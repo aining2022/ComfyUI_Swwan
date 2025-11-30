@@ -4,9 +4,10 @@ A collection of essential image processing utility nodes for ComfyUI, migrated f
 
 ## ✨ Features
 
-- � **ISmart Image Cropping**: Intelligent mask-based cropping with multiple detection modes
-- � ***Aspect Ratio Scaling**: Flexible image scaling with aspect ratio preservation
+- 🎯 **Smart Image Cropping**: Intelligent mask-based cropping with multiple detection modes
+- 📐 **Aspect Ratio Scaling**: Flexible image scaling with aspect ratio preservation
 - 🔄 **Crop Box Restoration**: Seamlessly restore cropped images back to original canvas
+- 🎛️ **Fast Groups Muter**: Quick control of node groups mute/unmute state (from rgthree-comfy)
 - ⚡ **Optimized Performance**: Lightweight implementation with minimal dependencies
 - 🛠️ **Workflow Integration**: Designed for seamless integration in complex ComfyUI pipelines
 
@@ -57,6 +58,69 @@ Scale images to specific aspect ratios with multiple fitting modes.
 - Prepare images for specific output formats
 - Maintain aspect ratios during processing
 - Create consistent image dimensions for batch processing
+
+### Fast Groups Muter (rgthree)
+Quick control of workflow groups' mute/unmute state. Virtual node for UI control only.
+
+**Features:**
+- Auto-detect all groups in workflow
+- Toggle mute state for all nodes in a group
+- Filter groups by color or title (regex support)
+- Multiple sort options (position, alphabetic, custom)
+- Batch operations (mute all, enable all, toggle all)
+- Quick navigation to group location
+
+**Use Cases:**
+- Quickly enable/disable entire sections of workflow
+- Test different workflow branches
+- Organize complex workflows with groups
+- Debug by isolating specific groups
+
+**Note:** This is a virtual node (frontend only) ported from rgthree-comfy. See `FAST_GROUPS_MUTER_README.md` for detailed usage.
+
+### Fast Muter (rgthree)
+Quick control of connected nodes' mute/unmute state. Virtual node for UI control.
+
+**Features:**
+- Auto-detect connected nodes
+- Toggle mute state for each connected node
+- Batch operations (mute all, enable all, toggle all)
+- Toggle restrictions (default, max one, always one)
+
+**Use Cases:**
+- Control multiple nodes from a single point
+- Test different processing paths
+- Quickly enable/disable node chains
+
+### Image Comparer (rgthree)
+Compare two images side-by-side with interactive slider or click mode.
+
+**Features:**
+- Slide mode: hover to compare images
+- Click mode: click to switch between images
+- Support for image batches
+- Automatic image selection from batches
+
+**Use Cases:**
+- Compare before/after processing results
+- Evaluate different model outputs
+- Quality control and A/B testing
+
+### Seed (rgthree)
+Enhanced seed node with special functions for randomization and control.
+
+**Features:**
+- Random seed generation
+- Increment/decrement seed values
+- Fixed random seed option
+- Last seed tracking and reuse
+- Server-side random generation fallback
+
+**Use Cases:**
+- Consistent reproducible results
+- Systematic seed exploration
+- Quick randomization for testing
+- Seed value management
 
 ## 🚀 Installation
 
