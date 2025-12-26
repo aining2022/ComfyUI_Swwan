@@ -3,3 +3,7 @@ torchvision
 Pillow
 numpy
 opencv-python
+scipy
+onnxruntime
+matplotlib
+spandrel
