@@ -8,7 +8,6 @@ from typing import Tuple
 from comfy.utils import common_upscale
 
 from .main_unit import *
-from .office_unit import ImageUpscaleWithModel,UpscaleModelLoader,composite
 
 if torch.cuda.is_available():
     device = torch.device("cuda")
