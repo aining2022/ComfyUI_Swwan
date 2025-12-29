@@ -3537,8 +3537,11 @@ class ImageUncropByMask:
                     {    
                         "destination": ("IMAGE",),
                         "source": ("IMAGE",),
-                        "mask": ("MASK",),
                         "bbox": ("BBOX",),
+                     },
+                "optional": {
+                        "mask": ("MASK",),
+                        "border_blending": ("INT", {"default": 0, "min": 0, "max": 1024, "step": 1, "tooltip": "Blur the mask edges in the bounding box"}),
                      },
                 }
 
@@ -3547,7 +3550,7 @@ class ImageUncropByMask:
     RETURN_NAMES = ("image",)
     FUNCTION = "uncrop"
 
-    def uncrop(self, destination, source, mask, bbox=None):
+    def uncrop(self, destination, source, bbox, mask=None, border_blending=0):
 
         output_list = []
 
@@ -3564,8 +3567,28 @@ class ImageUncropByMask:
             resized_source = resized_source.movedim(1, -1).squeeze(0)
     
             # Resize mask to match the bounding box dimensions
-            resized_mask = common_upscale(mask[i].unsqueeze(0).unsqueeze(0), bbox_width, bbox_height, "bilinear", "disabled")
-            resized_mask = resized_mask.squeeze(0).squeeze(0)
+            if mask is not None:
+                resized_mask = common_upscale(mask[i].unsqueeze(0).unsqueeze(0), bbox_width, bbox_height, "bilinear", "disabled")
+                resized_mask = resized_mask.squeeze(0).squeeze(0)
+            else:
+                resized_mask = torch.ones((bbox_height, bbox_width), dtype=source.dtype, device=source.device)
+
+            if border_blending > 0:
+                # Apply gaussian blur to the mask
+                sigma = float(border_blending)
+                radius = max(1, int(3.0 * sigma))
+                k = 2 * radius + 1
+                x = torch.arange(-radius, radius + 1, device=source.device, dtype=source.dtype)
+                k1 = torch.exp(-(x * x) / (2.0 * sigma * sigma))
+                k1 = k1 / k1.sum()
+                kx = k1.view(1, 1, 1, k)
+                ky = k1.view(1, 1, k, 1)
+                
+                # (H, W) -> (1, 1, H, W)
+                blurred_mask = resized_mask.unsqueeze(0).unsqueeze(0)
+                blurred_mask = F.conv2d(blurred_mask, kx, padding=(0, radius), groups=1)
+                blurred_mask = F.conv2d(blurred_mask, ky, padding=(radius, 0), groups=1)
+                resized_mask = blurred_mask.squeeze(0).squeeze(0)
 
             # Calculate padding values
             pad_left = x0
