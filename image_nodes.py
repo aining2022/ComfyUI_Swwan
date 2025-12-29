@@ -32,7 +32,10 @@ try:
     from server import PromptServer
 except:
     PromptServer = None
+
 from concurrent.futures import ThreadPoolExecutor
+from tqdm import tqdm
+
 
 script_directory = os.path.dirname(os.path.abspath(__file__))
 
@@ -4040,6 +4043,74 @@ class LoadVideosFromFolder:
             return s.vhs_nodes.utils.hash_path(video)
         return None
 
+class DrawMaskOnImage:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {"required": {
+                    "image": ("IMAGE", ),
+                    "mask": ("MASK", ),
+                    "color": ("STRING", {"default": "0, 0, 0", "tooltip": "Color as RGB values in range 0-255 or 0.0-1.0, separated by commas."}),
+                    "opacity": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01}),
+                  },
+                  "optional": {
+                    "device": (["cpu", "gpu"], {"default": "cpu", "tooltip": "Device to use for processing"}),
+                }
+        }
+    
+    RETURN_TYPES = ("IMAGE", )
+    RETURN_NAMES = ("images",)
+    FUNCTION = "apply"
+    CATEGORY = "Swwan/masking"
+    DESCRIPTION = "Applies the provided masks to the input images."
+
+    def apply(self, image, mask, color, opacity=1.0, device="cpu"):
+        B, H, W, C = image.shape
+        BM, HM, WM = mask.shape
+
+        processing_device = model_management.get_torch_device() if device == "gpu" else torch.device("cpu")
+
+        in_masks = mask.clone().to(processing_device)
+        in_images = image.clone().to(processing_device)
+        
+        if HM != H or WM != W:
+            in_masks = F.interpolate(mask.unsqueeze(1), size=(H, W), mode='nearest-exact').squeeze(1)
+        if B > BM:
+            in_masks = in_masks.repeat((B + BM - 1) // BM, 1, 1)[:B]
+        elif BM > B:
+            in_masks = in_masks[:B]
+        
+        output_images = []
+        
+        # Parse background color - detect if values are integers or floats
+        bg_values = []
+        for x in color.split(","):
+            val_str = x.strip()
+            if '.' in val_str:
+                bg_values.append(float(val_str))
+            else:
+                bg_values.append(int(val_str) / 255.0)
+
+        background_color = torch.tensor(bg_values, dtype=torch.float32, device=in_images.device)
+
+        for i in tqdm(range(B), desc="DrawMaskOnImage batch"):
+            curr_mask = in_masks[i]
+            img_idx = min(i, B - 1)
+            curr_image = in_images[img_idx]
+            # Apply opacity to the mask: effective_mask = mask * opacity
+            effective_mask = curr_mask * opacity
+            mask_expanded = effective_mask.unsqueeze(-1).expand(-1, -1, 3)
+            # Use strict interpolation formula: Image * (1 - Alpha) + Color * Alpha
+            masked_image = curr_image * (1 - mask_expanded) + background_color * (mask_expanded)
+            output_images.append(masked_image)
+        
+        # If no masks were processed, return empty tensor
+        if not output_images:
+            return (torch.zeros((0, H, W, 3), dtype=image.dtype),)
+
+        out_rgb = torch.stack(output_images, dim=0).cpu()
+        
+        return (out_rgb, )
+
 NODE_CLASS_MAPPINGS = {
     "ImagePass": ImagePass,
     "ColorMatch": ColorMatch,
@@ -4100,6 +4171,7 @@ NODE_CLASS_MAPPINGS = {
     "ImageCropByMaskBatch": ImageCropByMaskBatch,
     "ImagePadKJ": ImagePadKJ,
     "LoadVideosFromFolder": LoadVideosFromFolder,
+    "DrawMaskOnImage": DrawMaskOnImage,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -4162,6 +4234,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "ImageCropByMaskBatch": "Image Crop By Mask Batch (Swwan)",
     "ImagePadKJ": "Image Pad KJ (Swwan)",
     "LoadVideosFromFolder": "Load Videos From Folder (Swwan)",
+    "DrawMaskOnImage": "Draw Mask On Image (Swwan)",
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
