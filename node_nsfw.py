@@ -130,7 +130,7 @@ class DetectorForNSFW:
 
 
 class DetectorForNSFWV2:
-    """NSFW Detector V2 - 支持检测到NSFW内容时抛出异常终止工作流"""
+    """NSFW Detector V2 - 支持检测到NSFW内容时抛出异常终止工作流，同时保留替代图片功能"""
 
     def __init__(self) -> None:
         self.model = None
@@ -146,6 +146,7 @@ class DetectorForNSFWV2:
             },
             "optional": {
                 "model_name": (comfy_paths.get_filename_list("nsfw") + [""], {"default": ""}),
+                "alternative_image": ("IMAGE",),
                 "exception_message": ("STRING", {"default": "NSFW content detected, workflow terminated."}),
                 "buttocks_exposed": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 1.0, "step": 0.05}),
                 "female_breast_exposed": ("FLOAT", {"default": 0.7, "min": 0.0, "max": 1.0, "step": 0.05}),
@@ -155,16 +156,21 @@ class DetectorForNSFWV2:
             },
         }
 
-    RETURN_TYPES = ("IMAGE", "BOOLEAN", "STRING")
-    RETURN_NAMES = ("image", "is_nsfw", "detect_result")
+    RETURN_TYPES = ("IMAGE", "BOOLEAN", "STRING", "IMAGE")
+    RETURN_NAMES = ("output_image", "is_nsfw", "detect_result", "filtered_image")
     FUNCTION = "detect_nsfw"
 
     CATEGORY = "Swwan/filter"
 
     def detect_nsfw(self, image, detect_size=320, provider="CPU", raise_exception=False,
-                    model_name=None, exception_message="NSFW content detected, workflow terminated.", **kwargs):
+                    model_name=None, alternative_image=None, exception_message="NSFW content detected, workflow terminated.", **kwargs):
         if self.model is None:
             self.init_model(model_name, detect_size, provider)
+
+        if alternative_image is not None:
+            alternative_image = tensor2np(alternative_image)
+            if not isinstance(alternative_image, List):
+                alternative_image = [alternative_image]
 
         images = tensor2np(image)
         if not isinstance(images, List):
@@ -172,6 +178,8 @@ class DetectorForNSFWV2:
 
         is_nsfw = False
         result_info = []
+        results = []
+        filtered_results = []
 
         for i, img in enumerate(images):
             detect_result = self.model.detect(img)
@@ -188,13 +196,23 @@ class DetectorForNSFWV2:
             info = {"detect_result": detect_result, "nsfw": len(detected_results) > 0}
             result_info.append(info)
 
-            if len(detected_results) > 0:
+            if len(detected_results) == 0:
+                results.append(img)
+                filtered_results.append(img)
+            else:
                 is_nsfw = True
+                if alternative_image is not None:
+                    placeholder_image = alternative_image[i] if len(alternative_image) == len(images) else alternative_image[0]
+                else:
+                    placeholder_image = np.ones_like(img) * 255
+                results.append(placeholder_image)
 
         if is_nsfw and raise_exception:
             raise Exception(exception_message)
 
-        return (image, is_nsfw, json.dumps(result_info))
+        result_tensor = np2tensor(results)
+        filtered_tensor = np2tensor(filtered_results) if filtered_results else image
+        return (result_tensor, is_nsfw, json.dumps(result_info), filtered_tensor)
 
     def init_model(self, model_name, detect_size, provider):
         model_path = comfy_paths.get_full_path("nsfw", model_name) if model_name else None
