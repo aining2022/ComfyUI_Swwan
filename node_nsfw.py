@@ -130,9 +130,9 @@ class DetectorForNSFW:
 
 
 NODE_CLASS_MAPPINGS = {
-    "DetectorForNSFW": DetectorForNSFW,
+    "nsfwDetector": DetectorForNSFW,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "DetectorForNSFW": "Swwan NSFW Detector",
+    "nsfwDetector": "NSFW Detector",
 }
