@@ -2764,7 +2764,110 @@ highest dimension.
 
         return (out_image.cpu(), out_image.shape[2], out_image.shape[1], out_mask.cpu() if out_mask is not None else torch.zeros(64,64, device=torch.device("cpu"), dtype=torch.float32))
 
-import pathlib    
+
+class ImageResizeByMegapixels:
+    """
+    Resize image by target megapixels with aspect ratio control.
+    Calculates optimal dimensions based on target total pixels and divisibility requirements.
+    """
+    upscale_methods = ["nearest-exact", "bilinear", "area", "bicubic", "lanczos"]
+    aspect_ratios = ["default", "1:1", "3:2", "2:3", "4:3", "3:4", "16:9", "9:16", "21:9", "9:21"]
+    divisible_options = [2, 4, 8, 16, 32, 64]
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "image": ("IMAGE",),
+                "megapixels": ("FLOAT", {"default": 1.0, "min": 0.01, "max": 100.0, "step": 0.01, "tooltip": "Target megapixels (1.0 = 1 million pixels)"}),
+                "aspect_ratio": (s.aspect_ratios, {"default": "default", "tooltip": "Target aspect ratio. 'default' keeps original ratio."}),
+                "keep_proportion": (["crop", "resize", "pad", "pad_edge", "pad_edge_pixel", "pillarbox_blur"], {"default": "crop", "tooltip": "How to handle aspect ratio change when not using 'default'."}),
+                "divisible_by": (s.divisible_options, {"default": 16, "tooltip": "Width and height will be divisible by this value."}),
+                "upscale_method": (s.upscale_methods, {"default": "bilinear"}),
+                "crop_position": (["center", "top", "bottom", "left", "right"], {"default": "center"}),
+                "pad_color": ("STRING", {"default": "0, 0, 0", "tooltip": "Color to use for padding."}),
+            },
+            "optional": {
+                "mask": ("MASK",),
+                "device": (["cpu", "gpu"],),
+            },
+            "hidden": {
+                "unique_id": "UNIQUE_ID",
+            },
+        }
+
+    RETURN_TYPES = ("IMAGE", "INT", "INT", "MASK",)
+    RETURN_NAMES = ("IMAGE", "width", "height", "mask",)
+    FUNCTION = "resize"
+    CATEGORY = "Swwan/image"
+    DESCRIPTION = """
+Resizes image to target megapixels with optional aspect ratio control.
+
+- megapixels: Target total pixels in millions (1.0 = 1,000,000 pixels)
+- aspect_ratio: 'default' keeps original ratio, or choose a specific ratio
+- keep_proportion: How to handle aspect ratio changes (crop, pad, resize, etc.)
+- divisible_by: Ensures output dimensions are divisible by this value
+"""
+
+    @staticmethod
+    def parse_aspect_ratio(ratio_str):
+        """Parse aspect ratio string like '16:9' to (16, 9)"""
+        if ratio_str == "default":
+            return None
+        parts = ratio_str.split(":")
+        return (int(parts[0]), int(parts[1]))
+
+    def resize(self, image, megapixels, aspect_ratio, keep_proportion, divisible_by,
+               upscale_method, crop_position, pad_color, unique_id=None, device="cpu", mask=None, per_batch=64):
+        B, H, W, C = image.shape
+        target_pixels = megapixels * 1_000_000
+
+        # Determine aspect ratio
+        if aspect_ratio == "default":
+            ratio_w, ratio_h = W, H
+        else:
+            ratio_w, ratio_h = self.parse_aspect_ratio(aspect_ratio)
+
+        # Calculate scale factor and new dimensions
+        scale = math.sqrt(target_pixels / (ratio_w * ratio_h))
+        new_width = math.floor(ratio_w * scale / divisible_by) * divisible_by
+        new_height = math.floor(ratio_h * scale / divisible_by) * divisible_by
+
+        # Ensure minimum size
+        if new_width < divisible_by:
+            new_width = divisible_by
+        if new_height < divisible_by:
+            new_height = divisible_by
+
+        # Use ImageResizeKJv2's resize logic
+        resizer = ImageResizeKJv2()
+
+        # When aspect_ratio is "default", we can use "resize" mode directly
+        # When aspect_ratio is different, we need to use the keep_proportion to handle it
+        if aspect_ratio == "default":
+            # Original aspect ratio is maintained, just resize
+            mode = "resize"
+        else:
+            # Aspect ratio change, use the specified keep_proportion mode
+            mode = keep_proportion
+
+        return resizer.resize(
+            image=image,
+            width=new_width,
+            height=new_height,
+            keep_proportion=mode,
+            upscale_method=upscale_method,
+            divisible_by=1,  # We already handled divisibility
+            pad_color=pad_color,
+            crop_position=crop_position,
+            unique_id=unique_id,
+            device=device,
+            mask=mask,
+            per_batch=per_batch
+        )
+
+
+import pathlib
 class LoadAndResizeImage:
     _color_channels = ["alpha", "red", "green", "blue"]
     @classmethod
@@ -4159,6 +4262,7 @@ NODE_CLASS_MAPPINGS = {
     "PreviewAnimation": PreviewAnimation,
     "ImageResizeKJ": ImageResizeKJ,
     "ImageResizeKJv2": ImageResizeKJv2,
+    "ImageResizeByMegapixels": ImageResizeByMegapixels,
     "LoadAndResizeImage": LoadAndResizeImage,
     "LoadImagesFromFolderKJ": LoadImagesFromFolderKJ,
     "ImageGridtoBatch": ImageGridtoBatch,
@@ -4222,6 +4326,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "PreviewAnimation": "Preview Animation (Swwan)",
     "ImageResizeKJ": "Image Resize KJ (Swwan)",
     "ImageResizeKJv2": "Image Resize KJ v2 (Swwan)",
+    "ImageResizeByMegapixels": "Image Resize By Megapixels (Swwan)",
     "LoadAndResizeImage": "Load And Resize Image (Swwan)",
     "LoadImagesFromFolderKJ": "Load Images From Folder KJ (Swwan)",
     "ImageGridtoBatch": "Image Grid to Batch (Swwan)",
