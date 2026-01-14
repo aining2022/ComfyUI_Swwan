@@ -1,266 +1,201 @@
-# ComfyUI LayerStyle Utility Nodes
+# ComfyUI_Swwan
 
-A collection of essential image processing utility nodes for ComfyUI, migrated from the popular [ComfyUI_LayerStyle](https://github.com/chflame163/ComfyUI_LayerStyle) project. These nodes provide powerful image cropping, scaling, and restoration capabilities for advanced ComfyUI workflows.
+ComfyUI 自定义节点集合，收录个人常用节点，包含图像处理、Mask操作、数学运算、批处理等功能。
 
-## ✨ Features
+## 节点列表
 
-- 🎯 **Smart Image Cropping**: Intelligent mask-based cropping with multiple detection modes
-- 📐 **Aspect Ratio Scaling**: Flexible image scaling with aspect ratio preservation
-- 🔄 **Crop Box Restoration**: Seamlessly restore cropped images back to original canvas
-- 🎛️ **Fast Groups Muter**: Quick control of node groups mute/unmute state (from rgthree-comfy)
-- ⚡ **Optimized Performance**: Lightweight implementation with minimal dependencies
-- 🛠️ **Workflow Integration**: Designed for seamless integration in complex ComfyUI pipelines
+### 图像处理 (Image)
 
-## � Node List
+| 节点名 | 说明 |
+|--------|------|
+| Image Resize KJ v2 | 多功能图像缩放，支持裁剪/填充/拉伸等模式 |
+| Image Resize By Megapixels | 按目标百万像素缩放，支持宽高比控制 |
+| Image Concatenate | 图像拼接（横向/纵向） |
+| Image Concat From Batch | 从批次中拼接图像 |
+| Image Grid Composite 2x2/3x3 | 2x2/3x3 网格合成 |
+| Color Match | 颜色匹配 |
+| Save Image With Alpha | 保存带透明通道的图像 |
+| Cross Fade Images | 图像交叉淡入淡出 |
+| Add Label | 添加文字标签 |
+| Image Pad KJ | 图像填充 |
+| Draw Mask On Image | 在图像上绘制 Mask |
 
-### LayerUtility: CropByMask V2
-Intelligently crop images based on mask regions with advanced detection algorithms.
+### 图像裁剪 (Crop)
 
-**Features:**
-- Three detection modes: `mask_area`, `min_bounding_rect`, `max_inscribed_rect`
-- Customizable margin reserves (top, bottom, left, right)
-- Round dimensions to multiples (8, 16, 32, 64, 128, 256, 512)
-- Optional manual crop box input
-- Returns cropped image, mask, crop box coordinates, and preview
+| 节点名 | 说明 |
+|--------|------|
+| CropByMask V2/V3 | 基于 Mask 智能裁剪 |
+| RestoreCropBox | 还原裁剪区域到原图 |
+| Image Crop By Mask | 按 Mask 裁剪图像 |
+| Image Crop By Mask And Resize | 裁剪并缩放 |
+| Image Uncrop By Mask | 还原裁剪 |
 
-**Use Cases:**
-- Extract masked regions for focused processing
-- Prepare images for inpainting workflows
-- Optimize processing area to reduce computation
+### 批处理 (Batch)
 
-### LayerUtility: RestoreCropBox
-Restore cropped images back to their original canvas position.
+| 节点名 | 说明 |
+|--------|------|
+| Get Image Range From Batch | 从批次获取指定范围图像 |
+| Get Images From Batch Indexed | 按索引获取图像 |
+| Insert Images To Batch Indexed | 按索引插入图像 |
+| Replace Images In Batch | 替换批次中的图像 |
+| Shuffle Image Batch | 打乱图像顺序 |
+| Reverse Image Batch | 反转图像顺序 |
+| Image Batch Multi | 多图像批次合并 |
+| Image List To Batch / Batch To List | 列表与批次互转 |
 
-**Features:**
-- Paste cropped images back to original coordinates
-- Support for mask-based compositing
-- Automatic alpha channel handling
-- Batch processing support
-- Mask inversion option
+### 比例缩放 (Scale)
 
-**Use Cases:**
-- Restore processed regions to original image
-- Complete crop → process → restore workflows
-- Seamless image compositing
+| 节点名 | 说明 |
+|--------|------|
+| ImageScaleByAspectRatio V2 | 按宽高比缩放 |
+| Image Resize sum | 综合缩放节点 |
+| Load And Resize Image | 加载并缩放图像 |
 
-### LayerUtility: ImageScaleByAspectRatio V2
-Scale images to specific aspect ratios with multiple fitting modes.
+### Mask 处理
 
-**Features:**
-- Preset aspect ratios: 1:1, 3:2, 4:3, 16:9, 21:9, 3:4, 9:16, and more
-- Custom aspect ratio support
-- Three scaling modes: `letterbox`, `crop`, `fill`
-- Scale to specific side (longest, shortest, width, height)
-- Round dimensions to multiples
-- SSAA (Super-Sampling Anti-Aliasing) support
+| 节点名 | 说明 |
+|--------|------|
+| Mask transform sum | Mask 变换 |
+| NSFW Detector V2 | NSFW 内容检测 |
 
-**Use Cases:**
-- Prepare images for specific output formats
-- Maintain aspect ratios during processing
-- Create consistent image dimensions for batch processing
+### 数学运算 (Math)
 
-### Fast Groups Muter (rgthree)
-Quick control of workflow groups' mute/unmute state. Virtual node for UI control only.
+| 节点名 | 说明 |
+|--------|------|
+| Math Expression | 数学表达式计算 |
+| Math Calculate | 数学计算 |
+| Math Remap Data | 数值映射 |
 
-**Features:**
-- Auto-detect all groups in workflow
-- Toggle mute state for all nodes in a group
-- Filter groups by color or title (regex support)
-- Multiple sort options (position, alphabetic, custom)
-- Batch operations (mute all, enable all, toggle all)
-- Quick navigation to group location
+### 开关与控制 (Switch)
 
-**Use Cases:**
-- Quickly enable/disable entire sections of workflow
-- Test different workflow branches
-- Organize complex workflows with groups
-- Debug by isolating specific groups
+| 节点名 | 说明 |
+|--------|------|
+| Any Switch | 任意类型切换 |
+| Any Boolean Switch | 布尔切换 |
 
-**Note:** This is a virtual node (frontend only) ported from rgthree-comfy. See `FAST_GROUPS_MUTER_README.md` for detailed usage.
+### 工具 (Utility)
 
-### Fast Muter (rgthree)
-Quick control of connected nodes' mute/unmute state. Virtual node for UI control.
+| 节点名 | 说明 |
+|--------|------|
+| Seed | 种子节点（支持随机/递增） |
+| Get Image Size & Count | 获取图像尺寸和数量 |
+| Get Latent Size & Count | 获取 Latent 尺寸和数量 |
+| Preview Animation | 动画预览 |
+| Fast Preview | 快速预览 |
 
-**Features:**
-- Auto-detect connected nodes
-- Toggle mute state for each connected node
-- Batch operations (mute all, enable all, toggle all)
-- Toggle restrictions (default, max one, always one)
+## 安装
 
-**Use Cases:**
-- Control multiple nodes from a single point
-- Test different processing paths
-- Quickly enable/disable node chains
-
-### Image Comparer (rgthree)
-Compare two images side-by-side with interactive slider or click mode.
-
-**Features:**
-- Slide mode: hover to compare images
-- Click mode: click to switch between images
-- Support for image batches
-- Automatic image selection from batches
-
-**Use Cases:**
-- Compare before/after processing results
-- Evaluate different model outputs
-- Quality control and A/B testing
-
-### Seed (rgthree)
-Enhanced seed node with special functions for randomization and control.
-
-**Features:**
-- Random seed generation
-- Increment/decrement seed values
-- Fixed random seed option
-- Last seed tracking and reuse
-- Server-side random generation fallback
-
-**Use Cases:**
-- Consistent reproducible results
-- Systematic seed exploration
-- Quick randomization for testing
-- Seed value management
-
-## 🚀 Installation
-
-### Method 1: ComfyUI Manager (Recommended)
-1. Open ComfyUI Manager
-2. Search for "LayerStyle Utility"
-3. Click Install
-4. Restart ComfyUI
-
-### Method 2: Manual Installation
 ```bash
-# Navigate to ComfyUI custom_nodes directory
 cd ComfyUI/custom_nodes
-
-# Clone this repository
-git clone https://github.com/YOUR_USERNAME/ComfyUI_LayerStyle_Utility
-
-# Install dependencies
-cd ComfyUI_LayerStyle_Utility
-pip install -r requirements.txt
-
-# Restart ComfyUI
+git clone https://github.com/aining2022/ComfyUI_Swwan
+pip install -r ComfyUI_Swwan/requirements.txt
 ```
 
-## 📦 Dependencies
+## 致谢
 
-- `torch` - PyTorch for tensor operations
-- `torchvision` - Computer vision utilities
-- `Pillow` - Image processing library
-- `numpy` - Numerical computing
-- `opencv-python` - Advanced image processing
-
-All dependencies are automatically installed via `requirements.txt`.
-
-## � Usage Examples
-
-### Example 1: Crop → Process → Restore Workflow
-```
-[Load Image] → [CropByMask V2] → [Your Processing Node] → [RestoreCropBox] → [Save Image]
-                      ↓
-                  [Load Mask]
-```
-
-This workflow allows you to:
-1. Crop a specific region using a mask
-2. Process only the cropped area (faster, more efficient)
-3. Restore the processed region back to the original image
-
-### Example 2: Aspect Ratio Standardization
-```
-[Load Image] → [ImageScaleByAspectRatio V2] → [Your Model] → [Save Image]
-```
-
-Perfect for:
-- Preparing images for models that require specific dimensions
-- Creating consistent output sizes
-- Maintaining aspect ratios during batch processing
-
-### Example 3: Advanced Inpainting Pipeline
-```
-[Load Image] ──┬─→ [CropByMask V2] → [Inpainting Model] → [RestoreCropBox] ──→ [Save Image]
-               │                                                    ↑
-[Load Mask] ───┴────────────────────────────────────────────────────┘
-```
-
-## 🎯 Node Parameters
-
-### CropByMask V2
-- **image**: Input image tensor
-- **mask**: Mask defining the crop region
-- **invert_mask**: Invert the mask (default: False)
-- **detect**: Detection mode (`mask_area`, `min_bounding_rect`, `max_inscribed_rect`)
-- **top/bottom/left/right_reserve**: Margin pixels to add around detected region
-- **round_to_multiple**: Round dimensions to specified multiple
-- **crop_box** (optional): Manual crop box coordinates
-
-### RestoreCropBox
-- **background_image**: Original full-size image
-- **croped_image**: Cropped image to restore
-- **crop_box**: Crop box coordinates from CropByMask V2
-- **croped_mask** (optional): Mask for compositing
-- **invert_mask**: Invert the mask (default: False)
-
-### ImageScaleByAspectRatio V2
-- **aspect_ratio**: Target aspect ratio (original, custom, or preset)
-- **proportional_width/height**: Custom aspect ratio values
-- **fit**: Scaling mode (`letterbox`, `crop`, `fill`)
-- **scale_to_side**: Which side to scale to (longest, shortest, width, height)
-- **scale_to_length**: Target length in pixels
-- **round_to_multiple**: Round dimensions to specified multiple
-- **image/mask**: Input image or mask tensor
-
-## 🛠️ Technical Details
-
-### Detection Modes Explained
-
-- **mask_area**: Uses the entire mask area as crop region
-- **min_bounding_rect**: Finds the minimum bounding rectangle around mask
-- **max_inscribed_rect**: Finds the largest rectangle that fits inside mask
-
-### Scaling Modes Explained
-
-- **letterbox**: Fit image within target size, add padding if needed
-- **crop**: Fill target size, crop excess if needed
-- **fill**: Stretch image to exactly fill target size
-
-## 🤝 Credits
-
-These nodes are migrated from the excellent [ComfyUI_LayerStyle](https://github.com/chflame163/ComfyUI_LayerStyle) project by chflame163. We've extracted and optimized these specific utilities for users who need these functions without the full LayerStyle suite.
-
-Original project: https://github.com/chflame163/ComfyUI_LayerStyle
-
-## 📄 License
-
-This project maintains the same license as the original ComfyUI_LayerStyle project.
-
-## 🐛 Issues & Support
-
-If you encounter any issues or have questions:
-1. Check the [Issues](https://github.com/YOUR_USERNAME/ComfyUI_LayerStyle_Utility/issues) page
-2. Create a new issue with detailed description
-3. Include your ComfyUI version and error logs
-
-## 🌟 Contributing
-
-Contributions are welcome! Please feel free to:
-- Report bugs
-- Suggest new features
-- Submit pull requests
-- Improve documentation
-
-## 📝 Changelog
-
-### v1.0.0 (Initial Release)
-- Migrated CropByMask V2 node
-- Migrated RestoreCropBox node
-- Migrated ImageScaleByAspectRatio V2 node
-- Created standalone utility module
-- Optimized dependencies
+部分节点迁移自以下开源项目：
+- [ComfyUI_LayerStyle](https://github.com/chflame163/ComfyUI_LayerStyle)
+- [rgthree-comfy](https://github.com/rgthree/rgthree-comfy)
+- [ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes)
 
 ---
 
-**Note**: This is a focused utility package. For the complete LayerStyle suite with 100+ nodes, please visit the [original ComfyUI_LayerStyle project](https://github.com/chflame163/ComfyUI_LayerStyle).
+# ComfyUI_Swwan (English)
+
+Custom node collection for ComfyUI, featuring commonly used nodes for image processing, mask operations, math calculations, and batch processing.
+
+## Node List
+
+### Image Processing
+
+| Node | Description |
+|------|-------------|
+| Image Resize KJ v2 | Multi-mode image resize with crop/pad/stretch |
+| Image Resize By Megapixels | Resize by target megapixels with aspect ratio control |
+| Image Concatenate | Concatenate images (horizontal/vertical) |
+| Image Concat From Batch | Concatenate images from batch |
+| Image Grid Composite 2x2/3x3 | 2x2/3x3 grid composition |
+| Color Match | Color matching |
+| Save Image With Alpha | Save image with alpha channel |
+| Cross Fade Images | Image cross-fade transition |
+| Add Label | Add text label |
+| Image Pad KJ | Image padding |
+| Draw Mask On Image | Draw mask on image |
+
+### Image Cropping
+
+| Node | Description |
+|------|-------------|
+| CropByMask V2/V3 | Smart mask-based cropping |
+| RestoreCropBox | Restore cropped area to original |
+| Image Crop By Mask | Crop by mask |
+| Image Crop By Mask And Resize | Crop and resize |
+| Image Uncrop By Mask | Restore crop |
+
+### Batch Operations
+
+| Node | Description |
+|------|-------------|
+| Get Image Range From Batch | Get image range from batch |
+| Get Images From Batch Indexed | Get images by index |
+| Insert Images To Batch Indexed | Insert images by index |
+| Replace Images In Batch | Replace images in batch |
+| Shuffle Image Batch | Shuffle image order |
+| Reverse Image Batch | Reverse image order |
+| Image Batch Multi | Multi-image batch merge |
+| Image List To Batch / Batch To List | List-batch conversion |
+
+### Scaling
+
+| Node | Description |
+|------|-------------|
+| ImageScaleByAspectRatio V2 | Scale by aspect ratio |
+| Image Resize sum | Comprehensive resize node |
+| Load And Resize Image | Load and resize image |
+
+### Mask Processing
+
+| Node | Description |
+|------|-------------|
+| Mask transform sum | Mask transformation |
+| NSFW Detector V2 | NSFW content detection |
+
+### Math
+
+| Node | Description |
+|------|-------------|
+| Math Expression | Math expression evaluation |
+| Math Calculate | Math calculation |
+| Math Remap Data | Value remapping |
+
+### Switch & Control
+
+| Node | Description |
+|------|-------------|
+| Any Switch | Any type switch |
+| Any Boolean Switch | Boolean switch |
+
+### Utility
+
+| Node | Description |
+|------|-------------|
+| Seed | Seed node (random/increment) |
+| Get Image Size & Count | Get image size and count |
+| Get Latent Size & Count | Get latent size and count |
+| Preview Animation | Animation preview |
+| Fast Preview | Fast preview |
+
+## Installation
+
+```bash
+cd ComfyUI/custom_nodes
+git clone https://github.com/aining2022/ComfyUI_Swwan
+pip install -r ComfyUI_Swwan/requirements.txt
+```
+
+## Credits
+
+Some nodes are migrated from:
+- [ComfyUI_LayerStyle](https://github.com/chflame163/ComfyUI_LayerStyle)
+- [rgthree-comfy](https://github.com/rgthree/rgthree-comfy)
+- [ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes)
