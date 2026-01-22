@@ -184,7 +184,8 @@ Reserve 模式:
                 y2 = canvas_height
                 y1 = max(0, y2 - height)
 
-        return (x1, y1, x2, y2), (x, y, w, h)
+        # 确保返回整数（避免 numpy.float64 导致的类型错误）
+        return (int(x1), int(y1), int(x2), int(y2)), (int(x), int(y), int(w), int(h))
 
     def crop_by_mask_v5(self, detect, reserve_mode,
                         top_reserve, bottom_reserve, left_reserve, right_reserve,
