@@ -134,13 +134,20 @@ class RestoreCropBoxV4:
             # croped_image 只有 1 帧，复制到 batch_size 帧
             # 使用 repeat 而不是 expand，确保内存独立
             croped_image = croped_image.repeat(batch_size, 1, 1, 1)
-            log(f"{self.NODE_NAME}: Repeating croped_image from 1 to {batch_size} frames")
+            log(f"{self.NODE_NAME}: ⚠️ Auto-expanding: croped_image has only 1 frame, "
+                f"repeating it to match background's {batch_size} frames. "
+                f"This is correct for applying a single AI-processed result to a video. "
+                f"If you expect per-frame processing, check your upstream nodes (e.g., use ImageBatchToImageList + ImageListToImageBatch).",
+                message_type='warning')
         elif batch_size_crop != batch_size_bg:
             # 批次大小不匹配，取最小值并警告
             batch_size = min(batch_size_bg, batch_size_crop)
             background_image = background_image[:batch_size]
             croped_image = croped_image[:batch_size]
-            log(f"{self.NODE_NAME}: Warning - batch size mismatch, using {batch_size} frames")
+            log(f"{self.NODE_NAME}: ⚠️ Batch size mismatch detected: background has {batch_size_bg} frames, "
+                f"croped_image has {batch_size_crop} frames. Using first {batch_size} frames from both. "
+                f"Check your workflow to ensure correct frame counts.",
+                message_type='warning')
 
         # 选择设备
         if device == "GPU":

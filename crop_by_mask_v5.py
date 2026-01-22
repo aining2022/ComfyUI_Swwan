@@ -261,17 +261,21 @@ Reserve 模式:
             if batch_mode == "batch_first_reuse":
                 log(f"{self.NODE_NAME}: Batch mode - processing {batch_size} frames with same crop_box")
 
+            # 裁剪 mask（首帧mask复用到所有帧）
+            cropped_mask_pil = mask_pil.crop(effective_crop_box)
+
             for i in range(batch_size):
                 img_pil = tensor2pil(torch.unsqueeze(image[i], 0)).convert('RGB')
                 cropped_img = img_pil.crop(effective_crop_box)
                 ret_images.append(pil2tensor(cropped_img))
+
+                # 每帧都添加对应的 mask（复用同一个裁剪后的 mask）
+                ret_masks.append(pil2tensor(cropped_mask_pil.convert('RGB')))
         else:
+            # 只有 mask_image 输入的情况
             cropped_mask = mask_pil.crop(effective_crop_box)
             ret_images.append(pil2tensor(cropped_mask.convert('RGB')))
-
-        # 裁剪遮罩
-        cropped_mask = mask_pil.crop(effective_crop_box)
-        ret_masks.append(pil2tensor(cropped_mask.convert('RGB')))
+            ret_masks.append(pil2tensor(cropped_mask.convert('RGB')))
 
         log(f"{self.NODE_NAME} Processed {len(ret_images)} image(s).", message_type='finish')
 
