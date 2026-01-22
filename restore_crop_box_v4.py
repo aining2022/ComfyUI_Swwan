@@ -121,19 +121,26 @@ class RestoreCropBoxV4:
             restored_images: [B, H, W, C]
             restored_masks: [B, H, W]
         """
-        # 批次验证
+        # 批次大小
         batch_size_bg = background_image.shape[0]
         batch_size_crop = croped_image.shape[0]
+        batch_size = batch_size_bg  # 使用背景图像的批次大小
 
-        if batch_size_bg != batch_size_crop:
-            raise ValueError(
-                f"Batch size mismatch: background_image has {batch_size_bg} frames, "
-                f"but croped_image has {batch_size_crop} frames."
-            )
-
-        batch_size = background_image.shape[0]
         H, W, C = background_image.shape[1:]
         H_crop, W_crop = croped_image.shape[1:3]
+
+        # 处理批次不匹配的情况
+        if batch_size_crop == 1 and batch_size_bg > 1:
+            # croped_image 只有 1 帧，复制到 batch_size 帧
+            # 使用 repeat 而不是 expand，确保内存独立
+            croped_image = croped_image.repeat(batch_size, 1, 1, 1)
+            log(f"{self.NODE_NAME}: Repeating croped_image from 1 to {batch_size} frames")
+        elif batch_size_crop != batch_size_bg:
+            # 批次大小不匹配，取最小值并警告
+            batch_size = min(batch_size_bg, batch_size_crop)
+            background_image = background_image[:batch_size]
+            croped_image = croped_image[:batch_size]
+            log(f"{self.NODE_NAME}: Warning - batch size mismatch, using {batch_size} frames")
 
         # 选择设备
         if device == "GPU":
