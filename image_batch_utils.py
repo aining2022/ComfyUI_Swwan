@@ -7,6 +7,7 @@ class ImageListToImageBatch:
     def INPUT_TYPES(s):
         return {"required": {
                         "images": ("IMAGE", ),
+                        "device": (["auto", "cpu", "gpu"],),
                       }
                 }
 
@@ -17,13 +18,18 @@ class ImageListToImageBatch:
 
     CATEGORY = "Swwan/Image"
 
-    def doit(self, images):
+    def doit(self, images, device):
+        # Handle device parameter (it comes as a list due to INPUT_IS_LIST)
+        device_choice = device[0] if isinstance(device, list) else device
+
         if len(images) == 0:
             return ()
         if len(images) == 1:
             img = images[0]
             if img.ndim == 3:  # add batch dim if missing
                 img = img.unsqueeze(0)
+            # Move to target device
+            img = self._move_to_device(img, device_choice)
             return (img,)
 
         # Start with the first image
@@ -31,12 +37,15 @@ class ImageListToImageBatch:
         if image1.ndim == 3:
             image1 = image1.unsqueeze(0)
 
+        # Move to target device
+        image1 = self._move_to_device(image1, device_choice)
+
         for image2 in images[1:]:
             # Ensure batch dim
             if image2.ndim == 3:
                 image2 = image2.unsqueeze(0)
 
-            # Ensure same device
+            # Move to target device first (before any operations)
             if image2.device != image1.device:
                 image2 = image2.to(image1.device)
 
@@ -62,6 +71,19 @@ class ImageListToImageBatch:
             image1 = torch.cat((image1, image2), dim=0)
 
         return (image1,)
+
+    def _move_to_device(self, tensor, device_choice):
+        """Move tensor to specified device"""
+        if device_choice == "cpu":
+            return tensor.cpu()
+        elif device_choice == "gpu":
+            if torch.cuda.is_available():
+                return tensor.cuda()
+            else:
+                print("Warning: GPU not available, using CPU instead")
+                return tensor.cpu()
+        else:  # auto
+            return tensor  # Keep on current device
 
 
 class ImageBatchToImageList:
