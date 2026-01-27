@@ -2783,6 +2783,7 @@ class ImageResizeByMegapixels:
                 "aspect_ratio": (s.aspect_ratios, {"default": "default", "tooltip": "Target aspect ratio. 'default' keeps original ratio."}),
                 "keep_proportion": (["crop", "resize", "pad", "pad_edge", "pad_edge_pixel", "pillarbox_blur"], {"default": "crop", "tooltip": "How to handle aspect ratio change when not using 'default'."}),
                 "divisible_by": (s.divisible_options, {"default": 16, "tooltip": "Width and height will be divisible by this value."}),
+                "default_divisible": ("BOOLEAN", {"default": False, "tooltip": "When enabled, ensures final output dimensions strictly follow divisible_by constraint."}),
                 "upscale_method": (s.upscale_methods, {"default": "bilinear"}),
                 "crop_position": (["center", "top", "bottom", "left", "right"], {"default": "center"}),
                 "pad_color": ("STRING", {"default": "0, 0, 0", "tooltip": "Color to use for padding."}),
@@ -2807,6 +2808,7 @@ Resizes image to target megapixels with optional aspect ratio control.
 - aspect_ratio: 'default' keeps original ratio, or choose a specific ratio
 - keep_proportion: How to handle aspect ratio changes (crop, pad, resize, etc.)
 - divisible_by: Ensures output dimensions are divisible by this value
+- default_divisible: When enabled, strictly enforces divisible_by on final output
 """
 
     @staticmethod
@@ -2817,7 +2819,7 @@ Resizes image to target megapixels with optional aspect ratio control.
         parts = ratio_str.split(":")
         return (int(parts[0]), int(parts[1]))
 
-    def resize(self, image, megapixels, aspect_ratio, keep_proportion, divisible_by,
+    def resize(self, image, megapixels, aspect_ratio, keep_proportion, divisible_by, default_divisible,
                upscale_method, crop_position, pad_color, unique_id=None, device="cpu", mask=None, per_batch=64):
         B, H, W, C = image.shape
         target_pixels = megapixels * 1_000_000
@@ -2857,7 +2859,7 @@ Resizes image to target megapixels with optional aspect ratio control.
             height=new_height,
             keep_proportion=mode,
             upscale_method=upscale_method,
-            divisible_by=1,  # We already handled divisibility
+            divisible_by=divisible_by if default_divisible else 1,
             pad_color=pad_color,
             crop_position=crop_position,
             unique_id=unique_id,
