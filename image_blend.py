@@ -8,10 +8,10 @@ from PIL import Image
 from .layerstyle_utils import log, pil2tensor, tensor2pil, chop_image, chop_mode
 
 
-class ImageBlend:
+class ImageBlendSwwan:
 
     def __init__(self):
-        self.NODE_NAME = 'ImageBlend'
+        self.NODE_NAME = 'ImageBlendSwwan'
 
     @classmethod
     def INPUT_TYPES(cls):
@@ -90,9 +90,9 @@ class ImageBlend:
 
 
 NODE_CLASS_MAPPINGS = {
-    "ImageBlend": ImageBlend
+    "ImageBlendSwwan": ImageBlendSwwan
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ImageBlend": "Image Blend (Swwan)"
+    "ImageBlendSwwan": "Image Blend (Swwan)"
 }
