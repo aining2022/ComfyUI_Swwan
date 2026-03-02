@@ -55,7 +55,7 @@ class CropByMaskV5:
     RETURN_TYPES = ("IMAGE", "IMAGE", "BOX", "IMAGE",)
     RETURN_NAMES = ("cropped_image", "cropped_mask", "crop_box", "box_preview")
     FUNCTION = 'crop_by_mask_v5'
-    CATEGORY = 'Swwan/Image'
+    CATEGORY = 'Swwan/image'
     DESCRIPTION = """CropByMask V5 - 批处理智能裁剪节点
 
 批处理模式:

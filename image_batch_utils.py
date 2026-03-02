@@ -16,7 +16,7 @@ class ImageListToImageBatch:
     RETURN_TYPES = ("IMAGE", )
     FUNCTION = "doit"
 
-    CATEGORY = "Swwan/Image"
+    CATEGORY = "Swwan/image"
 
     def doit(self, images, device):
         # Handle device parameter (it comes as a list due to INPUT_IS_LIST)
@@ -95,7 +95,7 @@ class ImageBatchToImageList:
     OUTPUT_IS_LIST = (True,)
     FUNCTION = "doit"
 
-    CATEGORY = "Swwan/Image"
+    CATEGORY = "Swwan/image"
 
     def doit(self, image):
         images = [image[i:i + 1, ...] for i in range(image.shape[0])]
