@@ -4,9 +4,6 @@ Migrated from WAS Node Suite
 """
 
 import torch
-import numpy as np
-from PIL import Image, ImageFilter
-from .layerstyle_utils import tensor2pil, pil2tensor
 
 
 class BoundedImageCrop:
@@ -29,7 +26,7 @@ class BoundedImageCrop:
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "bounded_image_crop"
-    CATEGORY = "Swwan/image"
+    CATEGORY = "Swwan/Image"
 
     def bounded_image_crop(self, image, image_bounds):
         # Ensure we are working with batches
@@ -81,7 +78,7 @@ class BoundedImageCropWithMask:
 
     RETURN_TYPES = ("IMAGE", "IMAGE_BOUNDS",)
     FUNCTION = "bounded_image_crop_with_mask"
-    CATEGORY = "Swwan/image"
+    CATEGORY = "Swwan/Image"
 
     def bounded_image_crop_with_mask(self, image, mask, padding_left, padding_right, padding_top, padding_bottom, return_list=False):
         # Ensure we are working with batches

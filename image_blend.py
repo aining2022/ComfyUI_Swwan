@@ -31,7 +31,7 @@ class ImageBlend:
     RETURN_TYPES = ("IMAGE",)
     RETURN_NAMES = ("image",)
     FUNCTION = 'image_blend'
-    CATEGORY = 'Swwan/image'
+    CATEGORY = 'Swwan/Image'
 
     def image_blend(self, background_image, layer_image,
                     invert_mask, blend_mode, opacity,
