@@ -9,8 +9,10 @@ Original source: https://github.com/chflame163/ComfyUI_LayerStyle
 import numpy as np
 import torch
 import cv2
-from PIL import Image, ImageFilter, ImageDraw
+import copy
+from PIL import Image, ImageFilter, ImageDraw, ImageChops
 from typing import Union, List
+from skimage import img_as_float, img_as_ubyte
 
 
 def log(message: str, message_type: str = 'info'):
@@ -272,11 +274,11 @@ def is_valid_mask(tensor: torch.Tensor) -> bool:
 
 def num_round_up_to_multiple(number: int, multiple: int) -> int:
     """Round a number up to the nearest multiple
-    
+
     Args:
         number: Number to round
         multiple: Multiple to round to
-    
+
     Returns:
         Rounded number
     """
@@ -286,3 +288,227 @@ def num_round_up_to_multiple(number: int, multiple: int) -> int:
     else:
         factor = (number + multiple - 1) // multiple  # 向上取整的计算方式
         return factor * multiple
+
+
+# ============================================================================
+# Image Blend Functions
+# ============================================================================
+
+def cv22ski(cv2_image: np.ndarray) -> np.array:
+    """Convert OpenCV image to scikit-image format"""
+    return img_as_float(cv2_image)
+
+
+def ski2cv2(ski: np.array) -> np.ndarray:
+    """Convert scikit-image to OpenCV format"""
+    return img_as_ubyte(ski)
+
+
+# Blend mode list
+chop_mode = [
+    'normal',
+    'multply',
+    'screen',
+    'add',
+    'subtract',
+    'difference',
+    'darker',
+    'lighter',
+    'color_burn',
+    'color_dodge',
+    'linear_burn',
+    'linear_dodge',
+    'overlay',
+    'soft_light',
+    'hard_light',
+    'vivid_light',
+    'pin_light',
+    'linear_light',
+    'hard_mix'
+]
+
+
+def blend_color_burn(background_image: Image, layer_image: Image) -> Image:
+    """Color burn blend mode"""
+    img_1 = cv22ski(pil2cv2(background_image))
+    img_2 = cv22ski(pil2cv2(layer_image))
+    img = 1 - (1 - img_2) / (img_1 + 0.001)
+    mask_1 = img < 0
+    mask_2 = img > 1
+    img = img * (1 - mask_1)
+    img = img * (1 - mask_2) + mask_2
+    return cv22pil(ski2cv2(img))
+
+
+def blend_color_dodge(background_image: Image, layer_image: Image) -> Image:
+    """Color dodge blend mode"""
+    img_1 = cv22ski(pil2cv2(background_image))
+    img_2 = cv22ski(pil2cv2(layer_image))
+    img = img_2 / (1.0 - img_1 + 0.001)
+    mask_2 = img > 1
+    img = img * (1 - mask_2) + mask_2
+    return cv22pil(ski2cv2(img))
+
+
+def blend_linear_burn(background_image: Image, layer_image: Image) -> Image:
+    """Linear burn blend mode"""
+    img_1 = cv22ski(pil2cv2(background_image))
+    img_2 = cv22ski(pil2cv2(layer_image))
+    img = img_1 + img_2 - 1
+    mask_1 = img < 0
+    img = img * (1 - mask_1)
+    return cv22pil(ski2cv2(img))
+
+
+def blend_linear_dodge(background_image: Image, layer_image: Image) -> Image:
+    """Linear dodge blend mode"""
+    img_1 = cv22ski(pil2cv2(background_image))
+    img_2 = cv22ski(pil2cv2(layer_image))
+    img = img_1 + img_2
+    mask_2 = img > 1
+    img = img * (1 - mask_2) + mask_2
+    return cv22pil(ski2cv2(img))
+
+
+def blend_overlay(background_image: Image, layer_image: Image) -> Image:
+    """Overlay blend mode"""
+    img_1 = cv22ski(pil2cv2(background_image))
+    img_2 = cv22ski(pil2cv2(layer_image))
+    mask = img_2 < 0.5
+    img = 2 * img_1 * img_2 * mask + (1 - mask) * (1 - 2 * (1 - img_1) * (1 - img_2))
+    return cv22pil(ski2cv2(img))
+
+
+def blend_soft_light(background_image: Image, layer_image: Image) -> Image:
+    """Soft light blend mode"""
+    img_1 = cv22ski(pil2cv2(background_image))
+    img_2 = cv22ski(pil2cv2(layer_image))
+    mask = img_1 < 0.5
+    T1 = (2 * img_1 - 1) * (img_2 - img_2 * img_2) + img_2
+    T2 = (2 * img_1 - 1) * (np.sqrt(img_2) - img_2) + img_2
+    img = T1 * mask + T2 * (1 - mask)
+    return cv22pil(ski2cv2(img))
+
+
+def blend_hard_light(background_image: Image, layer_image: Image) -> Image:
+    """Hard light blend mode"""
+    img_1 = cv22ski(pil2cv2(background_image))
+    img_2 = cv22ski(pil2cv2(layer_image))
+    mask = img_1 < 0.5
+    T1 = 2 * img_1 * img_2
+    T2 = 1 - 2 * (1 - img_1) * (1 - img_2)
+    img = T1 * mask + T2 * (1 - mask)
+    return cv22pil(ski2cv2(img))
+
+
+def blend_vivid_light(background_image: Image, layer_image: Image) -> Image:
+    """Vivid light blend mode"""
+    img_1 = cv22ski(pil2cv2(background_image))
+    img_2 = cv22ski(pil2cv2(layer_image))
+    mask = img_1 < 0.5
+    T1 = 1 - (1 - img_2) / (2 * img_1 + 0.001)
+    T2 = img_2 / (2 * (1 - img_1) + 0.001)
+    mask_1 = T1 < 0
+    mask_2 = T2 > 1
+    T1 = T1 * (1 - mask_1)
+    T2 = T2 * (1 - mask_2) + mask_2
+    img = T1 * mask + T2 * (1 - mask)
+    return cv22pil(ski2cv2(img))
+
+
+def blend_pin_light(background_image: Image, layer_image: Image) -> Image:
+    """Pin light blend mode"""
+    img_1 = cv22ski(pil2cv2(background_image))
+    img_2 = cv22ski(pil2cv2(layer_image))
+    mask_1 = img_2 < (img_1 * 2 - 1)
+    mask_2 = img_2 > 2 * img_1
+    T1 = 2 * img_1 - 1
+    T2 = img_2
+    T3 = 2 * img_1
+    img = T1 * mask_1 + T2 * (1 - mask_1) * (1 - mask_2) + T3 * mask_2
+    return cv22pil(ski2cv2(img))
+
+
+def blend_linear_light(background_image: Image, layer_image: Image) -> Image:
+    """Linear light blend mode"""
+    img_1 = cv22ski(pil2cv2(background_image))
+    img_2 = cv22ski(pil2cv2(layer_image))
+    img = img_2 + img_1 * 2 - 1
+    mask_1 = img < 0
+    mask_2 = img > 1
+    img = img * (1 - mask_1)
+    img = img * (1 - mask_2) + mask_2
+    return cv22pil(ski2cv2(img))
+
+
+def blend_hard_mix(background_image: Image, layer_image: Image) -> Image:
+    """Hard mix blend mode"""
+    img_1 = cv22ski(pil2cv2(background_image))
+    img_2 = cv22ski(pil2cv2(layer_image))
+    img = img_1 + img_2
+    mask = img_1 + img_2 > 1
+    img = img * (1 - mask) + mask
+    img = img * mask
+    return cv22pil(ski2cv2(img))
+
+
+def chop_image(background_image: Image, layer_image: Image, blend_mode: str, opacity: int) -> Image:
+    """Apply blend mode to layer and background images
+
+    Args:
+        background_image: Background PIL Image
+        layer_image: Layer PIL Image to blend
+        blend_mode: Blend mode name from chop_mode list
+        opacity: Opacity value (0-100)
+
+    Returns:
+        Blended PIL Image
+    """
+    ret_image = background_image
+    if blend_mode == 'normal':
+        ret_image = copy.deepcopy(layer_image)
+    elif blend_mode == 'multply':
+        ret_image = ImageChops.multiply(background_image, layer_image)
+    elif blend_mode == 'screen':
+        ret_image = ImageChops.screen(background_image, layer_image)
+    elif blend_mode == 'add':
+        ret_image = ImageChops.add(background_image, layer_image, 1, 0)
+    elif blend_mode == 'subtract':
+        ret_image = ImageChops.subtract(background_image, layer_image, 1, 0)
+    elif blend_mode == 'difference':
+        ret_image = ImageChops.difference(background_image, layer_image)
+    elif blend_mode == 'darker':
+        ret_image = ImageChops.darker(background_image, layer_image)
+    elif blend_mode == 'lighter':
+        ret_image = ImageChops.lighter(background_image, layer_image)
+    elif blend_mode == 'color_burn':
+        ret_image = blend_color_burn(background_image, layer_image)
+    elif blend_mode == 'color_dodge':
+        ret_image = blend_color_dodge(background_image, layer_image)
+    elif blend_mode == 'linear_burn':
+        ret_image = blend_linear_burn(background_image, layer_image)
+    elif blend_mode == 'linear_dodge':
+        ret_image = blend_linear_dodge(background_image, layer_image)
+    elif blend_mode == 'overlay':
+        ret_image = blend_overlay(background_image, layer_image)
+    elif blend_mode == 'soft_light':
+        ret_image = blend_soft_light(background_image, layer_image)
+    elif blend_mode == 'hard_light':
+        ret_image = blend_hard_light(background_image, layer_image)
+    elif blend_mode == 'vivid_light':
+        ret_image = blend_vivid_light(background_image, layer_image)
+    elif blend_mode == 'pin_light':
+        ret_image = blend_pin_light(background_image, layer_image)
+    elif blend_mode == 'linear_light':
+        ret_image = blend_linear_light(background_image, layer_image)
+    elif blend_mode == 'hard_mix':
+        ret_image = blend_hard_mix(background_image, layer_image)
+
+    # Apply opacity
+    if opacity == 0:
+        ret_image = background_image
+    elif opacity < 100:
+        alpha = 1.0 - float(opacity) / 100
+        ret_image = Image.blend(ret_image, background_image, alpha)
+
+    return ret_image
