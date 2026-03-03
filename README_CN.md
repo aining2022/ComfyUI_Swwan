@@ -93,6 +93,21 @@ pip install -r requirements.txt
 
 ## 📖 使用示例
 
+### 示例 0：RGBA 安全后处理流程
+```text
+[Load Image] → [RGBA Safe Pre] → [任意 IMAGE 节点] → [RGBA Safe Post] → [RGBA Save]
+```
+
+适用于：
+- 透明 PNG 超分
+- 透明图去噪 / 去水印 / 风格迁移
+- 任意不支持 RGBA 的 `IMAGE` 节点链路
+
+节点职责：
+- `RGBA Safe Pre`：把 `Load Image` 输出的 `MASK` 还原为 alpha，并执行 premultiply
+- `RGBA Safe Post`：自动 resize alpha，安全 unpremultiply，避免除 0 爆亮
+- `RGBA Save`：导出带透明通道的 RGBA PNG
+
 ### 示例 1：裁剪 → 处理 → 恢复工作流
 ```
 [加载图像] → [CropByMask V2] → [你的处理节点] → [RestoreCropBox] → [保存图像]
