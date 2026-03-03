@@ -107,6 +107,7 @@ pip install -r requirements.txt
 - `RGBA Safe Pre`：把 `Load Image` 输出的 `MASK` 还原为 alpha，并执行 premultiply
 - `RGBA Safe Post`：自动 resize alpha，安全 unpremultiply，避免除 0 爆亮
 - `RGBA Save`：导出带透明通道的 RGBA PNG
+- `RGBA Multi Save`：按 `jpeg/png/webp` 保存；需要透明时保留 alpha，不需要透明时直接按背景色展平
 
 ### 示例 1：裁剪 → 处理 → 恢复工作流
 ```

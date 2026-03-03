@@ -11,6 +11,19 @@ import folder_paths
 from comfy.cli_args import args
 
 
+def _build_png_metadata(prompt, extra_pnginfo):
+    if args.disable_metadata:
+        return None
+
+    metadata = PngInfo()
+    if prompt is not None:
+        metadata.add_text("prompt", json.dumps(prompt))
+    if extra_pnginfo is not None:
+        for key, value in extra_pnginfo.items():
+            metadata.add_text(key, json.dumps(value))
+    return metadata
+
+
 def _normalize_mask(mask, batch_size, device):
     if mask.dim() == 2:
         mask = mask.unsqueeze(0)
@@ -50,6 +63,17 @@ def _resize_alpha(alpha, batch_size, height, width):
         align_corners=False,
     ).squeeze(1)
     return resized.clamp(0.0, 1.0)
+
+
+def _unpremultiply(image, alpha, epsilon):
+    safe_alpha = alpha.clamp(min=epsilon)
+    image_out = image / safe_alpha.unsqueeze(-1)
+    image_out = torch.where(alpha.unsqueeze(-1) > epsilon, image_out, torch.zeros_like(image_out))
+    return image_out.clamp(0.0, 1.0)
+
+
+def _flatten_premultiplied(image, alpha, background):
+    return (image + (1.0 - alpha).unsqueeze(-1) * background.view(1, 1, 1, 3)).clamp(0.0, 1.0)
 
 
 class RGBA_Safe_Pre:
@@ -118,10 +142,7 @@ and returns an alpha mask ready for RGBA export.
 
         alpha = alpha.to(device=image.device, dtype=torch.float32)
         alpha_out = _resize_alpha(alpha, batch_size, image_height, image_width)
-        safe_alpha = alpha_out.clamp(min=epsilon)
-        image_out = image / safe_alpha.unsqueeze(-1)
-        image_out = torch.where(alpha_out.unsqueeze(-1) > epsilon, image_out, torch.zeros_like(image_out))
-        return (image_out.clamp(0.0, 1.0), alpha_out)
+        return (_unpremultiply(image, alpha_out, epsilon), alpha_out)
 
 
 class RGBA_Save:
@@ -173,14 +194,7 @@ Saves RGB plus alpha as an RGBA PNG without dropping transparency.
             rgba = np.dstack((rgb, alpha_np))
             img = Image.fromarray(rgba, mode="RGBA")
 
-            metadata = None
-            if not args.disable_metadata:
-                metadata = PngInfo()
-                if prompt is not None:
-                    metadata.add_text("prompt", json.dumps(prompt))
-                if extra_pnginfo is not None:
-                    for key, value in extra_pnginfo.items():
-                        metadata.add_text(key, json.dumps(value))
+            metadata = _build_png_metadata(prompt, extra_pnginfo)
 
             filename_with_batch_num = filename.replace("%batch_num%", str(batch_number))
             file = f"{filename_with_batch_num}_{counter + batch_number:05}.png"
@@ -194,14 +208,146 @@ Saves RGB plus alpha as an RGBA PNG without dropping transparency.
         return {"ui": {"images": results}}
 
 
+class RGBA_Multi_Save:
+    def __init__(self):
+        self.output_dir = folder_paths.get_output_directory()
+        self.type = "output"
+        self.prefix_append = ""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "image": ("IMAGE",),
+                "alpha": ("MASK",),
+                "has_alpha": ("BOOLEAN",),
+                "file_format": (["jpeg", "png", "webp"], {"default": "png"}),
+                "alpha_mode": (["auto", "keep", "flatten"], {"default": "auto"}),
+                "filename_prefix": ("STRING", {"default": "RGBA"}),
+            },
+            "optional": {
+                "epsilon": ("FLOAT", {"default": 0.001, "min": 0.000001, "max": 0.1, "step": 0.0005}),
+                "background_red": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "background_green": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "background_blue": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "jpeg_quality": ("INT", {"default": 95, "min": 1, "max": 100, "step": 1}),
+                "webp_quality": ("INT", {"default": 90, "min": 1, "max": 100, "step": 1}),
+                "webp_lossless": ("BOOLEAN", {"default": False}),
+                "png_compress_level": ("INT", {"default": 4, "min": 0, "max": 9, "step": 1}),
+            },
+            "hidden": {
+                "prompt": "PROMPT",
+                "extra_pnginfo": "EXTRA_PNGINFO",
+            },
+        }
+
+    RETURN_TYPES = ()
+    FUNCTION = "save_images"
+    OUTPUT_NODE = True
+    CATEGORY = "Swwan/RGBA"
+    DESCRIPTION = """
+Saves premultiplied IMAGE output as JPEG, PNG, or WebP.
+Keeps alpha only when the selected format supports it and alpha_mode requires it.
+"""
+
+    def save_images(
+        self,
+        image,
+        alpha,
+        has_alpha,
+        file_format,
+        alpha_mode,
+        filename_prefix="RGBA",
+        epsilon=0.001,
+        background_red=1.0,
+        background_green=1.0,
+        background_blue=1.0,
+        jpeg_quality=95,
+        webp_quality=90,
+        webp_lossless=False,
+        png_compress_level=4,
+        prompt=None,
+        extra_pnginfo=None,
+    ):
+        filename_prefix += self.prefix_append
+        full_output_folder, filename, counter, subfolder, _ = folder_paths.get_save_image_path(
+            filename_prefix,
+            self.output_dir,
+            image[0].shape[1],
+            image[0].shape[0],
+        )
+
+        image = image.to(dtype=torch.float32)
+        alpha = alpha.to(device=image.device, dtype=torch.float32)
+        alpha = _resize_alpha(alpha, image.shape[0], image.shape[1], image.shape[2])
+        background = torch.tensor(
+            [background_red, background_green, background_blue],
+            device=image.device,
+            dtype=torch.float32,
+        )
+
+        supports_alpha = file_format in {"png", "webp"}
+        if alpha_mode == "keep":
+            keep_alpha = supports_alpha and bool(has_alpha)
+        elif alpha_mode == "flatten":
+            keep_alpha = False
+        else:
+            keep_alpha = supports_alpha and bool(has_alpha)
+
+        if keep_alpha:
+            output_image = _unpremultiply(image, alpha, epsilon)
+        else:
+            output_image = _flatten_premultiplied(image, alpha, background)
+
+        metadata = _build_png_metadata(prompt, extra_pnginfo) if file_format == "png" else None
+        extension = "jpg" if file_format == "jpeg" else file_format
+        results = []
+
+        for batch_number, (rgb_tensor, alpha_tensor) in enumerate(zip(output_image, alpha)):
+            rgb = np.clip(rgb_tensor.cpu().numpy() * 255.0, 0, 255).astype(np.uint8)
+
+            if keep_alpha:
+                alpha_np = np.clip(alpha_tensor.cpu().numpy() * 255.0, 0, 255).astype(np.uint8)
+                pil_image = Image.fromarray(np.dstack((rgb, alpha_np)), mode="RGBA")
+            else:
+                pil_image = Image.fromarray(rgb, mode="RGB")
+
+            filename_with_batch_num = filename.replace("%batch_num%", str(batch_number))
+            file = f"{filename_with_batch_num}_{counter + batch_number:05}.{extension}"
+            output_path = os.path.join(full_output_folder, file)
+
+            if file_format == "jpeg":
+                pil_image = pil_image.convert("RGB")
+                pil_image.save(output_path, format="JPEG", quality=jpeg_quality)
+            elif file_format == "webp":
+                pil_image.save(
+                    output_path,
+                    format="WEBP",
+                    quality=webp_quality,
+                    lossless=webp_lossless,
+                )
+            else:
+                pil_image.save(output_path, format="PNG", pnginfo=metadata, compress_level=png_compress_level)
+
+            results.append({
+                "filename": file,
+                "subfolder": subfolder,
+                "type": self.type,
+            })
+
+        return {"ui": {"images": results}}
+
+
 NODE_CLASS_MAPPINGS = {
     "RGBA_Safe_Pre": RGBA_Safe_Pre,
     "RGBA_Safe_Post": RGBA_Safe_Post,
     "RGBA_Save": RGBA_Save,
+    "RGBA_Multi_Save": RGBA_Multi_Save,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "RGBA_Safe_Pre": "RGBA Safe Pre (Swwan)",
     "RGBA_Safe_Post": "RGBA Safe Post (Swwan)",
     "RGBA_Save": "RGBA Save (Swwan)",
+    "RGBA_Multi_Save": "RGBA Multi Save (Swwan)",
 }

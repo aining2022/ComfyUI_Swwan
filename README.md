@@ -19,7 +19,7 @@ ComfyUI 自定义节点集合，收录个人常用节点，包含图像处理、
 | Add Label | 添加文字标签 |
 | Image Pad KJ | 图像填充 |
 | Draw Mask On Image | 在图像上绘制 Mask |
-| RGBA Safe Pre / Post / Save | 透明 PNG 安全前后处理与 RGBA 保存 |
+| RGBA Safe Pre / Post / Save / Multi Save | 透明图安全前后处理与多格式保存 |
 
 ### 图像裁剪 (Crop)
 
@@ -122,7 +122,7 @@ Custom node collection for ComfyUI, featuring commonly used nodes for image proc
 | Add Label | Add text label |
 | Image Pad KJ | Image padding |
 | Draw Mask On Image | Draw mask on image |
-| RGBA Safe Pre / Post / Save | Safe transparent PNG pre/post processing and RGBA export |
+| RGBA Safe Pre / Post / Save / Multi Save | Safe transparent image pre/post processing and multi-format export |
 
 ## RGBA Safe Workflow
 
@@ -143,6 +143,7 @@ RGBA Save
 - `RGBA Safe Pre`: converts `Load Image`'s `MASK` back into true alpha and premultiplies RGB.
 - `RGBA Safe Post`: resizes alpha to the processed size and safely unpremultiplies RGB without divide-by-zero blowups.
 - `RGBA Save`: merges RGB and alpha into an RGBA PNG and preserves transparency.
+- `RGBA Multi Save`: saves premultiplied results as `jpeg/png/webp`; it keeps alpha only for `png/webp` when needed, otherwise flattens to a background color.
 
 ### Image Cropping
 
