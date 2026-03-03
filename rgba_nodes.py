@@ -81,8 +81,8 @@ class RGBA_Safe_Pre:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "image": ("IMAGE",),
-                "mask": ("MASK",),
+                "image": ("IMAGE", {"tooltip": "Input RGB image from Load Image or any IMAGE node."}),
+                "mask": ("MASK", {"tooltip": "MASK from Load Image. ComfyUI stores alpha as 1 - alpha in this mask."}),
             }
         }
 
@@ -91,8 +91,8 @@ class RGBA_Safe_Pre:
     FUNCTION = "prepare"
     CATEGORY = "Swwan/RGBA"
     DESCRIPTION = """
-Extracts alpha from ComfyUI's Load Image mask, converts it back to alpha,
-and premultiplies RGB so the image can safely pass through RGB-only nodes.
+Converts ComfyUI's inverted load mask back to alpha and premultiplies RGB.
+Use this before sending a transparent image into RGB-only IMAGE nodes.
 """
 
     def prepare(self, image, mask):
@@ -116,10 +116,10 @@ class RGBA_Safe_Post:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "image": ("IMAGE",),
-                "alpha": ("MASK",),
-                "has_alpha": ("BOOLEAN",),
-                "epsilon": ("FLOAT", {"default": 0.001, "min": 0.000001, "max": 0.1, "step": 0.0005}),
+                "image": ("IMAGE", {"tooltip": "Processed IMAGE output, usually after passing through RGB-only nodes."}),
+                "alpha": ("MASK", {"tooltip": "Original alpha returned by RGBA Safe Pre."}),
+                "has_alpha": ("BOOLEAN", {"tooltip": "Boolean flag returned by RGBA Safe Pre. False makes this node act as passthrough."}),
+                "epsilon": ("FLOAT", {"default": 0.001, "min": 0.000001, "max": 0.1, "step": 0.0005, "tooltip": "Minimum alpha used during unpremultiply to avoid divide-by-zero and bright edge artifacts."}),
             }
         }
 
@@ -128,8 +128,8 @@ class RGBA_Safe_Post:
     FUNCTION = "restore"
     CATEGORY = "Swwan/RGBA"
     DESCRIPTION = """
-Resizes alpha to the processed image size, safely unpremultiplies RGB,
-and returns an alpha mask ready for RGBA export.
+Resizes alpha to the processed image size and safely unpremultiplies RGB.
+Use this when you need corrected RGB plus alpha as outputs for downstream nodes.
 """
 
     def restore(self, image, alpha, has_alpha, epsilon=0.001):
@@ -155,9 +155,9 @@ class RGBA_Save:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "image": ("IMAGE",),
-                "alpha": ("MASK",),
-                "filename_prefix": ("STRING", {"default": "RGBA"}),
+                "image": ("IMAGE", {"tooltip": "RGB image to save as PNG. Use RGBA Safe Post first if the image is still premultiplied."}),
+                "alpha": ("MASK", {"tooltip": "Alpha mask to embed into the saved PNG."}),
+                "filename_prefix": ("STRING", {"default": "RGBA", "tooltip": "Filename prefix for the saved PNG files."}),
             },
             "hidden": {
                 "prompt": "PROMPT",
@@ -170,7 +170,8 @@ class RGBA_Save:
     OUTPUT_NODE = True
     CATEGORY = "Swwan/RGBA"
     DESCRIPTION = """
-Saves RGB plus alpha as an RGBA PNG without dropping transparency.
+Saves RGB plus alpha as a transparent PNG.
+This is a dedicated PNG output node and does not handle JPEG or WebP.
 """
 
     def save_rgba(self, image, alpha, filename_prefix="RGBA", prompt=None, extra_pnginfo=None):
@@ -218,22 +219,22 @@ class RGBA_Multi_Save:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "image": ("IMAGE",),
-                "alpha": ("MASK",),
-                "has_alpha": ("BOOLEAN",),
-                "file_format": (["jpeg", "png", "webp"], {"default": "png"}),
-                "alpha_mode": (["auto", "keep", "flatten"], {"default": "auto"}),
-                "filename_prefix": ("STRING", {"default": "RGBA"}),
+                "image": ("IMAGE", {"tooltip": "Processed image. If it comes from RGBA Safe Pre, it is usually still premultiplied."}),
+                "alpha": ("MASK", {"tooltip": "Alpha from RGBA Safe Pre. It will be resized automatically to the current image size."}),
+                "has_alpha": ("BOOLEAN", {"tooltip": "Boolean flag from RGBA Safe Pre. Used by auto mode to decide whether alpha should be kept."}),
+                "file_format": (["jpeg", "png", "webp"], {"default": "png", "tooltip": "Output file format. JPEG never keeps alpha. PNG and WebP can keep alpha."}),
+                "alpha_mode": (["auto", "keep", "flatten"], {"default": "auto", "tooltip": "auto: keep alpha only for PNG/WebP when has_alpha is true. keep: force alpha-capable save. flatten: composite over background color and save RGB only."}),
+                "filename_prefix": ("STRING", {"default": "RGBA", "tooltip": "Filename prefix for saved files."}),
             },
             "optional": {
-                "epsilon": ("FLOAT", {"default": 0.001, "min": 0.000001, "max": 0.1, "step": 0.0005}),
-                "background_red": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01}),
-                "background_green": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01}),
-                "background_blue": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01}),
-                "jpeg_quality": ("INT", {"default": 95, "min": 1, "max": 100, "step": 1}),
-                "webp_quality": ("INT", {"default": 90, "min": 1, "max": 100, "step": 1}),
-                "webp_lossless": ("BOOLEAN", {"default": False}),
-                "png_compress_level": ("INT", {"default": 4, "min": 0, "max": 9, "step": 1}),
+                "epsilon": ("FLOAT", {"default": 0.001, "min": 0.000001, "max": 0.1, "step": 0.0005, "tooltip": "Only used when alpha is kept. Prevents divide-by-zero and overbright edges during unpremultiply."}),
+                "background_red": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01, "tooltip": "Background red channel used when flattening alpha to RGB."}),
+                "background_green": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01, "tooltip": "Background green channel used when flattening alpha to RGB."}),
+                "background_blue": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01, "tooltip": "Background blue channel used when flattening alpha to RGB."}),
+                "jpeg_quality": ("INT", {"default": 95, "min": 1, "max": 100, "step": 1, "tooltip": "JPEG encoder quality. Higher values keep more detail and larger files."}),
+                "webp_quality": ("INT", {"default": 90, "min": 1, "max": 100, "step": 1, "tooltip": "WebP quality used in lossy mode."}),
+                "webp_lossless": ("BOOLEAN", {"default": False, "tooltip": "Enable lossless WebP encoding. Usually larger but preserves pixels better."}),
+                "png_compress_level": ("INT", {"default": 4, "min": 0, "max": 9, "step": 1, "tooltip": "PNG compression level. Higher values reduce size but may save slower."}),
             },
             "hidden": {
                 "prompt": "PROMPT",
@@ -247,7 +248,8 @@ class RGBA_Multi_Save:
     CATEGORY = "Swwan/RGBA"
     DESCRIPTION = """
 Saves premultiplied IMAGE output as JPEG, PNG, or WebP.
-Keeps alpha only when the selected format supports it and alpha_mode requires it.
+It embeds RGBA Safe Post logic internally only when alpha must be preserved.
+Otherwise it flattens the image over a background color for fast RGB export.
 """
 
     def save_images(

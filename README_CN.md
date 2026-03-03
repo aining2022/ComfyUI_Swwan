@@ -109,6 +109,186 @@ pip install -r requirements.txt
 - `RGBA Save`：导出带透明通道的 RGBA PNG
 - `RGBA Multi Save`：按 `jpeg/png/webp` 保存；需要透明时保留 alpha，不需要透明时直接按背景色展平
 
+## RGBA 节点详解
+
+这组 RGBA 节点的目标，是让透明图可以安全地经过任何只支持 RGB 的 `IMAGE` 节点，同时在最终输出时按需要保留透明，或者快速展平为普通 RGB 文件。
+
+### 解决的问题
+
+- 透明边缘白边、黑边、灰边
+- 中间模型不支持 RGBA
+- 处理后透明通道丢失
+- `unpremultiply` 时除 0 或爆亮
+- 同一条工作流需要同时兼容 `jpeg`、`png`、`webp`
+
+### 推荐工作流
+
+保留透明：
+
+```text
+[Load Image] → [RGBA Safe Pre] → [任意 IMAGE 节点] → [RGBA Multi Save]
+```
+
+说明：
+- 输出格式选 `png` 或 `webp`
+- `alpha_mode` 选 `auto` 或 `keep`
+
+继续把修正后的 RGB 和 alpha 传给后续节点：
+
+```text
+[Load Image] → [RGBA Safe Pre] → [任意 IMAGE 节点] → [RGBA Safe Post] → [后续节点] → [RGBA Save / RGBA Multi Save]
+```
+
+输出普通 RGB 文件：
+
+```text
+[Load Image] → [RGBA Safe Pre] → [任意 IMAGE 节点] → [RGBA Multi Save]
+```
+
+说明：
+- 输出格式选 `jpeg`
+- 或把 `alpha_mode` 设为 `flatten`
+
+### 节点说明
+
+#### RGBA Safe Pre
+
+作用：
+- 将 `Load Image` 的反相 `MASK` 还原为真实 alpha
+- 对 RGB 执行 premultiply
+- 为 RGB-only 节点准备安全输入
+
+输入参数：
+
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `image` | `IMAGE` | 输入 RGB 图像 |
+| `mask` | `MASK` | `Load Image` 输出的 mask，内部语义是 `1 - alpha` |
+
+输出参数：
+
+| 输出 | 类型 | 说明 |
+|------|------|------|
+| `image_out` | `IMAGE` | premultiplied RGB |
+| `alpha` | `MASK` | 真实 alpha |
+| `has_alpha` | `BOOLEAN` | 是否真的带透明通道 |
+
+补充说明：
+- 输入是 `jpg` 时会自动退化为 passthrough
+- 不做 resize，不改变图像尺寸
+
+#### RGBA Safe Post
+
+作用：
+- 自动把 alpha resize 到处理后的图像尺寸
+- 对 premultiplied RGB 做安全 `unpremultiply`
+- 输出给后续节点继续使用
+
+输入参数：
+
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `image` | `IMAGE` | 中间处理后的图像 |
+| `alpha` | `MASK` | 来自 `RGBA Safe Pre` 的 alpha |
+| `has_alpha` | `BOOLEAN` | 来自 `RGBA Safe Pre` 的布尔标记 |
+| `epsilon` | `FLOAT` | 最小 alpha，下限保护，默认 `0.001` |
+
+输出参数：
+
+| 输出 | 类型 | 说明 |
+|------|------|------|
+| `image_out` | `IMAGE` | 修正后的普通 RGB |
+| `alpha_out` | `MASK` | resize 后的 alpha |
+
+适用场景：
+- 你还要把 RGB / alpha 继续接给其它节点
+- 你想显式保留 `Post` 的中间结果
+
+#### RGBA Save
+
+作用：
+- 将 RGB 和 alpha 合并并保存为透明 PNG
+- 适合只需要最终透明 PNG 的场景
+
+输入参数：
+
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `image` | `IMAGE` | 要保存的 RGB |
+| `alpha` | `MASK` | 要写入 PNG 的 alpha |
+| `filename_prefix` | `STRING` | 文件名前缀 |
+
+补充说明：
+- 只支持 PNG
+- 如果输入还是 premultiplied RGB，应先使用 `RGBA Safe Post`
+
+#### RGBA Multi Save
+
+作用：
+- 一个最终输出节点，同时支持 `jpeg`、`png`、`webp`
+- 需要保留透明时，内部自动执行 `RGBA Safe Post` 的核心逻辑
+- 不需要透明时，直接按背景色展平保存，减少无意义的除法开销
+
+核心参数：
+
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `image` | `IMAGE` | 处理后的图像 |
+| `alpha` | `MASK` | 来自 `RGBA Safe Pre` 的 alpha |
+| `has_alpha` | `BOOLEAN` | 来自 `RGBA Safe Pre` 的布尔标记 |
+| `file_format` | `STRING` | `jpeg` / `png` / `webp` |
+| `alpha_mode` | `STRING` | `auto` / `keep` / `flatten` |
+| `filename_prefix` | `STRING` | 文件名前缀 |
+
+可选参数：
+
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `epsilon` | `FLOAT` | 仅保留透明时使用，用于避免除 0 和边缘爆亮 |
+| `background_red` | `FLOAT` | 展平背景色 R |
+| `background_green` | `FLOAT` | 展平背景色 G |
+| `background_blue` | `FLOAT` | 展平背景色 B |
+| `jpeg_quality` | `INT` | JPEG 质量 |
+| `webp_quality` | `INT` | WebP 有损质量 |
+| `webp_lossless` | `BOOLEAN` | 是否启用无损 WebP |
+| `png_compress_level` | `INT` | PNG 压缩等级 |
+
+### RGBA Multi Save 行为规则
+
+| 输出格式 | `alpha_mode` | 行为 |
+|------|------|------|
+| `jpeg` | 任意 | 始终展平为 RGB |
+| `png` | `auto` | `has_alpha=True` 时保留透明，否则输出普通 RGB PNG |
+| `png` | `keep` | 仅在 `has_alpha=True` 时保留透明 |
+| `png` | `flatten` | 输出普通 RGB PNG |
+| `webp` | `auto` | `has_alpha=True` 时保留透明，否则输出普通 RGB WebP |
+| `webp` | `keep` | 仅在 `has_alpha=True` 时保留透明 |
+| `webp` | `flatten` | 输出普通 RGB WebP |
+
+### 参数选择建议
+
+- `epsilon`
+  建议保持默认 `0.001`。它的作用是在 `unpremultiply` 时给 alpha 一个最小下限，避免 `alpha=0` 或接近 0 时发生除 0、亮边和数值爆炸。
+- `alpha_mode=auto`
+  最适合通用工作流。`jpeg` 自动展平，`png/webp` 有 alpha 时自动保留透明。
+- `alpha_mode=keep`
+  适合明确要输出透明 `png/webp` 的场景。
+- `alpha_mode=flatten`
+  适合统一生成普通 RGB 文件，例如封面图、缩略图、训练集图片。
+
+### 常见问答
+
+`RGBA Multi Save` 是否等于 `RGBA Safe Post`？
+
+不完全等于，但在“保留透明输出”这条分支里，它已经内置了 `RGBA Safe Post` 的核心逻辑。
+
+- 输出透明 `png/webp` 时，它内部会执行 alpha resize 和安全 `unpremultiply`
+- 输出 `jpeg` 或选择 `flatten` 时，它不会执行 `Post`，而是直接按背景色合成 RGB
+
+因此：
+- 作为最终输出节点时，`RGBA Multi Save` 可以替代 `RGBA Safe Post + RGBA Save`
+- 作为中间节点时，仍然需要单独使用 `RGBA Safe Post`
+
 ### 示例 1：裁剪 → 处理 → 恢复工作流
 ```
 [加载图像] → [CropByMask V2] → [你的处理节点] → [RestoreCropBox] → [保存图像]
