@@ -93,7 +93,36 @@ pip install -r requirements.txt
 
 ## 📖 使用示例
 
-### 示例 0：RGBA 安全后处理流程
+### 示例 0：轻量格式保存
+
+如果你的目标是在 Replicate 里减少保存节点本身的耗时，可以优先使用 `IO Save Image Format`。
+
+这个节点只保留会明显影响编码耗时和文件体积的参数：
+
+- `quality`
+- `png_compress_level`
+- `optimize`
+- `webp_lossless`
+- `webp_method`
+
+默认值已经偏向更快导出：
+
+- `quality = 88`
+- `png_compress_level = 1`
+- `webp_method = 2`
+
+推荐建议：
+
+- PNG 建议从 `png_compress_level = 1` 起步，兼顾保存耗时和文件体积
+- WebP 关闭 `webp_lossless`
+- `webp_method` 尽量控制在 `0-2`
+- 非必要时保持 `optimize = false`
+
+额外说明：
+
+- 如果某些 Pillow 编码器在 `optimize = true` 时报错，节点会自动回退到不使用 `optimize` 再重试，避免任务中断
+
+### 示例 1：RGBA 安全后处理流程
 ```text
 [Load Image] → [RGBA Safe Pre] → [任意 IMAGE 节点] → [RGBA Safe Post] → [RGBA Save]
 ```

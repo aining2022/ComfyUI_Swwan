@@ -79,10 +79,35 @@ ComfyUI 自定义节点集合，收录个人常用节点，包含图像处理、
 | 节点名 | 说明 |
 |--------|------|
 | Seed | 种子节点（支持随机/递增） |
+| IO Save Image Format | 轻量格式保存节点，保留质量/压缩/优化等关键参数，适合 Replicate 快速导出 |
 | Get Image Size & Count | 获取图像尺寸和数量 |
 | Get Latent Size & Count | 获取 Latent 尺寸和数量 |
 | Preview Animation | 动画预览 |
 | Fast Preview | 快速预览 |
+
+### IO Save Image Format
+
+这个节点从格式保存场景里裁掉了不必要的元数据和工作流导出逻辑，只保留会明显影响编码耗时和文件体积的参数：
+
+- `quality`
+- `png_compress_level`
+- `optimize`
+- `webp_lossless`
+- `webp_method`
+
+如果你的目标是在 Replicate 上缩短节点尾部保存耗时，优先建议：
+
+- PNG 建议从 `png_compress_level = 1` 起步，在保存耗时和文件体积之间做平衡
+- WebP 关闭 `webp_lossless`，并优先使用较低的 `webp_method`，默认值已调整为 `2`
+- 非必要时保持 `optimize = false`
+
+节点默认值已经偏向快速导出：
+
+- `quality = 88`
+- `png_compress_level = 1`
+- `webp_method = 2`
+
+另外，如果某些 Pillow 编码器在 `optimize = true` 时保存失败，节点会自动回退到不使用 `optimize` 再重试，避免在批处理或 Replicate 任务里直接中断。
 
 ## RGBA 节点详解
 
