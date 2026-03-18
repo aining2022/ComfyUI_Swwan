@@ -124,6 +124,16 @@ pip install -r requirements.txt
 
 - 如果某些 Pillow 编码器在 `optimize = true` 时报错，节点会自动回退到不使用 `optimize` 再重试，避免任务中断
 
+### 示例 0.5：Patch Sage Attention KJ
+
+`Patch Sage Attention KJ` 已从 `ComfyUI-KJNodes` 迁移到当前仓库，可用于给 `MODEL` 打上 `SageAttention` attention override。
+
+说明：
+
+- 节点已经内置到 `ComfyUI_Swwan`
+- 运行时仍需额外安装 `sageattention` 或 `sageattn3`
+- 选择 `disabled` 时会移除当前模型上的 `optimized_attention_override`
+
 ### 示例 1：RGBA 安全后处理流程
 ```text
 [Load Image] → [RGBA Safe Pre] → [任意 IMAGE 节点] → [RGBA Safe Post] → [RGBA Save]

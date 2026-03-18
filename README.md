@@ -80,6 +80,7 @@ ComfyUI 自定义节点集合，收录个人常用节点，包含图像处理、
 |--------|------|
 | Seed | 种子节点（支持随机/递增） |
 | IO Save Image Format | 轻量格式保存节点，保留质量/压缩/优化等关键参数，适合 Replicate 快速导出 |
+| Patch Sage Attention KJ | 从 KJNodes 迁移的 SageAttention 模型补丁节点 |
 | Get Image Size & Count | 获取图像尺寸和数量 |
 | Get Latent Size & Count | 获取 Latent 尺寸和数量 |
 | Preview Animation | 动画预览 |
@@ -110,6 +111,16 @@ ComfyUI 自定义节点集合，收录个人常用节点，包含图像处理、
 - `webp_method = 2`
 
 另外，如果某些 Pillow 编码器在 `optimize = true` 时保存失败，节点会自动回退到不使用 `optimize` 再重试，避免在批处理或 Replicate 任务里直接中断。
+
+### Patch Sage Attention KJ
+
+这个节点已从 `ComfyUI-KJNodes` 迁移到当前仓库，用于给 `MODEL` 打上 `SageAttention` 的 attention override。
+
+说明：
+
+- 节点本身已内置到 `ComfyUI_Swwan`
+- 运行时仍需要额外安装 `sageattention` 或 `sageattn3`
+- 选择 `disabled` 时会移除当前模型上的 `optimized_attention_override`
 
 ## RGBA 节点详解
 
