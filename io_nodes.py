@@ -127,9 +127,9 @@ class IO_save_image:
         return {
             "required": {
                 "image": ("IMAGE", ),
-                "file_format": (["png", "webp", "jpg", "tif"],),
-                "output_path": ("STRING", {"default": "./output/Swwan", "multiline": False}),
-                "filename_mid": ("STRING", {"default": "Swwan"}),
+                "file_format": (["jpg", "png", "webp", "tif"],),
+                "output_path": ("STRING", {"default": "./output", "multiline": False}),
+                "filename_mid": ("STRING", {"default": "tmp"}),
             },
             "optional": {
                 "number_prefix": ("BOOLEAN", {"default": False, "label_on": "前置编号", "label_off": "后置编号"}),
@@ -153,7 +153,7 @@ class IO_save_image:
     def find_highest_numeric_value(directory, filename_mid, number_prefix=False):
         return _find_highest_numeric_value(directory, filename_mid, number_prefix)
 
-    def save_image(self, image, file_format, filename_mid="Swwan", output_path="", number_prefix=False, number_digits=5,
+    def save_image(self, image, file_format, filename_mid="", output_path="", number_prefix=False, number_digits=5,
                    save_workflow_as_json=False, prompt=None, extra_pnginfo=None):
         batch_size = image.shape[0]
         images_list = [image[i:i + 1, ...] for i in range(batch_size)]
@@ -208,16 +208,16 @@ class IO_save_image_format:
         return {
             "required": {
                 "image": ("IMAGE", ),
-                "file_format": (["png", "webp", "jpg", "tif", "bmp"],),
-                "output_path": ("STRING", {"default": "./output/Swwan", "multiline": False}),
-                "filename_mid": ("STRING", {"default": "Swwan"}),
+                "file_format": (["jpg", "png", "webp", "tif", "bmp"],),
+                "output_path": ("STRING", {"default": "./output", "multiline": False}),
+                "filename_mid": ("STRING", {"default": "tmp"}),
             },
             "optional": {
                 "number_prefix": ("BOOLEAN", {"default": False, "label_on": "前置编号", "label_off": "后置编号"}),
                 "number_digits": ("INT", {"default": 5, "min": 1, "max": 10, "step": 1, "tooltip": "编号位数，如设置为3则为001格式"}),
                 "quality": ("INT", {"default": FAST_DEFAULTS["quality"], "min": 1, "max": 100, "step": 1, "tooltip": "JPEG/WebP 质量。数值越高体积通常越大、保存通常越慢。"}),
                 "png_compress_level": ("INT", {"default": FAST_DEFAULTS["png_compress_level"], "min": 0, "max": 9, "step": 1, "tooltip": "PNG 压缩等级。Replicate 场景建议保持较低数值以减少保存耗时。"}),
-                "optimize": ("BOOLEAN", {"default": False, "tooltip": "启用 Pillow optimize。主要影响 JPEG/TIFF。若编码器报错，节点会自动回退到不使用 optimize。"}),
+                "optimize": ("BOOLEAN", {"default": True, "tooltip": "启用 Pillow optimize。主要影响 JPEG/TIFF。若编码器报错，节点会自动回退到不使用 optimize。"}),
                 "webp_lossless": ("BOOLEAN", {"default": False, "tooltip": "启用无损 WebP。通常会更慢且文件更大。"}),
                 "webp_method": ("INT", {"default": FAST_DEFAULTS["webp_method"], "min": 0, "max": 6, "step": 1, "tooltip": "WebP 编码方法。越高通常压得更小，但更慢。Replicate 场景建议使用 0-2。"}),
             },
@@ -243,12 +243,12 @@ Keeps only the format parameters that materially affect encode time and file siz
         image,
         file_format,
         output_path="",
-        filename_mid="Swwan",
+        filename_mid="",
         number_prefix=False,
         number_digits=5,
         quality=FAST_DEFAULTS["quality"],
         png_compress_level=FAST_DEFAULTS["png_compress_level"],
-        optimize=False,
+        optimize=True,
         webp_lossless=False,
         webp_method=FAST_DEFAULTS["webp_method"],
     ):

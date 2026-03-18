@@ -107,8 +107,10 @@ pip install -r requirements.txt
 
 默认值已经偏向更快导出：
 
+- `file_format = jpg`
 - `quality = 88`
 - `png_compress_level = 1`
+- `optimize = true`
 - `webp_method = 2`
 
 推荐建议：
@@ -116,7 +118,7 @@ pip install -r requirements.txt
 - PNG 建议从 `png_compress_level = 1` 起步，兼顾保存耗时和文件体积
 - WebP 关闭 `webp_lossless`
 - `webp_method` 尽量控制在 `0-2`
-- 非必要时保持 `optimize = false`
+- JPEG/TIFF 默认可保持 `optimize = true`；如果你更在意极限保存速度，也可以手动关闭
 
 额外说明：
 

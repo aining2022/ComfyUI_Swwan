@@ -99,12 +99,14 @@ ComfyUI 自定义节点集合，收录个人常用节点，包含图像处理、
 
 - PNG 建议从 `png_compress_level = 1` 起步，在保存耗时和文件体积之间做平衡
 - WebP 关闭 `webp_lossless`，并优先使用较低的 `webp_method`，默认值已调整为 `2`
-- 非必要时保持 `optimize = false`
+- JPEG/TIFF 默认可保持 `optimize = true`；如果你更在意极限保存速度，也可以手动关闭
 
 节点默认值已经偏向快速导出：
 
+- `file_format = jpg`
 - `quality = 88`
 - `png_compress_level = 1`
+- `optimize = true`
 - `webp_method = 2`
 
 另外，如果某些 Pillow 编码器在 `optimize = true` 时保存失败，节点会自动回退到不使用 `optimize` 再重试，避免在批处理或 Replicate 任务里直接中断。
