@@ -2779,7 +2779,7 @@ class ImageResizeByMegapixels:
         return {
             "required": {
                 "image": ("IMAGE",),
-                "megapixels": ("FLOAT", {"default": 1.0, "min": 0.01, "max": 100.0, "step": 0.01, "tooltip": "Target megapixels (1.0 = 1 million pixels)"}),
+                "megapixels": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 100.0, "step": 0.01, "tooltip": "Target megapixels (1.0 = 1 million pixels). Use 0 to skip resize and keep the original size."}),
                 "aspect_ratio": (s.aspect_ratios, {"default": "default", "tooltip": "Target aspect ratio. 'default' keeps original ratio."}),
                 "keep_proportion": (["crop", "resize", "pad", "pad_edge", "pad_edge_pixel", "pillarbox_blur"], {"default": "crop", "tooltip": "How to handle aspect ratio change when not using 'default'."}),
                 "divisible_by": (s.divisible_options, {"default": 16, "tooltip": "Width and height will be divisible by this value."}),
@@ -2797,14 +2797,14 @@ class ImageResizeByMegapixels:
             },
         }
 
-    RETURN_TYPES = ("IMAGE", "INT", "INT", "MASK",)
-    RETURN_NAMES = ("IMAGE", "width", "height", "mask",)
+    RETURN_TYPES = ("IMAGE", "INT", "INT", "MASK", "INT",)
+    RETURN_NAMES = ("IMAGE", "width", "height", "mask", "longest_edge",)
     FUNCTION = "resize"
     CATEGORY = "Swwan/image"
     DESCRIPTION = """
 Resizes image to target megapixels with optional aspect ratio control.
 
-- megapixels: Target total pixels in millions (1.0 = 1,000,000 pixels)
+- megapixels: Target total pixels in millions (1.0 = 1,000,000 pixels). Use 0 to skip resizing.
 - aspect_ratio: 'default' keeps original ratio, or choose a specific ratio
 - keep_proportion: How to handle aspect ratio changes (crop, pad, resize, etc.)
 - divisible_by: Ensures output dimensions are divisible by this value
@@ -2822,6 +2822,17 @@ Resizes image to target megapixels with optional aspect ratio control.
     def resize(self, image, megapixels, aspect_ratio, keep_proportion, divisible_by, default_divisible,
                upscale_method, crop_position, pad_color, unique_id=None, device="cpu", mask=None, per_batch=64):
         B, H, W, C = image.shape
+        empty_mask = torch.zeros(64, 64, device=torch.device("cpu"), dtype=torch.float32)
+
+        if megapixels <= 0:
+            return (
+                image,
+                W,
+                H,
+                mask if mask is not None else empty_mask,
+                max(H, W),
+            )
+
         target_pixels = megapixels * 1_000_000
 
         # Determine aspect ratio
@@ -2841,6 +2852,46 @@ Resizes image to target megapixels with optional aspect ratio control.
         if new_height < divisible_by:
             new_height = divisible_by
 
+        if (
+            aspect_ratio == "default"
+            and mask is None
+            and device == "cpu"
+            and upscale_method != "lanczos"
+            and (per_batch == 0 or B <= per_batch)
+        ):
+            resize_start = time.perf_counter() if os.environ.get("SWWAN_RESIZE_DEBUG") == "1" else None
+
+            # Match ImageResizeKJv2's "resize" mode dimensions without the generic crop/pad/mask path.
+            ratio = min(new_width / W, new_height / H)
+            final_width = round(W * ratio)
+            final_height = round(H * ratio)
+            if default_divisible and divisible_by > 1:
+                final_width = final_width - (final_width % divisible_by)
+                final_height = final_height - (final_height % divisible_by)
+
+            source_image = image if image.device.type == "cpu" else image.to(torch.device("cpu"))
+            out_image = F.interpolate(
+                source_image.movedim(-1, 1),
+                size=(final_height, final_width),
+                mode=upscale_method,
+            ).movedim(1, -1)
+
+            if resize_start is not None:
+                elapsed = time.perf_counter() - resize_start
+                print(
+                    f"[ImageResizeByMegapixels] fast cpu resize "
+                    f"{B}x{W}x{H} -> {final_width}x{final_height} "
+                    f"({upscale_method}) in {elapsed:.4f}s"
+                )
+
+            return (
+                out_image,
+                out_image.shape[2],
+                out_image.shape[1],
+                empty_mask,
+                max(out_image.shape[1], out_image.shape[2]),
+            )
+
         # Use ImageResizeKJv2's resize logic
         resizer = ImageResizeKJv2()
 
@@ -2853,7 +2904,7 @@ Resizes image to target megapixels with optional aspect ratio control.
             # Aspect ratio change, use the specified keep_proportion mode
             mode = keep_proportion
 
-        return resizer.resize(
+        out_image, out_width, out_height, out_mask = resizer.resize(
             image=image,
             width=new_width,
             height=new_height,
@@ -2867,6 +2918,7 @@ Resizes image to target megapixels with optional aspect ratio control.
             mask=mask,
             per_batch=per_batch
         )
+        return out_image, out_width, out_height, out_mask, max(out_height, out_width)
 
 
 import pathlib
