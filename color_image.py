@@ -39,9 +39,9 @@ def _parse_color(color):
 
 
 NODE_CLASS_MAPPINGS = {
-    "LayerUtility: ColorImage": ColorImage,
+    "LayerUtility: ColorImage (Swwan)": ColorImage,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "LayerUtility: ColorImage": "LayerUtility: ColorImage",
+    "LayerUtility: ColorImage (Swwan)": "LayerUtility: ColorImage (Swwan)",
 }
