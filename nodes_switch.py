@@ -41,7 +41,7 @@ class AnyBooleanSwitch:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "输入": (ANY,),
+                "输入": (ANY, {"lazy": True}),
                 "开关": ("BOOLEAN", {"default": True, "label_on": "开启", "label_off": "关闭"}),
             }
         }
@@ -54,6 +54,10 @@ class AnyBooleanSwitch:
     @classmethod
     def VALIDATE_INPUTS(cls, input_types):
         return True
+
+    def check_lazy_status(self, 开关, 输入=None):
+        # 开关关闭时不求值「输入」，其上游整条分支都不会执行
+        return ["输入"] if 开关 else []
 
     def process(self, 开关, 输入=None):
         if 开关:
