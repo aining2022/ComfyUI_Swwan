@@ -8,4 +8,3 @@ scikit-image
 onnxruntime
 matplotlib
 spandrel
-color-matcher
