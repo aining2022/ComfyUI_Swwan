@@ -8,8 +8,8 @@ ComfyUI 自定义节点集合，收录个人常用节点，包含图像处理、
 
 | 节点名 | 说明 |
 |--------|------|
-| Image Resize KJ v2 | 多功能图像缩放，支持裁剪/填充/拉伸等模式 |
-| Image Resize By Megapixels | 按目标百万像素缩放，支持宽高比控制 |
+| Resize Image v2 (KJ Alternative) | 多功能图像缩放，支持裁剪/填充/拉伸，以及可选 NVIDIA RTX VSR |
+| Image Resize By Megapixels | 按目标百万像素缩放，支持宽高比控制与可选 NVIDIA RTX VSR |
 | Image Concatenate | 图像拼接（横向/纵向） |
 | Image Concat From Batch | 从批次中拼接图像 |
 | Image Grid Composite 2x2/3x3 | 2x2/3x3 网格合成 |
@@ -57,7 +57,6 @@ ComfyUI 自定义节点集合，收录个人常用节点，包含图像处理、
 | 节点名 | 说明 |
 |--------|------|
 | Mask transform sum | Mask 变换 |
-| NSFW Detector V2 | NSFW 内容检测 |
 
 ### 数学运算 (Math)
 
@@ -80,7 +79,8 @@ ComfyUI 自定义节点集合，收录个人常用节点，包含图像处理、
 |--------|------|
 | Seed | 种子节点（支持随机/递增） |
 | IO Save Image Format | 轻量格式保存节点，保留质量/压缩/优化等关键参数，适合 Replicate 快速导出 |
-| Patch Sage Attention KJ | 从 KJNodes 迁移的 SageAttention 模型补丁节点 |
+| Patch Sage Attention KJ (KJ Alternative) | 独立的 SageAttention 模型补丁节点 |
+| MiniMax H3 Mem Eff Sage Attention Patch (KJ Alternative) | MiniMax H3 的低显存 SageAttention 模型补丁节点 |
 | Get Image Size & Count | 获取图像尺寸和数量 |
 | Get Latent Size & Count | 获取 Latent 尺寸和数量 |
 | Preview Animation | 动画预览 |
@@ -112,15 +112,21 @@ ComfyUI 自定义节点集合，收录个人常用节点，包含图像处理、
 
 另外，如果某些 Pillow 编码器在 `optimize = true` 时保存失败，节点会自动回退到不使用 `optimize` 再重试，避免在批处理或 Replicate 任务里直接中断。
 
-### Patch Sage Attention KJ
+### KJ Alternative SageAttention
 
-这个节点已从 `ComfyUI-KJNodes` 迁移到当前仓库，用于给 `MODEL` 打上 `SageAttention` 的 attention override。
+`Patch Sage Attention KJ (KJ Alternative)` 用于给 `MODEL` 打上 `SageAttention` attention override；它使用独立节点类型，因此可与 KJNodes 同时安装。
 
 说明：
 
 - 节点本身已内置到 `ComfyUI_Swwan`
 - 运行时仍需要额外安装 `sageattention` 或 `sageattn3`
 - 选择 `disabled` 时会移除当前模型上的 `optimized_attention_override`
+
+`MiniMax H3 Mem Eff Sage Attention Patch (KJ Alternative)` 会直接替换 MiniMax H3 transformer block 的 attention forward，以降低峰值显存。它需要匹配的 ComfyUI MiniMax H3 API、最新版 `sageattention`、Triton、CUDA 和受支持 NVIDIA GPU 架构。
+
+### NVIDIA RTX Video Super Resolution
+
+`Resize Image v2 (KJ Alternative)` 与 `Image Resize By Megapixels` 都提供 `nvidia_rtx_vsr` 插值方式。该方式按需加载 `nvvfx` / `nvidia-vfx`，仅适用于兼容的 CUDA NVIDIA GPU；输出尺寸会自动对齐到最接近的 8 倍数。
 
 ## RGBA 节点详解
 
@@ -348,8 +354,8 @@ Custom node collection for ComfyUI, featuring commonly used nodes for image proc
 
 | Node | Description |
 |------|-------------|
-| Image Resize KJ v2 | Multi-mode image resize with crop/pad/stretch |
-| Image Resize By Megapixels | Resize by target megapixels with aspect ratio control |
+| Resize Image v2 (KJ Alternative) | Multi-mode image resize with crop/pad/stretch and optional NVIDIA RTX VSR |
+| Image Resize By Megapixels | Resize by target megapixels with aspect ratio control and optional NVIDIA RTX VSR |
 | Image Concatenate | Concatenate images (horizontal/vertical) |
 | Image Concat From Batch | Concatenate images from batch |
 | Image Grid Composite 2x2/3x3 | 2x2/3x3 grid composition |
@@ -571,7 +577,6 @@ Optional parameters:
 | Node | Description |
 |------|-------------|
 | Mask transform sum | Mask transformation |
-| NSFW Detector V2 | NSFW content detection |
 
 ### Math
 
@@ -593,10 +598,18 @@ Optional parameters:
 | Node | Description |
 |------|-------------|
 | Seed | Seed node (random/increment) |
+| Patch Sage Attention KJ (KJ Alternative) | Independent SageAttention model patch |
+| MiniMax H3 Mem Eff Sage Attention Patch (KJ Alternative) | Memory-efficient SageAttention patch for MiniMax H3 |
 | Get Image Size & Count | Get image size and count |
 | Get Latent Size & Count | Get latent size and count |
 | Preview Animation | Animation preview |
 | Fast Preview | Fast preview |
+
+### KJ Alternative SageAttention and RTX VSR
+
+`Patch Sage Attention KJ (KJ Alternative)` uses its own node type so it can coexist with KJNodes. `MiniMax H3 Mem Eff Sage Attention Patch (KJ Alternative)` requires a ComfyUI build with MiniMax H3 support plus compatible SageAttention, Triton, CUDA, and NVIDIA GPU artifacts.
+
+Both `Resize Image v2 (KJ Alternative)` and `Image Resize By Megapixels` offer `nvidia_rtx_vsr`. It lazily loads the optional `nvvfx` / `nvidia-vfx` runtime on compatible CUDA NVIDIA systems and aligns output dimensions to the nearest multiple of eight.
 
 ## Installation
 

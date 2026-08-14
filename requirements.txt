@@ -5,7 +5,6 @@ numpy
 opencv-python
 scipy
 scikit-image
-onnxruntime
 matplotlib
 spandrel
 color-matcher

@@ -124,15 +124,21 @@ pip install -r requirements.txt
 
 - 如果某些 Pillow 编码器在 `optimize = true` 时报错，节点会自动回退到不使用 `optimize` 再重试，避免任务中断
 
-### 示例 0.5：Patch Sage Attention KJ
+### 示例 0.5：KJ Alternative SageAttention
 
-`Patch Sage Attention KJ` 已从 `ComfyUI-KJNodes` 迁移到当前仓库，可用于给 `MODEL` 打上 `SageAttention` attention override。
+`Patch Sage Attention KJ (KJ Alternative)` 可用于给 `MODEL` 打上 `SageAttention` attention override，并使用独立节点类型以便和 KJNodes 同时安装。
 
 说明：
 
 - 节点已经内置到 `ComfyUI_Swwan`
 - 运行时仍需额外安装 `sageattention` 或 `sageattn3`
 - 选择 `disabled` 时会移除当前模型上的 `optimized_attention_override`
+
+`MiniMax H3 Mem Eff Sage Attention Patch (KJ Alternative)` 会直接替换 MiniMax H3 transformer block 的 attention forward，以降低峰值显存。它需要支持 MiniMax H3 的 ComfyUI、匹配的 `sageattention`、Triton、CUDA 和 NVIDIA GPU 架构。
+
+### 示例 0.6：NVIDIA RTX Video Super Resolution
+
+`Resize Image v2 (KJ Alternative)` 与 `Image Resize By Megapixels` 都提供 `nvidia_rtx_vsr` 方法。该方法按需加载可选的 `nvvfx` / `nvidia-vfx` 运行时，仅适用于兼容 CUDA 的 NVIDIA GPU；输出尺寸会自动对齐到最接近的 8 倍数。
 
 ### 示例 1：RGBA 安全后处理流程
 ```text

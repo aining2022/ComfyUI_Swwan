@@ -2510,7 +2510,7 @@ v2 of the node. This node is only kept to not completely break older workflows.
         return(image, image.shape[2], image.shape[1],)
 
 class ImageResizeKJv2:
-    upscale_methods = ["nearest-exact", "bilinear", "area", "bicubic", "lanczos"]
+    upscale_methods = ["nearest-exact", "bilinear", "area", "bicubic", "lanczos", "nvidia_rtx_vsr"]
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -2549,7 +2549,14 @@ highest dimension.
     def resize(self, image, width, height, keep_proportion, upscale_method, divisible_by, pad_color, crop_position, unique_id, device="cpu", mask=None, per_batch=64):
         B, H, W, C = image.shape
 
-        if device == "gpu":
+        is_rtx_vsr = upscale_method == "nvidia_rtx_vsr"
+        if is_rtx_vsr:
+            if not torch.cuda.is_available():
+                raise RuntimeError("NVIDIA RTX Video Super Resolution requires a CUDA-capable NVIDIA GPU.")
+            device = model_management.get_torch_device()
+            if getattr(device, "type", None) != "cuda":
+                raise RuntimeError("NVIDIA RTX Video Super Resolution requires ComfyUI to use a CUDA device.")
+        elif device == "gpu":
             if upscale_method == "lanczos":
                 raise Exception("Lanczos is not supported on the GPU")
             device = model_management.get_torch_device()
@@ -2628,6 +2635,10 @@ highest dimension.
             width = width - (width % divisible_by)
             height = height - (height % divisible_by)
 
+        if is_rtx_vsr:
+            width = max(8, round(width / 8) * 8)
+            height = max(8, round(height / 8) * 8)
+
         # Preflight estimate (log-only when batching is active)
         if per_batch != 0 and B > per_batch:
             try:
@@ -2644,6 +2655,28 @@ highest dimension.
                     print(f"[ImageResizeKJv2] estimated output ~{est_mb:.2f} MB; batching {per_batch}/{B}")
             except:
                 pass
+
+        nvvfx_sr = None
+        nvvfx_ctx = None
+        if is_rtx_vsr:
+            try:
+                import nvvfx
+            except ImportError as error:
+                raise ImportError(
+                    "NVIDIA RTX Video Super Resolution is not available. "
+                    "Install the optional nvidia-vfx/nvvfx package and use a compatible NVIDIA GPU."
+                ) from error
+
+            try:
+                nvvfx_ctx = nvvfx.VideoSuperRes(nvvfx.effects.QualityLevel.ULTRA)
+                nvvfx_sr = nvvfx_ctx.__enter__()
+                nvvfx_sr.output_width = width
+                nvvfx_sr.output_height = height
+                nvvfx_sr.load()
+            except Exception:
+                if nvvfx_ctx is not None:
+                    nvvfx_ctx.__exit__(None, None, None)
+                raise
 
         def _process_subbatch(in_image, in_mask, pad_left, pad_right, pad_top, pad_bottom):
             # Avoid unnecessary clones; only move if needed
@@ -2681,12 +2714,22 @@ highest dimension.
                 if out_mask is not None:
                     out_mask = out_mask.narrow(-1, x, crop_w).narrow(-2, y, crop_h)
 
-            out_image = common_upscale(out_image.movedim(-1,1), width, height, upscale_method, crop="disabled").movedim(1,-1)
-            if out_mask is not None:
-                if upscale_method == "lanczos":
-                    out_mask = common_upscale(out_mask.unsqueeze(1).repeat(1, 3, 1, 1), width, height, upscale_method, crop="disabled").movedim(1,-1)[:, :, :, 0]
-                else:
-                    out_mask = common_upscale(out_mask.unsqueeze(1), width, height, upscale_method, crop="disabled").squeeze(1)
+            if is_rtx_vsr:
+                frames_chw = out_image.movedim(-1, 1).to(device).contiguous()
+                upscaled_frames = []
+                for frame in frames_chw:
+                    dlpack_out = nvvfx_sr.run(frame).image
+                    upscaled_frames.append(torch.from_dlpack(dlpack_out).clone())
+                out_image = torch.stack(upscaled_frames, dim=0).movedim(1, -1).cpu()
+                if out_mask is not None:
+                    out_mask = common_upscale(out_mask.unsqueeze(1), width, height, "bilinear", crop="disabled").squeeze(1)
+            else:
+                out_image = common_upscale(out_image.movedim(-1,1), width, height, upscale_method, crop="disabled").movedim(1,-1)
+                if out_mask is not None:
+                    if upscale_method == "lanczos":
+                        out_mask = common_upscale(out_mask.unsqueeze(1).repeat(1, 3, 1, 1), width, height, upscale_method, crop="disabled").movedim(1,-1)[:, :, :, 0]
+                    else:
+                        out_mask = common_upscale(out_mask.unsqueeze(1), width, height, upscale_method, crop="disabled").squeeze(1)
 
             # Pad logic
             if (keep_proportion.startswith("pad") or pillarbox_blur) and (pad_left > 0 or pad_right > 0 or pad_top > 0 or pad_bottom > 0):
@@ -2712,42 +2755,46 @@ highest dimension.
 
             return out_image, out_mask
 
-        # If batching disabled (per_batch==0) or batch fits, process whole batch
-        if per_batch == 0 or B <= per_batch:
-            out_image, out_mask = _process_subbatch(image, mask, pad_left, pad_right, pad_top, pad_bottom)
-        else:
-            chunks = []
-            mask_chunks = [] if mask is not None else None
-            total_batches = (B + per_batch - 1) // per_batch
-            current_batch = 0
-            for start_idx in range(0, B, per_batch):
-                current_batch += 1
-                end_idx = min(start_idx + per_batch, B)
-                sub_img = image[start_idx:end_idx]
-                sub_mask = mask[start_idx:end_idx] if mask is not None else None
-                sub_out_img, sub_out_mask = _process_subbatch(sub_img, sub_mask, pad_left, pad_right, pad_top, pad_bottom)
-                chunks.append(sub_out_img.cpu())
-                if mask is not None:
-                    mask_chunks.append(sub_out_mask.cpu() if sub_out_mask is not None else None)
-                # Per-batch progress update
-                if unique_id and PromptServer is not None:
-                    try:
-                        PromptServer.instance.send_progress_text(
-                            f"<tr><td>Resize v2</td><td>batch {current_batch}/{total_batches} · images {end_idx}/{B}</td></tr>",
-                            unique_id
-                        )
-                    except:
-                        pass
-                else:
-                    try:
-                        print(f"[ImageResizeKJv2] batch {current_batch}/{total_batches} · images {end_idx}/{B}")
-                    except:
-                        pass
-            out_image = torch.cat(chunks, dim=0)
-            if mask is not None and any(m is not None for m in mask_chunks):
-                out_mask = torch.cat([m for m in mask_chunks if m is not None], dim=0)
+        try:
+            # If batching disabled (per_batch==0) or batch fits, process whole batch
+            if per_batch == 0 or B <= per_batch:
+                out_image, out_mask = _process_subbatch(image, mask, pad_left, pad_right, pad_top, pad_bottom)
             else:
-                out_mask = None
+                chunks = []
+                mask_chunks = [] if mask is not None else None
+                total_batches = (B + per_batch - 1) // per_batch
+                current_batch = 0
+                for start_idx in range(0, B, per_batch):
+                    current_batch += 1
+                    end_idx = min(start_idx + per_batch, B)
+                    sub_img = image[start_idx:end_idx]
+                    sub_mask = mask[start_idx:end_idx] if mask is not None else None
+                    sub_out_img, sub_out_mask = _process_subbatch(sub_img, sub_mask, pad_left, pad_right, pad_top, pad_bottom)
+                    chunks.append(sub_out_img.cpu())
+                    if mask is not None:
+                        mask_chunks.append(sub_out_mask.cpu() if sub_out_mask is not None else None)
+                    # Per-batch progress update
+                    if unique_id and PromptServer is not None:
+                        try:
+                            PromptServer.instance.send_progress_text(
+                                f"<tr><td>Resize v2</td><td>batch {current_batch}/{total_batches} · images {end_idx}/{B}</td></tr>",
+                                unique_id
+                            )
+                        except:
+                            pass
+                    else:
+                        try:
+                            print(f"[ImageResizeKJv2] batch {current_batch}/{total_batches} · images {end_idx}/{B}")
+                        except:
+                            pass
+                out_image = torch.cat(chunks, dim=0)
+                if mask is not None and any(m is not None for m in mask_chunks):
+                    out_mask = torch.cat([m for m in mask_chunks if m is not None], dim=0)
+                else:
+                    out_mask = None
+        finally:
+            if nvvfx_ctx is not None:
+                nvvfx_ctx.__exit__(None, None, None)
 
         # Progress UI
         if unique_id and PromptServer is not None:
@@ -2770,7 +2817,7 @@ class ImageResizeByMegapixels:
     Resize image by target megapixels with aspect ratio control.
     Calculates optimal dimensions based on target total pixels and divisibility requirements.
     """
-    upscale_methods = ["nearest-exact", "bilinear", "area", "bicubic", "lanczos"]
+    upscale_methods = ["nearest-exact", "bilinear", "area", "bicubic", "lanczos", "nvidia_rtx_vsr"]
     aspect_ratios = ["default", "1:1", "3:2", "2:3", "4:3", "3:4", "16:9", "9:16", "21:9", "9:21"]
     divisible_options = [2, 4, 8, 16, 32, 64]
 
@@ -2856,7 +2903,7 @@ Resizes image to target megapixels with optional aspect ratio control.
             aspect_ratio == "default"
             and mask is None
             and device == "cpu"
-            and upscale_method != "lanczos"
+            and upscale_method not in ("lanczos", "nvidia_rtx_vsr")
             and (per_batch == 0 or B <= per_batch)
         ):
             resize_start = time.perf_counter() if os.environ.get("SWWAN_RESIZE_DEBUG") == "1" else None
@@ -4315,7 +4362,7 @@ NODE_CLASS_MAPPINGS = {
     "ImageConcatMulti": ImageConcatMulti,
     "PreviewAnimation": PreviewAnimation,
     "ImageResizeKJ": ImageResizeKJ,
-    "ImageResizeKJv2": ImageResizeKJv2,
+    "ImageResizeKJv2Alternative": ImageResizeKJv2,
     "ImageResizeByMegapixels": ImageResizeByMegapixels,
     "LoadAndResizeImage": LoadAndResizeImage,
     "LoadImagesFromFolderKJ": LoadImagesFromFolderKJ,
@@ -4379,7 +4426,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "ImageConcatMulti": "Image Concat Multi (Swwan)",
     "PreviewAnimation": "Preview Animation (Swwan)",
     "ImageResizeKJ": "Image Resize KJ (Swwan)",
-    "ImageResizeKJv2": "Image Resize KJ v2 (Swwan)",
+    "ImageResizeKJv2Alternative": "Resize Image v2 (KJ Alternative)",
     "ImageResizeByMegapixels": "Image Resize By Megapixels (Swwan)",
     "LoadAndResizeImage": "Load And Resize Image (Swwan)",
     "LoadImagesFromFolderKJ": "Load Images From Folder KJ (Swwan)",

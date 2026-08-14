@@ -324,9 +324,9 @@ class PatchSageAttentionKJ:
 
 
 NODE_CLASS_MAPPINGS = {
-    "PatchSageAttentionKJ": PatchSageAttentionKJ,
+    "PatchSageAttentionKJAlternative": PatchSageAttentionKJ,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "PatchSageAttentionKJ": "Patch Sage Attention KJ (Swwan)",
+    "PatchSageAttentionKJAlternative": "Patch Sage Attention KJ (KJ Alternative)",
 }

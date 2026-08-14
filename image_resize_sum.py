@@ -30,13 +30,6 @@ except ImportError:
     CubicSpline = None
     REMOVER_AVAILABLE = False 
 
-try:
-    import onnxruntime as ort
-    REMOVER_AVAILABLE = True  
-except ImportError:
-    ort = None
-    REMOVER_AVAILABLE = False  
-
 try:   
     from scipy.ndimage import distance_transform_edt
     REMOVER_AVAILABLE = True  

@@ -65,14 +65,41 @@ class AnyBooleanSwitch:
         else:
             return (None,)
 
+
+class RaiseExceptionOnTrue:
+    """当输入为True时抛出自定义异常，用于终止工作流节省计算成本"""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "condition": ("BOOLEAN", {"default": False}),
+                "exception_message": ("STRING", {"default": "Workflow terminated by condition."}),
+            },
+        }
+
+    RETURN_TYPES = ("BOOLEAN",)
+    RETURN_NAMES = ("condition",)
+    FUNCTION = "check_and_raise"
+
+    CATEGORY = "Swwan/utils"
+
+    def check_and_raise(self, condition, exception_message="Workflow terminated by condition."):
+        if condition:
+            raise Exception(exception_message)
+        return (condition,)
+
+
 NODE_CLASS_MAPPINGS = {
     "AnySwitch (Swwan)": AnySwitch,
     "AnyBooleanSwitch (Swwan)": AnyBooleanSwitch,
+    "raiseExceptionOnTrue": RaiseExceptionOnTrue,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "AnySwitch (Swwan)": "Any Switch (Swwan)",
     "AnyBooleanSwitch (Swwan)": "Any Boolean Switch (Swwan)",
+    "raiseExceptionOnTrue": "Raise Exception On True",
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
