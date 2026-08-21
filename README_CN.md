@@ -42,6 +42,20 @@
 - 完成 裁剪 → 处理 → 恢复 工作流
 - 无缝图像合成
 
+### Color Shift Fix (Swwan)
+视频 inpaint（如 LTX 去水印）后的色差修复。
+
+**功能特点：**
+- 以遮罩外未被修改的区域为颜色基准，逐帧拟合 R/G/B 每通道仿射变换（gain/offset）
+- 迭代修剪最小二乘，自动剔除内容本身变化的像素（被抹除的水印、底栏等）
+- 校正参数沿时间轴滑动窗口平滑（smooth_window），防止视频颜色闪烁
+- strength 强度混合，批次/尺寸不匹配时自动对齐
+- 纯 PyTorch 批处理，支持 GPU
+
+**使用场景：**
+- 接在 VAE Decode (Tiled) 之后、RestoreCropBox 之前：images 接解码输出，reference_images 接 CropByMask 的裁剪原图，mask 接裁剪后的遮罩
+- 视频去水印/去字幕工作流的全局色偏校正
+
 ### LayerUtility: ImageScaleByAspectRatio V2
 将图像缩放到特定宽高比，支持多种适配模式。
 
