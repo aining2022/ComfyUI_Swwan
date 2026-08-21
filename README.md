@@ -14,6 +14,7 @@ ComfyUI 自定义节点集合，收录个人常用节点，包含图像处理、
 | Image Concat From Batch | 从批次中拼接图像 |
 | Image Grid Composite 2x2/3x3 | 2x2/3x3 网格合成 |
 | Color Match | 颜色匹配 |
+| Color Shift Fix | 视频 inpaint 色差修复：以遮罩外区域为参考逐帧拟合每通道仿射变换，参数时序平滑防闪烁 |
 | Save Image With Alpha | 保存带透明通道的图像 |
 | Cross Fade Images | 图像交叉淡入淡出 |
 | Add Label | 添加文字标签 |
@@ -360,6 +361,7 @@ Custom node collection for ComfyUI, featuring commonly used nodes for image proc
 | Image Concat From Batch | Concatenate images from batch |
 | Image Grid Composite 2x2/3x3 | 2x2/3x3 grid composition |
 | Color Match | Color matching |
+| Color Shift Fix | Video inpaint color-shift fix: per-frame per-channel affine fit on unmasked reference area with temporally smoothed coefficients to prevent flicker |
 | Save Image With Alpha | Save image with alpha channel |
 | Cross Fade Images | Image cross-fade transition |
 | Add Label | Add text label |
