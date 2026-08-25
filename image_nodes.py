@@ -4317,7 +4317,6 @@ class DrawMaskOnImage:
 
 NODE_CLASS_MAPPINGS = {
     "ImagePass": ImagePass,
-    "ColorMatch": ColorMatch,
     "SaveImageWithAlpha": SaveImageWithAlpha,
     "ImageConcanate": ImageConcanate,
     "ImageConcatFromBatch": ImageConcatFromBatch,
@@ -4381,7 +4380,6 @@ NODE_CLASS_MAPPINGS = {
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ImagePass": "Image Pass (Swwan)",
-    "ColorMatch": "Color Match (Swwan)",
     "SaveImageWithAlpha": "Save Image With Alpha (Swwan)",
     "ImageConcanate": "Image Concatenate (Swwan)",
     "ImageConcatFromBatch": "Image Concat From Batch (Swwan)",
