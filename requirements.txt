@@ -7,4 +7,3 @@ scipy
 scikit-image
 matplotlib
 spandrel
-color-matcher
