@@ -25,8 +25,11 @@ jobs:
           python tests/test_workflow_image_nodes.py --comfyui-root ../comfyui
           python tests/test_project_contracts.py --comfyui-root ../comfyui
           python tests/test_face_head_processing.py --comfyui-root ../comfyui
+          python tests/test_face_head_workflow_repair.py --comfyui-root ../comfyui
+          python tests/test_face_head_loop.py --comfyui-root ../comfyui
           python tests/test_optional_imports.py --comfyui-root ../comfyui
           node tests/test_workflow_image_modes.mjs
+          node tests/test_swwan_widget_values.mjs
           node tests/test_project_frontend.mjs
           python tests/test_skill_candidates.py
       - working-directory: swwan

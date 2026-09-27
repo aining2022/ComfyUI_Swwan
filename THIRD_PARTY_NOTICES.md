@@ -41,3 +41,8 @@ Historical import revisions that were not recorded are explicitly identified abo
 ## Pure face/head preprocessing additions (Unreleased)
 
 Goohaitools mask arithmetic, bounds/area detection, existing-mask matte, region preview and SEGS ordering are adapted in `ops/{mask_regions,mask_analysis,mask_detection,image_matte,region_preview,segment_order}.py`. KJ GrowMaskWithBlur is adapted in `ops/mask_growth.py`; LayerStyle MaskGrow is shared via `ops/mask_processing.py`. Interfaces are separated in `nodes/mask_tools.py`, optional dependencies deferred, and missing preview fonts mapped to FreeMono. Defaults and CPU pixels of the corresponding algorithms are preserved, with the documented WAS batch fill repair. Additional frozen WAS reference uses the workflow's exact `ea935d1044ae5a26efa54ebeb18fe9020af49a45` revision; all other local source revisions are in `tests/fixtures/face_processing/sources.json`. KJ utility reference preserves its original credit to melMass/comfy_mtb. The new workflow is user supplied; no model files or images are included.
+
+
+## Face/head repair test references (Unreleased)
+
+`tests/fixtures/easy_loop.py` freezes selected loop, integer math, comparison and type-helper implementations from [yolain/ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use), revision `a61317df3ecdfd3d899a1e9a1a7cebd5bfa765c1`, GPL-3.0 (yolain and contributors). Original functions are preserved; imports are limited to ComfyUI graph interfaces for portable CPU tests. This is test-only code and does not register EasyUse nodes in the Swwan plugin. `tests/fixtures/qwen-face-head-current.json` freezes the user-supplied 179-node graph for migration regression; the corresponding example contains no model files or image media.

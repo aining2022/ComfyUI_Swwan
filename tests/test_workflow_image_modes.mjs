@@ -29,10 +29,12 @@ const context = vm.createContext({
         },
     },
 });
-for (const name of ['workflow_image_modes', 'swwan_color_widget']) {
+for (const name of ['swwan_widget_values', 'workflow_image_modes', 'swwan_color_widget']) {
     const source = readFileSync(`${root}web/js/${name}.js`, 'utf8').replace(/^import .*;\n/gm, '');
     vm.runInContext(source, context, { filename: name });
 }
+const named = extensions.find(e => e.name === 'Swwan.NamedWidgetValues');
+const catalog = JSON.parse(readFileSync(`${root}docs/node-catalog.json`, 'utf8'));
 const modes = extensions.find((extension) => extension.name === 'Swwan.WorkflowImageModes');
 const colors = extensions.find((extension) => extension.name === 'Swwan.ColorCodeWidget');
 function makeNode(id, values) {
@@ -48,6 +50,8 @@ function makeNode(id, values) {
         setSize(size) { this.size = size; }
         setDirtyCanvas() {}
     }
+    const entry = catalog.find(n => n.id === id);
+    named.beforeRegisterNodeDef(Node, {name:id,category:entry.category,input:entry.schema});
     modes.beforeRegisterNodeDef(Node, { name: id });
     const node = new Node();
     node.onNodeCreated();
@@ -188,3 +192,18 @@ for (const colorWidgetPresent of [true,false]) {
     assert.deepEqual(JSON.parse(savedValues(node)),saved);
 }
 console.log('PASS: named widget restoration with and without COLORCODE controls');
+
+
+// Named restoration also updates visibility when mode hooks register first.
+class ReverseOrderNode {
+    constructor() { this.comfyClass='ImageResizeKJv2Alternative';this.widgets=Object.entries(canonicalResize).map(([name,value])=>({name,value,type:'combo',options:{}}));this.inputs=[];this.outputs=[];this.size=[320,200]; }
+    setDirtyCanvas() {}
+}
+const resizeEntry=catalog.find(n=>n.id==='ImageResizeKJv2Alternative');
+modes.beforeRegisterNodeDef(ReverseOrderNode,{name:resizeEntry.id});
+named.beforeRegisterNodeDef(ReverseOrderNode,{name:resizeEntry.id,category:resizeEntry.category,input:resizeEntry.schema});
+const reverse=new ReverseOrderNode();reverse.onNodeCreated();
+reverse.onConfigure({widgets_values_named:{...canonicalResize,resize_mode:'essentials'}});
+assert.equal(visible(reverse,'essentials_interpolation'),true);
+assert.equal(visible(reverse,'upscale_method'),false);
+console.log('PASS: mode visibility with reversed extension order');

@@ -1,0 +1,136 @@
+{
+  "backend": "CPU isolated Swwan + core nodes",
+  "no_model_inference": true,
+  "cases": [
+    {
+      "status": "PASS",
+      "color_widget_present": true,
+      "nodes": 11,
+      "links": 12,
+      "checks": [
+        "named load/save with native named restoration disabled",
+        "nondefault color literal when widget absent",
+        "linked color precedence",
+        "Draw opacity and CPU",
+        "Essentials 768 keep proportion lanczos divisible_by0",
+        "same execution parameters after reload"
+      ],
+      "prompt_id": "144dff22-e826-47e2-9691-bf76b5fee932",
+      "save_ids": [
+        "8",
+        "9",
+        "10"
+      ],
+      "execution": "success",
+      "outputs": [
+        {
+          "save_id": "8",
+          "size": [
+            32,
+            24
+          ],
+          "mode": "RGB",
+          "pixel": [
+            255,
+            255,
+            255
+          ],
+          "filename": "face_repair_frontend_00001_.png"
+        },
+        {
+          "save_id": "9",
+          "size": [
+            768,
+            576
+          ],
+          "mode": "RGB",
+          "pixel": [
+            127,
+            127,
+            127
+          ],
+          "filename": "face_repair_resize_00001_.png"
+        },
+        {
+          "save_id": "10",
+          "size": [
+            32,
+            24
+          ],
+          "mode": "RGB",
+          "pixel": [
+            18,
+            52,
+            86
+          ],
+          "filename": "face_repair_linked_00001_.png"
+        }
+      ]
+    },
+    {
+      "status": "PASS",
+      "color_widget_present": false,
+      "nodes": 11,
+      "links": 12,
+      "checks": [
+        "named load/save with native named restoration disabled",
+        "nondefault color literal when widget absent",
+        "linked color precedence",
+        "Draw opacity and CPU",
+        "Essentials 768 keep proportion lanczos divisible_by0",
+        "same execution parameters after reload"
+      ],
+      "prompt_id": "52fb808a-a679-42ed-9bb9-a28c336c1c58",
+      "save_ids": [
+        "8",
+        "9",
+        "10"
+      ],
+      "execution": "success",
+      "outputs": [
+        {
+          "save_id": "8",
+          "size": [
+            32,
+            24
+          ],
+          "mode": "RGB",
+          "pixel": [
+            255,
+            255,
+            255
+          ],
+          "filename": "face_repair_frontend_00001_.png"
+        },
+        {
+          "save_id": "9",
+          "size": [
+            768,
+            576
+          ],
+          "mode": "RGB",
+          "pixel": [
+            127,
+            127,
+            127
+          ],
+          "filename": "face_repair_resize_00001_.png"
+        },
+        {
+          "save_id": "10",
+          "size": [
+            32,
+            24
+          ],
+          "mode": "RGB",
+          "pixel": [
+            18,
+            52,
+            86
+          ],
+          "filename": "face_repair_linked_00001_.png"
+        }
+      ]
+    }
+  ]
+}

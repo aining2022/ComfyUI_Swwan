@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Repair and prune the user-edited Qwen face/head UI workflow to the final SaveImage chain (145 nodes / 167 links), resolving Set/Get dependencies without evaluating switch values. Preserve loop ports and all surviving model/prompt/control edits; bypass the disabled image cache.
+- Fix legacy DrawMaskOnImage migration for both color/device and color/opacity/device interfaces. Validate scalar types, enums, colors, required sockets and link records; restore only documented recoverable fields.
+- Share named widget save/load across Swwan nodes, including converted controls and missing COLORCODE widgets. Prompt export retains saved literal colors when unlinked; connections take precedence. Seed metadata updates both positional and named execution values.
+
 - Fix Qwen migration retaining stale widget-name maps: save parameters under current input names and restore Swwan mode controls by name when COLORCODE is represented as a socket instead of a widget.
 
 - Split documentation into a task-oriented user README and an AGENTS.md development entry with catalog, compatibility, migration and validation guidance. Include both entries in distributions and refresh the installation checklist.

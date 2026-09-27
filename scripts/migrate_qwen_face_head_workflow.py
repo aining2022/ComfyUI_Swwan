@@ -7,6 +7,7 @@ import argparse
 import copy
 import json
 from pathlib import Path
+from workflow_contracts import validate_values, validate_workflow
 from migrate_qwen2511_workflow import MAPPINGS as BASE, INPUT_NAMES as BASE_NAMES, defaults, load_nodes, migrate as base_migrate
 
 MAPPINGS = {**BASE,
@@ -65,7 +66,14 @@ def migrate(original, registry):
         node = nodes[old["id"]]
         cls = registry.NODE_CLASS_MAPPINGS[MAPPINGS[kind]]
         v = defaults(cls); w = old.get("widgets_values") or []
-        if kind == "Mask Fill Holes": v.update(operation="fill_holes")
+        if kind == "DrawMaskOnImage":
+            if len(w) == 2 and w[1] in ("cpu", "gpu"):
+                v.update(color=w[0], opacity=1.0, device=w[1])
+            elif len(w) == 3 and w[2] in ("cpu", "gpu"):
+                v.update(color=w[0], opacity=w[1], device=w[2])
+            else:
+                raise ValueError(f"Node #{old['id']}: unrecognized Draw widget interface {w!r}")
+        elif kind == "Mask Fill Holes": v.update(operation="fill_holes")
         elif kind == "ToBinaryMask": v.update(operation="binary", threshold=w[0])
         elif kind == "MaskFix+": v.update(operation="cleanup", erode_dilate=w[0], close_holes=w[1], remove_isolated_pixels=w[2], smooth=w[3], blur=w[4])
         elif kind == "LayerMask: MaskGrow": v.update(operation="layer_grow", invert_mask=w[0], grow=w[1], blur=w[2])
@@ -84,6 +92,7 @@ def migrate(original, registry):
         elif kind == "ImageColorMatch+": v.update(match_mode="mean_std", **dict(zip(["color_space","factor","device","batch_size"],w)))
         elif kind == "ImageResize+": v.update(resize_mode="essentials", **dict(zip(["width","height","essentials_interpolation","essentials_method","essentials_condition","divisible_by"],w)))
         else: v.update(dict(zip(v,w)))
+        validate_values(old, cls, v)
         replace_node(node, cls, registry, v); selected.add(old["id"])
     for link in result["links"]:
         _, source, slot, target, index, kind = link
@@ -115,7 +124,7 @@ def migrate(original, registry):
         out = nodes[source]["outputs"][slot]
         if link_id not in (out.get("links") or []): out["links"] = (out.get("links") or []) + [link_id]
         nodes[target]["inputs"][index]["link"] = link_id
-    return result
+    return validate_workflow(result, registry)
 
 
 if __name__ == "__main__":

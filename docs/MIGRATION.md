@@ -23,3 +23,21 @@ Qwen2511 专用迁移器会按源接口重映射裁剪 SEAM/MASK 和相关端口
 | IMAGE list | 可包含不同尺寸；不能直接当同尺寸 batch |
 
 Legacy 保留原算法、原输出顺序和批次规则。新主入口不是每个历史合同的替换：有 replacement 的条目表示推荐选用入口，自动迁移不将 Legacy 类型强行替换为主入口。
+
+
+## 已编辑换脸／换头文件的修复精简
+
+本次 179 节点／197 连线版本作为独立基准保存在 `tests/fixtures/qwen-face-head-current.json`。
+交付的界面副本是 [`examples/qwen-face-head-final-swwan.json`](../examples/qwen-face-head-final-swwan.json)，为 145 节点／167 连线；不附带 API 文件。
+
+```sh
+python scripts/repair_qwen_face_head_workflow.py edited-swwan.json new-fixed.json --comfyui-root /path/to/ComfyUI
+```
+
+工具只适用于该已编辑工作流，拒绝覆盖源文件或已有目标。它从 SaveImage #163 反向解析显式连线及同名 Set/Get，保留选择器的全部输入分支；不根据当前布尔值、索引或模型配置裁掉可切换分支。循环结束 #162 的展示状态 initial_value2/3 断开，端口位置保留；关闭缓存且旁路的 #165 直接重连图像，进度链、预览、说明面板及不可达配置删除。输出命名仍为 `换脸_无高清`。
+
+修复依据：#92 保留 768×768、Essentials、keep proportion、always、lanczos、整除数 0；#62 的旧“颜色、设备”接口补默认 opacity=1.0，同时支持“颜色、透明度、设备”。#47/#58 的丢失背景色依据原工作流恢复为 #ffffff，其他合法值保留。仅识别确定的错位特征，不对未知坏值进行猜测。非法枚举、数值／布尔类型、颜色、必填参数或端口、连线及虚拟变量会明确报错。
+
+`web/js/swwan_widget_values.js` 为全部 Swwan 分类节点按实际输入名保存与恢复参数，隐藏和转换为输入的控件均不依赖位置匹配；保留 ComfyUI 原生位置数据和界面附加控件。COLORCODE 控件缺席时，合法颜色仍保存并注入执行参数；实际连线优先。历史文件已有错误命名映射时须先运行修复工具，新前端不会把错误值静默改成默认值。安装这些前端修改后须刷新页面，再导入修复副本。
+
+验证：5 项定向修复测试、7 项既有图片参考测试、7 项 Qwen 图片合同测试；独立 EasyUse 真实图展开执行三次模拟裁剪／编辑／还原，并经 SaveImage 写出后重读检查三处累计结果。真实前端在 COLORCODE 控件存在／缺席两种情况下验证转换为输入、颜色连线、命名保存重载及 CPU 实际输出，证据见 `tests/fixtures/face-repair-browser-acceptance.json`。未下载模型或执行 Qwen／检测模型／CUDA。

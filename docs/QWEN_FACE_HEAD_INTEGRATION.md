@@ -47,3 +47,18 @@ python scripts/migrate_qwen_face_head_workflow.py source.json new-swwan.json --c
 以上为 CPU 图片处理验收。未下载模型，未执行人脸检测／分割、Qwen 推理或 CUDA 路径，不代表换脸效果或完整生成链已验证。
 
 实际前端脚本 `tests/frontend_face_head_browser.js` 在只加载 Swwan 和 ComfyUI 核心图片／遮罩节点的临时 CPU 服务上创建 15 节点、17 连线的处理图，确认模式显示、外接 FLOAT 系数、COLORCODE、SEGS／BOOLEAN 端口及保存重载。通过前端转成 API 后实际排队执行，重读输出为 128×96 RGB PNG，证据为 `tests/fixtures/face-head-browser-acceptance.json`；该图没有模型或第三方节点。
+
+
+## 已编辑版本的修复精简验收
+
+新增 [`qwen-face-head-final-swwan.json`](../examples/qwen-face-head-final-swwan.json) 是用户后续修改的 179 节点版本的精简副本，不重新生成自最初的 201 节点文件。保留原文件及用户已有的模型、提示词、控件、布局与旁路状态；最终 145 个节点、167 条连线，唯一最终输出为 SaveImage #163（`换脸_无高清`）。
+
+精简仅删除最终保存链不可达的预览／序号／进度、辅助链、面板及闲置模型配置。Set/Get 虚拟连接已解析，全部可切换分支保留；循环 initial_value1、索引和计数仍有效，展示输入 initial_value2/3 清空但端口未重排。原旁路缓存的图像消费者改接原贴回图像。
+
+修复 Resize #92 的错位参数、Draw #62 的旧接口迁移和 Matte #47/#58 的白色背景值。统一前端按名称保存参数，并在 COLORCODE 控件缺席时保留其合法字面颜色；外接颜色优先。详见 [迁移说明](MIGRATION.md)。
+
+- `tests/test_face_head_workflow_repair.py`：当前基准、145/167、全部切换分支、布局和参数保持、必填端口、严格坏值报错、虚拟变量、幂等、旧版 Draw 两／三参数、白色绘制、原 Essentials 像素与接缝还原。
+- `tests/test_face_head_loop.py`：冻结的 EasyUse 图展开实现，3 次模拟裁剪编辑／贴回，移除展示状态后的累计结果由真实 SaveImage 保存并重读；不是普通 Python for 循环替代验收。
+- `tests/frontend_face_repair_browser.js`：隔离 CPU 服务中的 11 节点／12 连线图，分别在颜色控件存在／模块缺席时运行，禁用 LiteGraph 全局命名恢复以检查本仓逻辑，验证外接宽度和颜色、保存重载及相同执行参数。真实排队输出白色背景 RGB、外接 #123456 背景 RGB 和 768×576 缩放 PNG，证据为 `tests/fixtures/face-repair-browser-acceptance.json`。
+
+完整多人换脸生成仍依赖原模型预处理、EasyUse 等插件及模型；这些模型未运行，CPU 验收不代表最终换脸效果或远程生成通过。

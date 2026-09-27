@@ -25,6 +25,7 @@ app.registerExtension({
                 entry.inputs.seed = actual;
                 const saved = copy.workflow?.nodes?.find(n => String(n.id) === id);
                 if (saved?.widgets_values) saved.widgets_values[0] = actual;
+                if (saved?.widgets_values_named) saved.widgets_values_named.seed = actual;
                 if (saved) (saved.properties ||= {}).swwan_last_seed = actual;
                 changed.push([node, actual]);
             }
