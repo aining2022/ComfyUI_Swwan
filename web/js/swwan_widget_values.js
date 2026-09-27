@@ -17,6 +17,32 @@ function validate(node, name, value, data) {
     if (kind === 'COLORCODE') valid = valid && /^#(?:[\da-f]{3}|[\da-f]{6}|[\da-f]{8})$/i.test(value);
     if (!valid) throw new Error(`Swwan #${node.id}: invalid ${name}=${JSON.stringify(value)}. Repair the saved workflow parameters.`);
 }
+function savedValues(node, info, fields) {
+    const saved = info?.widgets_values_named;
+    const context = { id: info?.id ?? node.id };
+    if (!saved || typeof saved !== 'object' || Array.isArray(saved)) return;
+    for (const name of Object.keys(saved)) {
+        if (!fields.has(name)) throw new Error(`Swwan #${context.id}: unknown saved field ${name}`);
+    }
+    try {
+        for (const [name, value] of Object.entries(saved)) validate(context, name, value, fields.get(name));
+        return saved;
+    } catch (error) {
+        const entries = [...fields];
+        const positions = info.widgets_values;
+        // Recover only the exact historical omission of COLORCODE names while
+        // zipping a complete canonical positional list. Truncated lists cannot
+        // prove the lost final value; unrelated bad maps remain explicit errors.
+        const withoutColor = entries.filter(([, spec]) => spec[0] !== 'COLORCODE');
+        if (withoutColor.length === entries.length || !Array.isArray(positions)
+            || positions.length !== entries.length || Object.keys(saved).length !== withoutColor.length
+            || !withoutColor.every(([name], i) => Object.hasOwn(saved, name) && Object.is(saved[name], positions[i]))) throw error;
+        try {
+            entries.forEach(([name, spec], i) => validate(context, name, positions[i], spec));
+        } catch { throw error; }
+        return Object.fromEntries(entries.map(([name], i) => [name, positions[i]]));
+    }
+}
 function collect(node, fields) {
     const values = { ...node.swwanWidgetValues };
     for (const widget of node.widgets || []) {
@@ -41,17 +67,18 @@ app.registerExtension({
         const fields = new Map(Object.entries({ ...data.input?.required, ...data.input?.optional })
             .filter(([, spec]) => Array.isArray(spec[0]) || scalarTypes.has(spec[0])));
         contracts.set(data.name, fields);
+        // Inspect before ComfyUI's configure migrates positional widget data.
+        const configureNode = Node.prototype.configure;
+        Node.prototype.configure = function(info) {
+            const saved = savedValues(this, info, fields);
+            if (saved) info.widgets_values_named = { ...saved };
+            return configureNode?.apply(this, arguments);
+        };
         const configure = Node.prototype.onConfigure;
         Node.prototype.onConfigure = function(info) {
+            const saved = savedValues(this, info, fields);
             const result = configure?.apply(this, arguments);
-            const saved = info?.widgets_values_named;
-            if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
-                // Validate before applying any values; malformed saved maps are
-                // explicit errors instead of silently clobbering legal defaults.
-                for (const [name, value] of Object.entries(saved)) {
-                    if (!fields.has(name)) throw new Error(`Swwan #${this.id}: unknown saved field ${name}`);
-                    validate(this, name, value, fields.get(name));
-                }
+            if (saved) {
                 this.swwanWidgetValues = { ...saved };
                 for (const widget of this.widgets || []) {
                     if (Object.hasOwn(saved, widget.name)) widget.value = saved[widget.name];

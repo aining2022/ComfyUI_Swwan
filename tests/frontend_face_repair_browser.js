@@ -1,4 +1,4 @@
-// Evaluate through Playwright on an isolated ComfyUI CPU service. Run once
+// Evaluate in a browser on an isolated ComfyUI CPU service. Run once
 // normally and once with swwan_color_widget.js fulfilled as an empty module.
 (async () => {
     const {app}=await import('./scripts/app.js');
@@ -45,6 +45,24 @@
     check(JSON.stringify(first.output)===JSON.stringify(second.output),'Execution inputs changed after save/reload');
     const graphAgain=JSON.parse(JSON.stringify(app.graph.serialize()));
     check(graphAgain.nodes.find(n=>String(n.id)===String(ids.resize)).widgets_values_named.essentials_interpolation==='lanczos','Resize name lost');
+    // A previous frontend could retain all 25 positions while generating a
+    // stale named map with COLORCODE omitted. Inspect before native migration.
+    for (const namedRestore of [false,true]) {
+        LiteGraph.namedValuesRestore=namedRestore;
+        const staleGraph=JSON.parse(JSON.stringify(graph));
+        const staleResize=staleGraph.nodes.find(n=>String(n.id)===String(ids.resize));
+        const names=Object.keys(resizeFields).filter(name=>name!=='fill_color');
+        staleResize.widgets_values_named=Object.fromEntries(names.map((name,i)=>[name,Object.values(resizeFields)[i]]));
+        check(staleResize.widgets_values_named.aspect_ratio==='#123456','Missing stale-map reproduction');
+        await app.loadGraphData(staleGraph);
+        const recovered=await app.graphToPrompt();
+        check(JSON.stringify(first.output)===JSON.stringify(recovered.output),`Stale-map recovery changed inputs (${namedRestore})`);
+        const repaired=app.graph.serialize().nodes.find(n=>String(n.id)===String(ids.resize));
+        check(repaired.widgets_values_named.aspect_ratio==='original','Stale map saved again');
+        check(repaired.widgets_values_named.essentials_interpolation==='lanczos','Lost final interpolation');
+        await app.loadGraphData(JSON.parse(JSON.stringify(app.graph.serialize())));
+        check(JSON.stringify(first.output)===JSON.stringify((await app.graphToPrompt()).output),'Recovered save/reload changed inputs');
+    }
     const queued=await api.queuePrompt(0,second);
-    return {status:'PASS',color_widget_present:!!widget(app.graph.getNodeById(ids.matte),'background_color'),nodes:graph.nodes.length,links:graph.links.length,checks:['named load/save with native named restoration disabled','nondefault color literal when widget absent','linked color precedence','Draw opacity and CPU','Essentials 768 keep proportion lanczos divisible_by0','same execution parameters after reload'],prompt_id:queued.prompt_id,save_ids:ids.saves};
+    return {status:'PASS',color_widget_present:!!widget(app.graph.getNodeById(ids.matte),'background_color'),nodes:graph.nodes.length,links:graph.links.length,checks:['named load/save with native named restoration disabled','nondefault color literal when widget absent','linked color precedence','Draw opacity and CPU','Essentials 768 keep proportion lanczos divisible_by0','same execution parameters after reload','exact stale COLORCODE map recovery with native named restoration off/on'],prompt_id:queued.prompt_id,save_ids:ids.saves};
 })()

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Recover the exact historical COLORCODE-omitted named-map mismatch before native widget migration, only when all canonical positional values remain complete and valid. Preserve valid named edits; reject truncated or unrelated invalid maps. Verify both COLORCODE availability and native named restoration settings through actual load/save and CPU outputs.
+
 - Fix all Swwan frontend imports under reverse-proxy base paths such as `/comfyui/`: resolve app/api shims relative to the extension directory so COLORCODE, named parameter restoration, modes, seed and dynamic inputs load instead of requesting nonexistent root URLs. Test real import URLs and canonical migrated widget arrays.
 
 - Repair and prune the user-edited Qwen face/head UI workflow to the final SaveImage chain (145 nodes / 167 links), resolving Set/Get dependencies without evaluating switch values. Preserve loop ports and all surviving model/prompt/control edits; bypass the disabled image cache.

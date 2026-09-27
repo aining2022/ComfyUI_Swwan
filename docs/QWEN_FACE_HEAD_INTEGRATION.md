@@ -69,3 +69,9 @@ python scripts/migrate_qwen_face_head_workflow.py source.json new-swwan.json --c
 远程部署使用 `/comfyui/`，根路径 `/scripts/app.js` 返回 404；后端 Resize 注册正常，但 Swwan 前端扩展未注册。将全部 app/api 导入改为 `../../scripts/`，避免丢失反向代理前缀。此前根路径验收没有覆盖这个部署场景。
 
 使用隔离反向代理重现 `/comfyui/`，实际检查六个 Swwan 扩展加载。验收直接导入迁移器的完整 25 项 Resize 控件列表，在颜色控件存在／缺席时分别检查命名恢复、链接、保存重载、CPU 排队输出和 PNG 像素；证据见 `tests/fixtures/base-path-browser-acceptance.json`。未执行远程 Qwen 推理，远程服务需拉取修复、重启并强制刷新后重新导入正确副本。
+
+### 错位命名映射的兼容恢复
+
+远程新版扩展已加载，使用正确的 25 项 Resize 数据独立配置节点可以通过；收到 `aspect_ratio="#364254"` 表示命名映射仍含错位值。没有证据将错误归因于正常 25 项数据的加载。兼容逻辑仅识别 COLORCODE 名称遗漏造成的精确错位，并要求位置列表完整、逐项合法；在原生 configure 改写位置列表前恢复，不猜测被截断的最后一个参数。合法命名编辑始终优先。
+
+前端验收新增四种组合：颜色控件存在／缺席 × ComfyUI 原生命名恢复开启／关闭。每种均验证完整加载、导出执行参数、保存重载和连接保留；两个 CPU 队列实际成功，PNG 尺寸和全图像素重读一致。证据为 `tests/fixtures/widget-recovery-browser-acceptance.json`，回归为 `tests/test_swwan_widget_values.mjs`。未更改远程用户画布或执行 Qwen 推理。

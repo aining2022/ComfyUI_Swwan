@@ -38,7 +38,7 @@ python scripts/repair_qwen_face_head_workflow.py edited-swwan.json new-fixed.jso
 
 修复依据：#92 保留 768×768、Essentials、keep proportion、always、lanczos、整除数 0；#62 的旧“颜色、设备”接口补默认 opacity=1.0，同时支持“颜色、透明度、设备”。#47/#58 的丢失背景色依据原工作流恢复为 #ffffff，其他合法值保留。仅识别确定的错位特征，不对未知坏值进行猜测。非法枚举、数值／布尔类型、颜色、必填参数或端口、连线及虚拟变量会明确报错。
 
-`web/js/swwan_widget_values.js` 为全部 Swwan 分类节点按实际输入名保存与恢复参数，隐藏和转换为输入的控件均不依赖位置匹配；保留 ComfyUI 原生位置数据和界面附加控件。COLORCODE 控件缺席时，合法颜色仍保存并注入执行参数；实际连线优先。历史文件已有错误命名映射时须先运行修复工具，新前端不会把错误值静默改成默认值。安装这些前端修改后须刷新页面，再导入修复副本。
+`web/js/swwan_widget_values.js` 为全部 Swwan 分类节点按实际输入名保存与恢复参数，隐藏和转换为输入的控件均不依赖位置匹配；保留 ComfyUI 原生位置数据和界面附加控件。COLORCODE 控件缺席时，合法颜色仍保存并注入执行参数；实际连线优先。历史命名映射精确匹配“遗漏 COLORCODE 名称后按位置错位”，且完整位置参数全部通过接口校验时，前端会在 ComfyUI 原生迁移前恢复真实值。位置参数被截断或错误不符合该特征时仍须运行修复工具；不会把错误值静默改成默认值。安装这些前端修改后须刷新页面，再导入修复副本。
 
 验证：5 项定向修复测试、7 项既有图片参考测试、7 项 Qwen 图片合同测试；独立 EasyUse 真实图展开执行三次模拟裁剪／编辑／还原，并经 SaveImage 写出后重读检查三处累计结果。真实前端在 COLORCODE 控件存在／缺席两种情况下验证转换为输入、颜色连线、命名保存重载及 CPU 实际输出，证据见 `tests/fixtures/face-repair-browser-acceptance.json`。未下载模型或执行 Qwen／检测模型／CUDA。
 
@@ -48,3 +48,7 @@ python scripts/repair_qwen_face_head_workflow.py edited-swwan.json new-fixed.jso
 部署在 `/comfyui/` 等子路径时，旧扩展使用 `/scripts/app.js`／`/scripts/api.js` 会请求网站根目录，产生 404；因此颜色控件及按名称恢复逻辑根本未加载，后端仍收到错位值。全部 Swwan 前端现使用相对于 `extensions/ComfyUI_Swwan/` 的 `../../scripts/` 导入，保留部署路径。此修复不改变节点算法或接口。
 
 更新插件后重启服务并强制刷新页面，重新导入修复精简版。已经在失效前端中另存过的错误参数不能作为新的正确基准。`tests/test_frontend_base_path.mjs` 检查根路径和 `/comfyui/` 下的真实导入地址；前端验收直接加载迁移文件的完整控件列表，而非只测试浏览器自身保存的列表。
+
+### 完整位置参数与旧命名映射冲突
+
+加载时先检查原始数据，避免 ComfyUI 原生控件迁移先改写位置列表。合法命名参数始终优先，保留用户修改；只有精确的 COLORCODE 名称遗漏特征才允许从完整、逐项合法的位置列表恢复。缺失尾部值、未知字段或普通非法枚举仍明确报错。实际前端同时覆盖颜色控件存在／缺席与原生命名恢复开启／关闭，并验证保存重载、宽度／颜色连线优先和 CPU 图片输出；证据为 `tests/fixtures/widget-recovery-browser-acceptance.json`。

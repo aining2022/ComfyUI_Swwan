@@ -1,0 +1,113 @@
+{
+  "backend": "isolated CPU ComfyUI under /comfyui/ proxy",
+  "model_inference": false,
+  "recovery": "exact missing-COLORCODE named-map signature backed by complete validated positions",
+  "cases": [
+    {
+      "color_widget_present": true,
+      "native_named_restore": [
+        false,
+        true
+      ],
+      "nodes": 11,
+      "links": 12,
+      "canonical_resize_widget_count": 25,
+      "execution": "success",
+      "prompt_id": "222f66b4-164c-4c21-92ae-42f47e90cd77",
+      "outputs": [
+        {
+          "save_id": "8",
+          "size": [
+            32,
+            24
+          ],
+          "mode": "RGB",
+          "pixel": [
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "save_id": "9",
+          "size": [
+            768,
+            576
+          ],
+          "mode": "RGB",
+          "pixel": [
+            127,
+            127,
+            127
+          ]
+        },
+        {
+          "save_id": "10",
+          "size": [
+            32,
+            24
+          ],
+          "mode": "RGB",
+          "pixel": [
+            18,
+            52,
+            86
+          ]
+        }
+      ]
+    },
+    {
+      "color_widget_present": false,
+      "native_named_restore": [
+        false,
+        true
+      ],
+      "nodes": 11,
+      "links": 12,
+      "canonical_resize_widget_count": 25,
+      "execution": "success",
+      "prompt_id": "ee15c52a-95f7-4a79-9b92-4e3cf21854ae",
+      "outputs": [
+        {
+          "save_id": "8",
+          "size": [
+            32,
+            24
+          ],
+          "mode": "RGB",
+          "pixel": [
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "save_id": "9",
+          "size": [
+            768,
+            576
+          ],
+          "mode": "RGB",
+          "pixel": [
+            127,
+            127,
+            127
+          ]
+        },
+        {
+          "save_id": "10",
+          "size": [
+            32,
+            24
+          ],
+          "mode": "RGB",
+          "pixel": [
+            18,
+            52,
+            86
+          ]
+        }
+      ]
+    }
+  ]
+}
