@@ -168,3 +168,23 @@ console.log('PASS: mask processing/segments, region preview and extended color/r
 const linkedFactorMode = makeNode('SwwanCropByMaskV5',{crop_mode:'edit_region',edit_expansion_mode:'factor',edit_top_factor:1.2,top_reserve_ratio:.2});
 linkedFactorMode.inputs.push({name:'edit_expansion_mode',link:44});linkedFactorMode.onConnectionsChange();
 assert.equal(visible(linkedFactorMode,'edit_top_factor'),true);assert.equal(visible(linkedFactorMode,'top_reserve_ratio'),true);
+
+// A custom COLORCODE widget may be absent. Named restore must repair the
+// positional shift and retain all hidden controls in either frontend setup.
+const canonicalResize = {resize_mode:'edit_size',size_rule:'自定义宽高',execute_condition:'总是',
+    width:512,height:512,upscale_method:'lanczos',keep_proportion:'crop',pad_color:'0, 0, 0',device:'cpu',
+    edit_fit:'拉伸',fill_color:'#364254',aspect_ratio:'original',proportional_width:1,proportional_height:1,
+    aspect_fit:'letterbox',aspect_method:'lanczos',aspect_round:'8',aspect_scale_side:'longest',aspect_length:1024,
+    essentials_method:'stretch',essentials_condition:'always',essentials_interpolation:'nearest'};
+for (const colorWidgetPresent of [true,false]) {
+    const fields={...canonicalResize};if (!colorWidgetPresent) delete fields.fill_color;
+    const node=makeNode('ImageResizeKJv2Alternative',fields);
+    for (const w of node.widgets) if (w.name.startsWith('aspect_') || w.name.startsWith('essentials_')) w.value='shifted';
+    node.onConfigure({widgets_values_named:canonicalResize});
+    for (const w of node.widgets) assert.equal(w.value,canonicalResize[w.name],w.name);
+    assert.equal(visible(node,'width'),true);
+    assert.equal(visible(node,'aspect_method'),false);
+    const saved=JSON.parse(savedValues(node));node.onConfigure({widgets_values_named:canonicalResize});
+    assert.deepEqual(JSON.parse(savedValues(node)),saved);
+}
+console.log('PASS: named widget restoration with and without COLORCODE controls');

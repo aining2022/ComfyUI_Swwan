@@ -97,6 +97,7 @@ def migrate(original, registry):
         props["Node name for S&R"] = node["type"]
         # Persist all widgets, including hidden controls and converted inputs.
         node["widgets_values"] = list(values.values())
+        node["widgets_values_named"] = dict(values)
         node["inputs"] = []
         schema = cls.INPUT_TYPES()
         for group in ("required", "optional"):

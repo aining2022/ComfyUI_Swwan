@@ -85,6 +85,10 @@ class FaceHeadProcessing(unittest.TestCase):
     def test_workflow_preservation_and_idempotence(self):
         out=migrate(self.original,registry); same(out,migrate(out,registry))
         same(out,json.loads((ROOT/'examples/qwen-face-head-swwan.json').read_text()))
+        stale=copy.deepcopy(self.original)
+        for node in stale['nodes']:
+            if node['type'] in MAPPINGS:node['widgets_values_named']={'removed_plugin_field':'stale'}
+        same(migrate(stale,registry),out)
         old={n['id']:n for n in self.original['nodes']}; nodes={n['id']:n for n in out['nodes']}
         self.assertEqual(nodes.keys(),old.keys()); self.assertEqual(len(out['links']),len(self.original['links'])+2)
         for node_id,node in nodes.items():
@@ -99,6 +103,7 @@ class FaceHeadProcessing(unittest.TestCase):
             cls=registry.NODE_CLASS_MAPPINGS[node['type']]
             self.assertEqual(len(node['widgets_values']),len(defaults(cls)))
             params=dict(zip(defaults(cls),node['widgets_values']))
+            self.assertEqual(node['widgets_values_named'],params)
             schema={**cls.INPUT_TYPES().get('required',{}),**cls.INPUT_TYPES().get('optional',{})}
             for name,value in params.items():
                 if isinstance(schema[name][0],list):self.assertIn(value,schema[name][0],(node_id,name))

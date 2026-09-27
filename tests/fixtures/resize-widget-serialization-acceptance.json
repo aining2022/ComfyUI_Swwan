@@ -1,0 +1,50 @@
+{
+  "scope": "isolated ComfyUI CPU browser; no model inference",
+  "reproduced": "absent COLORCODE widget shifts positional Resize parameters",
+  "checks": [
+    {
+      "color_widget": false,
+      "api_validation": "passed",
+      "save_reload": "passed",
+      "cpu_execution": "success",
+      "outputs": [
+        {
+          "size": [
+            64,
+            48
+          ],
+          "mode": "RGB"
+        },
+        {
+          "size": [
+            64,
+            48
+          ],
+          "mode": "RGB"
+        }
+      ]
+    },
+    {
+      "color_widget": true,
+      "api_validation": "passed",
+      "save_reload": "passed",
+      "cpu_execution": "success",
+      "outputs": [
+        {
+          "size": [
+            64,
+            48
+          ],
+          "mode": "RGB"
+        },
+        {
+          "size": [
+            64,
+            48
+          ],
+          "mode": "RGB"
+        }
+      ]
+    }
+  ]
+}

@@ -42,6 +42,7 @@ def replace_node(node, cls, registry, values):
     props["swwan_version"] = registry.__version__
     props["cnr_id"] = "comfyui_swwan"
     node["widgets_values"] = list(values.values())
+    node["widgets_values_named"] = dict(values)
     node["inputs"] = []
     for group in ("required", "optional"):
         for name, data in cls.INPUT_TYPES().get(group, {}).items():
@@ -101,6 +102,7 @@ def migrate(original, registry):
         node = nodes[old["id"]];v = dict(zip(defaults(registry.NODE_CLASS_MAPPINGS[node["type"]]),node["widgets_values"]))
         v.update(edit_expansion_mode="factor", **dict(zip(["edit_top_factor","edit_bottom_factor","edit_left_factor","edit_right_factor"],old["widgets_values"][1:5])))
         node["widgets_values"] = list(v.values())
+        node["widgets_values_named"] = dict(v)
         for inp in node["inputs"]:
             inp["name"] = {"top_reserve_ratio":"edit_top_factor","bottom_reserve_ratio":"edit_bottom_factor","left_reserve_ratio":"edit_left_factor","right_reserve_ratio":"edit_right_factor"}.get(inp["name"],inp["name"])
             if "widget" in inp: inp["widget"]["name"] = inp["name"]

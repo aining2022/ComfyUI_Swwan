@@ -158,6 +158,19 @@ app.registerExtension({
             const original = nodeType.prototype[event];
             nodeType.prototype[event] = function () {
                 const result = original?.apply(this, arguments);
+                // Widget counts differ when a frontend treats COLORCODE as a
+                // socket rather than a custom widget. Restore by stable names
+                // before updating modes, regardless of LiteGraph's global setting.
+                if (event === "onConfigure") {
+                    const saved = arguments[0]?.widgets_values_named;
+                    if (saved && typeof saved === "object" && !Array.isArray(saved)) {
+                        for (const widget of this.widgets || []) {
+                            if (widget.serialize !== false && Object.hasOwn(saved, widget.name)) {
+                                widget.value = saved[widget.name];
+                            }
+                        }
+                    }
+                }
                 refresh(this);
                 return result;
             };

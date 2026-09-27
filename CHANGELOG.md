@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Fix Qwen migration retaining stale widget-name maps: save parameters under current input names and restore Swwan mode controls by name when COLORCODE is represented as a socket instead of a widget.
+
 - Split documentation into a task-oriented user README and an AGENTS.md development entry with catalog, compatibility, migration and validation guidance. Include both entries in distributions and refresh the installation checklist.
 
 - Integrate 43 pure image/mask instances from the Qwen face/head workflow while preserving all model, prompt, sampler, loop and explicitly excluded LG nodes.

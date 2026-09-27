@@ -100,6 +100,7 @@ class WorkflowContracts(unittest.TestCase):
             cls = C[node["type"]]
             self.assertEqual(len(node["widgets_values"]), len(defaults(cls)))
             values = dict(zip(defaults(cls), node["widgets_values"]))
+            self.assertEqual(node["widgets_values_named"], values)
             schema = {**cls.INPUT_TYPES().get("required", {}), **cls.INPUT_TYPES().get("optional", {})}
             for name, val in values.items():
                 if isinstance(schema[name][0], list): self.assertIn(val, schema[name][0])

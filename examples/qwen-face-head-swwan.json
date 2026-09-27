@@ -66,7 +66,26 @@
         1.0,
         false
       ],
-      "title": "Mask Process (Swwan)"
+      "title": "Mask Process (Swwan)",
+      "widgets_values_named": {
+        "operation": "fill_holes",
+        "threshold": 20,
+        "erode_dilate": 0,
+        "close_holes": 0,
+        "remove_isolated_pixels": 0,
+        "smooth": 0,
+        "blur": 0,
+        "invert_mask": false,
+        "grow": 4,
+        "expand": 0,
+        "incremental_expandrate": 0.0,
+        "tapered_corners": true,
+        "flip_input": false,
+        "blur_radius": 0.0,
+        "lerp_alpha": 1.0,
+        "decay_factor": 1.0,
+        "fill_holes": false
+      }
     },
     {
       "id": 2,
@@ -130,7 +149,26 @@
         1.0,
         false
       ],
-      "title": "Mask Process (Swwan)"
+      "title": "Mask Process (Swwan)",
+      "widgets_values_named": {
+        "operation": "binary",
+        "threshold": 5,
+        "erode_dilate": 0,
+        "close_holes": 0,
+        "remove_isolated_pixels": 0,
+        "smooth": 0,
+        "blur": 0,
+        "invert_mask": false,
+        "grow": 4,
+        "expand": 0,
+        "incremental_expandrate": 0.0,
+        "tapered_corners": true,
+        "flip_input": false,
+        "blur_radius": 0.0,
+        "lerp_alpha": 1.0,
+        "decay_factor": 1.0,
+        "fill_holes": false
+      }
     },
     {
       "id": 3,
@@ -1857,7 +1895,26 @@
         1.0,
         false
       ],
-      "title": "Mask Process (Swwan)"
+      "title": "Mask Process (Swwan)",
+      "widgets_values_named": {
+        "operation": "binary",
+        "threshold": 5,
+        "erode_dilate": 0,
+        "close_holes": 0,
+        "remove_isolated_pixels": 0,
+        "smooth": 0,
+        "blur": 0,
+        "invert_mask": false,
+        "grow": 4,
+        "expand": 0,
+        "incremental_expandrate": 0.0,
+        "tapered_corners": true,
+        "flip_input": false,
+        "blur_radius": 0.0,
+        "lerp_alpha": 1.0,
+        "decay_factor": 1.0,
+        "fill_holes": false
+      }
     },
     {
       "id": 36,
@@ -2372,7 +2429,14 @@
         0,
         "#ffffff"
       ],
-      "title": "Image Matte (Swwan)"
+      "title": "Image Matte (Swwan)",
+      "widgets_values_named": {
+        "fill_holes": true,
+        "crop_mask": false,
+        "crop_factor": 1.2,
+        "stroke_width": 0,
+        "background_color": "#ffffff"
+      }
     },
     {
       "id": 48,
@@ -2937,7 +3001,12 @@
         "关闭",
         "左对齐"
       ],
-      "title": "Mask Combine (Swwan)"
+      "title": "Mask Combine (Swwan)",
+      "widgets_values_named": {
+        "operation": "相加",
+        "bbox_mode": "关闭",
+        "alignment": "左对齐"
+      }
     },
     {
       "id": 57,
@@ -3168,7 +3237,14 @@
         0,
         "#ffffff"
       ],
-      "title": "Image Matte (Swwan)"
+      "title": "Image Matte (Swwan)",
+      "widgets_values_named": {
+        "fill_holes": true,
+        "crop_mask": false,
+        "crop_factor": 1.2,
+        "stroke_width": 0,
+        "background_color": "#ffffff"
+      }
     },
     {
       "id": 59,
@@ -3233,7 +3309,26 @@
         false
       ],
       "color": "rgba(27, 80, 119, 0.7)",
-      "title": "Mask Process (Swwan)"
+      "title": "Mask Process (Swwan)",
+      "widgets_values_named": {
+        "operation": "layer_grow",
+        "threshold": 20,
+        "erode_dilate": 0,
+        "close_holes": 0,
+        "remove_isolated_pixels": 0,
+        "smooth": 0,
+        "blur": 0,
+        "invert_mask": false,
+        "grow": 30,
+        "expand": 0,
+        "incremental_expandrate": 0.0,
+        "tapered_corners": true,
+        "flip_input": false,
+        "blur_radius": 0.0,
+        "lerp_alpha": 1.0,
+        "decay_factor": 1.0,
+        "fill_holes": false
+      }
     },
     {
       "id": 60,
@@ -3410,7 +3505,12 @@
         "关闭",
         "左对齐"
       ],
-      "title": "Mask Combine (Swwan)"
+      "title": "Mask Combine (Swwan)",
+      "widgets_values_named": {
+        "operation": "相加",
+        "bbox_mode": "关闭",
+        "alignment": "左对齐"
+      }
     },
     {
       "id": 62,
@@ -3459,7 +3559,12 @@
         "cpu",
         "cpu"
       ],
-      "title": "Draw Mask On Image (Swwan)"
+      "title": "Draw Mask On Image (Swwan)",
+      "widgets_values_named": {
+        "color": "255, 255, 255",
+        "opacity": "cpu",
+        "device": "cpu"
+      }
     },
     {
       "id": 63,
@@ -3533,7 +3638,13 @@
       ],
       "color": "#2f5a7d",
       "bgcolor": "#1b4669",
-      "title": "Restore Crop (Swwan)"
+      "title": "Restore Crop (Swwan)",
+      "widgets_values_named": {
+        "feathering": 0,
+        "device": "CPU",
+        "expand_percent": 5,
+        "feather_percent": 5
+      }
     },
     {
       "id": 64,
@@ -3694,7 +3805,17 @@
         "auto",
         0
       ],
-      "title": "Color Match (Swwan)"
+      "title": "Color Match (Swwan)",
+      "widgets_values_named": {
+        "method": "mkl",
+        "strength": 1.0,
+        "multithread": true,
+        "match_mode": "mean_std",
+        "color_space": "LAB",
+        "factor": 1,
+        "device": "auto",
+        "batch_size": 0
+      }
     },
     {
       "id": 67,
@@ -3755,7 +3876,12 @@
         "关闭",
         "左对齐"
       ],
-      "title": "Mask Combine (Swwan)"
+      "title": "Mask Combine (Swwan)",
+      "widgets_values_named": {
+        "operation": "相加",
+        "bbox_mode": "关闭",
+        "alignment": "左对齐"
+      }
     },
     {
       "id": 68,
@@ -3817,7 +3943,12 @@
         "关闭",
         "左对齐"
       ],
-      "title": "Mask Combine (Swwan)"
+      "title": "Mask Combine (Swwan)",
+      "widgets_values_named": {
+        "operation": "相加",
+        "bbox_mode": "关闭",
+        "alignment": "左对齐"
+      }
     },
     {
       "id": 69,
@@ -3882,7 +4013,20 @@
         1,
         50
       ],
-      "title": "Mask Segments (Swwan)"
+      "title": "Mask Segments (Swwan)",
+      "widgets_values_named": {
+        "operation": "combined_mask",
+        "combined": false,
+        "crop_factor": 3.0,
+        "bbox_fill": false,
+        "drop_size": 10,
+        "contour_fill": false,
+        "sort_rule": "面积大小",
+        "sort_order": "正序",
+        "start_index": 0,
+        "count": 1,
+        "group_threshold": 50
+      }
     },
     {
       "id": 70,
@@ -3957,7 +4101,16 @@
         6,
         false
       ],
-      "title": "Image Blend (Swwan)"
+      "title": "Image Blend (Swwan)",
+      "widgets_values_named": {
+        "invert_mask": false,
+        "blend_mode": "normal",
+        "opacity": 75,
+        "operation": "mask_composite",
+        "mask_expand": -10,
+        "mask_blur": 6,
+        "match_image_size": false
+      }
     },
     {
       "id": 71,
@@ -4066,7 +4219,26 @@
         1.0,
         false
       ],
-      "title": "Mask Process (Swwan)"
+      "title": "Mask Process (Swwan)",
+      "widgets_values_named": {
+        "operation": "binary",
+        "threshold": 5,
+        "erode_dilate": 0,
+        "close_holes": 0,
+        "remove_isolated_pixels": 0,
+        "smooth": 0,
+        "blur": 0,
+        "invert_mask": false,
+        "grow": 4,
+        "expand": 0,
+        "incremental_expandrate": 0.0,
+        "tapered_corners": true,
+        "flip_input": false,
+        "blur_radius": 0.0,
+        "lerp_alpha": 1.0,
+        "decay_factor": 1.0,
+        "fill_holes": false
+      }
     },
     {
       "id": 74,
@@ -4148,7 +4320,14 @@
         0,
         3.0
       ],
-      "title": "Mask Analyze (Swwan)"
+      "title": "Mask Analyze (Swwan)",
+      "widgets_values_named": {
+        "top_percent": 0,
+        "bottom_percent": 0,
+        "left_percent": 0,
+        "right_percent": 0,
+        "minimum_area_percent": 3.0
+      }
     },
     {
       "id": 75,
@@ -4888,7 +5067,20 @@
         1,
         50
       ],
-      "title": "Mask Segments (Swwan)"
+      "title": "Mask Segments (Swwan)",
+      "widgets_values_named": {
+        "operation": "from_mask",
+        "combined": false,
+        "crop_factor": 3,
+        "bbox_fill": false,
+        "drop_size": 10,
+        "contour_fill": false,
+        "sort_rule": "面积大小",
+        "sort_order": "正序",
+        "start_index": 0,
+        "count": 1,
+        "group_threshold": 50
+      }
     },
     {
       "id": 87,
@@ -4998,7 +5190,26 @@
         1.0,
         false
       ],
-      "title": "Mask Process (Swwan)"
+      "title": "Mask Process (Swwan)",
+      "widgets_values_named": {
+        "operation": "cleanup",
+        "threshold": 20,
+        "erode_dilate": 0,
+        "close_holes": 0,
+        "remove_isolated_pixels": 10,
+        "smooth": 0,
+        "blur": 0,
+        "invert_mask": false,
+        "grow": 4,
+        "expand": 0,
+        "incremental_expandrate": 0.0,
+        "tapered_corners": true,
+        "flip_input": false,
+        "blur_radius": 0.0,
+        "lerp_alpha": 1.0,
+        "decay_factor": 1.0,
+        "fill_holes": false
+      }
     },
     {
       "id": 89,
@@ -5062,7 +5273,26 @@
         1.0,
         false
       ],
-      "title": "Mask Process (Swwan)"
+      "title": "Mask Process (Swwan)",
+      "widgets_values_named": {
+        "operation": "cleanup",
+        "threshold": 20,
+        "erode_dilate": 0,
+        "close_holes": 0,
+        "remove_isolated_pixels": 10,
+        "smooth": 0,
+        "blur": 0,
+        "invert_mask": false,
+        "grow": 4,
+        "expand": 0,
+        "incremental_expandrate": 0.0,
+        "tapered_corners": true,
+        "flip_input": false,
+        "blur_radius": 0.0,
+        "lerp_alpha": 1.0,
+        "decay_factor": 1.0,
+        "fill_holes": false
+      }
     },
     {
       "id": 90,
@@ -5144,7 +5374,14 @@
         0,
         3.0
       ],
-      "title": "Mask Analyze (Swwan)"
+      "title": "Mask Analyze (Swwan)",
+      "widgets_values_named": {
+        "top_percent": 0,
+        "bottom_percent": 0,
+        "left_percent": 0,
+        "right_percent": 0,
+        "minimum_area_percent": 3.0
+      }
     },
     {
       "id": 91,
@@ -5257,7 +5494,34 @@
       ],
       "color": "#2f5a7d",
       "bgcolor": "#1b4669",
-      "title": "Mask Crop (Swwan)"
+      "title": "Mask Crop (Swwan)",
+      "widgets_values_named": {
+        "detect": "mask_area",
+        "reserve_mode": "absolute",
+        "top_reserve": 20,
+        "bottom_reserve": 20,
+        "left_reserve": 20,
+        "right_reserve": 20,
+        "top_reserve_ratio": 0.19999999999999996,
+        "bottom_reserve_ratio": 2,
+        "left_reserve_ratio": 0.19999999999999996,
+        "right_reserve_ratio": 0.19999999999999996,
+        "reserve_max": 100,
+        "round_to_multiple": "8",
+        "batch_mode": "single_frame",
+        "device": "CPU",
+        "crop_mode": "edit_region",
+        "fill_mask_holes": false,
+        "output_size": "原像素",
+        "custom_width": 768,
+        "custom_height": 768,
+        "alignment": 0,
+        "edit_expansion_mode": "factor",
+        "edit_top_factor": 1.2,
+        "edit_bottom_factor": 3,
+        "edit_left_factor": 1.2,
+        "edit_right_factor": 1.2
+      }
     },
     {
       "id": 92,
@@ -5346,7 +5610,34 @@
         "always",
         "lanczos"
       ],
-      "title": "Resize Image (Swwan)"
+      "title": "Resize Image (Swwan)",
+      "widgets_values_named": {
+        "width": 768,
+        "height": 768,
+        "upscale_method": "nearest-exact",
+        "keep_proportion": "stretch",
+        "pad_color": "0, 0, 0",
+        "crop_position": "center",
+        "divisible_by": 0,
+        "device": "cpu",
+        "resize_mode": "essentials",
+        "size_rule": "按长边等比例",
+        "edge_length": 1024,
+        "execute_condition": "总是",
+        "edit_fit": "裁剪",
+        "fill_color": "#364254",
+        "aspect_ratio": "original",
+        "proportional_width": 1,
+        "proportional_height": 1,
+        "aspect_fit": "letterbox",
+        "aspect_method": "lanczos",
+        "aspect_round": "8",
+        "aspect_scale_side": "longest",
+        "aspect_length": 1024,
+        "essentials_method": "keep proportion",
+        "essentials_condition": "always",
+        "essentials_interpolation": "lanczos"
+      }
     },
     {
       "id": 93,
@@ -5487,7 +5778,26 @@
         1,
         true
       ],
-      "title": "Mask Process (Swwan)"
+      "title": "Mask Process (Swwan)",
+      "widgets_values_named": {
+        "operation": "grow_blur",
+        "threshold": 20,
+        "erode_dilate": 0,
+        "close_holes": 0,
+        "remove_isolated_pixels": 0,
+        "smooth": 0,
+        "blur": 0,
+        "invert_mask": false,
+        "grow": 4,
+        "expand": 10,
+        "incremental_expandrate": 0,
+        "tapered_corners": true,
+        "flip_input": false,
+        "blur_radius": 0,
+        "lerp_alpha": 1,
+        "decay_factor": 1,
+        "fill_holes": true
+      }
     },
     {
       "id": 95,
@@ -5575,7 +5885,11 @@
       "widgets_values": [
         16,
         "cpu"
-      ]
+      ],
+      "widgets_values_named": {
+        "block_size": 16,
+        "device": "cpu"
+      }
     },
     {
       "id": 97,
@@ -5686,7 +6000,26 @@
         false
       ],
       "color": "rgba(27, 80, 119, 0.7)",
-      "title": "Mask Process (Swwan)"
+      "title": "Mask Process (Swwan)",
+      "widgets_values_named": {
+        "operation": "layer_grow",
+        "threshold": 20,
+        "erode_dilate": 0,
+        "close_holes": 0,
+        "remove_isolated_pixels": 0,
+        "smooth": 0,
+        "blur": 0,
+        "invert_mask": false,
+        "grow": 15,
+        "expand": 0,
+        "incremental_expandrate": 0.0,
+        "tapered_corners": true,
+        "flip_input": false,
+        "blur_radius": 0.0,
+        "lerp_alpha": 1.0,
+        "decay_factor": 1.0,
+        "fill_holes": false
+      }
     },
     {
       "id": 99,
@@ -5849,7 +6182,20 @@
         1,
         50
       ],
-      "title": "Mask Segments (Swwan)"
+      "title": "Mask Segments (Swwan)",
+      "widgets_values_named": {
+        "operation": "mask_batch",
+        "combined": false,
+        "crop_factor": 3.0,
+        "bbox_fill": false,
+        "drop_size": 10,
+        "contour_fill": false,
+        "sort_rule": "面积大小",
+        "sort_order": "正序",
+        "start_index": 0,
+        "count": 1,
+        "group_threshold": 50
+      }
     },
     {
       "id": 102,
@@ -5913,7 +6259,20 @@
         1,
         50
       ],
-      "title": "Mask Segments (Swwan)"
+      "title": "Mask Segments (Swwan)",
+      "widgets_values_named": {
+        "operation": "filter",
+        "combined": false,
+        "crop_factor": 3.0,
+        "bbox_fill": false,
+        "drop_size": 10,
+        "contour_fill": false,
+        "sort_rule": "面积大小",
+        "sort_order": "正序",
+        "start_index": 0,
+        "count": 1,
+        "group_threshold": 50
+      }
     },
     {
       "id": 103,
@@ -6046,7 +6405,14 @@
         0,
         3.0
       ],
-      "title": "Mask Analyze (Swwan)"
+      "title": "Mask Analyze (Swwan)",
+      "widgets_values_named": {
+        "top_percent": 0,
+        "bottom_percent": 0,
+        "left_percent": 0,
+        "right_percent": 0,
+        "minimum_area_percent": 3.0
+      }
     },
     {
       "id": 105,
@@ -6254,7 +6620,20 @@
         1,
         50
       ],
-      "title": "Mask Segments (Swwan)"
+      "title": "Mask Segments (Swwan)",
+      "widgets_values_named": {
+        "operation": "mask_batch",
+        "combined": false,
+        "crop_factor": 3.0,
+        "bbox_fill": false,
+        "drop_size": 10,
+        "contour_fill": false,
+        "sort_rule": "面积大小",
+        "sort_order": "正序",
+        "start_index": 0,
+        "count": 1,
+        "group_threshold": 50
+      }
     },
     {
       "id": 109,
@@ -6384,7 +6763,20 @@
         1,
         200
       ],
-      "title": "Mask Segments (Swwan)"
+      "title": "Mask Segments (Swwan)",
+      "widgets_values_named": {
+        "operation": "filter",
+        "combined": false,
+        "crop_factor": 3.0,
+        "bbox_fill": false,
+        "drop_size": 10,
+        "contour_fill": false,
+        "sort_rule": "左右上下",
+        "sort_order": "正序",
+        "start_index": 0,
+        "count": 1,
+        "group_threshold": 200
+      }
     },
     {
       "id": 111,
@@ -6579,7 +6971,20 @@
         "FreeMono.ttf",
         "#ffffff"
       ],
-      "title": "Image And Mask Preview (Swwan)"
+      "title": "Image And Mask Preview (Swwan)",
+      "widgets_values_named": {
+        "mask_opacity": 0.4,
+        "mask_color": "255, 255, 255",
+        "pass_through": true,
+        "preview_mode": "regions",
+        "region_color": "#00ffff",
+        "show_numbers": false,
+        "number_opacity": 0.8,
+        "number_scale": "跟随遮罩缩放",
+        "font_scale": 0.5,
+        "number_font": "FreeMono.ttf",
+        "number_color": "#ffffff"
+      }
     },
     {
       "id": 115,
@@ -6813,7 +7218,20 @@
         6,
         200
       ],
-      "title": "Mask Segments (Swwan)"
+      "title": "Mask Segments (Swwan)",
+      "widgets_values_named": {
+        "operation": "filter",
+        "combined": false,
+        "crop_factor": 3.0,
+        "bbox_fill": false,
+        "drop_size": 10,
+        "contour_fill": false,
+        "sort_rule": "左右上下",
+        "sort_order": "正序",
+        "start_index": 0,
+        "count": 6,
+        "group_threshold": 200
+      }
     },
     {
       "id": 122,
@@ -7081,7 +7499,20 @@
         1,
         50
       ],
-      "title": "Mask Segments (Swwan)"
+      "title": "Mask Segments (Swwan)",
+      "widgets_values_named": {
+        "operation": "from_mask",
+        "combined": false,
+        "crop_factor": 3,
+        "bbox_fill": false,
+        "drop_size": 50,
+        "contour_fill": false,
+        "sort_rule": "面积大小",
+        "sort_order": "正序",
+        "start_index": 0,
+        "count": 1,
+        "group_threshold": 50
+      }
     },
     {
       "id": 125,
@@ -7154,7 +7585,20 @@
         1,
         50
       ],
-      "title": "Mask Segments (Swwan)"
+      "title": "Mask Segments (Swwan)",
+      "widgets_values_named": {
+        "operation": "from_mask",
+        "combined": false,
+        "crop_factor": 3,
+        "bbox_fill": false,
+        "drop_size": 100,
+        "contour_fill": false,
+        "sort_rule": "面积大小",
+        "sort_order": "正序",
+        "start_index": 0,
+        "count": 1,
+        "group_threshold": 50
+      }
     },
     {
       "id": 126,
@@ -7219,7 +7663,20 @@
         1,
         50
       ],
-      "title": "Mask Segments (Swwan)"
+      "title": "Mask Segments (Swwan)",
+      "widgets_values_named": {
+        "operation": "from_mask",
+        "combined": true,
+        "crop_factor": 3,
+        "bbox_fill": false,
+        "drop_size": 10,
+        "contour_fill": false,
+        "sort_rule": "面积大小",
+        "sort_order": "正序",
+        "start_index": 0,
+        "count": 1,
+        "group_threshold": 50
+      }
     },
     {
       "id": 127,
@@ -7284,7 +7741,20 @@
         1,
         50
       ],
-      "title": "Mask Segments (Swwan)"
+      "title": "Mask Segments (Swwan)",
+      "widgets_values_named": {
+        "operation": "combined_mask",
+        "combined": false,
+        "crop_factor": 3.0,
+        "bbox_fill": false,
+        "drop_size": 10,
+        "contour_fill": false,
+        "sort_rule": "面积大小",
+        "sort_order": "正序",
+        "start_index": 0,
+        "count": 1,
+        "group_threshold": 50
+      }
     },
     {
       "id": 128,
@@ -7344,7 +7814,20 @@
         "FreeMono.ttf",
         "#ffffff"
       ],
-      "title": "Image And Mask Preview (Swwan)"
+      "title": "Image And Mask Preview (Swwan)",
+      "widgets_values_named": {
+        "mask_opacity": 0.4,
+        "mask_color": "255, 255, 255",
+        "pass_through": true,
+        "preview_mode": "regions",
+        "region_color": "#ff00a2",
+        "show_numbers": true,
+        "number_opacity": 0.8,
+        "number_scale": "跟随遮罩缩放",
+        "font_scale": 0.5,
+        "number_font": "FreeMono.ttf",
+        "number_color": "#ffffff"
+      }
     },
     {
       "id": 129,
@@ -7427,7 +7910,14 @@
         0,
         0.1
       ],
-      "title": "Mask Analyze (Swwan)"
+      "title": "Mask Analyze (Swwan)",
+      "widgets_values_named": {
+        "top_percent": 0,
+        "bottom_percent": 0,
+        "left_percent": 0,
+        "right_percent": 0,
+        "minimum_area_percent": 0.1
+      }
     },
     {
       "id": 130,
@@ -7648,7 +8138,34 @@
       ],
       "color": "#2f5a7d",
       "bgcolor": "#1b4669",
-      "title": "Mask Crop (Swwan)"
+      "title": "Mask Crop (Swwan)",
+      "widgets_values_named": {
+        "detect": "mask_area",
+        "reserve_mode": "absolute",
+        "top_reserve": 20,
+        "bottom_reserve": 20,
+        "left_reserve": 20,
+        "right_reserve": 20,
+        "top_reserve_ratio": 0.19999999999999996,
+        "bottom_reserve_ratio": 0.5,
+        "left_reserve_ratio": 0.10000000000000009,
+        "right_reserve_ratio": 0.10000000000000009,
+        "reserve_max": 100,
+        "round_to_multiple": "8",
+        "batch_mode": "single_frame",
+        "device": "CPU",
+        "crop_mode": "edit_region",
+        "fill_mask_holes": true,
+        "output_size": "自定义宽高",
+        "custom_width": 768,
+        "custom_height": 768,
+        "alignment": 8,
+        "edit_expansion_mode": "factor",
+        "edit_top_factor": 1.2,
+        "edit_bottom_factor": 1.5,
+        "edit_left_factor": 1.1,
+        "edit_right_factor": 1.1
+      }
     },
     {
       "id": 132,
@@ -8135,7 +8652,13 @@
         5120,
         0
       ],
-      "title": "Image Resize Range (Swwan)"
+      "title": "Image Resize Range (Swwan)",
+      "widgets_values_named": {
+        "限制模式": "长边",
+        "最小尺寸": 2048,
+        "最大尺寸": 5120,
+        "整除数": 0
+      }
     },
     {
       "id": 139,
@@ -10292,7 +10815,34 @@
         "always",
         "nearest"
       ],
-      "title": "Resize Image (Swwan)"
+      "title": "Resize Image (Swwan)",
+      "widgets_values_named": {
+        "width": 512,
+        "height": 512,
+        "upscale_method": "lanczos",
+        "keep_proportion": "crop",
+        "pad_color": "0, 0, 0",
+        "crop_position": "center",
+        "divisible_by": 16,
+        "device": "cpu",
+        "resize_mode": "edit_size",
+        "size_rule": "按长边等比例",
+        "edge_length": 1024,
+        "execute_condition": "总是",
+        "edit_fit": "裁剪",
+        "fill_color": "#364254",
+        "aspect_ratio": "original",
+        "proportional_width": 1,
+        "proportional_height": 1,
+        "aspect_fit": "letterbox",
+        "aspect_method": "lanczos",
+        "aspect_round": "8",
+        "aspect_scale_side": "longest",
+        "aspect_length": 1024,
+        "essentials_method": "stretch",
+        "essentials_condition": "always",
+        "essentials_interpolation": "nearest"
+      }
     },
     {
       "id": 176,
@@ -11055,7 +11605,14 @@
         0,
         3.0
       ],
-      "title": "Mask Analyze (Swwan)"
+      "title": "Mask Analyze (Swwan)",
+      "widgets_values_named": {
+        "top_percent": 0,
+        "bottom_percent": 0,
+        "left_percent": 0,
+        "right_percent": 0,
+        "minimum_area_percent": 3.0
+      }
     },
     {
       "id": 184,
