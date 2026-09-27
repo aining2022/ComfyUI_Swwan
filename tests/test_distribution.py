@@ -6,7 +6,7 @@ import zipfile
 p=argparse.ArgumentParser();p.add_argument('wheel',type=Path);args=p.parse_args()
 with zipfile.ZipFile(args.wheel) as archive:
     names=set(archive.namelist());prefix='ComfyUI_Swwan/'
-    required=['node_manifest.json','fonts/FreeMono.ttf','fonts/FreeMonoBoldOblique.otf',
+    required=['README.md','AGENTS.md','QUICK_START.md','INSTALLATION_CHECKLIST.md','node_manifest.json','fonts/FreeMono.ttf','fonts/FreeMonoBoldOblique.otf',
               'licenses/MIT-rgthree.txt','licenses/GPL-3.0.txt','THIRD_PARTY_NOTICES.md',
               'web/js/swwan_seed.js','skills/comfyui-swwan-node-development/SKILL.md',
               'skills/comfyui-swwan-node-development/scripts/find_candidates.py',

@@ -28,7 +28,7 @@ include-package-data = true
 
 [tool.setuptools.package-data]
 ComfyUI_Swwan = [
-  "node_manifest.json", "LICENSE", "README.md", "CHANGELOG.md", "CONTRIBUTING.md", "THIRD_PARTY_NOTICES.md", "requirements.txt",
+  "node_manifest.json", "LICENSE", "README.md", "AGENTS.md", "QUICK_START.md", "INSTALLATION_CHECKLIST.md", "CHANGELOG.md", "CONTRIBUTING.md", "THIRD_PARTY_NOTICES.md", "requirements.txt",
   "fonts/*.ttf", "fonts/*.otf", "licenses/*.txt", "web/js/*.js", "docs/*.md", "docs/*.json", "examples/*.json", "scripts/*.py",
   "skills/*/*.md", "skills/*/scripts/*.py", "skills/*/agents/*.yaml",
   "tests/*.py", "tests/*.mjs", "tests/*.js", "tests/fixtures/*.py", "tests/fixtures/*.json", "tests/fixtures/reference/*.py", "tests/fixtures/face_processing/*.py", "tests/fixtures/face_processing/*.json",

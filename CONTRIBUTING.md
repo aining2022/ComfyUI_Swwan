@@ -24,7 +24,7 @@
 
 ## 验证
 
-运行 README 中的 CPU、合同、前端和 skill 检查；冻结参考在 `tests/fixtures`，不能依赖作者 Downloads、邻接插件、当前 Git HEAD。行为变化对比固定合成输入、尺寸、像素、空值、alpha 和批次；保存必须重读实际文件。工作流迁移验证幂等、显式来源范围、旧输出端口和参数。
+按 [AGENTS.md](AGENTS.md) 的改动类型选择 CPU、合同、前端和 skill 检查；冻结参考在 `tests/fixtures`，不能依赖作者 Downloads、邻接插件、当前 Git HEAD。行为变化对比固定合成输入、尺寸、像素、空值、alpha 和批次；保存必须重读实际文件。工作流迁移验证幂等、显式来源范围、旧输出端口和参数。
 
 新增／扩展后刷新 `scripts/export_node_catalog.py`，补充替代关系、必要无模型示例和 CHANGELOG。GPU 只能按 HARDWARE_VALIDATION 的独立证据验收，不能从 CPU 推断。保留用户未提交改动；提交、推送、发布和付费调用遵循用户授权。
 

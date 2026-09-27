@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Split documentation into a task-oriented user README and an AGENTS.md development entry with catalog, compatibility, migration and validation guidance. Include both entries in distributions and refresh the installation checklist.
+
 - Integrate 43 pure image/mask instances from the Qwen face/head workflow while preserving all model, prompt, sampler, loop and explicitly excluded LG nodes.
 - Add five focused Advanced tools: Mask Process, Mask Combine, Mask Analyze, Mask Segments and Image Matte. SEGS remains a seven-field Impact-compatible contract, with no detector/model imports.
 - Extend existing crop with direct linked edit-region factors, Resize with the original Essentials algorithm, Color Match with six-space mean/std matching, and Preview with numbered mask regions. Existing modes, defaults and output slots stay intact.

@@ -1,4 +1,4 @@
-include node_manifest.json LICENSE README.md CHANGELOG.md CONTRIBUTING.md THIRD_PARTY_NOTICES.md requirements.txt
+include node_manifest.json LICENSE README.md AGENTS.md QUICK_START.md INSTALLATION_CHECKLIST.md CHANGELOG.md CONTRIBUTING.md THIRD_PARTY_NOTICES.md requirements.txt
 recursive-include fonts *.ttf *.otf
 recursive-include licenses *.txt
 recursive-include web *.js
