@@ -1,0 +1,35 @@
+[project]
+name = "ComfyUI_Swwan"
+version = "1.0.0"
+description = "Independent ComfyUI image processing and workflow tools with explicit compatibility."
+requires-python = ">=3.11"
+license = {file = "LICENSE"}
+dependencies = ["torch", "numpy", "Pillow"]
+
+[project.optional-dependencies]
+vision = ["opencv-python", "scipy", "scikit-image", "torchvision"]
+color = ["color-matcher"]
+# GPU backends have architecture-specific installation instructions, not automatic wheels.
+
+[project.urls]
+Repository = "https://github.com/aining2022/ComfyUI_Swwan"
+
+[tool.comfy]
+DisplayName = "ComfyUI Swwan"
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["ComfyUI_Swwan", "ComfyUI_Swwan.nodes", "ComfyUI_Swwan.ops"]
+package-dir = {"ComfyUI_Swwan" = "."}
+include-package-data = true
+
+[tool.setuptools.package-data]
+ComfyUI_Swwan = [
+  "node_manifest.json", "LICENSE", "README.md", "CHANGELOG.md", "CONTRIBUTING.md", "THIRD_PARTY_NOTICES.md", "requirements.txt",
+  "fonts/*.ttf", "fonts/*.otf", "licenses/*.txt", "web/js/*.js", "docs/*.md", "docs/*.json", "examples/*.json", "scripts/*.py",
+  "skills/*/*.md", "skills/*/scripts/*.py", "skills/*/agents/*.yaml",
+  "tests/*.py", "tests/*.mjs", "tests/*.js", "tests/fixtures/*.py", "tests/fixtures/*.json", "tests/fixtures/reference/*.py",
+]

@@ -1,0 +1,5825 @@
+{
+  "LayerUtility: CropByMask V2": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "invert_mask": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "detect": [
+          [
+            "mask_area",
+            "min_bounding_rect",
+            "max_inscribed_rect"
+          ]
+        ],
+        "top_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "bottom_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "left_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "right_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "round_to_multiple": [
+          [
+            "8",
+            "16",
+            "32",
+            "64",
+            "128",
+            "256",
+            "512",
+            "None"
+          ]
+        ]
+      },
+      "optional": {
+        "crop_box": [
+          "BOX"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK",
+      "BOX",
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "LayerUtility: CropByMask V3": {
+    "inputs": {
+      "required": {
+        "detect": [
+          [
+            "mask_area",
+            "min_bounding_rect",
+            "max_inscribed_rect"
+          ]
+        ],
+        "top_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "bottom_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "left_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "right_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "round_to_multiple": [
+          [
+            "8",
+            "16",
+            "32",
+            "64",
+            "128",
+            "256",
+            "512",
+            "None"
+          ]
+        ]
+      },
+      "optional": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask_image": [
+          "IMAGE"
+        ],
+        "crop_box": [
+          "BOX"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "IMAGE",
+      "BOX",
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "LayerUtility: CropByMask V4": {
+    "inputs": {
+      "required": {
+        "detect": [
+          [
+            "mask_area",
+            "min_bounding_rect",
+            "max_inscribed_rect"
+          ]
+        ],
+        "top_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "bottom_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "left_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "right_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "round_to_multiple": [
+          [
+            "8",
+            "16",
+            "32",
+            "64",
+            "128",
+            "256",
+            "512",
+            "None"
+          ]
+        ],
+        "reuse_crop_box": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "device": [
+          [
+            "CPU",
+            "GPU"
+          ],
+          {
+            "default": "CPU"
+          }
+        ]
+      },
+      "optional": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask_image": [
+          "IMAGE"
+        ],
+        "crop_box": [
+          "BOX"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "IMAGE",
+      "BOX",
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "SwwanCropByMaskV5": {
+    "inputs": {
+      "required": {
+        "detect": [
+          [
+            "mask_area",
+            "min_bounding_rect",
+            "max_inscribed_rect"
+          ]
+        ],
+        "reserve_mode": [
+          [
+            "absolute",
+            "ratio"
+          ]
+        ],
+        "top_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "bottom_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "left_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "right_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "top_reserve_ratio": [
+          "FLOAT",
+          {
+            "default": 0.5,
+            "min": 0.0,
+            "max": 10.0,
+            "step": 0.1
+          }
+        ],
+        "bottom_reserve_ratio": [
+          "FLOAT",
+          {
+            "default": 0.5,
+            "min": 0.0,
+            "max": 10.0,
+            "step": 0.1
+          }
+        ],
+        "left_reserve_ratio": [
+          "FLOAT",
+          {
+            "default": 0.5,
+            "min": 0.0,
+            "max": 10.0,
+            "step": 0.1
+          }
+        ],
+        "right_reserve_ratio": [
+          "FLOAT",
+          {
+            "default": 0.5,
+            "min": 0.0,
+            "max": 10.0,
+            "step": 0.1
+          }
+        ],
+        "reserve_max": [
+          "INT",
+          {
+            "default": 100,
+            "min": 0,
+            "max": 1024,
+            "step": 1
+          }
+        ],
+        "round_to_multiple": [
+          [
+            "8",
+            "16",
+            "32",
+            "64",
+            "128",
+            "256",
+            "512",
+            "None"
+          ]
+        ],
+        "batch_mode": [
+          [
+            "single_frame",
+            "batch_first_reuse"
+          ]
+        ],
+        "device": [
+          [
+            "CPU",
+            "GPU"
+          ],
+          {
+            "default": "CPU"
+          }
+        ]
+      },
+      "optional": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask_image": [
+          "IMAGE"
+        ],
+        "crop_box": [
+          "BOX"
+        ],
+        "crop_mode": [
+          [
+            "bounds",
+            "edit_region"
+          ],
+          {
+            "default": "bounds"
+          }
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "fill_mask_holes": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "output_size": [
+          [
+            "原像素",
+            "原像素1：1",
+            "自定义宽高"
+          ],
+          {
+            "default": "原像素"
+          }
+        ],
+        "custom_width": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 0,
+            "max": 8192
+          }
+        ],
+        "custom_height": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 0,
+            "max": 8192
+          }
+        ],
+        "alignment": [
+          "INT",
+          {
+            "default": 8,
+            "min": 0,
+            "max": 256
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "IMAGE",
+      "BOX",
+      "IMAGE",
+      "SEAM",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "LayerUtility: RestoreCropBox": {
+    "inputs": {
+      "required": {
+        "background_image": [
+          "IMAGE"
+        ],
+        "croped_image": [
+          "IMAGE"
+        ],
+        "invert_mask": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "crop_box": [
+          "BOX"
+        ]
+      },
+      "optional": {
+        "croped_mask": [
+          "MASK"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "LayerUtility: RestoreCropBox V2": {
+    "inputs": {
+      "required": {
+        "background_image": [
+          "IMAGE"
+        ],
+        "croped_image": [
+          "IMAGE"
+        ],
+        "invert_mask": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "crop_box": [
+          "BOX"
+        ],
+        "feathering": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 256,
+            "step": 1
+          }
+        ],
+        "device": [
+          [
+            "CPU",
+            "GPU"
+          ],
+          {
+            "default": "CPU"
+          }
+        ]
+      },
+      "optional": {
+        "croped_mask": [
+          "MASK"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "SwwanRestoreCropBoxV3": {
+    "inputs": {
+      "required": {
+        "background_image": [
+          "IMAGE"
+        ],
+        "croped_image": [
+          "IMAGE"
+        ],
+        "invert_mask": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "crop_box": [
+          "BOX"
+        ],
+        "feathering": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 256,
+            "step": 1
+          }
+        ],
+        "device": [
+          [
+            "CPU",
+            "GPU"
+          ],
+          {
+            "default": "CPU"
+          }
+        ]
+      },
+      "optional": {
+        "croped_mask": [
+          "MASK"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "SwwanRestoreCropBoxV4": {
+    "inputs": {
+      "required": {
+        "background_image": [
+          "IMAGE"
+        ],
+        "croped_image": [
+          "IMAGE"
+        ],
+        "crop_box": [
+          "BOX"
+        ],
+        "feathering": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 256,
+            "step": 1
+          }
+        ],
+        "device": [
+          [
+            "CPU",
+            "GPU"
+          ],
+          {
+            "default": "GPU"
+          }
+        ]
+      },
+      "optional": {
+        "croped_mask": [
+          "MASK"
+        ],
+        "region_info": [
+          "SEAM"
+        ],
+        "expand_percent": [
+          "INT",
+          {
+            "default": 5,
+            "min": 0,
+            "max": 30
+          }
+        ],
+        "feather_percent": [
+          "INT",
+          {
+            "default": 5,
+            "min": 0,
+            "max": 30
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "LayerUtility: ImageScaleByAspectRatio V2": {
+    "inputs": {
+      "required": {
+        "aspect_ratio": [
+          [
+            "original",
+            "custom",
+            "1:1",
+            "3:2",
+            "4:3",
+            "16:9",
+            "2:3",
+            "3:4",
+            "9:16"
+          ]
+        ],
+        "proportional_width": [
+          "INT",
+          {
+            "default": 1,
+            "min": 1,
+            "max": 100000000.0,
+            "step": 1
+          }
+        ],
+        "proportional_height": [
+          "INT",
+          {
+            "default": 1,
+            "min": 1,
+            "max": 100000000.0,
+            "step": 1
+          }
+        ],
+        "fit": [
+          [
+            "letterbox",
+            "crop",
+            "fill"
+          ]
+        ],
+        "method": [
+          [
+            "lanczos",
+            "bicubic",
+            "hamming",
+            "bilinear",
+            "box",
+            "nearest"
+          ]
+        ],
+        "round_to_multiple": [
+          [
+            "8",
+            "16",
+            "32",
+            "64",
+            "128",
+            "256",
+            "512",
+            "None"
+          ]
+        ],
+        "scale_to_side": [
+          [
+            "None",
+            "longest",
+            "shortest",
+            "width",
+            "height",
+            "total_pixel(kilo pixel)"
+          ]
+        ],
+        "scale_to_length": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 4,
+            "max": 100000000.0,
+            "step": 1
+          }
+        ],
+        "background_color": [
+          "STRING",
+          {
+            "default": "#000000"
+          }
+        ]
+      },
+      "optional": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK",
+      "BOX",
+      "INT",
+      "INT"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "LayerUtility: ColorImage (Swwan)": {
+    "inputs": {
+      "required": {
+        "width": [
+          "INT",
+          {
+            "default": 512,
+            "min": 4,
+            "max": 99999,
+            "step": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 512,
+            "min": 4,
+            "max": 99999,
+            "step": 1
+          }
+        ],
+        "color": [
+          "STRING",
+          {
+            "default": "#000000"
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageBlendSwwan": {
+    "inputs": {
+      "required": {
+        "background_image": [
+          "IMAGE"
+        ],
+        "layer_image": [
+          "IMAGE"
+        ],
+        "invert_mask": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ],
+        "blend_mode": [
+          [
+            "normal",
+            "multply",
+            "screen",
+            "add",
+            "subtract",
+            "difference",
+            "darker",
+            "lighter",
+            "color_burn",
+            "color_dodge",
+            "linear_burn",
+            "linear_dodge",
+            "overlay",
+            "soft_light",
+            "hard_light",
+            "vivid_light",
+            "pin_light",
+            "linear_light",
+            "hard_mix"
+          ]
+        ],
+        "opacity": [
+          "INT",
+          {
+            "default": 100,
+            "min": 0,
+            "max": 100,
+            "step": 1
+          }
+        ]
+      },
+      "optional": {
+        "layer_mask": [
+          "MASK"
+        ],
+        "operation": [
+          [
+            "blend",
+            "mask_composite"
+          ],
+          {
+            "default": "blend"
+          }
+        ],
+        "mask_expand": [
+          "INT",
+          {
+            "default": 0,
+            "min": -100,
+            "max": 100
+          }
+        ],
+        "mask_blur": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 100
+          }
+        ],
+        "match_image_size": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "Seed (rgthree)": {
+    "inputs": {
+      "required": {
+        "seed": [
+          "INT",
+          {
+            "default": 0,
+            "min": -1125899906842624,
+            "max": 1125899906842624
+          }
+        ]
+      },
+      "hidden": {
+        "prompt": "PROMPT",
+        "extra_pnginfo": "EXTRA_PNGINFO",
+        "unique_id": "UNIQUE_ID"
+      }
+    },
+    "outputs": [
+      "INT"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "SwwanImageListToImageBatch": {
+    "inputs": {
+      "required": {
+        "images": [
+          "IMAGE"
+        ],
+        "device": [
+          [
+            "auto",
+            "cpu",
+            "gpu"
+          ]
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": true,
+    "output_is_list": []
+  },
+  "SwwanImageBatchToImageList": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": [
+      true
+    ]
+  },
+  "Mask_transform_sum": {
+    "inputs": {
+      "required": {
+        "bg_mode": [
+          [
+            "crop_image",
+            "image",
+            "transparent",
+            "white",
+            "black",
+            "red",
+            "green",
+            "blue"
+          ]
+        ],
+        "mask_mode": [
+          [
+            "original",
+            "fill",
+            "fill_block",
+            "outline",
+            "outline_block",
+            "circle",
+            "outline_circle"
+          ],
+          {
+            "default": "original"
+          }
+        ],
+        "ignore_threshold": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 10000,
+            "step": 1
+          }
+        ],
+        "opacity": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.05
+          }
+        ],
+        "outline_thickness": [
+          "INT",
+          {
+            "default": 3,
+            "min": 1,
+            "max": 400,
+            "step": 1
+          }
+        ],
+        "smoothness": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 150,
+            "step": 1
+          }
+        ],
+        "mask_expand": [
+          "INT",
+          {
+            "default": 0,
+            "min": -500,
+            "max": 1000,
+            "step": 0.1
+          }
+        ],
+        "tapered_corners": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ],
+        "mask_min": [
+          "FLOAT",
+          {
+            "default": 0.0,
+            "min": -10.0,
+            "max": 1.0,
+            "step": 0.01
+          }
+        ],
+        "mask_max": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 10.0,
+            "step": 0.01
+          }
+        ],
+        "crop_to_mask": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "expand_width": [
+          "INT",
+          {
+            "default": 0,
+            "min": -500,
+            "max": 1000,
+            "step": 1
+          }
+        ],
+        "expand_height": [
+          "INT",
+          {
+            "default": 0,
+            "min": -500,
+            "max": 1000,
+            "step": 1
+          }
+        ],
+        "rescale_crop": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.1,
+            "max": 10.0,
+            "step": 0.01
+          }
+        ],
+        "divisible_by": [
+          "INT",
+          {
+            "default": 8,
+            "min": 1,
+            "max": 128,
+            "step": 1
+          }
+        ]
+      },
+      "optional": {
+        "base_image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "Image_Resize_sum": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "width": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "upscale_method": [
+          [
+            "nearest-exact",
+            "bilinear",
+            "area",
+            "bicubic",
+            "lanczos"
+          ],
+          {
+            "default": "bilinear"
+          }
+        ],
+        "keep_proportion": [
+          [
+            "resize",
+            "stretch",
+            "pad",
+            "pad_edge",
+            "crop"
+          ]
+        ],
+        "pad_color": [
+          [
+            "black",
+            "white",
+            "red",
+            "green",
+            "blue",
+            "gray"
+          ],
+          {
+            "default": "black"
+          }
+        ],
+        "crop_position": [
+          [
+            "center",
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ],
+          {
+            "default": "center"
+          }
+        ],
+        "divisible_by": [
+          "INT",
+          {
+            "default": 2,
+            "min": 0,
+            "max": 512,
+            "step": 1
+          }
+        ],
+        "pad_mask_remove": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ]
+      },
+      "optional": {
+        "mask": [
+          "MASK"
+        ],
+        "get_image_size": [
+          "IMAGE"
+        ],
+        "mask_stack": [
+          "MASK_STACK2"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK",
+      "STITCH3",
+      "FLOAT"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "Image_Resize_sum_restore": {
+    "inputs": {
+      "required": {
+        "resized_image": [
+          "IMAGE"
+        ],
+        "stitch": [
+          "STITCH3"
+        ],
+        "upscale_method": [
+          [
+            "nearest-exact",
+            "bilinear",
+            "area",
+            "bicubic",
+            "lanczos"
+          ],
+          {
+            "default": "bilinear"
+          }
+        ],
+        "pad_crop_no_scale": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK",
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "Image_Resize_sum_data": {
+    "inputs": {
+      "required": {
+        "stitch": [
+          "STITCH3"
+        ]
+      },
+      "optional": {
+        "image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "outputs": [
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "FLOAT"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "math_Remap_data": {
+    "inputs": {
+      "required": {
+        "clamp": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "source_min": [
+          "FLOAT",
+          {
+            "default": 0.0,
+            "min": -999,
+            "max": 999,
+            "step": 0.01
+          }
+        ],
+        "source_max": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": -999,
+            "max": 999,
+            "step": 0.01
+          }
+        ],
+        "target_min": [
+          "FLOAT",
+          {
+            "default": 0.0,
+            "min": -999,
+            "max": 999,
+            "step": 0.01
+          }
+        ],
+        "target_max": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": -999,
+            "max": 999,
+            "step": 0.01
+          }
+        ],
+        "easing": [
+          [
+            "Linear",
+            "Sine_In",
+            "Sine_Out",
+            "Sine_InOut",
+            "Sin_Squared",
+            "Quart_In",
+            "Quart_Out",
+            "Quart_InOut",
+            "Cubic_In",
+            "Cubic_Out",
+            "Cubic_InOut",
+            "Circ_In",
+            "Circ_Out",
+            "Circ_InOut",
+            "Back_In",
+            "Back_Out",
+            "Back_InOut",
+            "Elastic_In",
+            "Elastic_Out",
+            "Elastic_InOut",
+            "Bounce_In",
+            "Bounce_Out",
+            "Bounce_InOut"
+          ],
+          {
+            "default": "Linear"
+          }
+        ]
+      },
+      "optional": {
+        "value": [
+          "*"
+        ]
+      }
+    },
+    "outputs": [
+      "FLOAT",
+      "INT"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "math_calculate": {
+    "inputs": {
+      "required": {
+        "preset": [
+          [
+            "custom",
+            "sin(a)",
+            "cos(a)",
+            "tan(a)",
+            "asin(a)",
+            "acos(a)",
+            "atan(a)",
+            "pow(a, 2)",
+            "sqrt(a)",
+            "log(a)",
+            "log10(a)",
+            "sinh(a)",
+            "cosh(a)",
+            "tanh(a)",
+            "asinh(a)",
+            "acosh(a)",
+            "atanh(a)",
+            "radians(a)",
+            "degrees(a)",
+            "fabs(a)",
+            "exp(a)",
+            "round(a)",
+            "ceil(a)",
+            "floor(a)",
+            "abs(a)",
+            "a + b",
+            "a - b",
+            "a * b",
+            "a ÷ b",
+            "a % b",
+            "pow(a,b)",
+            "ceil(a÷b)",
+            "floor(a÷b)",
+            "max(a,b)",
+            "min(a,b)",
+            "a > b",
+            "a < b",
+            "a >= b",
+            "a <= b",
+            "a == b",
+            "a != b",
+            "a & b",
+            "a | b",
+            "a ^ b",
+            "a << b",
+            "a >> b",
+            "atan2(a,b)",
+            "hypot(a,b)",
+            "copysign(a,b)",
+            "fmod(a,b)",
+            "max(a,b,c)",
+            "min(a,b,c)",
+            "clamp(a,b,c)",
+            "lerp(a,b,c)"
+          ],
+          {
+            "default": "custom",
+            "label": [
+              "自定义表达式",
+              "正弦函数 sin(a)",
+              "余弦函数 cos(a)",
+              "正切函数 tan(a)",
+              "反正弦函数 asin(a)",
+              "反余弦函数 acos(a)",
+              "反正切函数 atan(a)",
+              "平方 a²",
+              "平方根 √a",
+              "自然对数 log(a)",
+              "常用对数 log10(a)",
+              "双曲正弦 sinh(a)",
+              "双曲余弦 cosh(a)",
+              "双曲正切 tanh(a)",
+              "反双曲正弦 asinh(a)",
+              "反双曲余弦 acosh(a)",
+              "反双曲正切 atanh(a)",
+              "角度转弧度 radians(a)",
+              "弧度转角度 degrees(a)",
+              "绝对值 fabs(a)",
+              "指数函数 e的a次方",
+              "四舍五入 round(a)",
+              "向上取整 ceil(a)",
+              "向下取整 floor(a)",
+              "绝对值 abs(a)",
+              "加法 a + b",
+              "减法 a - b",
+              "乘法 a * b",
+              "除法 a 除以 b",
+              "取模 a 模 b",
+              "幂运算 a的b次方",
+              "向上取整 ceil(a÷b)",
+              "向下取整 floor(a÷b)",
+              "最大值 max(a,b)",
+              "最小值 min(a,b)",
+              "大于 a > b",
+              "小于 a < b",
+              "大于等于 a >= b",
+              "小于等于 a <= b",
+              "等于 a == b",
+              "不等于 a != b",
+              "按位与 a & b",
+              "按位或 a | b",
+              "按位异或 a ^ b",
+              "左移位 a << b",
+              "右移位 a >> b",
+              "四象限反正切 atan2(a,b)",
+              "直角三角形斜边 hypot(a,b)",
+              "复制符号 copysign(a,b)",
+              "浮点数取模 fmod(a,b)",
+              "最大值 max(a,b,c)",
+              "最小值 min(a,b,c)",
+              "限制在b和c之间 clamp(a,b,c)",
+              "线性插值 lerp(a,b,c)"
+            ]
+          }
+        ],
+        "expression": [
+          "STRING",
+          {
+            "default": "",
+            "multiline": false
+          }
+        ],
+        "a": [
+          "*",
+          {
+            "forceInput": true
+          }
+        ]
+      },
+      "optional": {
+        "b": [
+          "*"
+        ],
+        "c": [
+          "*"
+        ]
+      }
+    },
+    "outputs": [
+      "FLOAT",
+      "INT",
+      "BOOLEAN"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "list_Slice": {
+    "inputs": {
+      "required": {
+        "ANY": [
+          "*",
+          {
+            "forceInput": true
+          }
+        ],
+        "start": [
+          "INT",
+          {
+            "default": 0,
+            "min": -9007199254740991
+          }
+        ],
+        "end": [
+          "INT",
+          {
+            "default": -1,
+            "min": -9007199254740991
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "*"
+    ],
+    "input_is_list": true,
+    "output_is_list": [
+      true
+    ]
+  },
+  "list_Merge": {
+    "inputs": {
+      "required": {},
+      "optional": {},
+      "hidden": {
+        "unique_id": "UNIQUE_ID",
+        "prompt": "PROMPT",
+        "extra_pnginfo": "EXTRA_PNGINFO"
+      }
+    },
+    "outputs": [
+      "*"
+    ],
+    "input_is_list": true,
+    "output_is_list": [
+      true
+    ]
+  },
+  "list_Value": {
+    "inputs": {
+      "required": {
+        "schedule": [
+          "STRING",
+          {
+            "multiline": true,
+            "default": "frame_number@value"
+          }
+        ],
+        "max_frames": [
+          "INT",
+          {
+            "default": 100,
+            "min": 1,
+            "max": 99999
+          }
+        ],
+        "easing_type": [
+          [
+            "Linear",
+            "Sine_In",
+            "Sine_Out",
+            "Sine_InOut",
+            "Sin_Squared",
+            "Quart_In",
+            "Quart_Out",
+            "Quart_InOut",
+            "Cubic_In",
+            "Cubic_Out",
+            "Cubic_InOut",
+            "Circ_In",
+            "Circ_Out",
+            "Circ_InOut",
+            "Back_In",
+            "Back_Out",
+            "Back_InOut",
+            "Elastic_In",
+            "Elastic_Out",
+            "Elastic_InOut",
+            "Bounce_In",
+            "Bounce_Out",
+            "Bounce_InOut"
+          ]
+        ]
+      }
+    },
+    "outputs": [
+      "FLOAT",
+      "INT",
+      "FLOAT"
+    ],
+    "input_is_list": false,
+    "output_is_list": [
+      true,
+      true,
+      true
+    ]
+  },
+  "list_num_range": {
+    "inputs": {
+      "required": {
+        "start": [
+          "FLOAT",
+          {
+            "default": 0
+          }
+        ],
+        "stop": [
+          "FLOAT",
+          {
+            "default": 1
+          }
+        ],
+        "num": [
+          "INT",
+          {
+            "default": 10,
+            "min": 2
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "FLOAT",
+      "LIST",
+      "INT"
+    ],
+    "input_is_list": false,
+    "output_is_list": [
+      true,
+      false,
+      false
+    ]
+  },
+  "sch_split_text": {
+    "inputs": {
+      "required": {
+        "text": [
+          "STRING",
+          {
+            "multiline": true,
+            "default": "a b c"
+          }
+        ],
+        "current_frame": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 99999
+          }
+        ]
+      },
+      "optional": {
+        "preset": [
+          [
+            "None",
+            "Line",
+            "Space",
+            "Comma",
+            "Period",
+            "Semicolon",
+            "Tab",
+            "Pipe",
+            "Custom"
+          ],
+          {
+            "default": "None"
+          }
+        ],
+        "delimiter": [
+          "STRING",
+          {
+            "default": " ",
+            "label": "Custom delimiter"
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "STRING",
+      "INT"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "sch_text": {
+    "inputs": {
+      "required": {
+        "keyframe_list": [
+          "STRING",
+          {
+            "multiline": true,
+            "default": "frame_number@text"
+          }
+        ],
+        "current_frame": [
+          "INT",
+          {
+            "default": 0.0,
+            "min": 0.0,
+            "max": 9999.0,
+            "step": 1.0
+          }
+        ],
+        "easing_type": [
+          [
+            "Linear",
+            "Sine_In",
+            "Sine_Out",
+            "Sine_InOut",
+            "Sin_Squared",
+            "Quart_In",
+            "Quart_Out",
+            "Quart_InOut",
+            "Cubic_In",
+            "Cubic_Out",
+            "Cubic_InOut",
+            "Circ_In",
+            "Circ_Out",
+            "Circ_InOut",
+            "Back_In",
+            "Back_Out",
+            "Back_InOut",
+            "Elastic_In",
+            "Elastic_Out",
+            "Elastic_InOut",
+            "Bounce_In",
+            "Bounce_Out",
+            "Bounce_InOut"
+          ]
+        ]
+      },
+      "optional": {}
+    },
+    "outputs": [
+      "STRING",
+      "STRING",
+      "FLOAT"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "sch_Value": {
+    "inputs": {
+      "required": {
+        "schedule": [
+          "STRING",
+          {
+            "multiline": true,
+            "default": "frame_number@value"
+          }
+        ],
+        "current_frame": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 9999,
+            "step": 1
+          }
+        ],
+        "easing_type": [
+          [
+            "Linear",
+            "Sine_In",
+            "Sine_Out",
+            "Sine_InOut",
+            "Sin_Squared",
+            "Quart_In",
+            "Quart_Out",
+            "Quart_InOut",
+            "Cubic_In",
+            "Cubic_Out",
+            "Cubic_InOut",
+            "Circ_In",
+            "Circ_Out",
+            "Circ_InOut",
+            "Back_In",
+            "Back_Out",
+            "Back_InOut",
+            "Elastic_In",
+            "Elastic_Out",
+            "Elastic_InOut",
+            "Bounce_In",
+            "Bounce_Out",
+            "Bounce_InOut"
+          ]
+        ]
+      }
+    },
+    "outputs": [
+      "INT",
+      "FLOAT",
+      "FLOAT",
+      "INT"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "sch_Prompt": {
+    "inputs": {
+      "required": {
+        "clip": [
+          "CLIP"
+        ],
+        "keyframe_list": [
+          "STRING",
+          {
+            "multiline": true,
+            "default": "frame_number@text"
+          }
+        ],
+        "current_frame": [
+          "INT",
+          {
+            "default": 0.0,
+            "min": 0.0,
+            "max": 9999.0,
+            "step": 1.0
+          }
+        ],
+        "easing_type": [
+          [
+            "Linear",
+            "Sine_In",
+            "Sine_Out",
+            "Sine_InOut",
+            "Sin_Squared",
+            "Quart_In",
+            "Quart_Out",
+            "Quart_InOut",
+            "Cubic_In",
+            "Cubic_Out",
+            "Cubic_InOut",
+            "Circ_In",
+            "Circ_Out",
+            "Circ_InOut",
+            "Back_In",
+            "Back_Out",
+            "Back_InOut",
+            "Elastic_In",
+            "Elastic_Out",
+            "Elastic_InOut",
+            "Bounce_In",
+            "Bounce_Out",
+            "Bounce_InOut"
+          ]
+        ]
+      }
+    },
+    "outputs": [
+      "CONDITIONING"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "sch_image": {
+    "inputs": {
+      "required": {
+        "images": [
+          "IMAGE"
+        ],
+        "current_frame": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 99999
+          }
+        ],
+        "max_frames": [
+          "INT",
+          {
+            "default": 99999,
+            "min": 1,
+            "max": 99999
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "sch_mask": {
+    "inputs": {
+      "required": {
+        "masks": [
+          "MASK"
+        ],
+        "current_frame": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 99999
+          }
+        ],
+        "max_frames": [
+          "INT",
+          {
+            "default": 99999,
+            "min": 1,
+            "max": 99999
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "BatchSlice": {
+    "inputs": {
+      "required": {
+        "LIST": [
+          "LIST",
+          {
+            "forceInput": true
+          }
+        ],
+        "start": [
+          "INT",
+          {
+            "default": 0,
+            "min": -9007199254740991
+          }
+        ],
+        "end": [
+          "INT",
+          {
+            "default": -1,
+            "min": -9007199254740991
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "*"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "MergeBatch": {
+    "inputs": {
+      "required": {},
+      "optional": {},
+      "hidden": {
+        "unique_id": "UNIQUE_ID",
+        "prompt": "PROMPT",
+        "extra_pnginfo": "EXTRA_PNGINFO"
+      }
+    },
+    "outputs": [
+      "LIST"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "type_AnyIndex": {
+    "inputs": {
+      "required": {
+        "any": [
+          "*",
+          {}
+        ],
+        "index": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 1000000,
+            "step": 1
+          }
+        ]
+      },
+      "hidden": {
+        "prompt": "PROMPT",
+        "my_unique_id": "UNIQUE_ID"
+      }
+    },
+    "outputs": [
+      "*"
+    ],
+    "input_is_list": true,
+    "output_is_list": []
+  },
+  "ImagePass": {
+    "inputs": {
+      "required": {},
+      "optional": {
+        "image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ColorMatch": {
+    "inputs": {
+      "required": {
+        "image_ref": [
+          "IMAGE"
+        ],
+        "image_target": [
+          "IMAGE"
+        ],
+        "method": [
+          [
+            "mkl",
+            "hm",
+            "reinhard",
+            "mvgd",
+            "hm-mvgd-hm",
+            "hm-mkl-hm"
+          ],
+          {
+            "default": "mkl"
+          }
+        ]
+      },
+      "optional": {
+        "strength": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 10.0,
+            "step": 0.01
+          }
+        ],
+        "multithread": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "SaveImageWithAlpha": {
+    "inputs": {
+      "required": {
+        "images": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "filename_prefix": [
+          "STRING",
+          {
+            "default": "ComfyUI"
+          }
+        ]
+      },
+      "hidden": {
+        "prompt": "PROMPT",
+        "extra_pnginfo": "EXTRA_PNGINFO"
+      }
+    },
+    "outputs": [],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageConcanate": {
+    "inputs": {
+      "required": {
+        "image1": [
+          "IMAGE"
+        ],
+        "image2": [
+          "IMAGE"
+        ],
+        "direction": [
+          [
+            "right",
+            "down",
+            "left",
+            "up"
+          ],
+          {
+            "default": "right"
+          }
+        ],
+        "match_image_size": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageConcatFromBatch": {
+    "inputs": {
+      "required": {
+        "images": [
+          "IMAGE"
+        ],
+        "num_columns": [
+          "INT",
+          {
+            "default": 3,
+            "min": 1,
+            "max": 255,
+            "step": 1
+          }
+        ],
+        "match_image_size": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "max_resolution": [
+          "INT",
+          {
+            "default": 4096
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageGridComposite2x2": {
+    "inputs": {
+      "required": {
+        "image1": [
+          "IMAGE"
+        ],
+        "image2": [
+          "IMAGE"
+        ],
+        "image3": [
+          "IMAGE"
+        ],
+        "image4": [
+          "IMAGE"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageGridComposite3x3": {
+    "inputs": {
+      "required": {
+        "image1": [
+          "IMAGE"
+        ],
+        "image2": [
+          "IMAGE"
+        ],
+        "image3": [
+          "IMAGE"
+        ],
+        "image4": [
+          "IMAGE"
+        ],
+        "image5": [
+          "IMAGE"
+        ],
+        "image6": [
+          "IMAGE"
+        ],
+        "image7": [
+          "IMAGE"
+        ],
+        "image8": [
+          "IMAGE"
+        ],
+        "image9": [
+          "IMAGE"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageBatchTestPattern": {
+    "inputs": {
+      "required": {
+        "batch_size": [
+          "INT",
+          {
+            "default": 1,
+            "min": 1,
+            "max": 255,
+            "step": 1
+          }
+        ],
+        "start_from": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 255,
+            "step": 1
+          }
+        ],
+        "text_x": [
+          "INT",
+          {
+            "default": 256,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "text_y": [
+          "INT",
+          {
+            "default": 256,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "default": 512,
+            "min": 16,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 512,
+            "min": 16,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "font": [
+          [
+            "FreeMono.ttf",
+            "FreeMonoBoldOblique.otf",
+            "TTNorms-Black.otf"
+          ]
+        ],
+        "font_size": [
+          "INT",
+          {
+            "default": 255,
+            "min": 8,
+            "max": 4096,
+            "step": 1
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageGrabPIL": {
+    "inputs": {
+      "required": {
+        "x": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "y": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "num_frames": [
+          "INT",
+          {
+            "default": 1,
+            "min": 1,
+            "max": 255,
+            "step": 1
+          }
+        ],
+        "delay": [
+          "FLOAT",
+          {
+            "default": 0.1,
+            "min": 0.0,
+            "max": 10.0,
+            "step": 0.01
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "WebcamCaptureCV2": {
+    "inputs": {
+      "required": {
+        "x": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "y": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "cam_index": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 255,
+            "step": 1
+          }
+        ],
+        "release": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "AddLabel": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "text_x": [
+          "INT",
+          {
+            "default": 10,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "text_y": [
+          "INT",
+          {
+            "default": 2,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 48,
+            "min": -1,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "font_size": [
+          "INT",
+          {
+            "default": 32,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "font_color": [
+          "STRING",
+          {
+            "default": "white"
+          }
+        ],
+        "label_color": [
+          "STRING",
+          {
+            "default": "black"
+          }
+        ],
+        "font": [
+          [
+            "FreeMono.ttf",
+            "FreeMonoBoldOblique.otf",
+            "TTNorms-Black.otf"
+          ]
+        ],
+        "text": [
+          "STRING",
+          {
+            "default": "Text"
+          }
+        ],
+        "direction": [
+          [
+            "up",
+            "down",
+            "left",
+            "right",
+            "overlay"
+          ],
+          {
+            "default": "up"
+          }
+        ]
+      },
+      "optional": {
+        "caption": [
+          "STRING",
+          {
+            "default": "",
+            "forceInput": true
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "GetImageSizeAndCount": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "INT",
+      "INT",
+      "INT"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "GetLatentSizeAndCount": {
+    "inputs": {
+      "required": {
+        "latent": [
+          "LATENT"
+        ]
+      }
+    },
+    "outputs": [
+      "LATENT",
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "INT"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageBatchRepeatInterleaving": {
+    "inputs": {
+      "required": {
+        "images": [
+          "IMAGE"
+        ],
+        "repeats": [
+          "INT",
+          {
+            "default": 1,
+            "min": 1,
+            "max": 4096
+          }
+        ]
+      },
+      "optional": {
+        "mask": [
+          "MASK"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageUpscaleWithModelBatched": {
+    "inputs": {
+      "required": {
+        "upscale_model": [
+          "UPSCALE_MODEL"
+        ],
+        "images": [
+          "IMAGE"
+        ],
+        "per_batch": [
+          "INT",
+          {
+            "default": 16,
+            "min": 1,
+            "max": 4096,
+            "step": 1
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageNormalize_Neg1_To_1": {
+    "inputs": {
+      "required": {
+        "images": [
+          "IMAGE"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "RemapImageRange": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "min": [
+          "FLOAT",
+          {
+            "default": 0.0,
+            "min": -10.0,
+            "max": 1.0,
+            "step": 0.01
+          }
+        ],
+        "max": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 10.0,
+            "step": 0.01
+          }
+        ],
+        "clamp": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "SplitImageChannels": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "IMAGE",
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "MergeImageChannels": {
+    "inputs": {
+      "required": {
+        "red": [
+          "IMAGE"
+        ],
+        "green": [
+          "IMAGE"
+        ],
+        "blue": [
+          "IMAGE"
+        ]
+      },
+      "optional": {
+        "alpha": [
+          "MASK",
+          {
+            "default": null
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImagePadForOutpaintMasked": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "left": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 8
+          }
+        ],
+        "top": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 8
+          }
+        ],
+        "right": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 8
+          }
+        ],
+        "bottom": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 8
+          }
+        ],
+        "feathering": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ]
+      },
+      "optional": {
+        "mask": [
+          "MASK"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImagePadForOutpaintTargetSize": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "target_width": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 8
+          }
+        ],
+        "target_height": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 8
+          }
+        ],
+        "feathering": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "upscale_method": [
+          [
+            "nearest-exact",
+            "bilinear",
+            "area",
+            "bicubic",
+            "lanczos"
+          ]
+        ]
+      },
+      "optional": {
+        "mask": [
+          "MASK"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImagePrepForICLora": {
+    "inputs": {
+      "required": {
+        "reference_image": [
+          "IMAGE"
+        ],
+        "output_width": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 1,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "output_height": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 1,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "border_width": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ]
+      },
+      "optional": {
+        "latent_image": [
+          "IMAGE"
+        ],
+        "latent_mask": [
+          "MASK"
+        ],
+        "reference_mask": [
+          "MASK"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageAndMaskPreview": {
+    "inputs": {
+      "required": {
+        "mask_opacity": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.01
+          }
+        ],
+        "mask_color": [
+          "STRING",
+          {
+            "default": "255, 255, 255"
+          }
+        ],
+        "pass_through": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ]
+      },
+      "optional": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ]
+      },
+      "hidden": {
+        "prompt": "PROMPT",
+        "extra_pnginfo": "EXTRA_PNGINFO"
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "CrossFadeImages": {
+    "inputs": {
+      "required": {
+        "images_1": [
+          "IMAGE"
+        ],
+        "images_2": [
+          "IMAGE"
+        ],
+        "interpolation": [
+          [
+            "linear",
+            "ease_in",
+            "ease_out",
+            "ease_in_out",
+            "bounce",
+            "elastic",
+            "glitchy",
+            "exponential_ease_out"
+          ]
+        ],
+        "transition_start_index": [
+          "INT",
+          {
+            "default": 1,
+            "min": -4096,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "transitioning_frames": [
+          "INT",
+          {
+            "default": 1,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "start_level": [
+          "FLOAT",
+          {
+            "default": 0.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.01
+          }
+        ],
+        "end_level": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.01
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "CrossFadeImagesMulti": {
+    "inputs": {
+      "required": {
+        "inputcount": [
+          "INT",
+          {
+            "default": 2,
+            "min": 2,
+            "max": 1000,
+            "step": 1
+          }
+        ],
+        "image_1": [
+          "IMAGE"
+        ],
+        "interpolation": [
+          [
+            "linear",
+            "ease_in",
+            "ease_out",
+            "ease_in_out",
+            "bounce",
+            "elastic",
+            "glitchy",
+            "exponential_ease_out"
+          ]
+        ],
+        "transitioning_frames": [
+          "INT",
+          {
+            "default": 1,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ]
+      },
+      "optional": {
+        "image_2": [
+          "IMAGE"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "TransitionImagesMulti": {
+    "inputs": {
+      "required": {
+        "inputcount": [
+          "INT",
+          {
+            "default": 2,
+            "min": 2,
+            "max": 1000,
+            "step": 1
+          }
+        ],
+        "image_1": [
+          "IMAGE"
+        ],
+        "interpolation": [
+          [
+            "linear",
+            "ease_in",
+            "ease_out",
+            "ease_in_out",
+            "bounce",
+            "elastic",
+            "glitchy",
+            "exponential_ease_out"
+          ]
+        ],
+        "transition_type": [
+          [
+            "horizontal slide",
+            "vertical slide",
+            "box",
+            "circle",
+            "horizontal door",
+            "vertical door",
+            "fade"
+          ]
+        ],
+        "transitioning_frames": [
+          "INT",
+          {
+            "default": 2,
+            "min": 2,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "blur_radius": [
+          "FLOAT",
+          {
+            "default": 0.0,
+            "min": 0.0,
+            "max": 100.0,
+            "step": 0.1
+          }
+        ],
+        "reverse": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "device": [
+          [
+            "CPU",
+            "GPU"
+          ],
+          {
+            "default": "CPU"
+          }
+        ]
+      },
+      "optional": {
+        "image_2": [
+          "IMAGE"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "TransitionImagesInBatch": {
+    "inputs": {
+      "required": {
+        "images": [
+          "IMAGE"
+        ],
+        "interpolation": [
+          [
+            "linear",
+            "ease_in",
+            "ease_out",
+            "ease_in_out",
+            "bounce",
+            "elastic",
+            "glitchy",
+            "exponential_ease_out"
+          ]
+        ],
+        "transition_type": [
+          [
+            "horizontal slide",
+            "vertical slide",
+            "box",
+            "circle",
+            "horizontal door",
+            "vertical door",
+            "fade"
+          ]
+        ],
+        "transitioning_frames": [
+          "INT",
+          {
+            "default": 1,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "blur_radius": [
+          "FLOAT",
+          {
+            "default": 0.0,
+            "min": 0.0,
+            "max": 100.0,
+            "step": 0.1
+          }
+        ],
+        "reverse": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "device": [
+          [
+            "CPU",
+            "GPU"
+          ],
+          {
+            "default": "CPU"
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageBatchJoinWithTransition": {
+    "inputs": {
+      "required": {
+        "images_1": [
+          "IMAGE"
+        ],
+        "images_2": [
+          "IMAGE"
+        ],
+        "start_index": [
+          "INT",
+          {
+            "default": 0,
+            "min": -10000,
+            "max": 10000,
+            "step": 1
+          }
+        ],
+        "interpolation": [
+          [
+            "linear",
+            "ease_in",
+            "ease_out",
+            "ease_in_out",
+            "bounce",
+            "elastic",
+            "glitchy",
+            "exponential_ease_out"
+          ]
+        ],
+        "transition_type": [
+          [
+            "horizontal slide",
+            "vertical slide",
+            "box",
+            "circle",
+            "horizontal door",
+            "vertical door",
+            "fade"
+          ]
+        ],
+        "transitioning_frames": [
+          "INT",
+          {
+            "default": 1,
+            "min": 1,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "blur_radius": [
+          "FLOAT",
+          {
+            "default": 0.0,
+            "min": 0.0,
+            "max": 100.0,
+            "step": 0.1
+          }
+        ],
+        "reverse": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "device": [
+          [
+            "CPU",
+            "GPU"
+          ],
+          {
+            "default": "CPU"
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ShuffleImageBatch": {
+    "inputs": {
+      "required": {
+        "images": [
+          "IMAGE"
+        ],
+        "seed": [
+          "INT",
+          {
+            "default": 123,
+            "min": 0,
+            "max": 18446744073709551615,
+            "step": 1
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "GetImageRangeFromBatch": {
+    "inputs": {
+      "required": {
+        "start_index": [
+          "INT",
+          {
+            "default": 0,
+            "min": -1,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "num_frames": [
+          "INT",
+          {
+            "default": 1,
+            "min": 1,
+            "max": 4096,
+            "step": 1
+          }
+        ]
+      },
+      "optional": {
+        "images": [
+          "IMAGE"
+        ],
+        "masks": [
+          "MASK"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageBatchExtendWithOverlap": {
+    "inputs": {
+      "required": {
+        "source_images": [
+          "IMAGE",
+          {
+            "tooltip": "The source images to extend"
+          }
+        ],
+        "overlap": [
+          "INT",
+          {
+            "default": 13,
+            "min": 1,
+            "max": 4096,
+            "step": 1,
+            "tooltip": "Number of overlapping frames between source and new images"
+          }
+        ],
+        "overlap_side": [
+          [
+            "source",
+            "new_images"
+          ],
+          {
+            "default": "source",
+            "tooltip": "Which side to overlap on"
+          }
+        ],
+        "overlap_mode": [
+          [
+            "cut",
+            "linear_blend",
+            "ease_in_out"
+          ],
+          {
+            "default": "linear_blend",
+            "tooltip": "Method to use for overlapping frames"
+          }
+        ]
+      },
+      "optional": {
+        "new_images": [
+          "IMAGE",
+          {
+            "tooltip": "The new images to extend with"
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "IMAGE",
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "GetLatentRangeFromBatch": {
+    "inputs": {
+      "required": {
+        "latents": [
+          "LATENT"
+        ],
+        "start_index": [
+          "INT",
+          {
+            "default": 0,
+            "min": -1,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "num_frames": [
+          "INT",
+          {
+            "default": 1,
+            "min": -1,
+            "max": 4096,
+            "step": 1
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "LATENT"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "InsertLatentToIndex": {
+    "inputs": {
+      "required": {
+        "source": [
+          "LATENT"
+        ],
+        "destination": [
+          "LATENT"
+        ],
+        "index": [
+          "INT",
+          {
+            "default": 0,
+            "min": -1,
+            "max": 4096,
+            "step": 1
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "LATENT"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageBatchFilter": {
+    "inputs": {
+      "required": {
+        "images": [
+          "IMAGE"
+        ],
+        "empty_color": [
+          "STRING",
+          {
+            "default": "0, 0, 0"
+          }
+        ],
+        "empty_threshold": [
+          "FLOAT",
+          {
+            "default": 0.01,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": {
+        "replacement_image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "STRING"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "GetImagesFromBatchIndexed": {
+    "inputs": {
+      "required": {
+        "images": [
+          "IMAGE"
+        ],
+        "indexes": [
+          "STRING",
+          {
+            "default": "0, 1, 2",
+            "multiline": true
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "InsertImagesToBatchIndexed": {
+    "inputs": {
+      "required": {
+        "original_images": [
+          "IMAGE"
+        ],
+        "images_to_insert": [
+          "IMAGE"
+        ],
+        "indexes": [
+          "STRING",
+          {
+            "default": "0, 1, 2",
+            "multiline": true
+          }
+        ]
+      },
+      "optional": {
+        "mode": [
+          [
+            "replace",
+            "insert"
+          ]
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "PadImageBatchInterleaved": {
+    "inputs": {
+      "required": {
+        "images": [
+          "IMAGE"
+        ],
+        "empty_frames_per_image": [
+          "INT",
+          {
+            "default": 1,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "pad_frame_value": [
+          "FLOAT",
+          {
+            "default": 0.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.01
+          }
+        ],
+        "add_after_last": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ReplaceImagesInBatch": {
+    "inputs": {
+      "required": {
+        "start_index": [
+          "INT",
+          {
+            "default": 1,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ]
+      },
+      "optional": {
+        "original_images": [
+          "IMAGE"
+        ],
+        "replacement_images": [
+          "IMAGE"
+        ],
+        "original_masks": [
+          "MASK"
+        ],
+        "replacement_masks": [
+          "MASK"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ReverseImageBatch": {
+    "inputs": {
+      "required": {
+        "images": [
+          "IMAGE"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageBatchMulti": {
+    "inputs": {
+      "required": {
+        "inputcount": [
+          "INT",
+          {
+            "default": 2,
+            "min": 2,
+            "max": 1000,
+            "step": 1
+          }
+        ],
+        "image_1": [
+          "IMAGE"
+        ]
+      },
+      "optional": {
+        "image_2": [
+          "IMAGE"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageTensorList": {
+    "inputs": {
+      "required": {
+        "image1": [
+          "IMAGE"
+        ],
+        "image2": [
+          "IMAGE"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageAddMulti": {
+    "inputs": {
+      "required": {
+        "inputcount": [
+          "INT",
+          {
+            "default": 2,
+            "min": 2,
+            "max": 1000,
+            "step": 1
+          }
+        ],
+        "image_1": [
+          "IMAGE"
+        ],
+        "image_2": [
+          "IMAGE"
+        ],
+        "blending": [
+          [
+            "add",
+            "subtract",
+            "multiply",
+            "difference"
+          ],
+          {
+            "default": "add"
+          }
+        ],
+        "blend_amount": [
+          "FLOAT",
+          {
+            "default": 0.5,
+            "min": 0,
+            "max": 1,
+            "step": 0.01
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageConcatMulti": {
+    "inputs": {
+      "required": {
+        "inputcount": [
+          "INT",
+          {
+            "default": 2,
+            "min": 2,
+            "max": 1000,
+            "step": 1
+          }
+        ],
+        "image_1": [
+          "IMAGE"
+        ],
+        "direction": [
+          [
+            "right",
+            "down",
+            "left",
+            "up"
+          ],
+          {
+            "default": "right"
+          }
+        ],
+        "match_image_size": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ]
+      },
+      "optional": {
+        "image_2": [
+          "IMAGE"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "PreviewAnimation": {
+    "inputs": {
+      "required": {
+        "fps": [
+          "FLOAT",
+          {
+            "default": 8.0,
+            "min": 0.01,
+            "max": 1000.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": {
+        "images": [
+          "IMAGE"
+        ],
+        "masks": [
+          "MASK"
+        ]
+      }
+    },
+    "outputs": [],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageResizeKJ": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "width": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "upscale_method": [
+          [
+            "nearest-exact",
+            "bilinear",
+            "area",
+            "bicubic",
+            "lanczos"
+          ]
+        ],
+        "keep_proportion": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "divisible_by": [
+          "INT",
+          {
+            "default": 2,
+            "min": 0,
+            "max": 512,
+            "step": 1
+          }
+        ]
+      },
+      "optional": {
+        "get_image_size": [
+          "IMAGE"
+        ],
+        "crop": [
+          [
+            "disabled",
+            "center",
+            0
+          ],
+          {
+            "tooltip": "0 will do the default center crop, this is a workaround for the widget order changing with the new frontend, as in old workflows the value of this widget becomes 0 automatically"
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "INT",
+      "INT"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageResizeKJv2Alternative": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "width": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "upscale_method": [
+          [
+            "nearest-exact",
+            "bilinear",
+            "area",
+            "bicubic",
+            "lanczos",
+            "nvidia_rtx_vsr"
+          ]
+        ],
+        "keep_proportion": [
+          [
+            "stretch",
+            "resize",
+            "pad",
+            "pad_edge",
+            "pad_edge_pixel",
+            "crop",
+            "pillarbox_blur",
+            "total_pixels"
+          ],
+          {
+            "default": false
+          }
+        ],
+        "pad_color": [
+          "STRING",
+          {
+            "default": "0, 0, 0",
+            "tooltip": "Color to use for padding."
+          }
+        ],
+        "crop_position": [
+          [
+            "center",
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ],
+          {
+            "default": "center"
+          }
+        ],
+        "divisible_by": [
+          "INT",
+          {
+            "default": 2,
+            "min": 0,
+            "max": 512,
+            "step": 1
+          }
+        ]
+      },
+      "optional": {
+        "mask": [
+          "MASK"
+        ],
+        "device": [
+          [
+            "cpu",
+            "gpu"
+          ]
+        ],
+        "resize_mode": [
+          [
+            "standard",
+            "edit_size"
+          ],
+          {
+            "default": "standard"
+          }
+        ],
+        "size_rule": [
+          [
+            "按长边等比例",
+            "按短边等比例",
+            "自定义宽高"
+          ],
+          {
+            "default": "按长边等比例"
+          }
+        ],
+        "edge_length": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 64,
+            "max": 100000
+          }
+        ],
+        "execute_condition": [
+          [
+            "总是",
+            "最长边大于时",
+            "最小边小于时"
+          ],
+          {
+            "default": "总是"
+          }
+        ],
+        "edit_fit": [
+          [
+            "拉伸",
+            "裁剪",
+            "填充_自定颜色",
+            "填充_边框颜色",
+            "填充_边缘像素",
+            "总像素_等比例"
+          ],
+          {
+            "default": "裁剪"
+          }
+        ],
+        "fill_color": [
+          "COLORCODE",
+          {
+            "default": "#364254"
+          }
+        ]
+      },
+      "hidden": {
+        "unique_id": "UNIQUE_ID"
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "INT",
+      "INT",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageResizeByMegapixels": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "megapixels": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 100.0,
+            "step": 0.01,
+            "tooltip": "Target megapixels (1.0 = 1 million pixels). Use 0 to skip resize and keep the original size."
+          }
+        ],
+        "aspect_ratio": [
+          [
+            "default",
+            "1:1",
+            "3:2",
+            "2:3",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "21:9",
+            "9:21"
+          ],
+          {
+            "default": "default",
+            "tooltip": "Target aspect ratio. 'default' keeps original ratio."
+          }
+        ],
+        "keep_proportion": [
+          [
+            "crop",
+            "resize",
+            "pad",
+            "pad_edge",
+            "pad_edge_pixel",
+            "pillarbox_blur"
+          ],
+          {
+            "default": "crop",
+            "tooltip": "How to handle aspect ratio change when not using 'default'."
+          }
+        ],
+        "divisible_by": [
+          [
+            2,
+            4,
+            8,
+            16,
+            32,
+            64
+          ],
+          {
+            "default": 16,
+            "tooltip": "Width and height will be divisible by this value."
+          }
+        ],
+        "default_divisible": [
+          "BOOLEAN",
+          {
+            "default": false,
+            "tooltip": "When enabled, ensures final output dimensions strictly follow divisible_by constraint."
+          }
+        ],
+        "upscale_method": [
+          [
+            "nearest-exact",
+            "bilinear",
+            "area",
+            "bicubic",
+            "lanczos",
+            "nvidia_rtx_vsr"
+          ],
+          {
+            "default": "bilinear"
+          }
+        ],
+        "crop_position": [
+          [
+            "center",
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ],
+          {
+            "default": "center"
+          }
+        ],
+        "pad_color": [
+          "STRING",
+          {
+            "default": "0, 0, 0",
+            "tooltip": "Color to use for padding."
+          }
+        ]
+      },
+      "optional": {
+        "mask": [
+          "MASK"
+        ],
+        "device": [
+          [
+            "cpu",
+            "gpu"
+          ]
+        ]
+      },
+      "hidden": {
+        "unique_id": "UNIQUE_ID"
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "INT",
+      "INT",
+      "MASK",
+      "INT"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "LoadAndResizeImage": {
+    "inputs": {
+      "required": {
+        "image": [
+          [
+            "0a1ad1c1-47bc-49d4-adde-35f46c5232f9_original.jpg",
+            "0a504a99-2405-4a47-a560-c137f7f06158_original.jpg",
+            "ComfyUI_00010_kjlso_1772265935.png",
+            "ComfyUI_temp_kiqoe_00001_.png",
+            "Gemini_Generated_Image_1xdqsb1xdqsb1xdq.jpeg",
+            "Gemini_Generated_Image_qvb1n3qvb1n3qvb1_rotated.jpg",
+            "RGBA_00001.png",
+            "Weixin Image_20260901170426_9306_66.jpg",
+            "clipspace-mask-1788323768395.png",
+            "clipspace-mask-1788323822330.png",
+            "clipspace-paint-1788323768395.png",
+            "clipspace-paint-1788323822330.png",
+            "clipspace-painted-1788323768395.png",
+            "clipspace-painted-1788323822330.png",
+            "clipspace-painted-masked-1788323768395.png",
+            "clipspace-painted-masked-1788323822330.png",
+            "example.png",
+            "fc394041-21fb-4ab3-b202-9d4fc3ba55ca.jpg",
+            "ffa36fec-6cbb-4072-9a6d-3e6fdfaa47b1.png",
+            "ffc90516-b878-4f8e-a8c9-f781ea7d87b0.jpg",
+            "iwEcAqNqcGcDAQTRBQAF0QPABrCybvWb1moxFAl85k3YJtkAB9IaM-B3CAAJomltCgAL0gAEXV8.jpg",
+            "removeddemo1-ezremove.png"
+          ],
+          {
+            "image_upload": true
+          }
+        ],
+        "resize": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 8
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 8
+          }
+        ],
+        "repeat": [
+          "INT",
+          {
+            "default": 1,
+            "min": 1,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "keep_proportion": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "divisible_by": [
+          "INT",
+          {
+            "default": 2,
+            "min": 0,
+            "max": 512,
+            "step": 1
+          }
+        ],
+        "mask_channel": [
+          [
+            "alpha",
+            "red",
+            "green",
+            "blue"
+          ],
+          {
+            "tooltip": "Channel to use for the mask output"
+          }
+        ],
+        "background_color": [
+          "STRING",
+          {
+            "default": "",
+            "tooltip": "Fills the alpha channel with the specified color."
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK",
+      "INT",
+      "INT",
+      "STRING"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "LoadImagesFromFolderKJ": {
+    "inputs": {
+      "required": {
+        "folder": [
+          "STRING",
+          {
+            "default": ""
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "default": 1024,
+            "min": -1,
+            "step": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 1024,
+            "min": -1,
+            "step": 1
+          }
+        ],
+        "keep_aspect_ratio": [
+          [
+            "crop",
+            "pad",
+            "stretch"
+          ]
+        ]
+      },
+      "optional": {
+        "image_load_cap": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "step": 1
+          }
+        ],
+        "start_index": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "step": 1
+          }
+        ],
+        "include_subfolders": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK",
+      "INT",
+      "STRING"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageGridtoBatch": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "columns": [
+          "INT",
+          {
+            "default": 3,
+            "min": 1,
+            "max": 8,
+            "tooltip": "The number of columns in the grid."
+          }
+        ],
+        "rows": [
+          "INT",
+          {
+            "default": 0,
+            "min": 1,
+            "max": 8,
+            "tooltip": "The number of rows in the grid. Set to 0 for automatic calculation."
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "SaveImageKJ": {
+    "inputs": {
+      "required": {
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "The images to save."
+          }
+        ],
+        "filename_prefix": [
+          "STRING",
+          {
+            "default": "ComfyUI",
+            "tooltip": "The prefix for the file to save. This may include formatting information such as %date:yyyy-MM-dd% or %Empty Latent Image.width% to include values from nodes."
+          }
+        ],
+        "output_folder": [
+          "STRING",
+          {
+            "default": "output",
+            "tooltip": "The folder to save the images to."
+          }
+        ]
+      },
+      "optional": {
+        "caption_file_extension": [
+          "STRING",
+          {
+            "default": ".txt",
+            "tooltip": "The extension for the caption file."
+          }
+        ],
+        "caption": [
+          "STRING",
+          {
+            "forceInput": true,
+            "tooltip": "string to save as .txt file"
+          }
+        ]
+      },
+      "hidden": {
+        "prompt": "PROMPT",
+        "extra_pnginfo": "EXTRA_PNGINFO"
+      }
+    },
+    "outputs": [
+      "STRING"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "SaveStringKJ": {
+    "inputs": {
+      "required": {
+        "string": [
+          "STRING",
+          {
+            "forceInput": true,
+            "tooltip": "string to save as .txt file"
+          }
+        ],
+        "filename_prefix": [
+          "STRING",
+          {
+            "default": "text",
+            "tooltip": "The prefix for the file to save. This may include formatting information such as %date:yyyy-MM-dd% or %Empty Latent Image.width% to include values from nodes."
+          }
+        ],
+        "output_folder": [
+          "STRING",
+          {
+            "default": "output",
+            "tooltip": "The folder to save the images to."
+          }
+        ]
+      },
+      "optional": {
+        "file_extension": [
+          "STRING",
+          {
+            "default": ".txt",
+            "tooltip": "The extension for the caption file."
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "STRING"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "FastPreview": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "format": [
+          [
+            "JPEG",
+            "PNG",
+            "WEBP"
+          ],
+          {
+            "default": "JPEG"
+          }
+        ],
+        "quality": [
+          "INT",
+          {
+            "default": 75,
+            "min": 1,
+            "max": 100,
+            "step": 1
+          }
+        ]
+      }
+    },
+    "outputs": [],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageCropByMaskAndResize": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "base_resolution": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 8
+          }
+        ],
+        "padding": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "min_crop_resolution": [
+          "INT",
+          {
+            "default": 128,
+            "min": 0,
+            "max": 16384,
+            "step": 8
+          }
+        ],
+        "max_crop_resolution": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 8
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK",
+      "BBOX"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageCropByMask": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageUncropByMask": {
+    "inputs": {
+      "required": {
+        "destination": [
+          "IMAGE"
+        ],
+        "source": [
+          "IMAGE"
+        ],
+        "bbox": [
+          "BBOX"
+        ]
+      },
+      "optional": {
+        "mask": [
+          "MASK"
+        ],
+        "border_blending": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 1024,
+            "step": 1,
+            "tooltip": "Blur the mask edges in the bounding box"
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImageCropByMaskBatch": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "masks": [
+          "MASK"
+        ],
+        "width": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 8
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 8
+          }
+        ],
+        "padding": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "preserve_size": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "bg_color": [
+          "STRING",
+          {
+            "default": "0, 0, 0",
+            "tooltip": "Color as RGB values in range 0-255, separated by commas."
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "ImagePadKJ": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "left": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "right": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "top": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "bottom": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "extra_padding": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "pad_mode": [
+          [
+            "edge",
+            "edge_pixel",
+            "color",
+            "pillarbox_blur"
+          ]
+        ],
+        "color": [
+          "STRING",
+          {
+            "default": "0, 0, 0",
+            "tooltip": "Color as RGB values in range 0-255, separated by commas."
+          }
+        ]
+      },
+      "optional": {
+        "mask": [
+          "MASK"
+        ],
+        "target_width": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 1,
+            "forceInput": true
+          }
+        ],
+        "target_height": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 1,
+            "forceInput": true
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "LoadVideosFromFolder": {
+    "inputs": {
+      "required": {
+        "video": [
+          "STRING",
+          {
+            "default": "X://insert/path/"
+          }
+        ],
+        "force_rate": [
+          "FLOAT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 60,
+            "step": 1,
+            "disable": 0
+          }
+        ],
+        "custom_width": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 4096,
+            "disable": 0
+          }
+        ],
+        "custom_height": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 4096,
+            "disable": 0
+          }
+        ],
+        "frame_load_cap": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 10000,
+            "step": 1,
+            "disable": 0
+          }
+        ],
+        "skip_first_frames": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 10000,
+            "step": 1
+          }
+        ],
+        "select_every_nth": [
+          "INT",
+          {
+            "default": 1,
+            "min": 1,
+            "max": 1000,
+            "step": 1
+          }
+        ],
+        "output_type": [
+          [
+            "batch",
+            "grid"
+          ],
+          {
+            "default": "batch"
+          }
+        ],
+        "grid_max_columns": [
+          "INT",
+          {
+            "default": 4,
+            "min": 1,
+            "max": 16,
+            "step": 1,
+            "disable": 1
+          }
+        ],
+        "add_label": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ]
+      },
+      "hidden": {
+        "force_size": "STRING",
+        "unique_id": "UNIQUE_ID"
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "SwwanDrawMaskOnImage": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "color": [
+          "STRING",
+          {
+            "default": "0, 0, 0",
+            "tooltip": "Color as RGB values in range 0-255 or 0.0-1.0, separated by commas."
+          }
+        ],
+        "opacity": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": {
+        "device": [
+          [
+            "cpu",
+            "gpu"
+          ],
+          {
+            "default": "cpu",
+            "tooltip": "Device to use for processing"
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "AnySwitch (Swwan)": {
+    "inputs": {
+      "optional": {
+        "优先输入": [
+          "*"
+        ],
+        "备用输入": [
+          "*"
+        ]
+      }
+    },
+    "outputs": [
+      "BOOLEAN",
+      "*"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "AnyBooleanSwitch (Swwan)": {
+    "inputs": {
+      "required": {
+        "输入": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "开关": [
+          "BOOLEAN",
+          {
+            "default": true,
+            "label_on": "开启",
+            "label_off": "关闭"
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "*"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "raiseExceptionOnTrue": {
+    "inputs": {
+      "required": {
+        "condition": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "exception_message": [
+          "STRING",
+          {
+            "default": "Workflow terminated by condition."
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "BOOLEAN"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "MathExpression_UTK": {
+    "inputs": {
+      "required": {
+        "expression": [
+          "STRING",
+          {
+            "multiline": true,
+            "dynamicPrompts": false,
+            "pysssss.autocomplete": {
+              "words": [
+                {
+                  "text": "round",
+                  "value": "round()",
+                  "showValue": false,
+                  "hint": "number, dp? = 0",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "ceil",
+                  "value": "ceil()",
+                  "showValue": false,
+                  "hint": "number",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "floor",
+                  "value": "floor()",
+                  "showValue": false,
+                  "hint": "number",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "min",
+                  "value": "min()",
+                  "showValue": false,
+                  "hint": "...numbers",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "max",
+                  "value": "max()",
+                  "showValue": false,
+                  "hint": "...numbers",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "randomint",
+                  "value": "randomint()",
+                  "showValue": false,
+                  "hint": "min, max",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "randomchoice",
+                  "value": "randomchoice()",
+                  "showValue": false,
+                  "hint": "...numbers",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "sqrt",
+                  "value": "sqrt()",
+                  "showValue": false,
+                  "hint": "number",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "int",
+                  "value": "int()",
+                  "showValue": false,
+                  "hint": "number",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "iif",
+                  "value": "iif()",
+                  "showValue": false,
+                  "hint": "value, truepart, falsepart",
+                  "caretOffset": -1
+                }
+              ],
+              "separator": ""
+            }
+          }
+        ]
+      },
+      "optional": {
+        "a": [
+          "*"
+        ],
+        "b": [
+          "*"
+        ],
+        "c": [
+          "*"
+        ]
+      },
+      "hidden": {
+        "extra_pnginfo": "EXTRA_PNGINFO",
+        "prompt": "PROMPT"
+      }
+    },
+    "outputs": [
+      "INT",
+      "FLOAT"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "IO_save_image": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "file_format": [
+          [
+            "jpg",
+            "png",
+            "webp",
+            "tif"
+          ]
+        ],
+        "output_path": [
+          "STRING",
+          {
+            "default": "./output",
+            "multiline": false
+          }
+        ],
+        "filename_mid": [
+          "STRING",
+          {
+            "default": "tmp"
+          }
+        ]
+      },
+      "optional": {
+        "number_prefix": [
+          "BOOLEAN",
+          {
+            "default": false,
+            "label_on": "前置编号",
+            "label_off": "后置编号"
+          }
+        ],
+        "number_digits": [
+          "INT",
+          {
+            "default": 5,
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "tooltip": "编号位数，如设置为3则为001格式"
+          }
+        ],
+        "save_workflow_as_json": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ]
+      },
+      "hidden": {
+        "prompt": "PROMPT",
+        "extra_pnginfo": "EXTRA_PNGINFO"
+      }
+    },
+    "outputs": [
+      "STRING"
+    ],
+    "input_is_list": false,
+    "output_is_list": [
+      true
+    ]
+  },
+  "IO_save_image_format": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "file_format": [
+          [
+            "jpg",
+            "png",
+            "webp",
+            "tif",
+            "bmp"
+          ]
+        ],
+        "output_path": [
+          "STRING",
+          {
+            "default": "./output",
+            "multiline": false
+          }
+        ],
+        "filename_mid": [
+          "STRING",
+          {
+            "default": "tmp"
+          }
+        ]
+      },
+      "optional": {
+        "number_prefix": [
+          "BOOLEAN",
+          {
+            "default": false,
+            "label_on": "前置编号",
+            "label_off": "后置编号"
+          }
+        ],
+        "number_digits": [
+          "INT",
+          {
+            "default": 5,
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "tooltip": "编号位数，如设置为3则为001格式"
+          }
+        ],
+        "quality": [
+          "INT",
+          {
+            "default": 88,
+            "min": 1,
+            "max": 100,
+            "step": 1,
+            "tooltip": "JPEG/WebP 质量。数值越高体积通常越大、保存通常越慢。"
+          }
+        ],
+        "png_compress_level": [
+          "INT",
+          {
+            "default": 1,
+            "min": 0,
+            "max": 9,
+            "step": 1,
+            "tooltip": "PNG 压缩等级。Replicate 场景建议保持较低数值以减少保存耗时。"
+          }
+        ],
+        "optimize": [
+          "BOOLEAN",
+          {
+            "default": true,
+            "tooltip": "启用 Pillow optimize。主要影响 JPEG/TIFF。若编码器报错，节点会自动回退到不使用 optimize。"
+          }
+        ],
+        "webp_lossless": [
+          "BOOLEAN",
+          {
+            "default": false,
+            "tooltip": "启用无损 WebP。通常会更慢且文件更大。"
+          }
+        ],
+        "webp_method": [
+          "INT",
+          {
+            "default": 2,
+            "min": 0,
+            "max": 6,
+            "step": 1,
+            "tooltip": "WebP 编码方法。越高通常压得更小，但更慢。Replicate 场景建议使用 0-2。"
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "STRING"
+    ],
+    "input_is_list": false,
+    "output_is_list": [
+      true
+    ]
+  },
+  "BoundedImageCrop": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "image_bounds": [
+          "IMAGE_BOUNDS"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "BoundedImageCropWithMask": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "padding_left": [
+          "INT",
+          {
+            "default": 64,
+            "min": 0,
+            "max": 18446744073709551615
+          }
+        ],
+        "padding_right": [
+          "INT",
+          {
+            "default": 64,
+            "min": 0,
+            "max": 18446744073709551615
+          }
+        ],
+        "padding_top": [
+          "INT",
+          {
+            "default": 64,
+            "min": 0,
+            "max": 18446744073709551615
+          }
+        ],
+        "padding_bottom": [
+          "INT",
+          {
+            "default": 64,
+            "min": 0,
+            "max": 18446744073709551615
+          }
+        ]
+      },
+      "optional": {
+        "return_list": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "IMAGE_BOUNDS"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "RGBA_Safe_Pre": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE",
+          {
+            "tooltip": "Input RGB image from Load Image or any IMAGE node."
+          }
+        ],
+        "mask": [
+          "MASK",
+          {
+            "tooltip": "MASK from Load Image. ComfyUI stores alpha as 1 - alpha in this mask."
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK",
+      "BOOLEAN"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "RGBA_Safe_Post": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE",
+          {
+            "tooltip": "Processed IMAGE output, usually after passing through RGB-only nodes."
+          }
+        ],
+        "alpha": [
+          "MASK",
+          {
+            "tooltip": "Original alpha returned by RGBA Safe Pre."
+          }
+        ],
+        "has_alpha": [
+          "BOOLEAN",
+          {
+            "tooltip": "Boolean flag returned by RGBA Safe Pre. False makes this node act as passthrough."
+          }
+        ],
+        "epsilon": [
+          "FLOAT",
+          {
+            "default": 0.001,
+            "min": 1e-06,
+            "max": 0.1,
+            "step": 0.0005,
+            "tooltip": "Minimum alpha used during unpremultiply to avoid divide-by-zero and bright edge artifacts."
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "RGBA_Save": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE",
+          {
+            "tooltip": "RGB image to save as PNG. Use RGBA Safe Post first if the image is still premultiplied."
+          }
+        ],
+        "alpha": [
+          "MASK",
+          {
+            "tooltip": "Alpha mask to embed into the saved PNG."
+          }
+        ],
+        "filename_prefix": [
+          "STRING",
+          {
+            "default": "RGBA",
+            "tooltip": "Filename prefix for the saved PNG files."
+          }
+        ]
+      },
+      "hidden": {
+        "prompt": "PROMPT",
+        "extra_pnginfo": "EXTRA_PNGINFO"
+      }
+    },
+    "outputs": [],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "RGBA_Multi_Save": {
+    "inputs": {
+      "required": {
+        "image": [
+          "IMAGE",
+          {
+            "tooltip": "Processed image. If it comes from RGBA Safe Pre, it is usually still premultiplied."
+          }
+        ],
+        "alpha": [
+          "MASK",
+          {
+            "tooltip": "Alpha from RGBA Safe Pre. It will be resized automatically to the current image size."
+          }
+        ],
+        "has_alpha": [
+          "BOOLEAN",
+          {
+            "tooltip": "Boolean flag from RGBA Safe Pre. Used by auto mode to decide whether alpha should be kept."
+          }
+        ],
+        "file_format": [
+          [
+            "jpeg",
+            "png",
+            "webp"
+          ],
+          {
+            "default": "png",
+            "tooltip": "Output file format. JPEG never keeps alpha. PNG and WebP can keep alpha."
+          }
+        ],
+        "alpha_mode": [
+          [
+            "auto",
+            "keep",
+            "flatten"
+          ],
+          {
+            "default": "auto",
+            "tooltip": "auto: keep alpha only for PNG/WebP when has_alpha is true. keep: force alpha-capable save. flatten: composite over background color and save RGB only."
+          }
+        ],
+        "filename_prefix": [
+          "STRING",
+          {
+            "default": "RGBA",
+            "tooltip": "Filename prefix for saved files."
+          }
+        ]
+      },
+      "optional": {
+        "epsilon": [
+          "FLOAT",
+          {
+            "default": 0.001,
+            "min": 1e-06,
+            "max": 0.1,
+            "step": 0.0005,
+            "tooltip": "Only used when alpha is kept. Prevents divide-by-zero and overbright edges during unpremultiply."
+          }
+        ],
+        "background_red": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.01,
+            "tooltip": "Background red channel used when flattening alpha to RGB."
+          }
+        ],
+        "background_green": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.01,
+            "tooltip": "Background green channel used when flattening alpha to RGB."
+          }
+        ],
+        "background_blue": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.01,
+            "tooltip": "Background blue channel used when flattening alpha to RGB."
+          }
+        ],
+        "jpeg_quality": [
+          "INT",
+          {
+            "default": 95,
+            "min": 1,
+            "max": 100,
+            "step": 1,
+            "tooltip": "JPEG encoder quality. Higher values keep more detail and larger files."
+          }
+        ],
+        "webp_quality": [
+          "INT",
+          {
+            "default": 90,
+            "min": 1,
+            "max": 100,
+            "step": 1,
+            "tooltip": "WebP quality used in lossy mode."
+          }
+        ],
+        "webp_lossless": [
+          "BOOLEAN",
+          {
+            "default": false,
+            "tooltip": "Enable lossless WebP encoding. Usually larger but preserves pixels better."
+          }
+        ],
+        "png_compress_level": [
+          "INT",
+          {
+            "default": 4,
+            "min": 0,
+            "max": 9,
+            "step": 1,
+            "tooltip": "PNG compression level. Higher values reduce size but may save slower."
+          }
+        ]
+      },
+      "hidden": {
+        "prompt": "PROMPT",
+        "extra_pnginfo": "EXTRA_PNGINFO"
+      }
+    },
+    "outputs": [],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "SwwanColorShiftFix": {
+    "inputs": {
+      "required": {
+        "images": [
+          "IMAGE"
+        ],
+        "reference_images": [
+          "IMAGE"
+        ],
+        "strength": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.05
+          }
+        ],
+        "smooth_window": [
+          "INT",
+          {
+            "default": 9,
+            "min": 1,
+            "max": 99,
+            "step": 2
+          }
+        ],
+        "trim_percentile": [
+          "FLOAT",
+          {
+            "default": 70.0,
+            "min": 50.0,
+            "max": 95.0,
+            "step": 5.0
+          }
+        ],
+        "device": [
+          [
+            "CPU",
+            "GPU"
+          ],
+          {
+            "default": "GPU"
+          }
+        ]
+      },
+      "optional": {
+        "mask": [
+          "MASK"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "PatchSageAttentionKJAlternative": {
+    "inputs": {
+      "required": {
+        "model": [
+          "MODEL"
+        ],
+        "sage_attention": [
+          [
+            "disabled",
+            "auto",
+            "sageattn_qk_int8_pv_fp16_cuda",
+            "sageattn_qk_int8_pv_fp16_triton",
+            "sageattn_qk_int8_pv_fp8_cuda",
+            "sageattn_qk_int8_pv_fp8_cuda++",
+            "sageattn_qk_int8_pv_fp8_cuda_sm90",
+            "sageattn3",
+            "sageattn3_per_block_mean"
+          ],
+          {
+            "default": "disabled",
+            "tooltip": "Patch the model attention override to use SageAttention. Choose disabled to remove an existing SageAttention override."
+          }
+        ]
+      },
+      "optional": {
+        "allow_compile": [
+          "BOOLEAN",
+          {
+            "default": false,
+            "tooltip": "Allow torch.compile inside the SageAttention wrapper when the backend supports it."
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "MODEL"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "MiniMaxH3MemoryEfficientSageAttentionPatchKJAlternative": {
+    "inputs": {
+      "required": {
+        "model": [
+          "MODEL"
+        ]
+      }
+    },
+    "outputs": [
+      "MODEL"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "SwwanImageResizeRange": {
+    "inputs": {
+      "required": {},
+      "optional": {
+        "图像": [
+          "IMAGE"
+        ],
+        "遮罩": [
+          "MASK"
+        ],
+        "限制模式": [
+          [
+            "长边",
+            "短边",
+            "宽度",
+            "高度",
+            "宽度与高度"
+          ],
+          {
+            "default": "长边"
+          }
+        ],
+        "最小尺寸": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 10,
+            "max": 10240,
+            "step": 1
+          }
+        ],
+        "最大尺寸": [
+          "INT",
+          {
+            "default": 3000,
+            "min": 10,
+            "max": 10240,
+            "step": 1
+          }
+        ],
+        "整除数": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 512,
+            "step": 1
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE",
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "SwwanBlockifyMask": {
+    "inputs": {
+      "required": {
+        "masks": [
+          "MASK"
+        ],
+        "block_size": [
+          "INT",
+          {
+            "default": 32,
+            "min": 8,
+            "max": 512,
+            "step": 1,
+            "tooltip": "Size of blocks in pixels (smaller = smaller blocks)"
+          }
+        ]
+      },
+      "optional": {
+        "device": [
+          [
+            "cpu",
+            "gpu"
+          ],
+          {
+            "default": "cpu",
+            "tooltip": "Device to use for processing"
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "MASK"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "SwwanImagesToRGB": {
+    "inputs": {
+      "required": {
+        "images": [
+          "IMAGE"
+        ]
+      }
+    },
+    "outputs": [
+      "IMAGE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  },
+  "SwwanColorConverter": {
+    "inputs": {
+      "required": {
+        "色值": [
+          "STRING",
+          {
+            "default": "#FFFFFF",
+            "multiline": false
+          }
+        ],
+        "转换后": [
+          [
+            "#HEX",
+            "HEX",
+            "RGB",
+            "HSL"
+          ],
+          {
+            "default": "#HEX"
+          }
+        ]
+      }
+    },
+    "outputs": [
+      "STRING",
+      "COLORCODE"
+    ],
+    "input_is_list": false,
+    "output_is_list": []
+  }
+}

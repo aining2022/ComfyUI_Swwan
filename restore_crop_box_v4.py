@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+# Source: LayerStyle; original notices and modification history in THIRD_PARTY_NOTICES.md.
 import torch
 import torch.nn.functional as F
 import numpy as np
@@ -31,6 +33,9 @@ class RestoreCropBoxV4:
             },
             "optional": {
                 "croped_mask": ("MASK",),
+                "region_info": ("SEAM",),
+                "expand_percent": ("INT", {"default": 5, "min": 0, "max": 30}),
+                "feather_percent": ("INT", {"default": 5, "min": 0, "max": 30}),
             }
         }
 
@@ -105,7 +110,8 @@ class RestoreCropBoxV4:
         return blurred_mask.squeeze(1)
 
     def restore_crop_box(self, background_image, croped_image, crop_box,
-                         feathering=0, device="GPU", croped_mask=None):
+                         feathering=0, device="GPU", croped_mask=None,
+                         region_info=None, expand_percent=5, feather_percent=5):
         """
         PyTorch 批处理版本的 restore
 
@@ -121,6 +127,14 @@ class RestoreCropBoxV4:
             restored_images: [B, H, W, C]
             restored_masks: [B, H, W]
         """
+        if region_info is not None:
+            from .edit_region import EditRegionRestore
+
+            return EditRegionRestore().恢复图像(
+                region_info, croped_image, expand_percent, feather_percent,
+                croped_mask, background_image,
+            )
+
         # 批次大小
         batch_size_bg = background_image.shape[0]
         batch_size_crop = croped_image.shape[0]
@@ -252,10 +266,4 @@ class RestoreCropBoxV4:
         return (result_images, result_masks)
 
 
-NODE_CLASS_MAPPINGS = {
-    "SwwanRestoreCropBoxV4": RestoreCropBoxV4
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "SwwanRestoreCropBoxV4": "Restore Crop Box V4 (Fast)"
-}
+RestoreCropBoxV4.DESCRIPTION = RestoreCropBoxV4.DESCRIPTION + '\nConnect region_info for CPU edit-region restore with percent expansion/feathering.\nWithout region_info, the existing BOX batch/GPU path is unchanged.\nThe MASK output is the actual full-canvas compositing mask.\n'

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+# Source: KJNodes; original notices and modification history in THIRD_PARTY_NOTICES.md.
 import importlib.util
 import logging
 
@@ -321,12 +323,3 @@ class PatchSageAttentionKJ:
 
         transformer_options["optimized_attention_override"] = attention_override_sage
         return (model_clone,)
-
-
-NODE_CLASS_MAPPINGS = {
-    "PatchSageAttentionKJAlternative": PatchSageAttentionKJ,
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "PatchSageAttentionKJAlternative": "Patch Sage Attention KJ (KJ Alternative)",
-}

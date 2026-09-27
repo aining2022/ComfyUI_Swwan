@@ -1,0 +1,355 @@
+{
+  "last_node_id": 3,
+  "last_link_id": 2,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LayerUtility: ColorImage (Swwan)",
+      "pos": [
+        30,
+        30
+      ],
+      "size": [
+        330,
+        320
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "width"
+          }
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "height"
+          }
+        },
+        {
+          "name": "color",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "color"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LayerUtility: ColorImage (Swwan)",
+        "swwan_version": "1.0.0"
+      },
+      "widgets_values": [
+        128,
+        96,
+        "#237bbd"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "SolidMask",
+      "pos": [
+        390,
+        30
+      ],
+      "size": [
+        330,
+        320
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "value",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "value"
+          }
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "width"
+          }
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "height"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SolidMask"
+      },
+      "widgets_values": [
+        0.5,
+        128,
+        96
+      ]
+    },
+    {
+      "id": 3,
+      "type": "SwwanSaveImage",
+      "pos": [
+        750,
+        30
+      ],
+      "size": [
+        330,
+        320
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1
+        },
+        {
+          "name": "file_format",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "file_format"
+          }
+        },
+        {
+          "name": "output_path",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "output_path"
+          }
+        },
+        {
+          "name": "filename_prefix",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "filename_prefix"
+          }
+        },
+        {
+          "name": "alpha",
+          "type": "MASK",
+          "link": 2
+        },
+        {
+          "name": "input_mode",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "input_mode"
+          }
+        },
+        {
+          "name": "alpha_mode",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "alpha_mode"
+          }
+        },
+        {
+          "name": "has_alpha",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "has_alpha"
+          }
+        },
+        {
+          "name": "background_color",
+          "type": "COLORCODE",
+          "link": null,
+          "widget": {
+            "name": "background_color"
+          }
+        },
+        {
+          "name": "quality",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "quality"
+          }
+        },
+        {
+          "name": "png_compress_level",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "png_compress_level"
+          }
+        },
+        {
+          "name": "optimize",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "optimize"
+          }
+        },
+        {
+          "name": "webp_lossless",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "webp_lossless"
+          }
+        },
+        {
+          "name": "webp_method",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "webp_method"
+          }
+        },
+        {
+          "name": "number_prefix",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "number_prefix"
+          }
+        },
+        {
+          "name": "number_digits",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "number_digits"
+          }
+        },
+        {
+          "name": "embed_metadata",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "embed_metadata"
+          }
+        },
+        {
+          "name": "save_workflow_as_json",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "save_workflow_as_json"
+          }
+        },
+        {
+          "name": "caption",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "caption"
+          }
+        },
+        {
+          "name": "epsilon",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "epsilon"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "paths",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SwwanSaveImage",
+        "swwan_version": "1.0.0"
+      },
+      "widgets_values": [
+        "png",
+        "swwan_examples",
+        "rgba",
+        "straight",
+        "keep",
+        true,
+        "#ffffff",
+        88,
+        1,
+        true,
+        false,
+        2,
+        false,
+        5,
+        true,
+        true,
+        "",
+        0.001
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      3,
+      0,
+      "IMAGE"
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      4,
+      "MASK"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8,
+      "offset": [
+        20,
+        20
+      ]
+    }
+  },
+  "version": 0.4
+}

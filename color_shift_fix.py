@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+# Source: Swwan; original notices and modification history in THIRD_PARTY_NOTICES.md.
 import torch
 import torch.nn.functional as F
 
@@ -167,12 +169,3 @@ class ColorShiftFix:
             message_type='finish')
 
         return (result.cpu(),)
-
-
-NODE_CLASS_MAPPINGS = {
-    "SwwanColorShiftFix": ColorShiftFix
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "SwwanColorShiftFix": "Color Shift Fix (Swwan)"
-}

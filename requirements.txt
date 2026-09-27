@@ -1,10 +1,7 @@
-torch
-torchvision
-Pillow
+# General image processing; GPU / model / desktop backends remain optional.
 numpy
+Pillow
 opencv-python
 scipy
 scikit-image
-matplotlib
-spandrel
-color-matcher
+# torch and torchvision are supplied by the ComfyUI runtime.

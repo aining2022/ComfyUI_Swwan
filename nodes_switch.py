@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+# Source: Swwan; original notices and modification history in THIRD_PARTY_NOTICES.md.
 class AnyType(str):
     """A special type that compares equal to any other type."""
     def __ne__(self, __value: object) -> bool:
@@ -88,18 +90,3 @@ class RaiseExceptionOnTrue:
         if condition:
             raise Exception(exception_message)
         return (condition,)
-
-
-NODE_CLASS_MAPPINGS = {
-    "AnySwitch (Swwan)": AnySwitch,
-    "AnyBooleanSwitch (Swwan)": AnyBooleanSwitch,
-    "raiseExceptionOnTrue": RaiseExceptionOnTrue,
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "AnySwitch (Swwan)": "Any Switch (Swwan)",
-    "AnyBooleanSwitch (Swwan)": "Any Boolean Switch (Swwan)",
-    "raiseExceptionOnTrue": "Raise Exception On True",
-}
-
-__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

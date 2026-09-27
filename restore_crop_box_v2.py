@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+# Source: LayerStyle; original notices and modification history in THIRD_PARTY_NOTICES.md.
 import torch
 import torch.nn.functional as F
 import numpy as np
@@ -143,12 +145,3 @@ class RestoreCropBoxV2:
 
         log(f"{self.NODE_NAME} Processed {len(ret_images)} image(s).", message_type='finish')
         return (torch.cat(ret_images, dim=0), torch.cat(ret_masks, dim=0),)
-
-
-NODE_CLASS_MAPPINGS = {
-    "LayerUtility: RestoreCropBox V2": RestoreCropBoxV2
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "LayerUtility: RestoreCropBox V2": "LayerUtility: RestoreCropBox V2"
-}

@@ -1,27 +1,17 @@
+# SPDX-License-Identifier: MIT
+# Source: rgthree; original notices and modification history in THIRD_PARTY_NOTICES.md.
 """
 Seed Node - 移植自 rgthree-comfy
 增强的种子节点，支持随机、递增、递减等特殊功能
 """
 
 import random
-from datetime import datetime
 
-# 初始化独立的随机状态
-initial_random_state = random.getstate()
-random.seed(datetime.now().timestamp())
-rgthree_seed_random_state = random.getstate()
-random.setstate(initial_random_state)
+_random = random.Random()
 
 
 def new_random_seed():
-    """从 rgthree_seed_random_state 获取新的随机种子"""
-    global rgthree_seed_random_state
-    prev_random_state = random.getstate()
-    random.setstate(rgthree_seed_random_state)
-    seed = random.randint(1, 1125899906842624)
-    rgthree_seed_random_state = random.getstate()
-    random.setstate(prev_random_state)
-    return seed
+    return _random.randint(1, 1125899906842624)
 
 
 class RgthreeSeed:
@@ -91,8 +81,3 @@ class RgthreeSeed:
                     prompt_node["inputs"]["seed"] = seed
 
         return (seed,)
-
-
-NODE_CLASS_MAPPINGS = {"Seed (rgthree)": RgthreeSeed}
-
-NODE_DISPLAY_NAME_MAPPINGS = {"Seed (rgthree)": "Seed"}

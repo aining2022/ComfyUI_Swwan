@@ -1,0 +1,20 @@
+[
+  {
+    "name": "image_tools_00000.png",
+    "dimensions": [
+      256,
+      256
+    ],
+    "preview": 1,
+    "passed": true
+  },
+  {
+    "name": "rgba_00000.png",
+    "dimensions": [
+      128,
+      96
+    ],
+    "preview": 1,
+    "passed": true
+  }
+]

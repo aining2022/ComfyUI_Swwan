@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+# Source: WAS; original notices and modification history in THIRD_PARTY_NOTICES.md.
 """
 Bounded Image Crop Nodes
 Migrated from WAS Node Suite
@@ -93,16 +95,20 @@ class BoundedImageCropWithMask:
         all_bounds = []
         for i in range(len(image)):
             # Single mask or multiple?
-            if (mask_len == 1 and i == 0) or mask_len > 0:
-                rows = torch.any(mask[i], dim=1)
-                cols = torch.any(mask[i], dim=0)
+            if (mask_len == 1 and i == 0) or mask_len > 1:
+                current_mask = mask[i if mask_len > 1 else 0]
+                rows = torch.any(current_mask, dim=1)
+                cols = torch.any(current_mask, dim=0)
+                if not rows.any() or not cols.any():
+                    rows = torch.ones_like(rows)
+                    cols = torch.ones_like(cols)
                 rmin, rmax = torch.where(rows)[0][[0, -1]]
                 cmin, cmax = torch.where(cols)[0][[0, -1]]
 
                 rmin = max(rmin - padding_top, 0)
-                rmax = min(rmax + padding_bottom, mask[i].shape[0] - 1)
+                rmax = min(rmax + padding_bottom, current_mask.shape[0] - 1)
                 cmin = max(cmin - padding_left, 0)
-                cmax = min(cmax + padding_right, mask[i].shape[1] - 1)
+                cmax = min(cmax + padding_right, current_mask.shape[1] - 1)
 
             # Even if only a single mask, create a bounds for each cropped image
             all_bounds.append([rmin, rmax, cmin, cmax])
@@ -111,14 +117,3 @@ class BoundedImageCropWithMask:
         if return_list:
             return cropped_images, all_bounds
         return torch.stack(cropped_images), all_bounds
-
-
-NODE_CLASS_MAPPINGS = {
-    "BoundedImageCrop": BoundedImageCrop,
-    "BoundedImageCropWithMask": BoundedImageCropWithMask,
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "BoundedImageCrop": "Bounded Image Crop (Swwan)",
-    "BoundedImageCropWithMask": "Bounded Image Crop With Mask (Swwan)",
-}

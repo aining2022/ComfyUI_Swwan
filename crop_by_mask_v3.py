@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+# Source: LayerStyle; original notices and modification history in THIRD_PARTY_NOTICES.md.
 import torch
 from PIL import Image
 
@@ -158,12 +160,3 @@ class CropByMaskV3:
             list(crop_box),
             pil2tensor(preview_image),
         )
-
-
-NODE_CLASS_MAPPINGS = {
-    "LayerUtility: CropByMask V3": CropByMaskV3
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "LayerUtility: CropByMask V3": "LayerUtility: CropByMask V3"
-}

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+# Source: LayerStyle; original notices and modification history in THIRD_PARTY_NOTICES.md.
 import torch
 import torch.nn.functional as F
 import numpy as np
@@ -247,12 +249,3 @@ class CropByMaskV4:
             list(effective_crop_box),
             pil2tensor(preview_image),
         )
-
-
-NODE_CLASS_MAPPINGS = {
-    "LayerUtility: CropByMask V4": CropByMaskV4
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "LayerUtility: CropByMask V4": "LayerUtility: CropByMask V4"
-}

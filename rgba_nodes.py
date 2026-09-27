@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Source: Swwan; original notices and modification history in THIRD_PARTY_NOTICES.md.
+from .ops.image_save import _build_png_metadata, _save_image_with_fallback
 import json
 import os
 
@@ -5,23 +8,11 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 from PIL import Image
-from PIL.PngImagePlugin import PngInfo
 
 import folder_paths
 from comfy.cli_args import args
 
 
-def _build_png_metadata(prompt, extra_pnginfo):
-    if args.disable_metadata:
-        return None
-
-    metadata = PngInfo()
-    if prompt is not None:
-        metadata.add_text("prompt", json.dumps(prompt))
-    if extra_pnginfo is not None:
-        for key, value in extra_pnginfo.items():
-            metadata.add_text(key, json.dumps(value))
-    return metadata
 
 
 def _normalize_mask(mask, batch_size, device):
@@ -199,7 +190,7 @@ This is a dedicated PNG output node and does not handle JPEG or WebP.
 
             filename_with_batch_num = filename.replace("%batch_num%", str(batch_number))
             file = f"{filename_with_batch_num}_{counter + batch_number:05}.png"
-            img.save(os.path.join(full_output_folder, file), pnginfo=metadata, compress_level=4)
+            _save_image_with_fallback(img, os.path.join(full_output_folder, file), {"format":"PNG", "pnginfo":metadata, "compress_level":4})
             results.append({
                 "filename": file,
                 "subfolder": subfolder,
@@ -320,16 +311,12 @@ Otherwise it flattens the image over a background color for fast RGB export.
 
             if file_format == "jpeg":
                 pil_image = pil_image.convert("RGB")
-                pil_image.save(output_path, format="JPEG", quality=jpeg_quality)
+                _save_image_with_fallback(pil_image, output_path, {"format":"JPEG", "quality":jpeg_quality})
             elif file_format == "webp":
-                pil_image.save(
-                    output_path,
-                    format="WEBP",
-                    quality=webp_quality,
-                    lossless=webp_lossless,
-                )
+                _save_image_with_fallback(pil_image, output_path,
+                    {"format":"WEBP", "quality":webp_quality, "lossless":webp_lossless})
             else:
-                pil_image.save(output_path, format="PNG", pnginfo=metadata, compress_level=png_compress_level)
+                _save_image_with_fallback(pil_image, output_path, {"format":"PNG", "pnginfo":metadata, "compress_level":png_compress_level})
 
             results.append({
                 "filename": file,
@@ -338,18 +325,3 @@ Otherwise it flattens the image over a background color for fast RGB export.
             })
 
         return {"ui": {"images": results}}
-
-
-NODE_CLASS_MAPPINGS = {
-    "RGBA_Safe_Pre": RGBA_Safe_Pre,
-    "RGBA_Safe_Post": RGBA_Safe_Post,
-    "RGBA_Save": RGBA_Save,
-    "RGBA_Multi_Save": RGBA_Multi_Save,
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "RGBA_Safe_Pre": "RGBA Safe Pre (Swwan)",
-    "RGBA_Safe_Post": "RGBA Safe Post (Swwan)",
-    "RGBA_Save": "RGBA Save (Swwan)",
-    "RGBA_Multi_Save": "RGBA Multi Save (Swwan)",
-}

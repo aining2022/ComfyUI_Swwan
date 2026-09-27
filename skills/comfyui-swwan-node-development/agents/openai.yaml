@@ -1,0 +1,4 @@
+interface:
+  display_name: "ComfyUI Swwan 节点开发"
+  short_description: "为 ComfyUI_Swwan 判断节点复用、扩展、新增并验证兼容性"
+  default_prompt: "使用 $comfyui-swwan-node-development 判断应复用、扩展还是新增节点，并完成兼容验证。"

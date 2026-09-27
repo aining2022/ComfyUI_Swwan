@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+# Source: LayerStyle; original notices and modification history in THIRD_PARTY_NOTICES.md.
 from PIL import ImageColor
 import torch
 
@@ -36,12 +38,3 @@ def _parse_color(color):
     except ValueError as exc:
         raise ValueError(f"ColorImage expects a PIL-compatible color string, got {color!r}") from exc
     return tuple(rgb[:3])
-
-
-NODE_CLASS_MAPPINGS = {
-    "LayerUtility: ColorImage (Swwan)": ColorImage,
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "LayerUtility: ColorImage (Swwan)": "LayerUtility: ColorImage (Swwan)",
-}

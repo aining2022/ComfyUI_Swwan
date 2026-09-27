@@ -1,0 +1,12 @@
+include node_manifest.json LICENSE README.md CHANGELOG.md CONTRIBUTING.md THIRD_PARTY_NOTICES.md requirements.txt
+recursive-include fonts *.ttf *.otf
+recursive-include licenses *.txt
+recursive-include web *.js
+recursive-include docs *.md *.json
+recursive-include examples *.json
+recursive-include scripts *.py
+recursive-include skills *.md *.py *.yaml
+recursive-include tests *.py *.mjs *.js *.json
+exclude .DS_Store
+exclude fonts/TTNorms-Black.otf
+global-exclude __pycache__ *.py[cod]

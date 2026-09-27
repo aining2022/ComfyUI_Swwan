@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+# Source: Swwan; original notices and modification history in THIRD_PARTY_NOTICES.md.
 
 import torch
 import comfy.utils
@@ -23,7 +25,7 @@ class ImageListToImageBatch:
         device_choice = device[0] if isinstance(device, list) else device
 
         if len(images) == 0:
-            return ()
+            raise ValueError("Image List to Batch requires at least one image.")
         if len(images) == 1:
             img = images[0]
             if img.ndim == 3:  # add batch dim if missing
@@ -100,13 +102,3 @@ class ImageBatchToImageList:
     def doit(self, image):
         images = [image[i:i + 1, ...] for i in range(image.shape[0])]
         return (images, )
-
-NODE_CLASS_MAPPINGS = {
-    "SwwanImageListToImageBatch": ImageListToImageBatch,
-    "SwwanImageBatchToImageList": ImageBatchToImageList,
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "SwwanImageListToImageBatch": "Image List to Image Batch",
-    "SwwanImageBatchToImageList": "Image Batch to Image List",
-}

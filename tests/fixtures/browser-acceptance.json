@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "extensions": [
+    "Swwan.ColorCodeWidget",
+    "Swwan.FastPreview",
+    "Swwan.WorkflowImageModes",
+    "Swwan.DynamicInputs",
+    "Swwan.Seed"
+  ],
+  "checks": [
+    "mode visibility",
+    "appended crop outputs",
+    "dynamic connected ports",
+    "COLORCODE connection/values",
+    "seed increment execution/metadata",
+    "random/decrement/last",
+    "graph save/reload"
+  ]
+}

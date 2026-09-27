@@ -1,0 +1,25 @@
+{
+  "order": [
+    "swwan-rgthree-reference",
+    "ComfyUI_LayerStyle",
+    "ComfyUI-KJNodes",
+    "ComfyUI_Swwan"
+  ],
+  "counts": {
+    "swwan-rgthree-reference": 24,
+    "ComfyUI_LayerStyle": 171,
+    "ComfyUI-KJNodes": 249,
+    "ComfyUI_Swwan": 113
+  },
+  "swwan_overlap": {
+    "swwan-rgthree-reference": [],
+    "ComfyUI_LayerStyle": [],
+    "ComfyUI-KJNodes": []
+  },
+  "passed": true,
+  "comfyui_revision": "4e024cb1e8423be735b919c585669dc189735c7b",
+  "third_party_optional_warnings": [
+    "KJ PatchTritonVAE unavailable without triton",
+    "LayerStyle guidedFilter unavailable in installed OpenCV"
+  ]
+}

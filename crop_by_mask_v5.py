@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+# Source: LayerStyle; original notices and modification history in THIRD_PARTY_NOTICES.md.
 import torch
 import torch.nn.functional as F
 import numpy as np
@@ -15,7 +17,7 @@ class CropByMaskV5:
 
     相比 V4 新增功能：
     - batch_mode: 批处理模式，支持直接处理视频批次
-      * single_frame: 单帧模式，每帧独立计算 crop_box
+      * single_frame: 保留历史行为，首帧遮罩和裁剪框处理输入批次
       * batch_first_reuse: 批处理模式，首帧计算 crop_box，后续帧自动复用
     """
 
@@ -49,17 +51,24 @@ class CropByMaskV5:
                 "image": ("IMAGE",),
                 "mask_image": ("IMAGE",),
                 "crop_box": ("BOX",),
+                "crop_mode": (["bounds", "edit_region"], {"default": "bounds"}),
+                "mask": ("MASK",),
+                "fill_mask_holes": ("BOOLEAN", {"default": False}),
+                "output_size": (["原像素", "原像素1：1", "自定义宽高"], {"default": "原像素"}),
+                "custom_width": ("INT", {"default": 1024, "min": 0, "max": 8192}),
+                "custom_height": ("INT", {"default": 1024, "min": 0, "max": 8192}),
+                "alignment": ("INT", {"default": 8, "min": 0, "max": 256}),
             }
         }
 
-    RETURN_TYPES = ("IMAGE", "IMAGE", "BOX", "IMAGE",)
-    RETURN_NAMES = ("cropped_image", "cropped_mask", "crop_box", "box_preview")
+    RETURN_TYPES = ("IMAGE", "IMAGE", "BOX", "IMAGE", "SEAM", "MASK")
+    RETURN_NAMES = ("cropped_image", "cropped_mask", "crop_box", "box_preview", "region_info", "region_mask")
     FUNCTION = 'crop_by_mask_v5'
     CATEGORY = 'Swwan/image'
     DESCRIPTION = """CropByMask V5 - 批处理智能裁剪节点
 
 批处理模式:
-- single_frame: 单帧模式，逐帧独立计算（兼容 V4）
+- single_frame: 保留历史行为，使用首帧遮罩和裁剪框处理输入批次
 - batch_first_reuse: 批处理模式，首帧计算 crop_box，后续帧自动复用
 
 Reserve 模式:
@@ -192,7 +201,39 @@ Reserve 模式:
                         top_reserve_ratio, bottom_reserve_ratio, left_reserve_ratio, right_reserve_ratio,
                         reserve_max, round_to_multiple,
                         batch_mode="single_frame", device="CPU",
-                        image=None, mask_image=None, crop_box=None):
+                        image=None, mask_image=None, crop_box=None,
+                        crop_mode="bounds", mask=None, fill_mask_holes=False,
+                        output_size="原像素", custom_width=1024, custom_height=1024,
+                        alignment=8):
+
+        if crop_mode == "edit_region":
+            from .edit_region import EditRegionCrop
+
+            if image is None:
+                raise ValueError("Edit region requires an image")
+            if mask is None and mask_image is not None:
+                mask = image2mask(tensor2pil(mask_image[0:1]).convert('L'))
+            if mask is None:
+                raise ValueError("Edit region requires mask or mask_image")
+            if mask.ndim == 2:
+                mask = mask.unsqueeze(0)
+            if mask.shape[1:3] != image.shape[1:3]:
+                raise ValueError("Edit region image and mask dimensions must match")
+            if output_size == "自定义宽高" and custom_width == custom_height == 0:
+                raise ValueError("At least one custom dimension must be positive")
+            region, cropped, region_mask = EditRegionCrop().裁剪图像(
+                image, mask, fill_mask_holes,
+                1 + top_reserve_ratio, 1 + bottom_reserve_ratio,
+                1 + left_reserve_ratio, 1 + right_reserve_ratio,
+                output_size, custom_width, custom_height, alignment,
+            )
+            top, bottom, left, right = region["裁剪区域"]
+            box = [left, top, right, bottom]
+            preview = draw_rect(tensor2pil(image[0:1]).convert('RGB'),
+                                left, top, right - left, bottom - top,
+                                line_color="#00FF00", line_width=2)
+            mask_rgb = region_mask.unsqueeze(-1).repeat(1, 1, 1, 3)
+            return cropped, mask_rgb, box, pil2tensor(preview), region, region_mask
 
         # 验证输入
         if mask_image is None and crop_box is None:
@@ -284,13 +325,9 @@ Reserve 模式:
             torch.cat(ret_masks, dim=0),
             list(effective_crop_box),
             pil2tensor(preview_image),
+            None,
+            torch.cat(ret_masks, dim=0)[..., 0],
         )
 
 
-NODE_CLASS_MAPPINGS = {
-    "SwwanCropByMaskV5": CropByMaskV5
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "SwwanCropByMaskV5": "Crop By Mask V5 (Batch)"
-}
+CropByMaskV5.DESCRIPTION = CropByMaskV5.DESCRIPTION + "\nEdit region: native mask input; first image only. Ratios add margins based on the mask's shortest side.\nUse region_info + region_mask for editing/restoration; bounds keeps the original four outputs.\n"

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+# Source: LayerStyle; original notices and modification history in THIRD_PARTY_NOTICES.md.
 """Utility functions extracted from ComfyUI_LayerStyle for node migration
 
 This module contains essential image processing and conversion functions
@@ -8,11 +10,14 @@ Original source: https://github.com/chflame163/ComfyUI_LayerStyle
 
 import numpy as np
 import torch
-import cv2
+from .ops.dependencies import lazy_module
+cv2 = lazy_module("cv2", "vision")
 import copy
 from PIL import Image, ImageFilter, ImageDraw, ImageChops
 from typing import Union, List
-from skimage import img_as_float, img_as_ubyte
+from .ops.dependencies import lazy_function
+img_as_float = lazy_function("skimage", "img_as_float", "vision")
+img_as_ubyte = lazy_function("skimage", "img_as_ubyte", "vision")
 
 
 def log(message: str, message_type: str = 'info'):

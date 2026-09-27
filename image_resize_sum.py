@@ -1,43 +1,25 @@
+# SPDX-License-Identifier: MIT
+# Source: Apt_Preset; original notices and modification history in THIRD_PARTY_NOTICES.md.
 import torch
 import numpy as np
-from torchvision.transforms.functional import to_pil_image, to_tensor
+from .ops.dependencies import lazy_function
+to_pil_image = lazy_function("torchvision.transforms.functional", "to_pil_image", "vision")
+to_tensor = lazy_function("torchvision.transforms.functional", "to_tensor", "vision")
 import torch.nn.functional as F
 from PIL import Image, ImageDraw, ImageFilter
 from typing import Tuple
 
 from comfy.utils import common_upscale
 
-from .main_unit import *
+from .ops.conversion import convert_pil_image
 
 if torch.cuda.is_available():
     device = torch.device("cuda")
 else:
     device = torch.device("cpu")
 
-#---------------------安全导入
-
-try:
-    import cv2
-    REMOVER_AVAILABLE = True  
-except ImportError:
-    cv2 = None
-    REMOVER_AVAILABLE = False  
-
-try:
-    from scipy.interpolate import CubicSpline
-    REMOVER_AVAILABLE = True  
-except ImportError:
-    CubicSpline = None
-    REMOVER_AVAILABLE = False 
-
-try:   
-    from scipy.ndimage import distance_transform_edt
-    REMOVER_AVAILABLE = True  
-except ImportError:
-    distance_transform_edt = None
-    REMOVER_AVAILABLE = False 
-
-
+from .ops.dependencies import lazy_module
+cv2 = lazy_module("cv2", "vision")
 
 #--------------------------------------------------------------------------------------#
 
@@ -972,19 +954,3 @@ class Image_Resize_sum_restore:
             output_original_image = torch.zeros((1, original_h, original_w, 3), dtype=torch.float32)
 
         return (restored_image.cpu(), restored_mask.cpu(), output_original_image.cpu())
-
-
-
-NODE_CLASS_MAPPINGS = {
-    "Mask_transform_sum": Mask_transform_sum,
-    "Image_Resize_sum": Image_Resize_sum,
-    "Image_Resize_sum_restore": Image_Resize_sum_restore,
-    "Image_Resize_sum_data": Image_Resize_sum_data,
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "Mask_transform_sum": "Mask Transform Sum",
-    "Image_Resize_sum": "Image Resize Sum",
-    "Image_Resize_sum_restore": "Image Resize Sum Restore",
-    "Image_Resize_sum_data": "Image Resize Sum Data",
-}

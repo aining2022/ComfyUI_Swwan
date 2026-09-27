@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+# Source: LayerStyle; original notices and modification history in THIRD_PARTY_NOTICES.md.
 import torch
 
 from .layerstyle_utils import log, tensor2pil, pil2tensor, mask2image, image2mask, gaussian_blur, min_bounding_rect, max_inscribed_rect, mask_area
@@ -105,12 +107,3 @@ class CropByMaskV2:
 
         log(f"{self.NODE_NAME} Processed {len(ret_images)} image(s).", message_type='finish')
         return (torch.cat(ret_images, dim=0), torch.cat(ret_masks, dim=0), list(crop_box), pil2tensor(preview_image),)
-
-
-NODE_CLASS_MAPPINGS = {
-    "LayerUtility: CropByMask V2": CropByMaskV2
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "LayerUtility: CropByMask V2": "LayerUtility: CropByMask V2"
-}

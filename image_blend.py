@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+# Source: LayerStyle; original notices and modification history in THIRD_PARTY_NOTICES.md.
 """Image Blend Node
 Migrated from ComfyUI_LayerStyle/py/image_blend.py
 Original author: chflame163
@@ -25,6 +27,10 @@ class ImageBlendSwwan:
             },
             "optional": {
                 "layer_mask": ("MASK",),
+                "operation": (["blend", "mask_composite"], {"default": "blend"}),
+                "mask_expand": ("INT", {"default": 0, "min": -100, "max": 100}),
+                "mask_blur": ("INT", {"default": 0, "min": 0, "max": 100}),
+                "match_image_size": ("BOOLEAN", {"default": False}),
             }
         }
 
@@ -35,7 +41,18 @@ class ImageBlendSwwan:
 
     def image_blend(self, background_image, layer_image,
                     invert_mask, blend_mode, opacity,
-                    layer_mask=None):
+                    layer_mask=None, operation="blend", mask_expand=0,
+                    mask_blur=0, match_image_size=False):
+
+        if operation == "mask_composite":
+            from .edit_image_ops import MaskComposite
+
+            if layer_mask is not None and invert_mask:
+                layer_mask = 1 - layer_mask
+            return MaskComposite().merge_images(
+                background_image, layer_image, opacity / 100.0,
+                mask_expand, mask_blur, match_image_size, layer_mask,
+            )
 
         b_images = []
         l_images = []
@@ -89,10 +106,4 @@ class ImageBlendSwwan:
         return (torch.cat(ret_images, dim=0),)
 
 
-NODE_CLASS_MAPPINGS = {
-    "ImageBlendSwwan": ImageBlendSwwan
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "ImageBlendSwwan": "Image Blend (Swwan)"
-}
+ImageBlendSwwan.DESCRIPTION = 'Operation blend preserves existing behavior. Mask composite processes the first image,\nresizes/centers the overlay, expands/blurs the mask and returns RGBA.\nFor the Qwen removal workflow use invert_mask=false.\n'

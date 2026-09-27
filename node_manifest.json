@@ -1,0 +1,1480 @@
+[
+  {
+    "id": "SwwanCropByMaskV2",
+    "module": "crop_by_mask_v2",
+    "class_name": "CropByMaskV2",
+    "display": "CropByMask V2 (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "LayerStyle",
+    "license": "MIT",
+    "legacy_ids": [
+      "LayerUtility: CropByMask V2"
+    ],
+    "replacement": "SwwanCropByMaskV5"
+  },
+  {
+    "id": "SwwanCropByMaskV3",
+    "module": "crop_by_mask_v3",
+    "class_name": "CropByMaskV3",
+    "display": "CropByMask V3 (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "LayerStyle",
+    "license": "MIT",
+    "legacy_ids": [
+      "LayerUtility: CropByMask V3"
+    ],
+    "replacement": "SwwanCropByMaskV5"
+  },
+  {
+    "id": "LayerUtility: CropByMask V4",
+    "module": "crop_by_mask_v4",
+    "class_name": "CropByMaskV4",
+    "display": "CropByMask V4 (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "LayerStyle",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": "SwwanCropByMaskV5"
+  },
+  {
+    "id": "SwwanCropByMaskV5",
+    "module": "crop_by_mask_v5",
+    "class_name": "CropByMaskV5",
+    "display": "Mask Crop (Swwan)",
+    "category": "Swwan/Image",
+    "tier": "primary",
+    "origin": "LayerStyle",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanRestoreCropBox",
+    "module": "restore_crop_box",
+    "class_name": "RestoreCropBox",
+    "display": "RestoreCropBox (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "LayerStyle",
+    "license": "MIT",
+    "legacy_ids": [
+      "LayerUtility: RestoreCropBox"
+    ],
+    "replacement": "SwwanRestoreCropBoxV4"
+  },
+  {
+    "id": "LayerUtility: RestoreCropBox V2",
+    "module": "restore_crop_box_v2",
+    "class_name": "RestoreCropBoxV2",
+    "display": "RestoreCropBox V2 (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "LayerStyle",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": "SwwanRestoreCropBoxV4"
+  },
+  {
+    "id": "SwwanRestoreCropBoxV3",
+    "module": "restore_crop_box_v3",
+    "class_name": "RestoreCropBoxV3",
+    "display": "Restore Crop Box V3 (Batch) (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "LayerStyle",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": "SwwanRestoreCropBoxV4"
+  },
+  {
+    "id": "SwwanRestoreCropBoxV4",
+    "module": "restore_crop_box_v4",
+    "class_name": "RestoreCropBoxV4",
+    "display": "Restore Crop (Swwan)",
+    "category": "Swwan/Image",
+    "tier": "primary",
+    "origin": "LayerStyle",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageScaleByAspectRatioV2",
+    "module": "image_scale_by_aspect_ratio_v2",
+    "class_name": "ImageScaleByAspectRatioV2",
+    "display": "ImageScaleByAspectRatio V2 (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "LayerStyle",
+    "license": "MIT",
+    "legacy_ids": [
+      "LayerUtility: ImageScaleByAspectRatio V2"
+    ],
+    "replacement": "ImageResizeKJv2Alternative"
+  },
+  {
+    "id": "LayerUtility: ColorImage (Swwan)",
+    "module": "color_image",
+    "class_name": "ColorImage",
+    "display": "ColorImage (Swwan)",
+    "category": "Swwan/Image",
+    "tier": "primary",
+    "origin": "LayerStyle",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "ImageBlendSwwan",
+    "module": "image_blend",
+    "class_name": "ImageBlendSwwan",
+    "display": "Image Blend (Swwan)",
+    "category": "Swwan/Image",
+    "tier": "primary",
+    "origin": "LayerStyle",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanSeed",
+    "module": "seed",
+    "class_name": "RgthreeSeed",
+    "display": "Seed (Swwan)",
+    "category": "Swwan/Utils",
+    "tier": "primary",
+    "origin": "rgthree",
+    "license": "MIT",
+    "legacy_ids": [
+      "Seed (rgthree)"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageListToImageBatch",
+    "module": "image_batch_utils",
+    "class_name": "ImageListToImageBatch",
+    "display": "Image List to Image Batch (Swwan)",
+    "category": "Swwan/Batch",
+    "tier": "primary",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageBatchToImageList",
+    "module": "image_batch_utils",
+    "class_name": "ImageBatchToImageList",
+    "display": "Image Batch to Image List (Swwan)",
+    "category": "Swwan/Batch",
+    "tier": "primary",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "Mask_transform_sum",
+    "module": "image_resize_sum",
+    "class_name": "Mask_transform_sum",
+    "display": "Mask Transform Sum (Swwan)",
+    "category": "Swwan/Advanced/Mask",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "Image_Resize_sum",
+    "module": "image_resize_sum",
+    "class_name": "Image_Resize_sum",
+    "display": "Image Resize Sum (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "Image_Resize_sum_restore",
+    "module": "image_resize_sum",
+    "class_name": "Image_Resize_sum_restore",
+    "display": "Image Resize Sum Restore (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "Image_Resize_sum_data",
+    "module": "image_resize_sum",
+    "class_name": "Image_Resize_sum_data",
+    "display": "Image Resize Sum Data (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "math_Remap_data",
+    "module": "nodes.math_utils",
+    "class_name": "math_Remap_data",
+    "display": "Math Remap Data (Swwan)",
+    "category": "Swwan/Advanced/Utils",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "math_calculate",
+    "module": "nodes.math_utils",
+    "class_name": "math_calculate",
+    "display": "Math Calculate (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": "MathExpression_UTK"
+  },
+  {
+    "id": "list_Slice",
+    "module": "nodes.data_lists",
+    "class_name": "list_Slice",
+    "display": "List Slice (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "list_Merge",
+    "module": "nodes.data_lists",
+    "class_name": "list_Merge",
+    "display": "List Merge (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "list_Value",
+    "module": "nodes.data_lists",
+    "class_name": "list_Value",
+    "display": "List Value (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "list_num_range",
+    "module": "nodes.data_lists",
+    "class_name": "list_num_range",
+    "display": "List Num Range (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "sch_split_text",
+    "module": "nodes.scheduling",
+    "class_name": "sch_split_text",
+    "display": "Schedule Split Text (Swwan)",
+    "category": "Swwan/Advanced/Scheduling",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "sch_text",
+    "module": "nodes.scheduling",
+    "class_name": "sch_text",
+    "display": "Schedule Text (Swwan)",
+    "category": "Swwan/Advanced/Scheduling",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "sch_Value",
+    "module": "nodes.scheduling",
+    "class_name": "sch_Value",
+    "display": "Schedule Value (Swwan)",
+    "category": "Swwan/Advanced/Scheduling",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "sch_Prompt",
+    "module": "nodes.scheduling",
+    "class_name": "sch_Prompt",
+    "display": "Schedule Prompt (Swwan)",
+    "category": "Swwan/Advanced/Scheduling",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "sch_image",
+    "module": "nodes.scheduling",
+    "class_name": "sch_image",
+    "display": "Schedule Image (Swwan)",
+    "category": "Swwan/Advanced/Scheduling",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "sch_mask",
+    "module": "nodes.scheduling",
+    "class_name": "sch_mask",
+    "display": "Schedule Mask (Swwan)",
+    "category": "Swwan/Advanced/Scheduling",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "BatchSlice",
+    "module": "nodes.data_lists",
+    "class_name": "BatchSlice",
+    "display": "Batch Slice (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "MergeBatch",
+    "module": "nodes.data_lists",
+    "class_name": "MergeBatch",
+    "display": "Merge Batch (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "type_AnyIndex",
+    "module": "nodes.data_lists",
+    "class_name": "type_AnyIndex",
+    "display": "Type Any Index (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "Apt_Preset",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImagePass",
+    "module": "nodes.batch",
+    "class_name": "ImagePass",
+    "display": "Image Pass (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImagePass"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanColorMatch",
+    "module": "nodes.color",
+    "class_name": "ColorMatch",
+    "display": "Color Match (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ColorMatch"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanSaveImageWithAlpha",
+    "module": "nodes.io",
+    "class_name": "SaveImageWithAlpha",
+    "display": "Save Image With Alpha (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "SaveImageWithAlpha"
+    ],
+    "replacement": "SwwanSaveImage"
+  },
+  {
+    "id": "SwwanImageConcanate",
+    "module": "nodes.concat",
+    "class_name": "ImageConcanate",
+    "display": "Image Concatenate (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageConcanate"
+    ],
+    "replacement": "SwwanImageConcatMulti"
+  },
+  {
+    "id": "SwwanImageConcatFromBatch",
+    "module": "nodes.concat",
+    "class_name": "ImageConcatFromBatch",
+    "display": "Image Concat From Batch (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageConcatFromBatch"
+    ],
+    "replacement": "SwwanImageConcatMulti"
+  },
+  {
+    "id": "SwwanImageGridComposite2x2",
+    "module": "nodes.concat",
+    "class_name": "ImageGridComposite2x2",
+    "display": "Image Grid Composite 2x2 (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageGridComposite2x2"
+    ],
+    "replacement": "SwwanImageConcatMulti"
+  },
+  {
+    "id": "SwwanImageGridComposite3x3",
+    "module": "nodes.concat",
+    "class_name": "ImageGridComposite3x3",
+    "display": "Image Grid Composite 3x3 (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageGridComposite3x3"
+    ],
+    "replacement": "SwwanImageConcatMulti"
+  },
+  {
+    "id": "SwwanImageBatchTestPattern",
+    "module": "nodes.io",
+    "class_name": "ImageBatchTestPattern",
+    "display": "Image Batch Test Pattern (Swwan)",
+    "category": "Swwan/Advanced/IO",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageBatchTestPattern"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageGrabPIL",
+    "module": "nodes.device",
+    "class_name": "ImageGrabPIL",
+    "display": "Image Grab PIL (Swwan)",
+    "category": "Swwan/Experimental",
+    "tier": "experimental",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageGrabPIL"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanWebcamCaptureCV2",
+    "module": "nodes.device",
+    "class_name": "WebcamCaptureCV2",
+    "display": "Webcam Capture CV2 (Swwan)",
+    "category": "Swwan/Experimental",
+    "tier": "experimental",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "WebcamCaptureCV2"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanAddLabel",
+    "module": "nodes.io",
+    "class_name": "AddLabel",
+    "display": "Add Label (Swwan)",
+    "category": "Swwan/Advanced/IO",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "AddLabel"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanGetImageSizeAndCount",
+    "module": "nodes.batch",
+    "class_name": "GetImageSizeAndCount",
+    "display": "Get Image Size & Count (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "GetImageSizeAndCount"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanGetLatentSizeAndCount",
+    "module": "nodes.batch",
+    "class_name": "GetLatentSizeAndCount",
+    "display": "Get Latent Size & Count (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "GetLatentSizeAndCount"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageBatchRepeatInterleaving",
+    "module": "nodes.batch",
+    "class_name": "ImageBatchRepeatInterleaving",
+    "display": "Image Batch Repeat Interleaving (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageBatchRepeatInterleaving"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageUpscaleWithModelBatched",
+    "module": "nodes.model",
+    "class_name": "ImageUpscaleWithModelBatched",
+    "display": "Image Upscale With Model Batched (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageUpscaleWithModelBatched"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageNormalize_Neg1_To_1",
+    "module": "nodes.color",
+    "class_name": "ImageNormalize_Neg1_To_1",
+    "display": "Image Normalize -1 to 1 (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageNormalize_Neg1_To_1"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanRemapImageRange",
+    "module": "nodes.color",
+    "class_name": "RemapImageRange",
+    "display": "Remap Image Range (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "RemapImageRange"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanSplitImageChannels",
+    "module": "nodes.color",
+    "class_name": "SplitImageChannels",
+    "display": "Split Image Channels (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "SplitImageChannels"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanMergeImageChannels",
+    "module": "nodes.color",
+    "class_name": "MergeImageChannels",
+    "display": "Merge Image Channels (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "MergeImageChannels"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImagePadForOutpaintMasked",
+    "module": "nodes.mask",
+    "class_name": "ImagePadForOutpaintMasked",
+    "display": "Image Pad For Outpaint Masked (Swwan)",
+    "category": "Swwan/Advanced/Mask",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImagePadForOutpaintMasked"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImagePadForOutpaintTargetSize",
+    "module": "nodes.mask",
+    "class_name": "ImagePadForOutpaintTargetSize",
+    "display": "Image Pad For Outpaint Target Size (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImagePadForOutpaintTargetSize"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImagePrepForICLora",
+    "module": "nodes.mask",
+    "class_name": "ImagePrepForICLora",
+    "display": "Image Prep For IC Lora (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImagePrepForICLora"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageAndMaskPreview",
+    "module": "nodes.io",
+    "class_name": "ImageAndMaskPreview",
+    "display": "Image And Mask Preview (Swwan)",
+    "category": "Swwan/Advanced/IO",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageAndMaskPreview"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanCrossFadeImages",
+    "module": "nodes.transition",
+    "class_name": "CrossFadeImages",
+    "display": "Cross Fade Images (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "CrossFadeImages"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanCrossFadeImagesMulti",
+    "module": "nodes.transition",
+    "class_name": "CrossFadeImagesMulti",
+    "display": "Cross Fade Images Multi (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "CrossFadeImagesMulti"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanTransitionImagesMulti",
+    "module": "nodes.transition",
+    "class_name": "TransitionImagesMulti",
+    "display": "Transition Images Multi (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "TransitionImagesMulti"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanTransitionImagesInBatch",
+    "module": "nodes.transition",
+    "class_name": "TransitionImagesInBatch",
+    "display": "Transition Images In Batch (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "TransitionImagesInBatch"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageBatchJoinWithTransition",
+    "module": "nodes.transition",
+    "class_name": "ImageBatchJoinWithTransition",
+    "display": "Image Batch Join With Transition (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageBatchJoinWithTransition"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanShuffleImageBatch",
+    "module": "nodes.batch",
+    "class_name": "ShuffleImageBatch",
+    "display": "Shuffle Image Batch (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ShuffleImageBatch"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanGetImageRangeFromBatch",
+    "module": "nodes.batch",
+    "class_name": "GetImageRangeFromBatch",
+    "display": "Get Image Range From Batch (Swwan)",
+    "category": "Swwan/Batch",
+    "tier": "primary",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "GetImageRangeFromBatch"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageBatchExtendWithOverlap",
+    "module": "nodes.batch",
+    "class_name": "ImageBatchExtendWithOverlap",
+    "display": "Image Batch Extend With Overlap (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageBatchExtendWithOverlap"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanGetLatentRangeFromBatch",
+    "module": "nodes.batch",
+    "class_name": "GetLatentRangeFromBatch",
+    "display": "Get Latent Range From Batch (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "GetLatentRangeFromBatch"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "InsertLatentToIndex",
+    "module": "nodes.batch",
+    "class_name": "InsertLatentToIndex",
+    "display": "Insert Latent To Index (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageBatchFilter",
+    "module": "nodes.batch",
+    "class_name": "ImageBatchFilter",
+    "display": "Image Batch Filter (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageBatchFilter"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanGetImagesFromBatchIndexed",
+    "module": "nodes.batch",
+    "class_name": "GetImagesFromBatchIndexed",
+    "display": "Get Images From Batch Indexed (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "GetImagesFromBatchIndexed"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanInsertImagesToBatchIndexed",
+    "module": "nodes.batch",
+    "class_name": "InsertImagesToBatchIndexed",
+    "display": "Insert Images To Batch Indexed (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "InsertImagesToBatchIndexed"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanPadImageBatchInterleaved",
+    "module": "nodes.batch",
+    "class_name": "PadImageBatchInterleaved",
+    "display": "Pad Image Batch Interleaved (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "PadImageBatchInterleaved"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanReplaceImagesInBatch",
+    "module": "nodes.batch",
+    "class_name": "ReplaceImagesInBatch",
+    "display": "Replace Images In Batch (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ReplaceImagesInBatch"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanReverseImageBatch",
+    "module": "nodes.batch",
+    "class_name": "ReverseImageBatch",
+    "display": "Reverse Image Batch (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ReverseImageBatch"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageBatchMulti",
+    "module": "nodes.batch",
+    "class_name": "ImageBatchMulti",
+    "display": "Image Batch Multi (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageBatchMulti"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageTensorList",
+    "module": "nodes.batch",
+    "class_name": "ImageTensorList",
+    "display": "Image Tensor List (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageTensorList"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageAddMulti",
+    "module": "nodes.batch",
+    "class_name": "ImageAddMulti",
+    "display": "Image Add Multi (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageAddMulti"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageConcatMulti",
+    "module": "nodes.concat",
+    "class_name": "ImageConcatMulti",
+    "display": "Image Concat Multi (Swwan)",
+    "category": "Swwan/Image",
+    "tier": "primary",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageConcatMulti"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanPreviewAnimation",
+    "module": "nodes.io",
+    "class_name": "PreviewAnimation",
+    "display": "Preview Animation (Swwan)",
+    "category": "Swwan/Advanced/IO",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "PreviewAnimation"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageResizeKJ",
+    "module": "nodes.resize",
+    "class_name": "ImageResizeKJ",
+    "display": "Image Resize (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageResizeKJ"
+    ],
+    "replacement": "ImageResizeKJv2Alternative"
+  },
+  {
+    "id": "ImageResizeKJv2Alternative",
+    "module": "nodes.resize",
+    "class_name": "ImageResizeKJv2",
+    "display": "Resize Image (Swwan)",
+    "category": "Swwan/Image",
+    "tier": "primary",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "ImageResizeByMegapixels",
+    "module": "nodes.resize",
+    "class_name": "ImageResizeByMegapixels",
+    "display": "Image Resize By Megapixels (Swwan)",
+    "category": "Swwan/Image",
+    "tier": "primary",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanLoadAndResizeImage",
+    "module": "nodes.io",
+    "class_name": "LoadAndResizeImage",
+    "display": "Load And Resize Image (Swwan)",
+    "category": "Swwan/Advanced/IO",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "LoadAndResizeImage"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanLoadImagesFromFolderKJ",
+    "module": "nodes.io",
+    "class_name": "LoadImagesFromFolderKJ",
+    "display": "Load Images From Folder (Swwan)",
+    "category": "Swwan/Advanced/IO",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "LoadImagesFromFolderKJ"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageGridtoBatch",
+    "module": "nodes.transition",
+    "class_name": "ImageGridtoBatch",
+    "display": "Image Grid to Batch (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageGridtoBatch"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanSaveImageKJ",
+    "module": "nodes.io",
+    "class_name": "SaveImageKJ",
+    "display": "Save Image (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "SaveImageKJ"
+    ],
+    "replacement": "SwwanSaveImage"
+  },
+  {
+    "id": "SwwanSaveStringKJ",
+    "module": "nodes.io",
+    "class_name": "SaveStringKJ",
+    "display": "Save String (Swwan)",
+    "category": "Swwan/Advanced/IO",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "SaveStringKJ"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanFastPreview",
+    "module": "nodes.io",
+    "class_name": "FastPreview",
+    "display": "Fast Preview (Swwan)",
+    "category": "Swwan/Advanced/IO",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "FastPreview"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageCropByMaskAndResize",
+    "module": "nodes.mask",
+    "class_name": "ImageCropByMaskAndResize",
+    "display": "Image Crop By Mask And Resize (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageCropByMaskAndResize"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageCropByMask",
+    "module": "nodes.mask",
+    "class_name": "ImageCropByMask",
+    "display": "Image Crop By Mask (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageCropByMask"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageUncropByMask",
+    "module": "nodes.mask",
+    "class_name": "ImageUncropByMask",
+    "display": "Image Uncrop By Mask (Swwan)",
+    "category": "Swwan/Advanced/Mask",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageUncropByMask"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageCropByMaskBatch",
+    "module": "nodes.mask",
+    "class_name": "ImageCropByMaskBatch",
+    "display": "Image Crop By Mask Batch (Swwan)",
+    "category": "Swwan/Advanced/Batch",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImageCropByMaskBatch"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImagePadKJ",
+    "module": "nodes.mask",
+    "class_name": "ImagePadKJ",
+    "display": "Image Pad (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "ImagePadKJ"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanLoadVideosFromFolder",
+    "module": "nodes.io",
+    "class_name": "LoadVideosFromFolder",
+    "display": "Load Videos From Folder (Swwan)",
+    "category": "Swwan/Advanced/IO",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [
+      "LoadVideosFromFolder"
+    ],
+    "replacement": null
+  },
+  {
+    "id": "SwwanDrawMaskOnImage",
+    "module": "nodes.mask",
+    "class_name": "DrawMaskOnImage",
+    "display": "Draw Mask On Image (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "AnySwitch (Swwan)",
+    "module": "nodes_switch",
+    "class_name": "AnySwitch",
+    "display": "Any Switch (Swwan)",
+    "category": "Swwan/Advanced/Utils",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "AnyBooleanSwitch (Swwan)",
+    "module": "nodes_switch",
+    "class_name": "AnyBooleanSwitch",
+    "display": "Any Boolean Switch (Swwan)",
+    "category": "Swwan/Utils",
+    "tier": "primary",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "raiseExceptionOnTrue",
+    "module": "nodes_switch",
+    "class_name": "RaiseExceptionOnTrue",
+    "display": "Raise Exception On True (Swwan)",
+    "category": "Swwan/Advanced/Utils",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "MathExpression_UTK",
+    "module": "math_expression",
+    "class_name": "MathExpression_UTK",
+    "display": "Math Expression (Swwan)",
+    "category": "Swwan/Utils",
+    "tier": "primary",
+    "origin": "UniversalToolkit",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "IO_save_image",
+    "module": "io_nodes",
+    "class_name": "IO_save_image",
+    "display": "IO Save Image (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": "SwwanSaveImage"
+  },
+  {
+    "id": "IO_save_image_format",
+    "module": "io_nodes",
+    "class_name": "IO_save_image_format",
+    "display": "IO Save Image Format (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": "SwwanSaveImage"
+  },
+  {
+    "id": "BoundedImageCrop",
+    "module": "bounded_image_crop",
+    "class_name": "BoundedImageCrop",
+    "display": "Bounded Image Crop (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "WAS",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "BoundedImageCropWithMask",
+    "module": "bounded_image_crop",
+    "class_name": "BoundedImageCropWithMask",
+    "display": "Bounded Image Crop With Mask (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "WAS",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "RGBA_Safe_Pre",
+    "module": "rgba_nodes",
+    "class_name": "RGBA_Safe_Pre",
+    "display": "RGBA Safe Pre (Swwan)",
+    "category": "Swwan/RGBA",
+    "tier": "primary",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "RGBA_Safe_Post",
+    "module": "rgba_nodes",
+    "class_name": "RGBA_Safe_Post",
+    "display": "RGBA Safe Post (Swwan)",
+    "category": "Swwan/RGBA",
+    "tier": "primary",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "RGBA_Save",
+    "module": "rgba_nodes",
+    "class_name": "RGBA_Save",
+    "display": "RGBA Save (Swwan)",
+    "category": "Swwan/RGBA",
+    "tier": "primary",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "RGBA_Multi_Save",
+    "module": "rgba_nodes",
+    "class_name": "RGBA_Multi_Save",
+    "display": "RGBA Multi Save (Swwan) · 旧版兼容",
+    "category": "Swwan/Legacy",
+    "tier": "legacy",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": "SwwanSaveImage"
+  },
+  {
+    "id": "SwwanColorShiftFix",
+    "module": "color_shift_fix",
+    "class_name": "ColorShiftFix",
+    "display": "Color Shift Fix (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "PatchSageAttentionKJAlternative",
+    "module": "sage_attention_patch",
+    "class_name": "PatchSageAttentionKJ",
+    "display": "Patch Sage Attention KJ (KJ Alternative) (Swwan)",
+    "category": "Swwan/Advanced/Model",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "MiniMaxH3MemoryEfficientSageAttentionPatchKJAlternative",
+    "module": "minimax_h3_sage_attention_patch",
+    "class_name": "MiniMaxH3MemoryEfficientSageAttentionPatchKJAlternative",
+    "display": "MiniMax H3 Mem Eff Sage Attention Patch (KJ Alternative) (Swwan)",
+    "category": "Swwan/Advanced/Model",
+    "tier": "advanced",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageResizeRange",
+    "module": "workflow_tools",
+    "class_name": "ImageResizeRange",
+    "display": "Image Resize Range (Swwan)",
+    "category": "Swwan/Image",
+    "tier": "primary",
+    "origin": "Goohaitools",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanBlockifyMask",
+    "module": "workflow_tools",
+    "class_name": "BlockifyMask",
+    "display": "Blockify Mask (Swwan)",
+    "category": "Swwan/Mask",
+    "tier": "primary",
+    "origin": "KJNodes",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImagesToRGB",
+    "module": "workflow_tools",
+    "class_name": "ImagesToRGB",
+    "display": "Images to RGB (Swwan)",
+    "category": "Swwan/Image",
+    "tier": "primary",
+    "origin": "Swwan; WAS behavior reference",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanColorConverter",
+    "module": "workflow_tools",
+    "class_name": "ColorConverter",
+    "display": "Color Converter (Swwan)",
+    "category": "Swwan/Image",
+    "tier": "primary",
+    "origin": "Goohaitools",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanSaveImage",
+    "module": "nodes.save",
+    "class_name": "SwwanSaveImage",
+    "display": "Save Image (Swwan)",
+    "category": "Swwan/IO",
+    "tier": "primary",
+    "origin": "Swwan",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [],
+    "replacement": null
+  }
+]

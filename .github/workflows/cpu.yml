@@ -1,0 +1,34 @@
+name: CPU contracts
+on: [push, pull_request]
+jobs:
+  cpu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: swwan
+      - uses: actions/checkout@v4
+        with:
+          repository: comfyanonymous/ComfyUI
+          ref: 4e024cb1e8423be735b919c585669dc189735c7b
+          path: comfyui
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -r comfyui/requirements.txt -r swwan/requirements.txt
+      - working-directory: swwan
+        run: |
+          python tests/test_workflow_image_nodes.py --comfyui-root ../comfyui
+          python tests/test_project_contracts.py --comfyui-root ../comfyui
+          python tests/test_optional_imports.py --comfyui-root ../comfyui
+          node tests/test_workflow_image_modes.mjs
+          node tests/test_project_frontend.mjs
+          python tests/test_skill_candidates.py
+      - working-directory: swwan
+        run: |
+          pip wheel . --no-deps --wheel-dir /tmp/swwan-dist
+          python tests/test_distribution.py /tmp/swwan-dist/comfyui_swwan-1.0.0-py3-none-any.whl
