@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "nodes": 15,
+  "links": 17,
+  "checks": [
+    "five tool registrations",
+    "crop factor",
+    "mask/segments/color/resize/preview mode visibility",
+    "SEGS and appended BOOLEAN",
+    "COLORCODE connection",
+    "complete parameter save/reload"
+  ],
+  "prompt_id": "283d9c90-9e80-4547-a9e6-79027ebcf7a7",
+  "save_node_id": "15",
+  "execution": "success",
+  "output_image": {
+    "size": [
+      128,
+      96
+    ],
+    "mode": "RGB",
+    "pixel_0_0": [
+      0,
+      0,
+      0
+    ]
+  },
+  "comfyui_reference": "4e024cb1e8423be735b919c585669dc189735c7b"
+}

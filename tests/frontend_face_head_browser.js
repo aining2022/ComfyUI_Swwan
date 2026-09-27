@@ -1,0 +1,48 @@
+// Evaluate on an isolated ComfyUI CPU QA server with only Swwan + core image/mask nodes.
+(async () => {
+    const { app } = await import('/scripts/app.js');
+    const { api } = await import('/scripts/api.js');
+    const check = (condition, message) => { if (!condition) throw Error(message); };
+    const widget = (node, name) => node.widgets.find((w) => w.name === name);
+    const set = (node, name, value) => { const w = widget(node, name); check(w, `Missing ${name}`); w.value = value; w.callback?.(value); };
+    app.graph.clear();
+    const create = (id) => { const n = LiteGraph.createNode(id); check(n, `Missing ${id}`); app.graph.add(n); return n; };
+    const connect = (source, slot, target, name) => { const index = target.inputs.findIndex((i) => i.name === name); check(index >= 0, `Missing input ${name}`); check(source.connect(slot, target, index), `Failed connection ${name}`); };
+    const image = create('LayerUtility: ColorImage (Swwan)');
+    const mask = create('SolidMask'); set(mask, 'width', 128); set(mask, 'height', 96); set(mask, 'value', 1);
+    set(image, 'width', 128); set(image, 'height', 96);
+    const crop = create('SwwanCropByMaskV5'); set(crop, 'crop_mode', 'edit_region'); set(crop, 'edit_expansion_mode', 'factor');
+    check(widget(crop, 'top_reserve_ratio').hidden, 'Old reserve ratios visible in factor mode');
+    check(!widget(crop, 'edit_top_factor').hidden, 'Direct factor input hidden');
+    connect(image, 0, crop, 'image'); connect(mask, 0, crop, 'mask');
+    const coefficient = create('MathExpression_UTK'); set(coefficient, 'expression', '1.2'); connect(coefficient, 1, crop, 'edit_top_factor');
+    const process = create('SwwanMaskProcess'); set(process, 'operation', 'binary'); set(process, 'threshold', 5); connect(crop, 5, process, 'mask');
+    check(widget(process, 'blur').hidden && !widget(process, 'threshold').hidden, 'Binary mode fields incorrect');
+    const convert = create('SwwanMaskSegments'); set(convert, 'operation', 'from_mask'); set(convert, 'drop_size', 1); connect(process, 0, convert, 'mask');
+    const filter = create('SwwanMaskSegments'); set(filter, 'operation', 'filter'); set(filter, 'sort_rule', '左右上下'); connect(convert, 0, filter, 'segs');
+    check(widget(filter, 'crop_factor').hidden && !widget(filter, 'sort_rule').hidden, 'Segment mode fields incorrect');
+    const analysis = create('SwwanMaskAnalyze'); connect(process, 0, analysis, 'mask'); check(analysis.outputs[7].type === 'BOOLEAN', 'Missing area detection output');
+    const combine = create('SwwanMaskCombine'); connect(process, 0, combine, 'mask_1');
+    const matte = create('SwwanImageMatte'); set(matte, 'crop_mask', false); connect(crop, 0, matte, 'image'); connect(filter, 1, matte, 'mask');
+    const color = create('SwwanColorConverter'); set(color, '色值', '#123456'); connect(color, 1, matte, 'background_color');
+    const match = create('SwwanColorMatch'); set(match, 'match_mode', 'mean_std'); connect(matte, 1, match, 'image_ref'); connect(matte, 1, match, 'image_target');
+    check(widget(match, 'method').hidden && !widget(match, 'color_space').hidden, 'Color mode fields incorrect');
+    const resize = create('ImageResizeKJv2Alternative'); set(resize, 'resize_mode', 'essentials'); set(resize, 'width', 128); set(resize, 'height', 96); set(resize, 'essentials_method', 'keep proportion'); connect(match, 0, resize, 'image');
+    check(widget(resize, 'upscale_method').hidden && !widget(resize, 'essentials_interpolation').hidden, 'Resize mode fields incorrect');
+    const preview = create('SwwanImageAndMaskPreview'); set(preview, 'preview_mode', 'regions'); set(preview, 'show_numbers', true); set(preview, 'number_font', 'FreeMono.ttf'); connect(crop, 0, preview, 'image'); connect(filter, 1, preview, 'mask');
+    check(widget(preview, 'mask_color').hidden && !widget(preview, 'region_color').hidden, 'Preview fields incorrect');
+    const save = create('SwwanSaveImage'); connect(resize, 0, save, 'image'); set(save, 'filename_prefix', 'swwan_face_head_qa');
+    const graph = JSON.parse(JSON.stringify(app.graph.serialize()));
+    const params = await app.graphToPrompt();
+    check(Array.isArray(params.output[crop.id].inputs.edit_top_factor), 'Linked factor missing from API prompt');
+    check(Array.isArray(params.output[matte.id].inputs.background_color), 'COLORCODE connection missing');
+    await app.loadGraphData(graph);
+    const loaded = (id) => app.graph.getNodeById(id);
+    check(widget(loaded(process.id), 'threshold').value === 5, 'Threshold lost on reload');
+    check(loaded(crop.id).inputs.some((i) => i.name === 'edit_top_factor' && i.link != null), 'Factor connection lost on reload');
+    check(loaded(matte.id).inputs.some((i) => i.name === 'background_color' && i.link != null), 'Color connection lost on reload');
+    const serialized = await app.graphToPrompt();
+    check(JSON.stringify(params.output) === JSON.stringify(serialized.output), 'API parameter/connection change after reload');
+    const queued = await api.queuePrompt(0, serialized);
+    return { status: 'PASS', nodes: graph.nodes.length, links: graph.links.length, checks: ['five tool registrations', 'crop factor', 'mask/segments/color/resize/preview mode visibility', 'SEGS and appended BOOLEAN', 'COLORCODE connection', 'complete parameter save/reload'], prompt_id: queued.prompt_id, save_node_id: String(save.id) };
+})()

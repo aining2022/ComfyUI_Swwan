@@ -24,6 +24,12 @@ class ColorMatch:
             "optional": {
                 "strength": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 10.0, "step": 0.01}),
                 "multithread": ("BOOLEAN", {"default": True}),
+                "match_mode": (["color_matcher", "mean_std"], {"default": "color_matcher"}),
+                "reference_mask": ("MASK",),
+                "color_space": (["LAB", "YCbCr", "RGB", "LUV", "YUV", "XYZ"],),
+                "factor": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.05}),
+                "device": (["auto", "cpu", "gpu"],),
+                "batch_size": ("INT", {"default": 0, "min": 0, "max": 1024}),
             }
         }
 
@@ -45,7 +51,15 @@ https://github.com/hahnec/color-matcher/
 
 """
 
-    def colormatch(self, image_ref, image_target, method, strength=1.0, multithread=True):
+    def colormatch(self, image_ref, image_target, method, strength=1.0, multithread=True,
+                   match_mode="color_matcher", reference_mask=None, color_space="LAB", factor=1., device="auto", batch_size=0):
+        if match_mode == "mean_std":
+            from ..ops.color_transfer import EssentialsColorAlgorithm
+            try:
+                return EssentialsColorAlgorithm().execute(image_target, image_ref, color_space, factor, device, batch_size, reference_mask)
+            except ImportError as exc:
+                raise RuntimeError("Mean/std Color Match requires kornia (ComfyUI dependency)") from exc
+        if match_mode != "color_matcher": raise ValueError(f"Unknown color matching mode: {match_mode}")
         # Skip unnecessary processing
         if strength == 0:
             return (image_target,)

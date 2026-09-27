@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Integrate 43 pure image/mask instances from the Qwen face/head workflow while preserving all model, prompt, sampler, loop and explicitly excluded LG nodes.
+- Add five focused Advanced tools: Mask Process, Mask Combine, Mask Analyze, Mask Segments and Image Matte. SEGS remains a seven-field Impact-compatible contract, with no detector/model imports.
+- Extend existing crop with direct linked edit-region factors, Resize with the original Essentials algorithm, Color Match with six-space mean/std matching, and Preview with numbered mask regions. Existing modes, defaults and output slots stay intact.
+- Retain WAS single-mask `[1,1,H,W]` filling output and repair its ambiguous multi-mask path with per-image processing. Binary mode normalizes MASK channels exactly as Impact does.
+- Add an idempotent, source-preserving workflow migration and frozen CPU references. Replace the unavailable preview font with redistributed FreeMono; enabled numbering intentionally changes typography.
+
 ## 1.0.0 — 2026-09-26
 
 - 113 registered capabilities organized into 21 primary, 72 Advanced, 18 Legacy and 2 Experimental entries. Unique manifest and duplicate-ID rejection; all displays carry `(Swwan)`.

@@ -256,6 +256,14 @@ class ImageAndMaskPreview(SaveImage):
             "optional": {
                 "image": ("IMAGE",),
                 "mask": ("MASK",),
+                "preview_mode": (["standard", "regions"], {"default": "standard"}),
+                "region_color": ("COLORCODE", {"default": "#00ffff"}),
+                "show_numbers": ("BOOLEAN", {"default": False}),
+                "number_opacity": ("FLOAT", {"default": 0.8, "min": 0., "max": 1., "step": .1}),
+                "number_scale": (["跟随遮罩缩放", "固定大小"],),
+                "font_scale": ("FLOAT", {"default": 0.6, "min": .1, "max": 2., "step": .1}),
+                "number_font": (["FreeMono.ttf", "FreeMonoBoldOblique.otf", "苹方特粗.ttf"], {"default": "FreeMono.ttf"}),
+                "number_color": ("COLORCODE", {"default": "#ffffff"}),
             },
             "hidden": {"prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"},
         }
@@ -272,7 +280,16 @@ this allows for the preview to be passed for video combine
 nodes for example.
 """
 
-    def execute(self, mask_opacity, mask_color, pass_through, filename_prefix="ComfyUI", image=None, mask=None, prompt=None, extra_pnginfo=None):
+    def execute(self, mask_opacity, mask_color, pass_through, filename_prefix="ComfyUI", image=None, mask=None, prompt=None, extra_pnginfo=None,
+                preview_mode="standard", region_color="#00ffff", show_numbers=False, number_opacity=.8,
+                number_scale="跟随遮罩缩放", font_scale=.6, number_font="FreeMono.ttf", number_color="#ffffff"):
+        if preview_mode == "regions":
+            if image is None or mask is None: raise ValueError("Region Preview requires both image and mask")
+            from ..ops.region_preview import RegionPreviewAlgorithm
+            if number_font == "苹方特粗.ttf": number_font = "FreeMono.ttf"
+            return RegionPreviewAlgorithm().preview(image, mask, mask_opacity, region_color, show_numbers,
+                                                   number_font, number_opacity, number_scale, font_scale, number_color)
+        if preview_mode != "standard": raise ValueError(f"Unknown preview mode: {preview_mode}")
         if mask is not None and image is None:
             preview = mask.reshape((-1, 1, mask.shape[-2], mask.shape[-1])).movedim(1, -1).expand(-1, -1, -1, 3)
         elif mask is None and image is not None:

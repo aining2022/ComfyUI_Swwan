@@ -1,6 +1,6 @@
 # ComfyUI_Swwan
 
-独立的 ComfyUI 图片处理与工作流工具。1.0.0 保留全部历史能力，用 **21 个推荐主入口**、任务专用工具和 Legacy 兼容层降低选择成本。当前注册 **113 个节点**：21 主入口、72 专用工具、18 Legacy、2 Experimental。
+独立的 ComfyUI 图片处理与工作流工具。1.0.0 保留全部历史能力，用 **21 个推荐主入口**、任务专用工具和 Legacy 兼容层降低选择成本。当前注册 **118 个节点**：21 主入口、77 专用工具、18 Legacy、2 Experimental。
 
 ## 从任务选择节点
 
@@ -34,7 +34,7 @@
 
 ## 安装
 
-在 ComfyUI 的 Python 环境中安装本仓 `requirements.txt`，把仓库放进 `ComfyUI/custom_nodes`，重启服务并刷新浏览器。基础注册只需 ComfyUI 已有的 torch、numpy、Pillow；图像算法依赖按 `pyproject.toml` 的 vision/color 分层。Color Match 执行时另需 `color-matcher`。GPU 专用库按硬件安装，本项目不自动安装 CUDA wheels。
+在 ComfyUI 的 Python 环境中安装本仓 `requirements.txt`，把仓库放进 `ComfyUI/custom_nodes`，重启服务并刷新浏览器。基础注册只需 ComfyUI 已有的 torch、numpy、Pillow；图像算法依赖按 `pyproject.toml` 的 vision/color 分层。Color Match 的旧 `color_matcher` 模式执行时另需 `color-matcher`；新 `mean_std` 模式使用 ComfyUI 的 kornia。GPU 专用库按硬件安装，本项目不自动安装 CUDA wheels。
 
 ```sh
 cd /path/to/ComfyUI/custom_nodes
@@ -72,6 +72,8 @@ Save Image 统一 PNG/JPEG/WebP/TIFF/BMP、alpha、元数据、字幕与 workflo
 
 Qwen2511 的 [迁移工作流](examples/qwen2511-remove-single-swwan.json) 保留核心节点、QwenEditUtils、模型、提示词和采样配置。执行该工作流仍需对应模型和 QwenEditUtils。
 
+Qwen 换脸／换头的 [迁移工作流](examples/qwen-face-head-swwan.json) 将 43 个纯图片／遮罩节点整合到已有入口和 5 个专用工具。模型预处理、QwenEditUtils、循环控制及按要求忽略的 LG 颜色节点保留，详见 [节点对照与验收](docs/QWEN_FACE_HEAD_INTEGRATION.md)。
+
 ## 维护与验证
 
 [贡献指南](CONTRIBUTING.md)、[变更说明](CHANGELOG.md)、[安装验收清单](INSTALLATION_CHECKLIST.md)。仓库维护的 [节点开发 skill](skills/comfyui-swwan-node-development/SKILL.md) 查询当前机器可读目录，判断复用、扩展、优化或新增，不复制节点名单。
@@ -80,6 +82,7 @@ Qwen2511 的 [迁移工作流](examples/qwen2511-remove-single-swwan.json) 保�
 python scripts/export_node_catalog.py --comfyui-root /path/to/ComfyUI
 python tests/test_workflow_image_nodes.py --comfyui-root /path/to/ComfyUI
 python tests/test_project_contracts.py --comfyui-root /path/to/ComfyUI
+python tests/test_face_head_processing.py --comfyui-root /path/to/ComfyUI
 python tests/test_optional_imports.py --comfyui-root /path/to/ComfyUI
 node tests/test_workflow_image_modes.mjs
 node tests/test_project_frontend.mjs

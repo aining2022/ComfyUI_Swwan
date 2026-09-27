@@ -426,7 +426,7 @@
     "display": "Color Match (Swwan)",
     "category": "Swwan/Advanced/Image",
     "tier": "advanced",
-    "origin": "KJNodes",
+    "origin": "KJNodes/Essentials",
     "license": "GPL-3.0-only",
     "legacy_ids": [
       "ColorMatch"
@@ -720,7 +720,7 @@
     "display": "Image And Mask Preview (Swwan)",
     "category": "Swwan/Advanced/IO",
     "tier": "advanced",
-    "origin": "KJNodes",
+    "origin": "KJNodes/Goohaitools",
     "license": "GPL-3.0-only",
     "legacy_ids": [
       "ImageAndMaskPreview"
@@ -1040,7 +1040,7 @@
     "display": "Resize Image (Swwan)",
     "category": "Swwan/Image",
     "tier": "primary",
-    "origin": "KJNodes",
+    "origin": "KJNodes/Goohaitools/LayerStyle/Essentials",
     "license": "GPL-3.0-only",
     "legacy_ids": [],
     "replacement": null
@@ -1473,6 +1473,66 @@
     "category": "Swwan/IO",
     "tier": "primary",
     "origin": "Swwan",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanMaskProcess",
+    "module": "nodes.mask_tools",
+    "class_name": "MaskProcess",
+    "display": "Mask Process (Swwan)",
+    "category": "Swwan/Advanced/Mask",
+    "tier": "advanced",
+    "origin": "WAS/Impact/LayerStyle/KJNodes/Essentials",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanMaskCombine",
+    "module": "nodes.mask_tools",
+    "class_name": "MaskCombine",
+    "display": "Mask Combine (Swwan)",
+    "category": "Swwan/Advanced/Mask",
+    "tier": "advanced",
+    "origin": "Goohaitools",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanMaskAnalyze",
+    "module": "nodes.mask_tools",
+    "class_name": "MaskAnalyze",
+    "display": "Mask Analyze (Swwan)",
+    "category": "Swwan/Advanced/Mask",
+    "tier": "advanced",
+    "origin": "Goohaitools",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanMaskSegments",
+    "module": "nodes.mask_tools",
+    "class_name": "MaskSegments",
+    "display": "Mask Segments (Swwan)",
+    "category": "Swwan/Advanced/Mask",
+    "tier": "advanced",
+    "origin": "Impact/Goohaitools",
+    "license": "GPL-3.0-only",
+    "legacy_ids": [],
+    "replacement": null
+  },
+  {
+    "id": "SwwanImageMatte",
+    "module": "nodes.mask_tools",
+    "class_name": "ImageMatte",
+    "display": "Image Matte (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "Goohaitools",
     "license": "GPL-3.0-only",
     "legacy_ids": [],
     "replacement": null

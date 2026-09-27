@@ -2,13 +2,13 @@
 
 由唯一注册清单和实际接口生成；层级已应用到菜单。
 
-当前注册 **113** 个节点，**15** 个分类。
+当前注册 **118** 个节点，**15** 个分类。
 
 | 层级 | 数量 |
 | --- | --- |
 | 兼容入口 | 18 |
 | 主入口 | 21 |
-| 专用工具 | 72 |
+| 专用工具 | 77 |
 | 实验功能 | 2 |
 
 | 层级 | 节点 ID | 显示名 | 当前分类 | 输出 | 源码 |
@@ -61,10 +61,10 @@
 | 专用工具 | `SwwanGetLatentSizeAndCount` | Get Latent Size & Count (Swwan) | Swwan/Advanced/Batch | LATENT, INT, INT, INT, INT, INT | [nodes/batch.py](../nodes/batch.py#L52) |
 | 专用工具 | `SwwanImageBatchRepeatInterleaving` | Image Batch Repeat Interleaving (Swwan) | Swwan/Advanced/Batch | IMAGE, MASK | [nodes/batch.py](../nodes/batch.py#L82) |
 | 专用工具 | `SwwanImageUpscaleWithModelBatched` | Image Upscale With Model Batched (Swwan) | Swwan/Advanced/Batch | IMAGE | [nodes/model.py](../nodes/model.py#L5) |
-| 专用工具 | `SwwanImageNormalize_Neg1_To_1` | Image Normalize -1 to 1 (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/color.py](../nodes/color.py#L94) |
-| 专用工具 | `SwwanRemapImageRange` | Remap Image Range (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/color.py](../nodes/color.py#L112) |
-| 专用工具 | `SwwanSplitImageChannels` | Split Image Channels (Swwan) | Swwan/Advanced/Image | IMAGE, IMAGE, IMAGE, MASK | [nodes/color.py](../nodes/color.py#L138) |
-| 专用工具 | `SwwanMergeImageChannels` | Merge Image Channels (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/color.py](../nodes/color.py#L168) |
+| 专用工具 | `SwwanImageNormalize_Neg1_To_1` | Image Normalize -1 to 1 (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/color.py](../nodes/color.py#L108) |
+| 专用工具 | `SwwanRemapImageRange` | Remap Image Range (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/color.py](../nodes/color.py#L126) |
+| 专用工具 | `SwwanSplitImageChannels` | Split Image Channels (Swwan) | Swwan/Advanced/Image | IMAGE, IMAGE, IMAGE, MASK | [nodes/color.py](../nodes/color.py#L152) |
+| 专用工具 | `SwwanMergeImageChannels` | Merge Image Channels (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/color.py](../nodes/color.py#L182) |
 | 专用工具 | `SwwanImagePadForOutpaintMasked` | Image Pad For Outpaint Masked (Swwan) | Swwan/Advanced/Mask | IMAGE, MASK | [nodes/mask.py](../nodes/mask.py#L5) |
 | 专用工具 | `SwwanImagePadForOutpaintTargetSize` | Image Pad For Outpaint Target Size (Swwan) | Swwan/Advanced/Image | IMAGE, MASK | [nodes/mask.py](../nodes/mask.py#L86) |
 | 专用工具 | `SwwanImagePrepForICLora` | Image Prep For IC Lora (Swwan) | Swwan/Advanced/Image | IMAGE, MASK | [nodes/mask.py](../nodes/mask.py#L145) |
@@ -89,22 +89,22 @@
 | 专用工具 | `SwwanImageTensorList` | Image Tensor List (Swwan) | Swwan/Advanced/Batch | IMAGE | [nodes/batch.py](../nodes/batch.py#L670) |
 | 专用工具 | `SwwanImageAddMulti` | Image Add Multi (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/batch.py](../nodes/batch.py#L697) |
 | 主入口 | `SwwanImageConcatMulti` | Image Concat Multi (Swwan) | Swwan/Image | IMAGE | [nodes/concat.py](../nodes/concat.py#L196) |
-| 专用工具 | `SwwanPreviewAnimation` | Preview Animation (Swwan) | Swwan/Advanced/IO | 输出节点 | [nodes/io.py](../nodes/io.py#L301) |
+| 专用工具 | `SwwanPreviewAnimation` | Preview Animation (Swwan) | Swwan/Advanced/IO | 输出节点 | [nodes/io.py](../nodes/io.py#L318) |
 | 兼容入口 | `SwwanImageResizeKJ` | Image Resize (Swwan) · 旧版兼容 | Swwan/Legacy | IMAGE, INT, INT | [nodes/resize.py](../nodes/resize.py#L5) |
 | 主入口 | `ImageResizeKJv2Alternative` | Resize Image (Swwan) | Swwan/Image | IMAGE, INT, INT, MASK | [nodes/resize.py](../nodes/resize.py#L82) |
-| 主入口 | `ImageResizeByMegapixels` | Image Resize By Megapixels (Swwan) | Swwan/Image | IMAGE, INT, INT, MASK, INT | [nodes/resize.py](../nodes/resize.py#L425) |
-| 专用工具 | `SwwanLoadAndResizeImage` | Load And Resize Image (Swwan) | Swwan/Advanced/IO | IMAGE, MASK, INT, INT, STRING | [nodes/io.py](../nodes/io.py#L385) |
-| 专用工具 | `SwwanLoadImagesFromFolderKJ` | Load Images From Folder (Swwan) | Swwan/Advanced/IO | IMAGE, MASK, INT, STRING | [nodes/io.py](../nodes/io.py#L538) |
+| 主入口 | `ImageResizeByMegapixels` | Image Resize By Megapixels (Swwan) | Swwan/Image | IMAGE, INT, INT, MASK, INT | [nodes/resize.py](../nodes/resize.py#L436) |
+| 专用工具 | `SwwanLoadAndResizeImage` | Load And Resize Image (Swwan) | Swwan/Advanced/IO | IMAGE, MASK, INT, INT, STRING | [nodes/io.py](../nodes/io.py#L402) |
+| 专用工具 | `SwwanLoadImagesFromFolderKJ` | Load Images From Folder (Swwan) | Swwan/Advanced/IO | IMAGE, MASK, INT, STRING | [nodes/io.py](../nodes/io.py#L555) |
 | 专用工具 | `SwwanImageGridtoBatch` | Image Grid to Batch (Swwan) | Swwan/Advanced/Batch | IMAGE | [nodes/transition.py](../nodes/transition.py#L312) |
-| 兼容入口 | `SwwanSaveImageKJ` | Save Image (Swwan) · 旧版兼容 | Swwan/Legacy | STRING | [nodes/io.py](../nodes/io.py#L768) |
-| 专用工具 | `SwwanSaveStringKJ` | Save String (Swwan) | Swwan/Advanced/IO | STRING | [nodes/io.py](../nodes/io.py#L839) |
-| 专用工具 | `SwwanFastPreview` | Fast Preview (Swwan) | Swwan/Advanced/IO | 输出节点 | [nodes/io.py](../nodes/io.py#L889) |
+| 兼容入口 | `SwwanSaveImageKJ` | Save Image (Swwan) · 旧版兼容 | Swwan/Legacy | STRING | [nodes/io.py](../nodes/io.py#L785) |
+| 专用工具 | `SwwanSaveStringKJ` | Save String (Swwan) | Swwan/Advanced/IO | STRING | [nodes/io.py](../nodes/io.py#L856) |
+| 专用工具 | `SwwanFastPreview` | Fast Preview (Swwan) | Swwan/Advanced/IO | 输出节点 | [nodes/io.py](../nodes/io.py#L906) |
 | 专用工具 | `SwwanImageCropByMaskAndResize` | Image Crop By Mask And Resize (Swwan) | Swwan/Advanced/Image | IMAGE, MASK, BBOX | [nodes/mask.py](../nodes/mask.py#L228) |
 | 专用工具 | `SwwanImageCropByMask` | Image Crop By Mask (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/mask.py](../nodes/mask.py#L366) |
 | 专用工具 | `SwwanImageUncropByMask` | Image Uncrop By Mask (Swwan) | Swwan/Advanced/Mask | IMAGE | [nodes/mask.py](../nodes/mask.py#L412) |
 | 专用工具 | `SwwanImageCropByMaskBatch` | Image Crop By Mask Batch (Swwan) | Swwan/Advanced/Batch | IMAGE, MASK | [nodes/mask.py](../nodes/mask.py#L496) |
 | 专用工具 | `SwwanImagePadKJ` | Image Pad (Swwan) | Swwan/Advanced/Image | IMAGE, MASK | [nodes/mask.py](../nodes/mask.py#L598) |
-| 专用工具 | `SwwanLoadVideosFromFolder` | Load Videos From Folder (Swwan) | Swwan/Advanced/IO | IMAGE | [nodes/io.py](../nodes/io.py#L921) |
+| 专用工具 | `SwwanLoadVideosFromFolder` | Load Videos From Folder (Swwan) | Swwan/Advanced/IO | IMAGE | [nodes/io.py](../nodes/io.py#L938) |
 | 专用工具 | `SwwanDrawMaskOnImage` | Draw Mask On Image (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/mask.py](../nodes/mask.py#L769) |
 | 专用工具 | `AnySwitch (Swwan)` | Any Switch (Swwan) | Swwan/Advanced/Utils | BOOLEAN, * | [nodes_switch.py](../nodes_switch.py#L16) |
 | 主入口 | `AnyBooleanSwitch (Swwan)` | Any Boolean Switch (Swwan) | Swwan/Utils | * | [nodes_switch.py](../nodes_switch.py#L41) |
@@ -126,6 +126,11 @@
 | 主入口 | `SwwanImagesToRGB` | Images to RGB (Swwan) | Swwan/Image | IMAGE | [workflow_tools.py](../workflow_tools.py#L571) |
 | 主入口 | `SwwanColorConverter` | Color Converter (Swwan) | Swwan/Image | STRING, COLORCODE | [workflow_tools.py](../workflow_tools.py#L354) |
 | 主入口 | `SwwanSaveImage` | Save Image (Swwan) | Swwan/IO | STRING | [nodes/save.py](../nodes/save.py#L14) |
+| 专用工具 | `SwwanMaskProcess` | Mask Process (Swwan) | Swwan/Advanced/Mask | MASK, MASK | [nodes/mask_tools.py](../nodes/mask_tools.py#L9) |
+| 专用工具 | `SwwanMaskCombine` | Mask Combine (Swwan) | Swwan/Advanced/Mask | MASK, INT, INT | [nodes/mask_tools.py](../nodes/mask_tools.py#L73) |
+| 专用工具 | `SwwanMaskAnalyze` | Mask Analyze (Swwan) | Swwan/Advanced/Mask | MASK, INT, INT, INT, INT, INT, INT, BOOLEAN | [nodes/mask_tools.py](../nodes/mask_tools.py#L91) |
+| 专用工具 | `SwwanMaskSegments` | Mask Segments (Swwan) | Swwan/Advanced/Mask | SEGS, MASK | [nodes/mask_tools.py](../nodes/mask_tools.py#L111) |
+| 专用工具 | `SwwanImageMatte` | Image Matte (Swwan) | Swwan/Advanced/Image | IMAGE, IMAGE, MASK | [nodes/mask_tools.py](../nodes/mask_tools.py#L149) |
 
 机器可读接口清单：[node-catalog.json](node-catalog.json)。
 

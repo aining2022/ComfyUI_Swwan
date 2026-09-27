@@ -6,6 +6,7 @@ const nodeIds = new Set([
     "SwwanCropByMaskV5", "SwwanRestoreCropBoxV4",
     "ImageResizeKJv2Alternative", "ImageBlendSwwan",
     "SwwanImageConcatMulti", "SwwanSaveImage", "MathExpression_UTK",
+    "SwwanMaskProcess", "SwwanMaskSegments", "SwwanImageAndMaskPreview", "SwwanColorMatch",
 ]);
 
 function value(node, name) {
@@ -38,18 +39,26 @@ function update(node) {
         if (edit) {
             hide("detect", "reserve_mode", "top_reserve", "bottom_reserve", "left_reserve", "right_reserve",
                 "reserve_max", "round_to_multiple", "batch_mode", "device");
+            if (!connected(node, "edit_expansion_mode")) {
+                if (value(node, "edit_expansion_mode") === "factor") hide("top_reserve_ratio", "bottom_reserve_ratio", "left_reserve_ratio", "right_reserve_ratio");
+                else hide("edit_top_factor", "edit_bottom_factor", "edit_left_factor", "edit_right_factor");
+            }
             if (value(node, "output_size") !== "自定义宽高" && !connected(node, "output_size")) {
                 hide("custom_width", "custom_height");
             }
         } else {
-            hide("fill_mask_holes", "output_size", "custom_width", "custom_height", "alignment");
+            hide("fill_mask_holes", "output_size", "custom_width", "custom_height", "alignment", "edit_expansion_mode", "edit_top_factor", "edit_bottom_factor", "edit_left_factor", "edit_right_factor");
             if (!connected(node, "reserve_mode") && value(node, "reserve_mode") === "absolute") {
                 hide("top_reserve_ratio", "bottom_reserve_ratio", "left_reserve_ratio", "right_reserve_ratio", "reserve_max");
             }
         }
     } else if (id === "ImageResizeKJv2Alternative" && !connected(node, "resize_mode")) {
         const aspectNames = ["aspect_ratio", "proportional_width", "proportional_height", "aspect_fit", "aspect_method", "aspect_round", "aspect_scale_side", "aspect_length"];
-        if (value(node, "resize_mode") === "aspect_ratio") {
+        const essentials = ["essentials_method", "essentials_condition", "essentials_interpolation"];
+        if (value(node, "resize_mode") !== "essentials") hide(...essentials);
+        if (value(node, "resize_mode") === "essentials") {
+            hide("upscale_method", "keep_proportion", "pad_color", "crop_position", "device", "size_rule", "edge_length", "execute_condition", "edit_fit", "fill_color", ...aspectNames);
+        } else if (value(node, "resize_mode") === "aspect_ratio") {
             hide("width", "height", "upscale_method", "keep_proportion", "pad_color", "crop_position", "divisible_by", "device", "size_rule", "edge_length", "execute_condition", "edit_fit");
             if (value(node, "aspect_ratio") !== "custom" && !connected(node, "aspect_ratio")) hide("proportional_width", "proportional_height");
         } else if (value(node, "resize_mode") === "edit_size") {
@@ -64,6 +73,26 @@ function update(node) {
         } else {
             hide("size_rule", "edge_length", "execute_condition", "edit_fit", "fill_color", ...aspectNames);
         }
+    } else if (id === "SwwanMaskProcess" && !connected(node, "operation")) {
+        const fields = {
+            binary: ["threshold"], fill_holes: [],
+            cleanup: ["erode_dilate", "close_holes", "remove_isolated_pixels", "smooth", "blur"],
+            layer_grow: ["invert_mask", "grow", "blur"],
+            grow_blur: ["expand", "incremental_expandrate", "tapered_corners", "flip_input", "blur_radius", "lerp_alpha", "decay_factor", "fill_holes"],
+        };
+        const active = new Set(fields[value(node, "operation")] || []);
+        for (const name of new Set(Object.values(fields).flat())) if (!active.has(name)) hide(name);
+    } else if (id === "SwwanMaskSegments" && !connected(node, "operation")) {
+        const convert = ["combined", "crop_factor", "bbox_fill", "drop_size", "contour_fill"];
+        const filter = ["sort_rule", "sort_order", "start_index", "count", "group_threshold"];
+        if (value(node, "operation") !== "from_mask") hide(...convert);
+        if (value(node, "operation") !== "filter") hide(...filter);
+    } else if (id === "SwwanImageAndMaskPreview" && !connected(node, "preview_mode")) {
+        if (value(node, "preview_mode") === "regions") hide("mask_color", "pass_through");
+        else hide("region_color", "show_numbers", "number_opacity", "number_scale", "font_scale", "number_font", "number_color");
+    } else if (id === "SwwanColorMatch" && !connected(node, "match_mode")) {
+        if (value(node, "match_mode") === "mean_std") hide("method", "strength", "multithread");
+        else hide("color_space", "factor", "device", "batch_size");
     } else if (id === "ImageBlendSwwan" && !connected(node, "operation")) {
         if (value(node, "operation") === "mask_composite") hide("blend_mode");
         else hide("mask_expand", "mask_blur", "match_image_size");

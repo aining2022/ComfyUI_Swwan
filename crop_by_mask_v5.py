@@ -58,6 +58,9 @@ class CropByMaskV5:
                 "custom_width": ("INT", {"default": 1024, "min": 0, "max": 8192}),
                 "custom_height": ("INT", {"default": 1024, "min": 0, "max": 8192}),
                 "alignment": ("INT", {"default": 8, "min": 0, "max": 256}),
+                "edit_expansion_mode": (["reserve_ratio", "factor"], {"default": "reserve_ratio"}),
+                **{name: ("FLOAT", {"default": 1.2, "min": 1.0, "max": 10.0, "step": 0.1}) for name in
+                   ("edit_top_factor", "edit_bottom_factor", "edit_left_factor", "edit_right_factor")},
             }
         }
 
@@ -204,7 +207,7 @@ Reserve 模式:
                         image=None, mask_image=None, crop_box=None,
                         crop_mode="bounds", mask=None, fill_mask_holes=False,
                         output_size="原像素", custom_width=1024, custom_height=1024,
-                        alignment=8):
+                        alignment=8, edit_expansion_mode="reserve_ratio", edit_top_factor=1.2, edit_bottom_factor=1.2, edit_left_factor=1.2, edit_right_factor=1.2):
 
         if crop_mode == "edit_region":
             from .edit_region import EditRegionCrop
@@ -221,10 +224,11 @@ Reserve 模式:
                 raise ValueError("Edit region image and mask dimensions must match")
             if output_size == "自定义宽高" and custom_width == custom_height == 0:
                 raise ValueError("At least one custom dimension must be positive")
+            factors = (edit_top_factor, edit_bottom_factor, edit_left_factor, edit_right_factor) if edit_expansion_mode == "factor" else (
+                1 + top_reserve_ratio, 1 + bottom_reserve_ratio, 1 + left_reserve_ratio, 1 + right_reserve_ratio)
             region, cropped, region_mask = EditRegionCrop().裁剪图像(
                 image, mask, fill_mask_holes,
-                1 + top_reserve_ratio, 1 + bottom_reserve_ratio,
-                1 + left_reserve_ratio, 1 + right_reserve_ratio,
+                *factors,
                 output_size, custom_width, custom_height, alignment,
             )
             top, bottom, left, right = region["裁剪区域"]

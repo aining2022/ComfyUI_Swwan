@@ -11,7 +11,7 @@ import nodes
 from server import PromptServer
 import asyncio
 PromptServer(asyncio.new_event_loop())
-OPTIONAL={'cv2','scipy','skimage','matplotlib','spandrel','color_matcher','triton','sageattention','nvvfx'}
+OPTIONAL={'cv2','scipy','skimage','matplotlib','spandrel','color_matcher','triton','sageattention','nvvfx','kornia','torchvision'}
 for key in list(sys.modules):
     if key.split('.')[0] in OPTIONAL:del sys.modules[key]
 class Blocked(importlib.abc.MetaPathFinder):
@@ -21,7 +21,8 @@ sys.meta_path.insert(0,Blocked())
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 from migrate_qwen2511_workflow import load_nodes
 reg=load_nodes(args.comfyui_root)
-assert len(reg.NODE_CLASS_MAPPINGS)==113
+import json
+assert len(reg.NODE_CLASS_MAPPINGS)==len(json.loads((Path(__file__).resolve().parents[1]/"node_manifest.json").read_text()))
 for cls in reg.NODE_CLASS_MAPPINGS.values():cls.INPUT_TYPES()
 assert not (OPTIONAL&{key.split('.')[0] for key in sys.modules})
 print('PASS: registration and all schemas without optional libraries')

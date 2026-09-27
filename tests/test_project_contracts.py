@@ -34,7 +34,7 @@ class Acceptance(unittest.TestCase):
     def test_registry_and_old_contracts(self):
         manifest=reg.registry.MANIFEST
         self.assertEqual(sum(x['tier']=='primary' for x in manifest),21)
-        self.assertEqual(len(C),113);self.assertFalse(set(ALIASES)&C.keys())
+        self.assertEqual(len(C),len(json.loads((ROOT/"node_manifest.json").read_text())));self.assertFalse(set(ALIASES)&C.keys())
         self.assertIn('ImageResizeByMegapixels',C);self.assertIn('SwwanDrawMaskOnImage',C)
         with self.assertRaisesRegex(ValueError,'Duplicate Swwan'):
             reg.registry.build_registry(reg.__name__,[manifest[0],manifest[0]])

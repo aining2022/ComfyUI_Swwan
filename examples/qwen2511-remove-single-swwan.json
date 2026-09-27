@@ -111,7 +111,12 @@
         "原像素",
         1024,
         1024,
-        16
+        16,
+        "reserve_ratio",
+        1.2,
+        1.2,
+        1.2,
+        1.2
       ],
       "widgets_values_named": {
         "遮罩填充": true,
@@ -841,7 +846,10 @@
         "lanczos",
         "8",
         "longest",
-        1024
+        1024,
+        "stretch",
+        "always",
+        "nearest"
       ],
       "widgets_values_named": {
         "宽度": 512,

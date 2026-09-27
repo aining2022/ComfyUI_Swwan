@@ -25,10 +25,10 @@ MAPPINGS = {
     "LayerUtility: ColorImage": "LayerUtility: ColorImage (Swwan)",
 }
 INPUT_NAMES = {
-    "GH_MaskCropV2": {"图像": "image", "遮罩": "mask"},
+    "GH_MaskCropV2": {"图像": "image", "遮罩": "mask", "遮罩填充": "fill_mask_holes", "扩展系数上": "top_reserve_ratio", "扩展系数下": "bottom_reserve_ratio", "扩展系数左": "left_reserve_ratio", "扩展系数右": "right_reserve_ratio", "输出尺寸": "output_size", "自定义宽": "custom_width", "自定义高": "custom_height", "倍数取整": "alignment"},
     "GH_CropRestore": {"接缝": "region_info", "裁剪图像": "croped_image", "裁剪遮罩": "croped_mask", "背景图像": "background_image"},
-    "图像缩放V2_孤海": {"图像": "image", "填充颜色": "fill_color", "遮罩": "mask", "宽度": "width", "高度": "height"},
-    "GulfSeaImageMergeMask": {"背景图": "background_image", "覆盖图": "layer_image", "遮罩": "layer_mask"},
+    "图像缩放V2_孤海": {"图像": "image", "填充颜色": "fill_color", "遮罩": "mask", "宽度": "width", "高度": "height", "将边缩放到": "edge_length", "缩放方法": "size_rule", "缩放插值": "upscale_method", "缩放模式": "edit_fit", "固定方向": "crop_position", "执行条件": "execute_condition", "整除数": "divisible_by"},
+    "GulfSeaImageMergeMask": {"背景图": "background_image", "覆盖图": "layer_image", "遮罩": "layer_mask", "透明度": "opacity", "遮罩扩展": "mask_expand", "模糊半径": "mask_blur", "匹配图像大小": "match_image_size"},
 }
 OUTPUT_SLOTS = {"GH_MaskCropV2": {0: 4, 1: 0, 2: 5}}
 SCALAR_TYPES = {"INT", "FLOAT", "BOOLEAN", "STRING", "COLORCODE"}
@@ -82,7 +82,7 @@ def migrate(original, registry):
             positions = {"居中": "center", "上": "top", "下": "bottom", "左": "left", "右": "right"}
             values.update(width=w[0], height=w[1], resize_mode="edit_size", size_rule=w[2], edge_length=w[3],
                           upscale_method=interpolation[w[4]], edit_fit=w[5], crop_position=positions[w[6]],
-                          execute_condition=w[7], divisible_by=w[8], keep_proportion="crop", device="cpu")
+                          execute_condition=w[7], fill_color=w[8] if len(w) > 9 else "#364254", divisible_by=w[9] if len(w) > 9 else w[8], keep_proportion="crop", device="cpu")
         elif old_type == "GulfSeaImageMergeMask":
             values.update(operation="mask_composite", opacity=int(round(w[0]*100)), invert_mask=False,
                           mask_expand=w[1], mask_blur=w[2], match_image_size=w[3], blend_mode="normal")

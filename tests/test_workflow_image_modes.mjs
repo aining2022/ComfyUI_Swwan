@@ -97,7 +97,7 @@ assert.equal(visible(crop, 'fill_mask_holes'), true);
 assert.equal(visible(crop, 'detect'), true);
 
 const resize = makeNode('ImageResizeKJv2Alternative', {
-    resize_mode: 'standard', size_rule: '按长边等比例', width: 640, height: 480,
+    upscale_method:'lanczos', essentials_method:'stretch', essentials_condition:'always', essentials_interpolation:'nearest', resize_mode: 'standard', size_rule: '按长边等比例', width: 640, height: 480,
     keep_proportion: 'pad', pad_color: '0, 0, 0', device: 'cpu', edge_length: 1024,
     execute_condition: '总是', edit_fit: '裁剪', fill_color: '#364254',
 });
@@ -152,3 +152,19 @@ for (const order of original ? [[original, colors], [colors, original]] : [[colo
     assert.deepEqual(JSON.parse(savedValues(node)), ['#abcdef']);
 }
 console.log('PASS: modes, connected inputs, restore visibility, serialized values and COLORCODE widgets' + (original ? ' (both plugin orders)' : ''));
+
+const maskProcess = makeNode('SwwanMaskProcess',{operation:'cleanup',threshold:5,erode_dilate:0,blur:3,grow:4,expand:10,fill_holes:true});
+assert.equal(visible(maskProcess,'threshold'),false);set(maskProcess,'operation','binary');assert.equal(visible(maskProcess,'threshold'),true);assert.equal(visible(maskProcess,'blur'),false);
+set(maskProcess,'operation','grow_blur');assert.equal(visible(maskProcess,'expand'),true);assert.equal(visible(maskProcess,'fill_holes'),true);assert.equal(widget(maskProcess,'threshold').value,5);
+const segments = makeNode('SwwanMaskSegments',{operation:'from_mask',combined:false,crop_factor:3,sort_rule:'面积大小',start_index:0});
+assert.equal(visible(segments,'crop_factor'),true);set(segments,'operation','filter');assert.equal(visible(segments,'crop_factor'),false);assert.equal(visible(segments,'sort_rule'),true);
+const transfer = makeNode('SwwanColorMatch',{match_mode:'color_matcher',method:'mkl',strength:1,color_space:'LAB',factor:1});
+set(transfer,'match_mode','mean_std');assert.equal(visible(transfer,'method'),false);assert.equal(visible(transfer,'color_space'),true);
+const regionPreview = makeNode('SwwanImageAndMaskPreview',{preview_mode:'standard',mask_color:'255,255,255',region_color:'#ff00a2',show_numbers:true});
+set(regionPreview,'preview_mode','regions');assert.equal(visible(regionPreview,'mask_color'),false);assert.equal(visible(regionPreview,'region_color'),true);
+set(resize,'resize_mode','essentials');assert.equal(visible(resize,'upscale_method'),false);assert.equal(visible(resize,'width'),true);
+console.log('PASS: mask processing/segments, region preview and extended color/resize mode controls');
+
+const linkedFactorMode = makeNode('SwwanCropByMaskV5',{crop_mode:'edit_region',edit_expansion_mode:'factor',edit_top_factor:1.2,top_reserve_ratio:.2});
+linkedFactorMode.inputs.push({name:'edit_expansion_mode',link:44});linkedFactorMode.onConnectionsChange();
+assert.equal(visible(linkedFactorMode,'edit_top_factor'),true);assert.equal(visible(linkedFactorMode,'top_reserve_ratio'),true);

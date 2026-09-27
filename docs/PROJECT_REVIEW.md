@@ -73,3 +73,7 @@
 CPU CI 已配置固定 ComfyUI SHA，未运行远程 GitHub Actions（未提交/推送）。CUDA、RTX、SageAttention、MiniMax H3、屏幕／摄像头和 Qwen 完整生成效果仍按 HARDWARE_VALIDATION 独立验收；本轮没有模型下载或推理。
 
 用户既有 `.DS_Store` 与 DrawMask ID 修改保留；Downloads 原文件保留。Qwen 核心、QwenEditUtils、模型名、提示词、采样和布局保持原值；仅为还原补接原图时增加 LoadImage 输出连线。本地整改未自动提交、推送或发布。
+
+## 后续：Qwen 换脸／换头图片处理
+
+本次扩展新增 5 个 Advanced 工具，当前实际注册为 118 个，推荐主入口仍为 21 个。新增图片行为、工作流迁移、参考来源和验收边界见 [专项报告](QWEN_FACE_HEAD_INTEGRATION.md)；原 1.0.0 整改基线记录保持原样。

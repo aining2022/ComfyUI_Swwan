@@ -1,0 +1,103 @@
+[
+  {
+    "file": "nodes/\u906e\u7f69\u6df7\u5408\u8fd0\u7b97.py",
+    "repo": "Goohaitools-comfyui",
+    "revision": "a84303e6e73a289af59d96eddab9f521ebd00643",
+    "license": "GPL-3.0-only",
+    "algorithm": "MaskCombineAlgorithm"
+  },
+  {
+    "file": "nodes/\u906e\u7f69\u5206\u6790.py",
+    "repo": "Goohaitools-comfyui",
+    "revision": "a84303e6e73a289af59d96eddab9f521ebd00643",
+    "license": "GPL-3.0-only",
+    "algorithm": "MaskAnalysisAlgorithm"
+  },
+  {
+    "file": "nodes/\u906e\u7f69\u68c0\u6d4b.py",
+    "repo": "Goohaitools-comfyui",
+    "revision": "a84303e6e73a289af59d96eddab9f521ebd00643",
+    "license": "GPL-3.0-only",
+    "algorithm": "MaskDetectAlgorithm"
+  },
+  {
+    "file": "nodes/\u4fdd\u7559\u906e\u7f69\u533a\u57df\u79fb\u9664\u56fe\u50cf\u80cc\u666f.py",
+    "repo": "Goohaitools-comfyui",
+    "revision": "a84303e6e73a289af59d96eddab9f521ebd00643",
+    "license": "GPL-3.0-only",
+    "algorithm": "MaskMatteAlgorithm"
+  },
+  {
+    "file": "nodes/\u56fe\u50cf\u4e0e\u906e\u7f69\u9884\u89c8.py",
+    "repo": "Goohaitools-comfyui",
+    "revision": "a84303e6e73a289af59d96eddab9f521ebd00643",
+    "license": "GPL-3.0-only",
+    "algorithm": "RegionPreviewAlgorithm"
+  },
+  {
+    "file": "nodes/Seg\u6b21\u5e8f\u8fc7\u6ee4.py",
+    "repo": "Goohaitools-comfyui",
+    "revision": "a84303e6e73a289af59d96eddab9f521ebd00643",
+    "license": "GPL-3.0-only",
+    "algorithm": "SegmentOrderAlgorithm"
+  },
+  {
+    "file": "mask.py",
+    "repo": "ComfyUI_essentials",
+    "revision": "9d9f4bedfc9f0321c19faf71855e228c93bd0dc9",
+    "license": "MIT",
+    "algorithm": "MaskCleanupAlgorithm"
+  },
+  {
+    "file": "image.py",
+    "repo": "ComfyUI_essentials",
+    "revision": "9d9f4bedfc9f0321c19faf71855e228c93bd0dc9",
+    "license": "MIT",
+    "algorithm": "EssentialsResizeAlgorithm"
+  },
+  {
+    "file": "image.py",
+    "repo": "ComfyUI_essentials",
+    "revision": "9d9f4bedfc9f0321c19faf71855e228c93bd0dc9",
+    "license": "MIT",
+    "algorithm": "EssentialsColorAlgorithm"
+  },
+  {
+    "file": "nodes/mask_nodes.py",
+    "repo": "ComfyUI-KJNodes",
+    "revision": "9b565354e32a7061296ac598d9c7f445e10d31ed",
+    "license": "GPL-3.0-only",
+    "algorithm": "GrowMaskAlgorithm"
+  },
+  {
+    "repo": "ComfyUI-Impact-Pack",
+    "files": [
+      "modules/impact/core.py",
+      "modules/impact/utils.py"
+    ],
+    "revision": "61bd8397a18e7e7668e6a24e95168967768c2bed",
+    "license": "GPL-3.0-only"
+  },
+  {
+    "repo": "ComfyUI_LayerStyle",
+    "files": [
+      "py/imagefunc.py",
+      "py/mask_grow.py"
+    ],
+    "revision": "a3459a7638c4c2839878089c105c73af0eb2edd2",
+    "license": "MIT"
+  },
+  {
+    "repo": "was-node-suite-comfyui",
+    "file": "WAS_Node_Suite.py",
+    "revision": "ea935d1044ae5a26efa54ebeb18fe9020af49a45",
+    "license": "MIT"
+  },
+  {
+    "repo": "ComfyUI-KJNodes",
+    "file": "utility/utility.py",
+    "revision": "9b565354e32a7061296ac598d9c7f445e10d31ed",
+    "origin_credit": "melMass/comfy_mtb",
+    "license": "MIT upstream notice retained in MIT-mtb.txt"
+  }
+]

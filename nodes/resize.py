@@ -97,7 +97,7 @@ class ImageResizeKJv2:
             "optional" : {
                 "mask": ("MASK",),
                 "device": (["cpu", "gpu"],),
-                "resize_mode": (["standard", "edit_size", "aspect_ratio"], {"default": "standard"}),
+                "resize_mode": (["standard", "edit_size", "aspect_ratio", "essentials"], {"default": "standard"}),
                 "size_rule": (["按长边等比例", "按短边等比例", "自定义宽高"], {"default": "按长边等比例"}),
                 "edge_length": ("INT", {"default": 1024, "min": 64, "max": 100000}),
                 "execute_condition": (["总是", "最长边大于时", "最小边小于时"], {"default": "总是"}),
@@ -111,6 +111,9 @@ class ImageResizeKJv2:
                 "aspect_round": (["8","16","32","64","128","256","512","None"], {"default":"8"}),
                 "aspect_scale_side": (["None","longest","shortest","width","height","total_pixel(kilo pixel)"], {"default":"longest"}),
                 "aspect_length": ("INT", {"default":1024,"min":4}),
+                "essentials_method": (["stretch", "keep proportion", "fill / crop", "pad"],),
+                "essentials_condition": (["always", "downscale if bigger", "upscale if smaller", "if bigger area", "if smaller area"],),
+                "essentials_interpolation": (["nearest", "bilinear", "bicubic", "area", "nearest-exact", "lanczos"],),
                 #"per_batch": ("INT", { "default": 0, "min": 0, "max": MAX_RESOLUTION, "step": 1, "tooltip": "Process images in sub-batches to reduce memory usage. 0 disables sub-batching."}),
             },
              "hidden": {
@@ -136,7 +139,15 @@ highest dimension.
                resize_mode="standard", size_rule="按长边等比例", edge_length=1024,
                execute_condition="总是", edit_fit="裁剪", fill_color="#364254",
                aspect_ratio="original", proportional_width=1, proportional_height=1,
-               aspect_fit="letterbox", aspect_method="lanczos", aspect_round="8", aspect_scale_side="longest", aspect_length=1024):
+               aspect_fit="letterbox", aspect_method="lanczos", aspect_round="8", aspect_scale_side="longest", aspect_length=1024, essentials_method="stretch", essentials_condition="always", essentials_interpolation="nearest"):
+        if resize_mode == "essentials":
+            from ..ops.resize_essentials import EssentialsResizeAlgorithm
+            algorithm = EssentialsResizeAlgorithm()
+            resized, w, h = algorithm.execute(image, width, height, essentials_method, essentials_interpolation, essentials_condition, divisible_by)
+            resized_mask = None
+            if mask is not None:
+                resized_mask = algorithm.execute(mask.unsqueeze(-1), width, height, essentials_method, essentials_interpolation, essentials_condition, divisible_by)[0][..., 0]
+            return resized, w, h, resized_mask
         if resize_mode == "aspect_ratio":
             from ..ops.aspect_resize import aspect_resize
             result = aspect_resize(
