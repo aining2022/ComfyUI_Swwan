@@ -1,8 +1,8 @@
 // Evaluate through Playwright on an isolated ComfyUI CPU service. Run once
 // normally and once with swwan_color_widget.js fulfilled as an empty module.
 (async () => {
-    const {app}=await import('/scripts/app.js');
-    const {api}=await import('/scripts/api.js');
+    const {app}=await import('./scripts/app.js');
+    const {api}=await import('./scripts/api.js');
     const check=(condition,message)=>{if(!condition)throw Error(message);};
     LiteGraph.namedValuesRestore=false; // prove the repository's own restore
     app.graph.clear();
@@ -35,6 +35,11 @@
     check(first.output[draw.id].inputs.opacity===1,'Draw shifted');
     const graph=JSON.parse(JSON.stringify(app.graph.serialize()));
     check(graph.nodes.find(n=>String(n.id)===String(ids.matte)).widgets_values_named.background_color==='#ffffff','Color absent from saved map');
+    // Import the canonical 25-value list shipped in migrated workflows, even
+    // if this frontend has only 24 widgets because COLORCODE is absent.
+    const savedResize=graph.nodes.find(n=>String(n.id)===String(ids.resize));
+    savedResize.widgets_values=Object.values(resizeFields);
+    savedResize.widgets_values_named={...resizeFields};
     await app.loadGraphData(graph);
     const second=await app.graphToPrompt();
     check(JSON.stringify(first.output)===JSON.stringify(second.output),'Execution inputs changed after save/reload');

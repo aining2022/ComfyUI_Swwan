@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Independent Swwan implementation; see licenses/MIT-Swwan.txt.
-import { app } from '/scripts/app.js';
+import { app } from '../../scripts/app.js';
 const NODES = new Set(['SwwanImageConcatMulti','SwwanImageBatchMulti','SwwanImageAddMulti',
     'SwwanCrossFadeImagesMulti','SwwanTransitionImagesMulti']);
 export function updateInputs(node) {

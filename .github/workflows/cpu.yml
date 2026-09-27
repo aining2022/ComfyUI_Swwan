@@ -30,6 +30,7 @@ jobs:
           python tests/test_optional_imports.py --comfyui-root ../comfyui
           node tests/test_workflow_image_modes.mjs
           node tests/test_swwan_widget_values.mjs
+          node tests/test_frontend_base_path.mjs
           node tests/test_project_frontend.mjs
           python tests/test_skill_candidates.py
       - working-directory: swwan

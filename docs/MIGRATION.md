@@ -41,3 +41,10 @@ python scripts/repair_qwen_face_head_workflow.py edited-swwan.json new-fixed.jso
 `web/js/swwan_widget_values.js` 为全部 Swwan 分类节点按实际输入名保存与恢复参数，隐藏和转换为输入的控件均不依赖位置匹配；保留 ComfyUI 原生位置数据和界面附加控件。COLORCODE 控件缺席时，合法颜色仍保存并注入执行参数；实际连线优先。历史文件已有错误命名映射时须先运行修复工具，新前端不会把错误值静默改成默认值。安装这些前端修改后须刷新页面，再导入修复副本。
 
 验证：5 项定向修复测试、7 项既有图片参考测试、7 项 Qwen 图片合同测试；独立 EasyUse 真实图展开执行三次模拟裁剪／编辑／还原，并经 SaveImage 写出后重读检查三处累计结果。真实前端在 COLORCODE 控件存在／缺席两种情况下验证转换为输入、颜色连线、命名保存重载及 CPU 实际输出，证据见 `tests/fixtures/face-repair-browser-acceptance.json`。未下载模型或执行 Qwen／检测模型／CUDA。
+
+
+### 反向代理路径下的前端修复
+
+部署在 `/comfyui/` 等子路径时，旧扩展使用 `/scripts/app.js`／`/scripts/api.js` 会请求网站根目录，产生 404；因此颜色控件及按名称恢复逻辑根本未加载，后端仍收到错位值。全部 Swwan 前端现使用相对于 `extensions/ComfyUI_Swwan/` 的 `../../scripts/` 导入，保留部署路径。此修复不改变节点算法或接口。
+
+更新插件后重启服务并强制刷新页面，重新导入修复精简版。已经在失效前端中另存过的错误参数不能作为新的正确基准。`tests/test_frontend_base_path.mjs` 检查根路径和 `/comfyui/` 下的真实导入地址；前端验收直接加载迁移文件的完整控件列表，而非只测试浏览器自身保存的列表。

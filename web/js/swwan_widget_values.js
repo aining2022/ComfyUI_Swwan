@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Independent Swwan implementation; see licenses/MIT-Swwan.txt.
-import { app } from '/scripts/app.js';
+import { app } from '../../scripts/app.js';
 
 const contracts = new Map();
 const scalarTypes = new Set(['INT', 'FLOAT', 'BOOLEAN', 'STRING', 'COLORCODE']);

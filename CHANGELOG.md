@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Fix all Swwan frontend imports under reverse-proxy base paths such as `/comfyui/`: resolve app/api shims relative to the extension directory so COLORCODE, named parameter restoration, modes, seed and dynamic inputs load instead of requesting nonexistent root URLs. Test real import URLs and canonical migrated widget arrays.
+
 - Repair and prune the user-edited Qwen face/head UI workflow to the final SaveImage chain (145 nodes / 167 links), resolving Set/Get dependencies without evaluating switch values. Preserve loop ports and all surviving model/prompt/control edits; bypass the disabled image cache.
 - Fix legacy DrawMaskOnImage migration for both color/device and color/opacity/device interfaces. Validate scalar types, enums, colors, required sockets and link records; restore only documented recoverable fields.
 - Share named widget save/load across Swwan nodes, including converted controls and missing COLORCODE widgets. Prompt export retains saved literal colors when unlinked; connections take precedence. Seed metadata updates both positional and named execution values.

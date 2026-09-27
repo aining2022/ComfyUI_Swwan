@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Independent Swwan implementation; see licenses/MIT-Swwan.txt.
-import { app } from "/scripts/app.js";
+import { app } from "../../scripts/app.js";
 
 // A custom widget keeps COLORCODE sockets independent of other plugins. Use a
 // custom type so current LiteGraph dispatches pointerdown to the color picker.

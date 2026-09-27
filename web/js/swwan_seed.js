@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Independent Swwan implementation; see licenses/MIT-Swwan.txt.
-import { app } from '/scripts/app.js';
-import { api } from '/scripts/api.js';
+import { app } from '../../scripts/app.js';
+import { api } from '../../scripts/api.js';
 const MAX = 1125899906842624;
 function randomSeed() { return 1 + Math.floor(Math.random() * MAX); }
 export function resolveSeed(value, last, random = randomSeed) {

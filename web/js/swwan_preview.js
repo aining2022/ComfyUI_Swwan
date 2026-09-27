@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Independent Swwan implementation; see licenses/MIT-Swwan.txt.
-import { app } from '/scripts/app.js';
+import { app } from '../../scripts/app.js';
 app.registerExtension({
     name: 'Swwan.FastPreview',
     beforeRegisterNodeDef(Node, data) {

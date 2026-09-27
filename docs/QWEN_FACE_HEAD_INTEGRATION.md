@@ -62,3 +62,10 @@ python scripts/migrate_qwen_face_head_workflow.py source.json new-swwan.json --c
 - `tests/frontend_face_repair_browser.js`：隔离 CPU 服务中的 11 节点／12 连线图，分别在颜色控件存在／模块缺席时运行，禁用 LiteGraph 全局命名恢复以检查本仓逻辑，验证外接宽度和颜色、保存重载及相同执行参数。真实排队输出白色背景 RGB、外接 #123456 背景 RGB 和 768×576 缩放 PNG，证据为 `tests/fixtures/face-repair-browser-acceptance.json`。
 
 完整多人换脸生成仍依赖原模型预处理、EasyUse 等插件及模型；这些模型未运行，CPU 验收不代表最终换脸效果或远程生成通过。
+
+
+### 子路径部署补充验收
+
+远程部署使用 `/comfyui/`，根路径 `/scripts/app.js` 返回 404；后端 Resize 注册正常，但 Swwan 前端扩展未注册。将全部 app/api 导入改为 `../../scripts/`，避免丢失反向代理前缀。此前根路径验收没有覆盖这个部署场景。
+
+使用隔离反向代理重现 `/comfyui/`，实际检查六个 Swwan 扩展加载。验收直接导入迁移器的完整 25 项 Resize 控件列表，在颜色控件存在／缺席时分别检查命名恢复、链接、保存重载、CPU 排队输出和 PNG 像素；证据见 `tests/fixtures/base-path-browser-acceptance.json`。未执行远程 Qwen 推理，远程服务需拉取修复、重启并强制刷新后重新导入正确副本。

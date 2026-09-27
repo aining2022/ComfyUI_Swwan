@@ -1,0 +1,105 @@
+{
+  "backend": "isolated CPU ComfyUI under /comfyui/ proxy",
+  "model_inference": false,
+  "imports": "all 6 Swwan frontend modules use relative app/api shims",
+  "cases": [
+    {
+      "color_widget_present": true,
+      "nodes": 11,
+      "links": 12,
+      "canonical_resize_widget_count": 25,
+      "execution": "success",
+      "prompt_id": "bd48f7d5-f292-431c-ad48-b13797c914f1",
+      "outputs": [
+        {
+          "save_id": "8",
+          "size": [
+            32,
+            24
+          ],
+          "mode": "RGB",
+          "pixel": [
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "save_id": "9",
+          "size": [
+            768,
+            576
+          ],
+          "mode": "RGB",
+          "pixel": [
+            127,
+            127,
+            127
+          ]
+        },
+        {
+          "save_id": "10",
+          "size": [
+            32,
+            24
+          ],
+          "mode": "RGB",
+          "pixel": [
+            18,
+            52,
+            86
+          ]
+        }
+      ]
+    },
+    {
+      "color_widget_present": false,
+      "nodes": 11,
+      "links": 12,
+      "canonical_resize_widget_count": 25,
+      "execution": "success",
+      "prompt_id": "509d969a-de0e-44e1-ad4f-1cfdd360193d",
+      "outputs": [
+        {
+          "save_id": "8",
+          "size": [
+            32,
+            24
+          ],
+          "mode": "RGB",
+          "pixel": [
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "save_id": "9",
+          "size": [
+            768,
+            576
+          ],
+          "mode": "RGB",
+          "pixel": [
+            127,
+            127,
+            127
+          ]
+        },
+        {
+          "save_id": "10",
+          "size": [
+            32,
+            24
+          ],
+          "mode": "RGB",
+          "pixel": [
+            18,
+            52,
+            86
+          ]
+        }
+      ]
+    }
+  ]
+}
