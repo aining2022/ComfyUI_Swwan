@@ -193,6 +193,29 @@ for (const colorWidgetPresent of [true,false]) {
 }
 console.log('PASS: named widget restoration with and without COLORCODE controls');
 
+const outpaint = makeNode('SwwanImagePadForOutpaintMasked', {
+    left: 50, right: 50, top: 0, bottom: 0, feathering: 0,
+    padding_mode: 'legacy', padding_unit: '百分比', alignment: 16,
+});
+assert.equal(visible(outpaint, 'padding_unit'), false);
+assert.equal(widget(outpaint, 'left').options.step2, 8);
+set(outpaint, 'padding_mode', 'directional');
+assert.equal(visible(outpaint, 'padding_unit'), true);
+assert.equal(visible(outpaint, 'alignment'), true);
+assert.equal(widget(outpaint, 'left').options.step2, 1);
+assert.equal(widget(outpaint, 'right').options.step, 10);
+set(outpaint, 'padding_unit', '像素');
+const outpaintSaved = savedValues(outpaint);
+outpaint.onConfigure();
+assert.equal(savedValues(outpaint), outpaintSaved);
+assert.equal(widget(outpaint, 'left').value, 50);
+set(outpaint, 'padding_mode', 'legacy');
+outpaint.configure({ widgets_values_named: { padding_mode: 'directional' } });
+assert.equal(widget(outpaint, 'left').options.step2, 1);
+outpaint.configure({ widgets_values: [50, 50, 0, 0, 0, 'directional', '百分比', 16] });
+assert.equal(widget(outpaint, 'left').options.step2, 1);
+outpaint.configure({ widgets_values_named: { padding_mode: 'legacy' } });
+assert.equal(widget(outpaint, 'left').options.step2, 8);
 
 // Named restoration also updates visibility when mode hooks register first.
 class ReverseOrderNode {

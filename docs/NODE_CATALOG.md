@@ -66,8 +66,8 @@
 | 专用工具 | `SwwanSplitImageChannels` | Split Image Channels (Swwan) | Swwan/Advanced/Image | IMAGE, IMAGE, IMAGE, MASK | [nodes/color.py](../nodes/color.py#L152) |
 | 专用工具 | `SwwanMergeImageChannels` | Merge Image Channels (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/color.py](../nodes/color.py#L182) |
 | 专用工具 | `SwwanImagePadForOutpaintMasked` | Image Pad For Outpaint Masked (Swwan) | Swwan/Advanced/Mask | IMAGE, MASK | [nodes/mask.py](../nodes/mask.py#L5) |
-| 专用工具 | `SwwanImagePadForOutpaintTargetSize` | Image Pad For Outpaint Target Size (Swwan) | Swwan/Advanced/Image | IMAGE, MASK | [nodes/mask.py](../nodes/mask.py#L86) |
-| 专用工具 | `SwwanImagePrepForICLora` | Image Prep For IC Lora (Swwan) | Swwan/Advanced/Image | IMAGE, MASK | [nodes/mask.py](../nodes/mask.py#L145) |
+| 专用工具 | `SwwanImagePadForOutpaintTargetSize` | Image Pad For Outpaint Target Size (Swwan) | Swwan/Advanced/Image | IMAGE, MASK | [nodes/mask.py](../nodes/mask.py#L94) |
+| 专用工具 | `SwwanImagePrepForICLora` | Image Prep For IC Lora (Swwan) | Swwan/Advanced/Image | IMAGE, MASK | [nodes/mask.py](../nodes/mask.py#L153) |
 | 专用工具 | `SwwanImageAndMaskPreview` | Image And Mask Preview (Swwan) | Swwan/Advanced/IO | IMAGE | [nodes/io.py](../nodes/io.py#L241) |
 | 专用工具 | `SwwanCrossFadeImages` | Cross Fade Images (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/transition.py](../nodes/transition.py#L6) |
 | 专用工具 | `SwwanCrossFadeImagesMulti` | Cross Fade Images Multi (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/transition.py](../nodes/transition.py#L62) |
@@ -99,13 +99,13 @@
 | 兼容入口 | `SwwanSaveImageKJ` | Save Image (Swwan) · 旧版兼容 | Swwan/Legacy | STRING | [nodes/io.py](../nodes/io.py#L785) |
 | 专用工具 | `SwwanSaveStringKJ` | Save String (Swwan) | Swwan/Advanced/IO | STRING | [nodes/io.py](../nodes/io.py#L856) |
 | 专用工具 | `SwwanFastPreview` | Fast Preview (Swwan) | Swwan/Advanced/IO | 输出节点 | [nodes/io.py](../nodes/io.py#L906) |
-| 专用工具 | `SwwanImageCropByMaskAndResize` | Image Crop By Mask And Resize (Swwan) | Swwan/Advanced/Image | IMAGE, MASK, BBOX | [nodes/mask.py](../nodes/mask.py#L228) |
-| 专用工具 | `SwwanImageCropByMask` | Image Crop By Mask (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/mask.py](../nodes/mask.py#L366) |
-| 专用工具 | `SwwanImageUncropByMask` | Image Uncrop By Mask (Swwan) | Swwan/Advanced/Mask | IMAGE | [nodes/mask.py](../nodes/mask.py#L412) |
-| 专用工具 | `SwwanImageCropByMaskBatch` | Image Crop By Mask Batch (Swwan) | Swwan/Advanced/Batch | IMAGE, MASK | [nodes/mask.py](../nodes/mask.py#L496) |
-| 专用工具 | `SwwanImagePadKJ` | Image Pad (Swwan) | Swwan/Advanced/Image | IMAGE, MASK | [nodes/mask.py](../nodes/mask.py#L598) |
+| 专用工具 | `SwwanImageCropByMaskAndResize` | Image Crop By Mask And Resize (Swwan) | Swwan/Advanced/Image | IMAGE, MASK, BBOX | [nodes/mask.py](../nodes/mask.py#L236) |
+| 专用工具 | `SwwanImageCropByMask` | Image Crop By Mask (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/mask.py](../nodes/mask.py#L374) |
+| 专用工具 | `SwwanImageUncropByMask` | Image Uncrop By Mask (Swwan) | Swwan/Advanced/Mask | IMAGE | [nodes/mask.py](../nodes/mask.py#L420) |
+| 专用工具 | `SwwanImageCropByMaskBatch` | Image Crop By Mask Batch (Swwan) | Swwan/Advanced/Batch | IMAGE, MASK | [nodes/mask.py](../nodes/mask.py#L504) |
+| 专用工具 | `SwwanImagePadKJ` | Image Pad (Swwan) | Swwan/Advanced/Image | IMAGE, MASK | [nodes/mask.py](../nodes/mask.py#L606) |
 | 专用工具 | `SwwanLoadVideosFromFolder` | Load Videos From Folder (Swwan) | Swwan/Advanced/IO | IMAGE | [nodes/io.py](../nodes/io.py#L938) |
-| 专用工具 | `SwwanDrawMaskOnImage` | Draw Mask On Image (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/mask.py](../nodes/mask.py#L769) |
+| 专用工具 | `SwwanDrawMaskOnImage` | Draw Mask On Image (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/mask.py](../nodes/mask.py#L777) |
 | 专用工具 | `AnySwitch (Swwan)` | Any Switch (Swwan) | Swwan/Advanced/Utils | BOOLEAN, * | [nodes_switch.py](../nodes_switch.py#L16) |
 | 主入口 | `AnyBooleanSwitch (Swwan)` | Any Boolean Switch (Swwan) | Swwan/Utils | * | [nodes_switch.py](../nodes_switch.py#L41) |
 | 专用工具 | `raiseExceptionOnTrue` | Raise Exception On True (Swwan) | Swwan/Advanced/Utils | BOOLEAN | [nodes_switch.py](../nodes_switch.py#L71) |
@@ -126,11 +126,11 @@
 | 主入口 | `SwwanImagesToRGB` | Images to RGB (Swwan) | Swwan/Image | IMAGE | [workflow_tools.py](../workflow_tools.py#L571) |
 | 主入口 | `SwwanColorConverter` | Color Converter (Swwan) | Swwan/Image | STRING, COLORCODE | [workflow_tools.py](../workflow_tools.py#L354) |
 | 主入口 | `SwwanSaveImage` | Save Image (Swwan) | Swwan/IO | STRING | [nodes/save.py](../nodes/save.py#L14) |
-| 专用工具 | `SwwanMaskProcess` | Mask Process (Swwan) | Swwan/Advanced/Mask | MASK, MASK | [nodes/mask_tools.py](../nodes/mask_tools.py#L9) |
-| 专用工具 | `SwwanMaskCombine` | Mask Combine (Swwan) | Swwan/Advanced/Mask | MASK, INT, INT | [nodes/mask_tools.py](../nodes/mask_tools.py#L73) |
-| 专用工具 | `SwwanMaskAnalyze` | Mask Analyze (Swwan) | Swwan/Advanced/Mask | MASK, INT, INT, INT, INT, INT, INT, BOOLEAN | [nodes/mask_tools.py](../nodes/mask_tools.py#L91) |
-| 专用工具 | `SwwanMaskSegments` | Mask Segments (Swwan) | Swwan/Advanced/Mask | SEGS, MASK | [nodes/mask_tools.py](../nodes/mask_tools.py#L111) |
-| 专用工具 | `SwwanImageMatte` | Image Matte (Swwan) | Swwan/Advanced/Image | IMAGE, IMAGE, MASK | [nodes/mask_tools.py](../nodes/mask_tools.py#L149) |
+| 专用工具 | `SwwanMaskProcess` | Mask Process (Swwan) | Swwan/Advanced/Mask | MASK, MASK | [nodes/mask_tools.py](../nodes/mask_tools.py#L8) |
+| 专用工具 | `SwwanMaskCombine` | Mask Combine (Swwan) | Swwan/Advanced/Mask | MASK, INT, INT | [nodes/mask_tools.py](../nodes/mask_tools.py#L72) |
+| 专用工具 | `SwwanMaskAnalyze` | Mask Analyze (Swwan) | Swwan/Advanced/Mask | MASK, INT, INT, INT, INT, INT, INT, BOOLEAN | [nodes/mask_tools.py](../nodes/mask_tools.py#L90) |
+| 专用工具 | `SwwanMaskSegments` | Mask Segments (Swwan) | Swwan/Advanced/Mask | SEGS, MASK | [nodes/mask_tools.py](../nodes/mask_tools.py#L110) |
+| 专用工具 | `SwwanImageMatte` | Image Matte (Swwan) | Swwan/Advanced/Image | IMAGE, IMAGE, MASK | [nodes/mask_tools.py](../nodes/mask_tools.py#L148) |
 
 机器可读接口清单：[node-catalog.json](node-catalog.json)。
 

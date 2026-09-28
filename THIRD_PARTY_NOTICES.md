@@ -42,6 +42,10 @@ Historical import revisions that were not recorded are explicitly identified abo
 
 Goohaitools mask arithmetic, bounds/area detection, existing-mask matte, region preview and SEGS ordering are adapted in `ops/{mask_regions,mask_analysis,mask_detection,image_matte,region_preview,segment_order}.py`. KJ GrowMaskWithBlur is adapted in `ops/mask_growth.py`; LayerStyle MaskGrow is shared via `ops/mask_processing.py`. Interfaces are separated in `nodes/mask_tools.py`, optional dependencies deferred, and missing preview fonts mapped to FreeMono. Defaults and CPU pixels of the corresponding algorithms are preserved, with the documented WAS batch fill repair. Additional frozen WAS reference uses the workflow's exact `ea935d1044ae5a26efa54ebeb18fe9020af49a45` revision; all other local source revisions are in `tests/fixtures/face_processing/sources.json`. KJ utility reference preserves its original credit to melMass/comfy_mtb. The new workflow is user supplied; no model files or images are included.
 
+## Directional outpainting addition (Unreleased)
+
+`ops/outpaint.py` adapts geometry, gray canvas, MASK polarity and PIL Gaussian feathering from Goohaitools `nodes/外补画板（3合一）.py`, revision `a84303e6e73a289af59d96eddab9f521ebd00643` (GPL-3.0, goohai and contributors). The existing KJ outpaint interface keeps its legacy branch unchanged and adds explicit directional units/alignment. Swwan normalizes valid 2D/3D tensor masks where the reference has malformed indexing/interpolation, and reports empty dimensions or unsupported image batches. The frozen directional class in `tests/fixtures/reference/outpaint_directional.py` retains the GPL source as a pixel/geometry reference.
+
 
 ## Face/head repair test references (Unreleased)
 

@@ -5,7 +5,7 @@ import { app } from "../../scripts/app.js";
 const nodeIds = new Set([
     "SwwanCropByMaskV5", "SwwanRestoreCropBoxV4",
     "ImageResizeKJv2Alternative", "ImageBlendSwwan",
-    "SwwanImageConcatMulti", "SwwanSaveImage", "MathExpression_UTK",
+    "SwwanImageConcatMulti", "SwwanSaveImage", "MathExpression_UTK", "SwwanImagePadForOutpaintMasked",
     "SwwanMaskProcess", "SwwanMaskSegments", "SwwanImageAndMaskPreview", "SwwanColorMatch",
 ]);
 
@@ -15,6 +15,16 @@ function value(node, name) {
 
 function connected(node, name) {
     return node.inputs?.some((input) => input.name === name && input.link != null);
+}
+
+function setOutpaintStep(node, directional) {
+    const step = directional ? 1 : 8;
+    for (const widget of node.widgets || []) {
+        if (!["left", "top", "right", "bottom"].includes(widget.name) || !widget.options) continue;
+        // LiteGraph uses tenths for step; current ComfyUI also uses step2.
+        widget.options.step = step * 10;
+        widget.options.step2 = step;
+    }
 }
 
 function setVisible(widget, visible) {
@@ -73,6 +83,10 @@ function update(node) {
         } else {
             hide("size_rule", "edge_length", "execute_condition", "edit_fit", "fill_color", ...aspectNames);
         }
+    } else if (id === "SwwanImagePadForOutpaintMasked") {
+        const directional = connected(node, "padding_mode") || value(node, "padding_mode") === "directional";
+        setOutpaintStep(node, directional);
+        if (!directional) hide("padding_unit", "alignment");
     } else if (id === "SwwanMaskProcess" && !connected(node, "operation")) {
         const fields = {
             binary: ["threshold"], fill_holes: [],
@@ -140,6 +154,17 @@ app.registerExtension({
     name: "Swwan.WorkflowImageModes",
     beforeRegisterNodeDef(nodeType, nodeData) {
         if (!nodeIds.has(nodeData.name)) return;
+        if (nodeData.name === "SwwanImagePadForOutpaintMasked") {
+            const configure = nodeType.prototype.configure;
+            nodeType.prototype.configure = function (info) {
+                const index = this.widgets?.findIndex((widget) => widget.name === "padding_mode");
+                const mode = info.widgets_values_named?.padding_mode ?? info.widgets_values?.[index];
+                const linked = info.inputs?.some((input) => input.name === "padding_mode" && input.link != null);
+                // Set precision before native/named restoration assigns side values.
+                setOutpaintStep(this, linked || mode === "directional");
+                return configure?.apply(this, arguments);
+            };
+        }
         nodeType.prototype.swwanRefreshModes = function () { refresh(this); };
         const created = nodeType.prototype.onNodeCreated;
         nodeType.prototype.onNodeCreated = function () {

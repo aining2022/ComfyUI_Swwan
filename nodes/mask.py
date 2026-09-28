@@ -17,6 +17,9 @@ class ImagePadForOutpaintMasked:
             },
             "optional": {
                 "mask": ("MASK",),
+                "padding_mode": (["legacy", "directional"], {"default": "legacy"}),
+                "padding_unit": (["像素", "百分比"], {"default": "像素"}),
+                "alignment": ([0, 8, 16, 32, 64], {"default": 0}),
             }
         }
 
@@ -25,7 +28,12 @@ class ImagePadForOutpaintMasked:
 
     CATEGORY = "image"
 
-    def expand_image(self, image, left, top, right, bottom, feathering, mask=None):
+    DESCRIPTION = "Legacy pixel padding or directional outpaint in pixels/percent. Directional mode uses one RGB image, per-axis percentages, gray 0.5 fill, Gaussian feathering and optional alignment; MASK is white outside and black inside without an input mask."
+
+    def expand_image(self, image, left, top, right, bottom, feathering, mask=None, padding_mode="legacy", padding_unit="像素", alignment=0):
+        if padding_mode == "directional":
+            from ..ops.outpaint import directional_outpaint
+            return directional_outpaint(image, left, top, right, bottom, padding_unit, alignment, feathering, mask)
         if mask is not None:
             if torch.allclose(mask, torch.zeros_like(mask)):
                     print("Warning: The incoming mask is fully black. Handling it as None.")

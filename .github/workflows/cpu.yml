@@ -23,6 +23,7 @@ jobs:
       - working-directory: swwan
         run: |
           python tests/test_workflow_image_nodes.py --comfyui-root ../comfyui
+          python tests/test_outpaint.py --comfyui-root ../comfyui
           python tests/test_project_contracts.py --comfyui-root ../comfyui
           python tests/test_face_head_processing.py --comfyui-root ../comfyui
           python tests/test_face_head_workflow_repair.py --comfyui-root ../comfyui

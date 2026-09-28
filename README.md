@@ -71,6 +71,8 @@ python -m pip install -r requirements.txt
 
 需要更细的操作时到 `Swwan/Advanced/<任务>`。Color Match、Color Shift Fix、BBOX、IMAGE_BOUNDS、视频和模型补丁各有独立用途。`Swwan/Legacy` 用于历史兼容，`Swwan/Experimental` 包含设备实验功能。
 
+扩图使用 `Image Pad For Outpaint Masked (Swwan)`：`padding_mode=directional` 支持 `padding_unit` 在像素／百分比之间切换，左右按原图宽度、上下按原图高度计算；`alignment` 控制尺寸对齐，`feathering` 为高斯羽化。该模式处理单张 RGB 图；默认 `legacy` 保留原像素扩边与批次行为。四侧均为 0 且启用对齐时，按原扩图算法向下裁齐。
+
 常用遮罩专用工具如下，它们不运行检测或分割模型：
 
 | 工具 | 用途 |

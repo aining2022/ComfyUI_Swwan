@@ -10,6 +10,9 @@
 - Fix legacy DrawMaskOnImage migration for both color/device and color/opacity/device interfaces. Validate scalar types, enums, colors, required sockets and link records; restore only documented recoverable fields.
 - Share named widget save/load across Swwan nodes, including converted controls and missing COLORCODE widgets. Prompt export retains saved literal colors when unlinked; connections take precedence. Seed metadata updates both positional and named execution values.
 
+- Extend Image Pad For Outpaint Masked with an optional directional mode: pixel/percentage units, ceiling alignment, gray canvas and Gaussian feathering. Legacy defaults, output order and batch behavior remain; directional mode uses a single RGB image.
+- Keep directional padding controls at integer precision during entry and workflow reload, so percentages such as 50 are not rounded to the legacy 8-pixel step.
+
 - Fix Qwen migration retaining stale widget-name maps: save parameters under current input names and restore Swwan mode controls by name when COLORCODE is represented as a socket instead of a widget.
 
 - Split documentation into a task-oriented user README and an AGENTS.md development entry with catalog, compatibility, migration and validation guidance. Include both entries in distributions and refresh the installation checklist.

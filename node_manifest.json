@@ -678,7 +678,7 @@
     "display": "Image Pad For Outpaint Masked (Swwan)",
     "category": "Swwan/Advanced/Mask",
     "tier": "advanced",
-    "origin": "KJNodes",
+    "origin": "KJNodes / Goohaitools",
     "license": "GPL-3.0-only",
     "legacy_ids": [
       "ImagePadForOutpaintMasked"

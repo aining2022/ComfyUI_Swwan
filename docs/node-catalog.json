@@ -4477,13 +4477,13 @@
     "category": "Swwan/Advanced/Mask",
     "proposed_tier": "专用工具",
     "tier": "advanced",
-    "origin": "KJNodes",
+    "origin": "KJNodes / Goohaitools",
     "license": "GPL-3.0-only",
     "legacy_ids": [
       "ImagePadForOutpaintMasked"
     ],
     "replacement": null,
-    "description": "",
+    "description": "Legacy pixel padding or directional outpaint in pixels/percent. Directional mode uses one RGB image, per-axis percentages, gray 0.5 fill, Gaussian feathering and optional alignment; MASK is white outside and black inside without an input mask.",
     "schema": {
       "required": {
         "image": [
@@ -4538,6 +4538,36 @@
       "optional": {
         "mask": [
           "MASK"
+        ],
+        "padding_mode": [
+          [
+            "legacy",
+            "directional"
+          ],
+          {
+            "default": "legacy"
+          }
+        ],
+        "padding_unit": [
+          [
+            "像素",
+            "百分比"
+          ],
+          {
+            "default": "像素"
+          }
+        ],
+        "alignment": [
+          [
+            0,
+            8,
+            16,
+            32,
+            64
+          ],
+          {
+            "default": 0
+          }
         ]
       }
     },
@@ -4551,7 +4581,22 @@
         "feathering": "INT"
       },
       "optional": {
-        "mask": "MASK"
+        "mask": "MASK",
+        "padding_mode": [
+          "legacy",
+          "directional"
+        ],
+        "padding_unit": [
+          "像素",
+          "百分比"
+        ],
+        "alignment": [
+          0,
+          8,
+          16,
+          32,
+          64
+        ]
       }
     },
     "output_types": [
@@ -4565,7 +4610,7 @@
     "id": "SwwanImagePadForOutpaintTargetSize",
     "display": "Image Pad For Outpaint Target Size (Swwan)",
     "source": "nodes/mask.py",
-    "line": 86,
+    "line": 94,
     "category": "Swwan/Advanced/Image",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -4653,7 +4698,7 @@
     "id": "SwwanImagePrepForICLora",
     "display": "Image Prep For IC Lora (Swwan)",
     "source": "nodes/mask.py",
-    "line": 145,
+    "line": 153,
     "category": "Swwan/Advanced/Image",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -7611,7 +7656,7 @@
     "id": "SwwanImageCropByMaskAndResize",
     "display": "Image Crop By Mask And Resize (Swwan)",
     "source": "nodes/mask.py",
-    "line": 228,
+    "line": 236,
     "category": "Swwan/Advanced/Image",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -7690,7 +7735,7 @@
     "id": "SwwanImageCropByMask",
     "display": "Image Crop By Mask (Swwan)",
     "source": "nodes/mask.py",
-    "line": 366,
+    "line": 374,
     "category": "Swwan/Advanced/Image",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -7727,7 +7772,7 @@
     "id": "SwwanImageUncropByMask",
     "display": "Image Uncrop By Mask (Swwan)",
     "source": "nodes/mask.py",
-    "line": 412,
+    "line": 420,
     "category": "Swwan/Advanced/Mask",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -7787,7 +7832,7 @@
     "id": "SwwanImageCropByMaskBatch",
     "display": "Image Crop By Mask Batch (Swwan)",
     "source": "nodes/mask.py",
-    "line": 496,
+    "line": 504,
     "category": "Swwan/Advanced/Batch",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -7870,7 +7915,7 @@
     "id": "SwwanImagePadKJ",
     "display": "Image Pad (Swwan)",
     "source": "nodes/mask.py",
-    "line": 598,
+    "line": 606,
     "category": "Swwan/Advanced/Image",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -8143,7 +8188,7 @@
     "id": "SwwanDrawMaskOnImage",
     "display": "Draw Mask On Image (Swwan)",
     "source": "nodes/mask.py",
-    "line": 769,
+    "line": 777,
     "category": "Swwan/Advanced/Image",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -9915,7 +9960,7 @@
     "id": "SwwanMaskProcess",
     "display": "Mask Process (Swwan)",
     "source": "nodes/mask_tools.py",
-    "line": 9,
+    "line": 8,
     "category": "Swwan/Advanced/Mask",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -10103,7 +10148,7 @@
     "id": "SwwanMaskCombine",
     "display": "Mask Combine (Swwan)",
     "source": "nodes/mask_tools.py",
-    "line": 73,
+    "line": 72,
     "category": "Swwan/Advanced/Mask",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -10200,7 +10245,7 @@
     "id": "SwwanMaskAnalyze",
     "display": "Mask Analyze (Swwan)",
     "source": "nodes/mask_tools.py",
-    "line": 91,
+    "line": 90,
     "category": "Swwan/Advanced/Mask",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -10288,7 +10333,7 @@
     "id": "SwwanMaskSegments",
     "display": "Mask Segments (Swwan)",
     "source": "nodes/mask_tools.py",
-    "line": 111,
+    "line": 110,
     "category": "Swwan/Advanced/Mask",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -10434,7 +10479,7 @@
     "id": "SwwanImageMatte",
     "display": "Image Matte (Swwan)",
     "source": "nodes/mask_tools.py",
-    "line": 149,
+    "line": 148,
     "category": "Swwan/Advanced/Image",
     "proposed_tier": "专用工具",
     "tier": "advanced",
