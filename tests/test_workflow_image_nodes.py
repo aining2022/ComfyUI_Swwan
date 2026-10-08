@@ -136,8 +136,18 @@ class WorkflowContracts(unittest.TestCase):
             ("ImageResizeKJv2Alternative", "ImageResizeKJv2", dict(image=self.image, width=80, height=64, keep_proportion="crop", upscale_method="bilinear", mask=self.mask), 4),
             ("ImageResizeByMegapixels", "ImageResizeByMegapixels", dict(image=self.image, megapixels=0.02, aspect_ratio="4:3", upscale_method="bilinear", mask=self.mask), 5),
         ]
+        for mode in ["pad", "pad_edge", "pad_edge_pixel", "pillarbox_blur"]:
+            for mask in [None, self.mask.repeat(2, 1, 1)]:
+                params = dict(image=self.image.repeat(2, 1, 1, 1), mask=mask,
+                              keep_proportion=mode, upscale_method="bilinear",
+                              pad_color="32, 64, 96", per_batch=1)
+                cases.append(("ImageResizeKJv2Alternative", "ImageResizeKJv2",
+                              dict(params, width=64, height=64, divisible_by=8), 4))
+                cases.append(("ImageResizeByMegapixels", "ImageResizeByMegapixels",
+                              dict(params, megapixels=0.004096, aspect_ratio="1:1",
+                                   divisible_by=8, default_divisible=True), 5))
         for node_id, name, kwargs, slots in cases:
-            with self.subTest(node=node_id), contextlib.redirect_stdout(io.StringIO()):
+            with self.subTest(node=node_id, mode=kwargs.get("keep_proportion"), mask=kwargs.get("mask") is not None), contextlib.redirect_stdout(io.StringIO()):
                 cls = baselines[name]; values = defaults(cls); values.update(kwargs)
                 if "hidden" in cls.INPUT_TYPES(): values["unique_id"] = None
                 expected = getattr(cls(), cls.FUNCTION)(**values)

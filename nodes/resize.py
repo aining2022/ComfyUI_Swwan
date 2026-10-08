@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 # Derived image algorithms: ComfyUI-KJNodes.
 from ..ops.image_common import F, MAX_RESOLUTION, PromptServer, common_upscale, math, model_management, os, time, torch
+from .mask import ImagePadKJ
 
 class ImageResizeKJ:
     upscale_methods = ["nearest-exact", "bilinear", "area", "bicubic", "lanczos"]

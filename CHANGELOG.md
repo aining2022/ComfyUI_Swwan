@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Fix the missing internal ImagePadKJ import in Resize v2 and Resize By Megapixels; restore pad, pad_edge, pad_edge_pixel and pillarbox_blur execution with pixel/mask regression coverage.
+
 - Recover the exact historical COLORCODE-omitted named-map mismatch before native widget migration, only when all canonical positional values remain complete and valid. Preserve valid named edits; reject truncated or unrelated invalid maps. Verify both COLORCODE availability and native named restoration settings through actual load/save and CPU outputs.
 
 - Fix all Swwan frontend imports under reverse-proxy base paths such as `/comfyui/`: resolve app/api shims relative to the extension directory so COLORCODE, named parameter restoration, modes, seed and dynamic inputs load instead of requesting nonexistent root URLs. Test real import URLs and canonical migrated widget arrays.
