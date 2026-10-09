@@ -13,23 +13,37 @@ app.registerExtension({
     name: 'Swwan.Seed',
     setup() {
         const original = api.queuePrompt;
-        api.queuePrompt = async function(number, prompt) {
-            const copy = structuredClone(prompt);
+        api.queuePrompt = async function(number, prompt, ...args) {
+            // Frontend reactive proxies can be JSON-serializable but not
+            // structured-cloneable. Copy only the paths whose seeds we change.
+            let copy = prompt;
             const changed = [];
-            for (const [id, entry] of Object.entries(copy.output || {})) {
+            const seeds = new Map();
+            for (const [id, entry] of Object.entries(prompt.output || {})) {
                 if (entry.class_type !== 'SwwanSeed') continue;
                 const node = app.graph?.getNodeById(Number(id));
                 const value = entry.inputs.seed;
                 if (typeof value !== 'number') continue;
                 const actual = resolveSeed(value, node?.properties?.swwan_last_seed);
-                entry.inputs.seed = actual;
-                const saved = copy.workflow?.nodes?.find(n => String(n.id) === id);
-                if (saved?.widgets_values) saved.widgets_values[0] = actual;
-                if (saved?.widgets_values_named) saved.widgets_values_named.seed = actual;
-                if (saved) (saved.properties ||= {}).swwan_last_seed = actual;
+                if (copy === prompt) copy = { ...prompt, output: { ...prompt.output } };
+                copy.output[id] = { ...entry, inputs: { ...entry.inputs, seed: actual } };
+                seeds.set(id, actual);
                 changed.push([node, actual]);
             }
-            const result = await original.call(this, number, copy);
+            if (seeds.size && Array.isArray(prompt.workflow?.nodes)) {
+                copy.workflow = { ...prompt.workflow, nodes: prompt.workflow.nodes.map(saved => {
+                    if (!seeds.has(String(saved.id))) return saved;
+                    const actual = seeds.get(String(saved.id));
+                    const updated = { ...saved, properties: { ...saved.properties, swwan_last_seed: actual } };
+                    if (saved.widgets_values) {
+                        updated.widgets_values = [...saved.widgets_values];
+                        updated.widgets_values[0] = actual;
+                    }
+                    if (saved.widgets_values_named) updated.widgets_values_named = { ...saved.widgets_values_named, seed: actual };
+                    return updated;
+                }) };
+            }
+            const result = await original.call(this, number, copy, ...args);
             for (const [node, actual] of changed) {
                 if (node) { (node.properties ||= {}).swwan_last_seed = actual; node.setDirtyCanvas?.(true); }
             }

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Fix Seed's global queue hook rejecting reactive prompts with DataCloneError, including workflows without SwwanSeed. Copy only edited seed fields and execution metadata, preserve queue options, and keep the last seed unchanged on failed submission.
+
 - Fix the missing internal ImagePadKJ import in Resize v2 and Resize By Megapixels; restore pad, pad_edge, pad_edge_pixel and pillarbox_blur execution with pixel/mask regression coverage.
 
 - Recover the exact historical COLORCODE-omitted named-map mismatch before native widget migration, only when all canonical positional values remain complete and valid. Preserve valid named edits; reject truncated or unrelated invalid maps. Verify both COLORCODE availability and native named restoration settings through actual load/save and CPU outputs.
