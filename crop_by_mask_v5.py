@@ -51,7 +51,7 @@ class CropByMaskV5:
                 "image": ("IMAGE",),
                 "mask_image": ("IMAGE",),
                 "crop_box": ("BOX",),
-                "crop_mode": (["bounds", "edit_region"], {"default": "bounds"}),
+                "crop_mode": (["bounds", "edit_region", "qwen21_aligned"], {"default": "bounds"}),
                 "mask": ("MASK",),
                 "fill_mask_holes": ("BOOLEAN", {"default": False}),
                 "output_size": (["原像素", "原像素1：1", "自定义宽高"], {"default": "原像素"}),
@@ -61,11 +61,13 @@ class CropByMaskV5:
                 "edit_expansion_mode": (["reserve_ratio", "factor"], {"default": "reserve_ratio"}),
                 **{name: ("FLOAT", {"default": 1.2, "min": 1.0, "max": 10.0, "step": 0.1}) for name in
                    ("edit_top_factor", "edit_bottom_factor", "edit_left_factor", "edit_right_factor")},
+                "qwen_resolution": ("INT", {"default": 1024, "min": 512, "max": 2048, "step": 32}),
+                "qwen_tolerance": ("FLOAT", {"default": 1.0, "min": 0.2, "max": 3.0, "step": 0.1}),
             }
         }
 
-    RETURN_TYPES = ("IMAGE", "IMAGE", "BOX", "IMAGE", "SEAM", "MASK")
-    RETURN_NAMES = ("cropped_image", "cropped_mask", "crop_box", "box_preview", "region_info", "region_mask")
+    RETURN_TYPES = ("IMAGE", "IMAGE", "BOX", "IMAGE", "SEAM", "MASK", "INT", "INT", "INT")
+    RETURN_NAMES = ("cropped_image", "cropped_mask", "crop_box", "box_preview", "region_info", "region_mask", "width", "height", "encoder_resolution")
     FUNCTION = 'crop_by_mask_v5'
     CATEGORY = 'Swwan/image'
     DESCRIPTION = """CropByMask V5 - 批处理智能裁剪节点
@@ -207,7 +209,24 @@ Reserve 模式:
                         image=None, mask_image=None, crop_box=None,
                         crop_mode="bounds", mask=None, fill_mask_holes=False,
                         output_size="原像素", custom_width=1024, custom_height=1024,
-                        alignment=8, edit_expansion_mode="reserve_ratio", edit_top_factor=1.2, edit_bottom_factor=1.2, edit_left_factor=1.2, edit_right_factor=1.2):
+                        alignment=8, edit_expansion_mode="reserve_ratio", edit_top_factor=1.2, edit_bottom_factor=1.2, edit_left_factor=1.2, edit_right_factor=1.2, qwen_resolution=1024, qwen_tolerance=1.0):
+
+        if crop_mode == "qwen21_aligned":
+            from .ops.qwen21_geometry import prepare_aligned
+            if image is None:
+                raise ValueError("Qwen aligned crop requires an image")
+            if mask is None and mask_image is not None:
+                mask = mask_image[:1, ..., 0]
+            factors = (edit_top_factor, edit_bottom_factor, edit_left_factor, edit_right_factor) if edit_expansion_mode == "factor" else (
+                1 + top_reserve_ratio, 1 + bottom_reserve_ratio, 1 + left_reserve_ratio, 1 + right_reserve_ratio)
+            if fill_mask_holes:
+                from .ops.qwen21_geometry import fill_holes_preserving_softness
+                mask = fill_holes_preserving_softness(mask)
+            prepared, region_mask, region = prepare_aligned(image, mask, qwen_resolution, qwen_tolerance, factors)
+            x0,y0,x1,y1 = region["box"]
+            preview = draw_rect(tensor2pil(image[:1]).convert("RGB"),x0,y0,x1-x0,y1-y0,line_color="#00FF00",line_width=2)
+            width,height = region["canvas_size"]
+            return prepared,region_mask[...,None].repeat(1,1,1,3),list(region["box"]),pil2tensor(preview),region,region_mask,width,height,0
 
         if crop_mode == "edit_region":
             from .edit_region import EditRegionCrop
@@ -237,7 +256,7 @@ Reserve 模式:
                                 left, top, right - left, bottom - top,
                                 line_color="#00FF00", line_width=2)
             mask_rgb = region_mask.unsqueeze(-1).repeat(1, 1, 1, 3)
-            return cropped, mask_rgb, box, pil2tensor(preview), region, region_mask
+            return cropped, mask_rgb, box, pil2tensor(preview), region, region_mask, cropped.shape[2], cropped.shape[1], 0
 
         # 验证输入
         if mask_image is None and crop_box is None:
@@ -331,6 +350,7 @@ Reserve 模式:
             pil2tensor(preview_image),
             None,
             torch.cat(ret_masks, dim=0)[..., 0],
+            ret_images[0].shape[2], ret_images[0].shape[1], 0,
         )
 
 

@@ -13,7 +13,9 @@ with zipfile.ZipFile(args.wheel) as archive:
               'examples/cpu-image-tools.json','examples/qwen2511-remove-single-swwan.json',
               'nodes/scheduling.py','ops/workflow_helpers.py', 'nodes/mask_tools.py', 'ops/segments.py',
               'tests/fixtures/face_processing/sources.json', 'tests/fixtures/face_processing/impact_core.py',
-              'examples/qwen-face-head-swwan.json', 'licenses/MIT-Essentials.txt', 'licenses/MIT-mtb.txt']
+              'resources/qwen21/bfs-v5-api.json', 'licenses/bluebox-mit.txt', 'web/js/qwen21_controls.js',
+              'ops/qwen21_graph.py', 'ops/qwen21_runtime.py', 'ops/qwen21_geometry.py', 'ops/qwen21_tasks.py',
+              'examples/qwen21-turbo-unified.json', 'examples/qwen-face-head-swwan.json', 'licenses/MIT-Essentials.txt', 'licenses/MIT-mtb.txt']
     for filename in required:assert prefix+filename in names,filename
     assert not any('TTNorms' in n or '.DS_Store' in n for n in names)
     manifest=json.loads(archive.read(prefix+'node_manifest.json'))

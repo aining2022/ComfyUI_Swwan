@@ -8,6 +8,7 @@ import argparse
 import asyncio
 import copy
 import importlib.util
+import inspect
 import json
 from pathlib import Path
 import sys
@@ -40,7 +41,17 @@ def load_nodes(comfyui_root):
     args.cpu = True
     from server import PromptServer
     if not hasattr(PromptServer, "instance"):
-        PromptServer(asyncio.new_event_loop())
+        server_options = {}
+        if "asset_manager" in inspect.signature(PromptServer).parameters:
+            # This registry-only CPU helper does not serve HTTP asset routes or
+            # initialize the user's persistent asset database.
+            from types import SimpleNamespace
+            server_options["asset_manager"] = SimpleNamespace(
+                register_routes=lambda *args: None,
+                set_event_sink=lambda *args: None,
+                enabled=False,
+            )
+        PromptServer(asyncio.new_event_loop(), **server_options)
     spec = importlib.util.spec_from_file_location("swwan_migration", ROOT / "__init__.py", submodule_search_locations=[str(ROOT)])
     module = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = module

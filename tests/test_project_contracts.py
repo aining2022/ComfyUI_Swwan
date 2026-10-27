@@ -53,7 +53,12 @@ class Acceptance(unittest.TestCase):
                     for name,data in inputs.items():
                         got=schema[group][name]
                         if isinstance(data,list) and isinstance(data[0],list):
-                            self.assertEqual(got[0][:len(data[0])],data[0])
+                            if len(data)>1 and data[1].get('image_upload'):
+                                # Upload choices come from this server's input folder, not the fixture author's files.
+                                self.assertIsInstance(got[0],list)
+                                self.assertTrue(all(isinstance(x,str) for x in got[0]))
+                            else:
+                                self.assertEqual(got[0][:len(data[0])],data[0])
                             if new=='ImageResizeKJv2Alternative' and name=='keep_proportion':
                                 self.assertEqual(data[1]['default'],False);self.assertEqual(got[1]['default'],'stretch')
                                 self.assertEqual({k:v for k,v in got[1].items() if k!='default'},{k:v for k,v in data[1].items() if k!='default'})

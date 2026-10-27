@@ -6,6 +6,8 @@
 
 - Fix the missing internal ImagePadKJ import in Resize v2 and Resize By Megapixels; restore pad, pad_edge, pad_edge_pixel and pillarbox_blur execution with pixel/mask regression coverage.
 
+- Support the current ComfyUI asset-manager constructor in registry-only CPU validation without initializing the user asset database.
+
 - Recover the exact historical COLORCODE-omitted named-map mismatch before native widget migration, only when all canonical positional values remain complete and valid. Preserve valid named edits; reject truncated or unrelated invalid maps. Verify both COLORCODE availability and native named restoration settings through actual load/save and CPU outputs.
 
 - Fix all Swwan frontend imports under reverse-proxy base paths such as `/comfyui/`: resolve app/api shims relative to the extension directory so COLORCODE, named parameter restoration, modes, seed and dynamic inputs load instead of requesting nonexistent root URLs. Test real import URLs and canonical migrated widget arrays.
@@ -41,3 +43,12 @@
 - GPL-3.0 combined distribution with original source notices; TTNorms removed and historical values map to FreeMono. CPU fixtures, fixed ComfyUI CI reference, contribution guide and installed node-development skill.
 
 No model inference, GPU validation or public release is implied by local CPU acceptance. Hardware checks are listed separately.
+
+## 2026-10-26 — Qwen Turbo unified workflow
+
+- Add optional `qwen21_aligned` to Mask Crop V5. Append `qwen_resolution` / `qwen_tolerance` controls and width / height / encoder_resolution outputs; previous input and six-output prefixes retain their meaning. One SEAM records crop, proportional scale, padding and inverse restoration.
+- Restore V4 accepts the new SEAM version and protects unselected original pixels. Existing SEAM and BOX paths are unchanged.
+- Add Qwen 2.1 public controls, references and active-only dispatch with shared Turbo INT8/Sage inference, absolute LoRA strength and preserved extra prompt. Bounded 2 GiB CPU LoRA LRU; clean model patches for every invocation.
+- Integrate the user-provided BFS v5 preprocessing graph with a sequential per-person chain, avoiding Easy-Use nested-loop IDs. Region detection/sorting is evaluated on the original canvas; each person uses the preceding completed canvas. Diagnostic artifacts identify partial failures.
+- Freeze original-image regions in row-major order for both numbering and identity mapping; preserve source alpha independently of edit masks and keep soft-mask values when filling holes.
+- Add CPU geometry/control/graph tests and workflow examples. L20 quality status is reported separately in the integration project's validation report; registration tests do not establish image quality.

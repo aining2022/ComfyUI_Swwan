@@ -10,7 +10,12 @@ comfy_args.cpu=True
 import nodes
 from server import PromptServer
 import asyncio
-PromptServer(asyncio.new_event_loop())
+import inspect
+from types import SimpleNamespace
+server_options = {}
+if "asset_manager" in inspect.signature(PromptServer).parameters:
+    server_options["asset_manager"] = SimpleNamespace(register_routes=lambda *a: None, set_event_sink=lambda *a: None, enabled=False)
+PromptServer(asyncio.new_event_loop(), **server_options)
 OPTIONAL={'cv2','scipy','skimage','matplotlib','spandrel','color_matcher','triton','sageattention','nvvfx','kornia','torchvision'}
 for key in list(sys.modules):
     if key.split('.')[0] in OPTIONAL:del sys.modules[key]

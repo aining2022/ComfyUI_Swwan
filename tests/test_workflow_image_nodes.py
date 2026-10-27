@@ -98,7 +98,12 @@ class WorkflowContracts(unittest.TestCase):
         for node in nodes.values():
             if node["type"] not in C: continue
             cls = C[node["type"]]
-            self.assertEqual(len(node["widgets_values"]), len(defaults(cls)))
+            expected = len(defaults(cls))
+            # Existing V5 files legitimately omit the two new trailing optional widgets.
+            if node["type"] == "SwwanCropByMaskV5" and len(node["widgets_values"]) == expected - 2:
+                self.assertEqual(list(defaults(cls))[-2:], ["qwen_resolution", "qwen_tolerance"])
+            else:
+                self.assertEqual(len(node["widgets_values"]), expected)
             values = dict(zip(defaults(cls), node["widgets_values"]))
             self.assertEqual(node["widgets_values_named"], values)
             schema = {**cls.INPUT_TYPES().get("required", {}), **cls.INPUT_TYPES().get("optional", {})}

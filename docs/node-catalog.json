@@ -540,7 +540,8 @@
         "crop_mode": [
           [
             "bounds",
-            "edit_region"
+            "edit_region",
+            "qwen21_aligned"
           ],
           {
             "default": "bounds"
@@ -633,6 +634,24 @@
             "max": 10.0,
             "step": 0.1
           }
+        ],
+        "qwen_resolution": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 512,
+            "max": 2048,
+            "step": 32
+          }
+        ],
+        "qwen_tolerance": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.2,
+            "max": 3.0,
+            "step": 0.1
+          }
         ]
       }
     },
@@ -681,7 +700,8 @@
         "crop_box": "BOX",
         "crop_mode": [
           "bounds",
-          "edit_region"
+          "edit_region",
+          "qwen21_aligned"
         ],
         "mask": "MASK",
         "fill_mask_holes": "BOOLEAN",
@@ -700,7 +720,9 @@
         "edit_top_factor": "FLOAT",
         "edit_bottom_factor": "FLOAT",
         "edit_left_factor": "FLOAT",
-        "edit_right_factor": "FLOAT"
+        "edit_right_factor": "FLOAT",
+        "qwen_resolution": "INT",
+        "qwen_tolerance": "FLOAT"
       }
     },
     "output_types": [
@@ -709,7 +731,10 @@
       "BOX",
       "IMAGE",
       "SEAM",
-      "MASK"
+      "MASK",
+      "INT",
+      "INT",
+      "INT"
     ],
     "output_is_list": [],
     "input_is_list": false
@@ -6405,7 +6430,7 @@
     "id": "SwwanImageResizeKJ",
     "display": "Image Resize (Swwan) · 旧版兼容",
     "source": "nodes/resize.py",
-    "line": 5,
+    "line": 6,
     "category": "Swwan/Legacy",
     "proposed_tier": "兼容入口",
     "tier": "legacy",
@@ -6516,7 +6541,7 @@
     "id": "ImageResizeKJv2Alternative",
     "display": "Resize Image (Swwan)",
     "source": "nodes/resize.py",
-    "line": 82,
+    "line": 83,
     "category": "Swwan/Image",
     "proposed_tier": "主入口",
     "tier": "primary",
@@ -6939,7 +6964,7 @@
     "id": "ImageResizeByMegapixels",
     "display": "Image Resize By Megapixels (Swwan)",
     "source": "nodes/resize.py",
-    "line": 436,
+    "line": 437,
     "category": "Swwan/Image",
     "proposed_tier": "主入口",
     "tier": "primary",
@@ -7153,30 +7178,7 @@
     "schema": {
       "required": {
         "image": [
-          [
-            "0a1ad1c1-47bc-49d4-adde-35f46c5232f9_original.jpg",
-            "0a504a99-2405-4a47-a560-c137f7f06158_original.jpg",
-            "ComfyUI_00010_kjlso_1772265935.png",
-            "ComfyUI_temp_kiqoe_00001_.png",
-            "Gemini_Generated_Image_1xdqsb1xdqsb1xdq.jpeg",
-            "Gemini_Generated_Image_qvb1n3qvb1n3qvb1_rotated.jpg",
-            "RGBA_00001.png",
-            "Weixin Image_20260901170426_9306_66.jpg",
-            "clipspace-mask-1788323768395.png",
-            "clipspace-mask-1788323822330.png",
-            "clipspace-paint-1788323768395.png",
-            "clipspace-paint-1788323822330.png",
-            "clipspace-painted-1788323768395.png",
-            "clipspace-painted-1788323822330.png",
-            "clipspace-painted-masked-1788323768395.png",
-            "clipspace-painted-masked-1788323822330.png",
-            "example.png",
-            "fc394041-21fb-4ab3-b202-9d4fc3ba55ca.jpg",
-            "ffa36fec-6cbb-4072-9a6d-3e6fdfaa47b1.png",
-            "ffc90516-b878-4f8e-a8c9-f781ea7d87b0.jpg",
-            "iwEcAqNqcGcDAQTRBQAF0QPABrCybvWb1moxFAl85k3YJtkAB9IaM-B3CAAJomltCgAL0gAEXV8.jpg",
-            "removeddemo1-ezremove.png"
-          ],
+          [],
           {
             "image_upload": true
           }
@@ -7251,30 +7253,7 @@
     },
     "input_types": {
       "required": {
-        "image": [
-          "0a1ad1c1-47bc-49d4-adde-35f46c5232f9_original.jpg",
-          "0a504a99-2405-4a47-a560-c137f7f06158_original.jpg",
-          "ComfyUI_00010_kjlso_1772265935.png",
-          "ComfyUI_temp_kiqoe_00001_.png",
-          "Gemini_Generated_Image_1xdqsb1xdqsb1xdq.jpeg",
-          "Gemini_Generated_Image_qvb1n3qvb1n3qvb1_rotated.jpg",
-          "RGBA_00001.png",
-          "Weixin Image_20260901170426_9306_66.jpg",
-          "clipspace-mask-1788323768395.png",
-          "clipspace-mask-1788323822330.png",
-          "clipspace-paint-1788323768395.png",
-          "clipspace-paint-1788323822330.png",
-          "clipspace-painted-1788323768395.png",
-          "clipspace-painted-1788323822330.png",
-          "clipspace-painted-masked-1788323768395.png",
-          "clipspace-painted-masked-1788323822330.png",
-          "example.png",
-          "fc394041-21fb-4ab3-b202-9d4fc3ba55ca.jpg",
-          "ffa36fec-6cbb-4072-9a6d-3e6fdfaa47b1.png",
-          "ffc90516-b878-4f8e-a8c9-f781ea7d87b0.jpg",
-          "iwEcAqNqcGcDAQTRBQAF0QPABrCybvWb1moxFAl85k3YJtkAB9IaM-B3CAAJomltCgAL0gAEXV8.jpg",
-          "removeddemo1-ezremove.png"
-        ],
+        "image": [],
         "resize": "BOOLEAN",
         "width": "INT",
         "height": "INT",
@@ -10551,6 +10530,980 @@
     "output_types": [
       "IMAGE",
       "IMAGE",
+      "MASK"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21Controls",
+    "display": "Qwen 2.1 Controls (Swwan)",
+    "source": "nodes/qwen21_unified.py",
+    "line": 8,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "task": [
+          [
+            "remove",
+            "watermark",
+            "edit",
+            "local_edit",
+            "enhance",
+            "cutout",
+            "face_swap",
+            "body_swap",
+            "outfit_swap",
+            "outpaint",
+            "angles"
+          ],
+          {
+            "default": "remove"
+          }
+        ],
+        "extra_prompt": [
+          "STRING",
+          {
+            "default": "",
+            "multiline": true
+          }
+        ],
+        "lora_strength": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 2.0,
+            "step": 0.01
+          }
+        ],
+        "consistency": [
+          [
+            "auto",
+            "on",
+            "off"
+          ],
+          {
+            "default": "auto"
+          }
+        ],
+        "seed": [
+          "INT",
+          {
+            "default": 42,
+            "min": 0,
+            "max": 18446744073709551615
+          }
+        ],
+        "resolution": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 512,
+            "max": 2048,
+            "step": 32
+          }
+        ],
+        "sampling_preset": [
+          [
+            "turbo9",
+            "official8",
+            "experimental12",
+            "experimental16"
+          ],
+          {
+            "default": "turbo9"
+          }
+        ],
+        "people": [
+          "INT",
+          {
+            "default": 1,
+            "min": 1,
+            "max": 6
+          }
+        ],
+        "swap_head": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "forehead": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "bfs_version": [
+          [
+            "v1.1",
+            "v1.0"
+          ],
+          {
+            "default": "v1.1"
+          }
+        ],
+        "skin_match": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "watermark_mode": [
+          [
+            "local",
+            "full"
+          ],
+          {
+            "default": "local"
+          }
+        ],
+        "left": [
+          "INT",
+          {
+            "default": 128,
+            "min": 0,
+            "max": 4096
+          }
+        ],
+        "right": [
+          "INT",
+          {
+            "default": 128,
+            "min": 0,
+            "max": 4096
+          }
+        ],
+        "top": [
+          "INT",
+          {
+            "default": 128,
+            "min": 0,
+            "max": 4096
+          }
+        ],
+        "bottom": [
+          "INT",
+          {
+            "default": 128,
+            "min": 0,
+            "max": 4096
+          }
+        ],
+        "azimuth": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 330,
+            "step": 30
+          }
+        ],
+        "elevation": [
+          [
+            0,
+            30,
+            60,
+            90
+          ],
+          {
+            "default": 0
+          }
+        ],
+        "close_up": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "task": [
+          "remove",
+          "watermark",
+          "edit",
+          "local_edit",
+          "enhance",
+          "cutout",
+          "face_swap",
+          "body_swap",
+          "outfit_swap",
+          "outpaint",
+          "angles"
+        ],
+        "extra_prompt": "STRING",
+        "lora_strength": "FLOAT",
+        "consistency": [
+          "auto",
+          "on",
+          "off"
+        ],
+        "seed": "INT",
+        "resolution": "INT",
+        "sampling_preset": [
+          "turbo9",
+          "official8",
+          "experimental12",
+          "experimental16"
+        ],
+        "people": "INT",
+        "swap_head": "BOOLEAN",
+        "forehead": "BOOLEAN",
+        "bfs_version": [
+          "v1.1",
+          "v1.0"
+        ],
+        "skin_match": "BOOLEAN",
+        "watermark_mode": [
+          "local",
+          "full"
+        ],
+        "left": "INT",
+        "right": "INT",
+        "top": "INT",
+        "bottom": "INT",
+        "azimuth": "INT",
+        "elevation": [
+          0,
+          30,
+          60,
+          90
+        ],
+        "close_up": "BOOLEAN"
+      }
+    },
+    "output_types": [
+      "QWEN21_CONFIG",
+      "STRING"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21References",
+    "display": "Qwen 2.1 References (Swwan)",
+    "source": "nodes/qwen21_unified.py",
+    "line": 38,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "filenames": [
+          "STRING",
+          {
+            "default": "",
+            "multiline": true,
+            "tooltip": "ComfyUI input filenames, one per line, in person order. Empty = no references."
+          }
+        ]
+      },
+      "optional": {
+        "config": [
+          "QWEN21_CONFIG"
+        ],
+        "image1": [
+          "IMAGE"
+        ],
+        "image2": [
+          "IMAGE"
+        ],
+        "image3": [
+          "IMAGE"
+        ],
+        "image4": [
+          "IMAGE"
+        ],
+        "image5": [
+          "IMAGE"
+        ],
+        "image6": [
+          "IMAGE"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "filenames": "STRING"
+      },
+      "optional": {
+        "config": "QWEN21_CONFIG",
+        "image1": "IMAGE",
+        "image2": "IMAGE",
+        "image3": "IMAGE",
+        "image4": "IMAGE",
+        "image5": "IMAGE",
+        "image6": "IMAGE"
+      }
+    },
+    "output_types": [
+      "QWEN21_REFS"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21Dispatch",
+    "display": "Qwen 2.1 Dispatch (Swwan)",
+    "source": "nodes/qwen21_unified.py",
+    "line": 79,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "model": [
+          "MODEL"
+        ],
+        "clip": [
+          "CLIP"
+        ],
+        "vae": [
+          "VAE"
+        ],
+        "image": [
+          "IMAGE"
+        ],
+        "config": [
+          "QWEN21_CONFIG"
+        ],
+        "references": [
+          "QWEN21_REFS"
+        ]
+      },
+      "optional": {
+        "mask": [
+          "MASK"
+        ],
+        "source_alpha_mask": [
+          "MASK"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "model": "MODEL",
+        "clip": "CLIP",
+        "vae": "VAE",
+        "image": "IMAGE",
+        "config": "QWEN21_CONFIG",
+        "references": "QWEN21_REFS"
+      },
+      "optional": {
+        "mask": "MASK",
+        "source_alpha_mask": "MASK"
+      }
+    },
+    "output_types": [
+      "IMAGE",
+      "STRING"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21Prepare",
+    "display": "Qwen 2.1 Prepare (Swwan)",
+    "source": "nodes/qwen21_unified.py",
+    "line": 115,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "references": [
+          "QWEN21_REFS"
+        ],
+        "config": [
+          "QWEN21_CONFIG"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "image": "IMAGE",
+        "mask": "MASK",
+        "references": "QWEN21_REFS",
+        "config": "QWEN21_CONFIG"
+      }
+    },
+    "output_types": [
+      "IMAGE",
+      "SEAM",
+      "QWEN21_REFS"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21Core",
+    "display": "Qwen 2.1 Core (Swwan)",
+    "source": "nodes/qwen21_unified.py",
+    "line": 126,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "model": [
+          "MODEL"
+        ],
+        "clip": [
+          "CLIP"
+        ],
+        "vae": [
+          "VAE"
+        ],
+        "image": [
+          "IMAGE"
+        ],
+        "references": [
+          "QWEN21_REFS"
+        ],
+        "config": [
+          "QWEN21_CONFIG"
+        ],
+        "person": [
+          "INT",
+          {
+            "default": 0
+          }
+        ]
+      },
+      "optional": {
+        "previous": [
+          "IMAGE"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "model": "MODEL",
+        "clip": "CLIP",
+        "vae": "VAE",
+        "image": "IMAGE",
+        "references": "QWEN21_REFS",
+        "config": "QWEN21_CONFIG",
+        "person": "INT"
+      },
+      "optional": {
+        "previous": "IMAGE"
+      }
+    },
+    "output_types": [
+      "IMAGE",
+      "QWEN21_RECORD"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21Finish",
+    "display": "Qwen 2.1 Finish (Swwan)",
+    "source": "nodes/qwen21_unified.py",
+    "line": 139,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "seam": [
+          "SEAM"
+        ],
+        "config": [
+          "QWEN21_CONFIG"
+        ],
+        "record": [
+          "QWEN21_RECORD"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "image": "IMAGE",
+        "seam": "SEAM",
+        "config": "QWEN21_CONFIG",
+        "record": "QWEN21_RECORD"
+      }
+    },
+    "output_types": [
+      "IMAGE",
+      "MASK",
+      "STRING"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21Source",
+    "display": "Qwen 2.1 Source (Swwan)",
+    "source": "nodes/qwen21_unified.py",
+    "line": 150,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "image": "IMAGE",
+        "mask": "MASK"
+      }
+    },
+    "output_types": [
+      "IMAGE",
+      "MASK"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21ReferenceAtIndex",
+    "display": "Qwen 2.1 ReferenceAtIndex (Swwan)",
+    "source": "nodes/qwen21_unified.py",
+    "line": 158,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "references": [
+          "QWEN21_REFS"
+        ],
+        "index": [
+          "INT",
+          {
+            "default": 0
+          }
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "references": "QWEN21_REFS",
+        "index": "INT"
+      }
+    },
+    "output_types": [
+      "IMAGE"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21Auxiliary",
+    "display": "Qwen 2.1 Auxiliary (Swwan)",
+    "source": "nodes/qwen21_unified.py",
+    "line": 168,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "image": "IMAGE"
+      }
+    },
+    "output_types": [
+      "QWEN21_REFS"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21FaceGuard",
+    "display": "Qwen 2.1 FaceGuard (Swwan)",
+    "source": "nodes/qwen21_unified.py",
+    "line": 178,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "count": [
+          "INT",
+          {
+            "default": 1
+          }
+        ],
+        "valid": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "references": [
+          "QWEN21_REFS"
+        ],
+        "config": [
+          "QWEN21_CONFIG"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "image": "IMAGE",
+        "count": "INT",
+        "valid": "BOOLEAN",
+        "references": "QWEN21_REFS",
+        "config": "QWEN21_CONFIG"
+      }
+    },
+    "output_types": [
+      "IMAGE"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21FaceCheckpoint",
+    "display": "Qwen 2.1 FaceCheckpoint (Swwan)",
+    "source": "nodes/qwen21_unified.py",
+    "line": 194,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "person": [
+          "INT",
+          {
+            "default": 0
+          }
+        ],
+        "config": [
+          "QWEN21_CONFIG"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "image": "IMAGE",
+        "person": "INT",
+        "config": "QWEN21_CONFIG"
+      }
+    },
+    "output_types": [
+      "IMAGE"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21FaceRestore",
+    "display": "Qwen 2.1 FaceRestore (Swwan)",
+    "source": "nodes/qwen21_unified.py",
+    "line": 209,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "background": [
+          "IMAGE"
+        ],
+        "image": [
+          "IMAGE"
+        ],
+        "seam": [
+          "SEAM"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "manual": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "config": [
+          "QWEN21_CONFIG"
+        ],
+        "record": [
+          "QWEN21_RECORD"
+        ],
+        "person": [
+          "INT",
+          {
+            "default": 0
+          }
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "background": "IMAGE",
+        "image": "IMAGE",
+        "seam": "SEAM",
+        "mask": "MASK",
+        "manual": "BOOLEAN",
+        "config": "QWEN21_CONFIG",
+        "record": "QWEN21_RECORD",
+        "person": "INT"
+      }
+    },
+    "output_types": [
+      "IMAGE"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21FaceFinish",
+    "display": "Qwen 2.1 FaceFinish (Swwan)",
+    "source": "nodes/qwen21_unified.py",
+    "line": 234,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "preview": [
+          "IMAGE"
+        ],
+        "config": [
+          "QWEN21_CONFIG"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "image": "IMAGE",
+        "preview": "IMAGE",
+        "config": "QWEN21_CONFIG"
+      }
+    },
+    "output_types": [
+      "IMAGE",
+      "STRING"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21FaceSequence",
+    "display": "Qwen 2.1 Face Sequence (Swwan)",
+    "source": "nodes/qwen21_unified.py",
+    "line": 250,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "model": [
+          "MODEL"
+        ],
+        "clip": [
+          "CLIP"
+        ],
+        "vae": [
+          "VAE"
+        ],
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "regions": [
+          "SEGS"
+        ],
+        "manual": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "group_threshold": [
+          "FLOAT",
+          {
+            "default": 50.0
+          }
+        ],
+        "count": [
+          "INT",
+          {
+            "default": 1
+          }
+        ],
+        "preview": [
+          "IMAGE"
+        ],
+        "references": [
+          "QWEN21_REFS"
+        ],
+        "config": [
+          "QWEN21_CONFIG"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "model": "MODEL",
+        "clip": "CLIP",
+        "vae": "VAE",
+        "image": "IMAGE",
+        "mask": "MASK",
+        "regions": "SEGS",
+        "manual": "BOOLEAN",
+        "group_threshold": "FLOAT",
+        "count": "INT",
+        "preview": "IMAGE",
+        "references": "QWEN21_REFS",
+        "config": "QWEN21_CONFIG"
+      }
+    },
+    "output_types": [
+      "IMAGE",
+      "STRING"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21FaceRegions",
+    "display": "Qwen 2.1 Face Regions (Swwan)",
+    "source": "nodes/qwen21_unified.py",
+    "line": 263,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "segs": [
+          "SEGS"
+        ],
+        "index": [
+          "INT",
+          {
+            "default": -1,
+            "min": -1,
+            "max": 5
+          }
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "segs": "SEGS",
+        "index": "INT"
+      }
+    },
+    "output_types": [
+      "SEGS",
       "MASK"
     ],
     "output_is_list": [],

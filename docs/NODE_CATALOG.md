@@ -2,13 +2,13 @@
 
 由唯一注册清单和实际接口生成；层级已应用到菜单。
 
-当前注册 **118** 个节点，**15** 个分类。
+当前注册 **133** 个节点，**16** 个分类。
 
 | 层级 | 数量 |
 | --- | --- |
 | 兼容入口 | 18 |
 | 主入口 | 21 |
-| 专用工具 | 77 |
+| 专用工具 | 92 |
 | 实验功能 | 2 |
 
 | 层级 | 节点 ID | 显示名 | 当前分类 | 输出 | 源码 |
@@ -16,7 +16,7 @@
 | 兼容入口 | `SwwanCropByMaskV2` | CropByMask V2 (Swwan) · 旧版兼容 | Swwan/Legacy | IMAGE, MASK, BOX, IMAGE | [crop_by_mask_v2.py](../crop_by_mask_v2.py#L10) |
 | 兼容入口 | `SwwanCropByMaskV3` | CropByMask V3 (Swwan) · 旧版兼容 | Swwan/Legacy | IMAGE, IMAGE, BOX, IMAGE | [crop_by_mask_v3.py](../crop_by_mask_v3.py#L10) |
 | 兼容入口 | `LayerUtility: CropByMask V4` | CropByMask V4 (Swwan) · 旧版兼容 | Swwan/Legacy | IMAGE, IMAGE, BOX, IMAGE | [crop_by_mask_v4.py](../crop_by_mask_v4.py#L14) |
-| 主入口 | `SwwanCropByMaskV5` | Mask Crop (Swwan) | Swwan/Image | IMAGE, IMAGE, BOX, IMAGE, SEAM, MASK | [crop_by_mask_v5.py](../crop_by_mask_v5.py#L14) |
+| 主入口 | `SwwanCropByMaskV5` | Mask Crop (Swwan) | Swwan/Image | IMAGE, IMAGE, BOX, IMAGE, SEAM, MASK, INT, INT, INT | [crop_by_mask_v5.py](../crop_by_mask_v5.py#L14) |
 | 兼容入口 | `SwwanRestoreCropBox` | RestoreCropBox (Swwan) · 旧版兼容 | Swwan/Legacy | IMAGE, MASK | [restore_crop_box.py](../restore_crop_box.py#L9) |
 | 兼容入口 | `LayerUtility: RestoreCropBox V2` | RestoreCropBox V2 (Swwan) · 旧版兼容 | Swwan/Legacy | IMAGE, MASK | [restore_crop_box_v2.py](../restore_crop_box_v2.py#L11) |
 | 兼容入口 | `SwwanRestoreCropBoxV3` | Restore Crop Box V3 (Batch) (Swwan) · 旧版兼容 | Swwan/Legacy | IMAGE, MASK | [restore_crop_box_v3.py](../restore_crop_box_v3.py#L11) |
@@ -90,9 +90,9 @@
 | 专用工具 | `SwwanImageAddMulti` | Image Add Multi (Swwan) | Swwan/Advanced/Image | IMAGE | [nodes/batch.py](../nodes/batch.py#L697) |
 | 主入口 | `SwwanImageConcatMulti` | Image Concat Multi (Swwan) | Swwan/Image | IMAGE | [nodes/concat.py](../nodes/concat.py#L196) |
 | 专用工具 | `SwwanPreviewAnimation` | Preview Animation (Swwan) | Swwan/Advanced/IO | 输出节点 | [nodes/io.py](../nodes/io.py#L318) |
-| 兼容入口 | `SwwanImageResizeKJ` | Image Resize (Swwan) · 旧版兼容 | Swwan/Legacy | IMAGE, INT, INT | [nodes/resize.py](../nodes/resize.py#L5) |
-| 主入口 | `ImageResizeKJv2Alternative` | Resize Image (Swwan) | Swwan/Image | IMAGE, INT, INT, MASK | [nodes/resize.py](../nodes/resize.py#L82) |
-| 主入口 | `ImageResizeByMegapixels` | Image Resize By Megapixels (Swwan) | Swwan/Image | IMAGE, INT, INT, MASK, INT | [nodes/resize.py](../nodes/resize.py#L436) |
+| 兼容入口 | `SwwanImageResizeKJ` | Image Resize (Swwan) · 旧版兼容 | Swwan/Legacy | IMAGE, INT, INT | [nodes/resize.py](../nodes/resize.py#L6) |
+| 主入口 | `ImageResizeKJv2Alternative` | Resize Image (Swwan) | Swwan/Image | IMAGE, INT, INT, MASK | [nodes/resize.py](../nodes/resize.py#L83) |
+| 主入口 | `ImageResizeByMegapixels` | Image Resize By Megapixels (Swwan) | Swwan/Image | IMAGE, INT, INT, MASK, INT | [nodes/resize.py](../nodes/resize.py#L437) |
 | 专用工具 | `SwwanLoadAndResizeImage` | Load And Resize Image (Swwan) | Swwan/Advanced/IO | IMAGE, MASK, INT, INT, STRING | [nodes/io.py](../nodes/io.py#L402) |
 | 专用工具 | `SwwanLoadImagesFromFolderKJ` | Load Images From Folder (Swwan) | Swwan/Advanced/IO | IMAGE, MASK, INT, STRING | [nodes/io.py](../nodes/io.py#L555) |
 | 专用工具 | `SwwanImageGridtoBatch` | Image Grid to Batch (Swwan) | Swwan/Advanced/Batch | IMAGE | [nodes/transition.py](../nodes/transition.py#L312) |
@@ -131,6 +131,21 @@
 | 专用工具 | `SwwanMaskAnalyze` | Mask Analyze (Swwan) | Swwan/Advanced/Mask | MASK, INT, INT, INT, INT, INT, INT, BOOLEAN | [nodes/mask_tools.py](../nodes/mask_tools.py#L90) |
 | 专用工具 | `SwwanMaskSegments` | Mask Segments (Swwan) | Swwan/Advanced/Mask | SEGS, MASK | [nodes/mask_tools.py](../nodes/mask_tools.py#L110) |
 | 专用工具 | `SwwanImageMatte` | Image Matte (Swwan) | Swwan/Advanced/Image | IMAGE, IMAGE, MASK | [nodes/mask_tools.py](../nodes/mask_tools.py#L148) |
+| 专用工具 | `SwwanQwen21Controls` | Qwen 2.1 Controls (Swwan) | Swwan/Advanced/Qwen | QWEN21_CONFIG, STRING | [nodes/qwen21_unified.py](../nodes/qwen21_unified.py#L8) |
+| 专用工具 | `SwwanQwen21References` | Qwen 2.1 References (Swwan) | Swwan/Advanced/Qwen | QWEN21_REFS | [nodes/qwen21_unified.py](../nodes/qwen21_unified.py#L38) |
+| 专用工具 | `SwwanQwen21Dispatch` | Qwen 2.1 Dispatch (Swwan) | Swwan/Advanced/Qwen | IMAGE, STRING | [nodes/qwen21_unified.py](../nodes/qwen21_unified.py#L79) |
+| 专用工具 | `SwwanQwen21Prepare` | Qwen 2.1 Prepare (Swwan) | Swwan/Advanced/Qwen | IMAGE, SEAM, QWEN21_REFS | [nodes/qwen21_unified.py](../nodes/qwen21_unified.py#L115) |
+| 专用工具 | `SwwanQwen21Core` | Qwen 2.1 Core (Swwan) | Swwan/Advanced/Qwen | IMAGE, QWEN21_RECORD | [nodes/qwen21_unified.py](../nodes/qwen21_unified.py#L126) |
+| 专用工具 | `SwwanQwen21Finish` | Qwen 2.1 Finish (Swwan) | Swwan/Advanced/Qwen | IMAGE, MASK, STRING | [nodes/qwen21_unified.py](../nodes/qwen21_unified.py#L139) |
+| 专用工具 | `SwwanQwen21Source` | Qwen 2.1 Source (Swwan) | Swwan/Advanced/Qwen | IMAGE, MASK | [nodes/qwen21_unified.py](../nodes/qwen21_unified.py#L150) |
+| 专用工具 | `SwwanQwen21ReferenceAtIndex` | Qwen 2.1 ReferenceAtIndex (Swwan) | Swwan/Advanced/Qwen | IMAGE | [nodes/qwen21_unified.py](../nodes/qwen21_unified.py#L158) |
+| 专用工具 | `SwwanQwen21Auxiliary` | Qwen 2.1 Auxiliary (Swwan) | Swwan/Advanced/Qwen | QWEN21_REFS | [nodes/qwen21_unified.py](../nodes/qwen21_unified.py#L168) |
+| 专用工具 | `SwwanQwen21FaceGuard` | Qwen 2.1 FaceGuard (Swwan) | Swwan/Advanced/Qwen | IMAGE | [nodes/qwen21_unified.py](../nodes/qwen21_unified.py#L178) |
+| 专用工具 | `SwwanQwen21FaceCheckpoint` | Qwen 2.1 FaceCheckpoint (Swwan) | Swwan/Advanced/Qwen | IMAGE | [nodes/qwen21_unified.py](../nodes/qwen21_unified.py#L194) |
+| 专用工具 | `SwwanQwen21FaceRestore` | Qwen 2.1 FaceRestore (Swwan) | Swwan/Advanced/Qwen | IMAGE | [nodes/qwen21_unified.py](../nodes/qwen21_unified.py#L209) |
+| 专用工具 | `SwwanQwen21FaceFinish` | Qwen 2.1 FaceFinish (Swwan) | Swwan/Advanced/Qwen | IMAGE, STRING | [nodes/qwen21_unified.py](../nodes/qwen21_unified.py#L234) |
+| 专用工具 | `SwwanQwen21FaceSequence` | Qwen 2.1 Face Sequence (Swwan) | Swwan/Advanced/Qwen | IMAGE, STRING | [nodes/qwen21_unified.py](../nodes/qwen21_unified.py#L250) |
+| 专用工具 | `SwwanQwen21FaceRegions` | Qwen 2.1 Face Regions (Swwan) | Swwan/Advanced/Qwen | SEGS, MASK | [nodes/qwen21_unified.py](../nodes/qwen21_unified.py#L263) |
 
 机器可读接口清单：[node-catalog.json](node-catalog.json)。
 

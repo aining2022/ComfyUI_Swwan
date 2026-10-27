@@ -50,3 +50,10 @@ Goohaitools mask arithmetic, bounds/area detection, existing-mask matte, region 
 ## Face/head repair test references (Unreleased)
 
 `tests/fixtures/easy_loop.py` freezes selected loop, integer math, comparison and type-helper implementations from [yolain/ComfyUI-Easy-Use](https://github.com/yolain/ComfyUI-Easy-Use), revision `a61317df3ecdfd3d899a1e9a1a7cebd5bfa765c1`, GPL-3.0 (yolain and contributors). Original functions are preserved; imports are limited to ComfyUI graph interfaces for portable CPU tests. This is test-only code and does not register EasyUse nodes in the Swwan plugin. `tests/fixtures/qwen-face-head-current.json` freezes the user-supplied 179-node graph for migration regression; the corresponding example contains no model files or image media.
+
+## Qwen 2.1 aligned geometry and unified workflow (2026-10-26)
+
+- `ops/qwen21_geometry.py`: candidate enumeration, aspect scoring and fixed-point equations adapted from ComfyUI-BlueBox (user-provided local source), `nodes/cut_qwen_image_21.py`, MIT, copyright (c) 2026 zhoutingxi. Full notice in `licenses/bluebox-mit.txt`. Swwan adds mask-preserving expansion, reversible SEAM, alpha-safe resize and exact exterior protection. Source fingerprints accompany `image/qwen21-unified/resources/source-manifest.json` in the integration project.
+- `resources/qwen21/bfs-v5-api.json`: frozen user-provided `Qwen-2.1-BFS-Swwan-v5-api.json` baseline; referenced plugins remain external dependencies. No model weights or input photographs are bundled. Runtime changes replace the original loaders, sampling and loop mechanics while retaining the region-processing graph.
+- Prepared encoding follows ComfyUI 0.37.0 `TextEncodeQwenImage21` resolution=0 semantics. No attention-weight or zero-drift guarantee is inferred from reference token counts.
+- Task prompts and weight selections follow the linked model authors' model cards; model licenses and input-image rights are not replaced by this node package's license. Models are downloaded separately.

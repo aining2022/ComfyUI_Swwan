@@ -45,7 +45,10 @@ function update(node) {
     const hidden = new Set();
     const hide = (...names) => names.forEach((name) => hidden.add(name));
     if (id === "SwwanCropByMaskV5" && !connected(node, "crop_mode")) {
-        const edit = value(node, "crop_mode") === "edit_region";
+        const aligned = value(node, "crop_mode") === "qwen21_aligned";
+        const edit = aligned || value(node, "crop_mode") === "edit_region";
+        if (!aligned) hide("qwen_resolution", "qwen_tolerance");
+        else hide("output_size", "custom_width", "custom_height", "alignment");
         if (edit) {
             hide("detect", "reserve_mode", "top_reserve", "bottom_reserve", "left_reserve", "right_reserve",
                 "reserve_max", "round_to_multiple", "batch_mode", "device");
@@ -128,7 +131,7 @@ function update(node) {
         const source = link && node.graph?.getNodeById(link.origin_id);
         const known = source && (source.comfyClass || source.type) === "SwwanCropByMaskV5"
             && !connected(source, "crop_mode");
-        const edit = known && value(source, "crop_mode") === "edit_region";
+        const edit = known && ["edit_region", "qwen21_aligned"].includes(value(source, "crop_mode"));
         if (edit) hide("feathering", "device");
         if (!connected(node, "region_info") || (known && !edit)) hide("expand_percent", "feather_percent");
     }

@@ -128,3 +128,5 @@ python scripts/migrate_workflow.py old.json --swwan-node-id 12 --swwan-node-id 3
 开发流程和命令见 [AI agent 入口](AGENTS.md)、[贡献指南](CONTRIBUTING.md) 和 [节点开发 skill](skills/comfyui-swwan-node-development/SKILL.md)。变更记录见 [CHANGELOG](CHANGELOG.md)。
 
 整包按 **GPL-3.0** 分发；各来源文件保留原许可、版权和修改说明。详见 [LICENSE](LICENSE)、[来源与资产声明](THIRD_PARTY_NOTICES.md)。
+
+- [Qwen 2.1 Turbo 多功能统一工作流](docs/QWEN21_UNIFIED.md)：裁切对齐、公共 LoRA / prompt、最多 6 人换脸。

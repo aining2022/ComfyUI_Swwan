@@ -127,6 +127,14 @@ class RestoreCropBoxV4:
             restored_images: [B, H, W, C]
             restored_masks: [B, H, W]
         """
+        if region_info is not None and region_info.get("qwen21_geometry_version") == 1:
+            from .ops.qwen21_geometry import restore_aligned
+            x0, y0, x1, y1 = region_info["box"]
+            short = min(x1 - x0, y1 - y0)
+            return restore_aligned(background_image, croped_image, region_info, croped_mask,
+                                   feather=round(short*feather_percent/100),
+                                   expand=round(short*expand_percent/100))
+
         if region_info is not None:
             from .edit_region import EditRegionRestore
 
