@@ -652,6 +652,16 @@
             "max": 3.0,
             "step": 0.1
           }
+        ],
+        "qwen_restore_backend": [
+          [
+            "swwan",
+            "goohai"
+          ],
+          {
+            "default": "swwan",
+            "tooltip": "qwen21_aligned SEAM format. goohai connects to GH_CropRestore, retaining its color restoration."
+          }
         ]
       }
     },
@@ -722,7 +732,11 @@
         "edit_left_factor": "FLOAT",
         "edit_right_factor": "FLOAT",
         "qwen_resolution": "INT",
-        "qwen_tolerance": "FLOAT"
+        "qwen_tolerance": "FLOAT",
+        "qwen_restore_backend": [
+          "swwan",
+          "goohai"
+        ]
       }
     },
     "output_types": [

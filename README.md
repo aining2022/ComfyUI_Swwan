@@ -130,3 +130,7 @@ python scripts/migrate_workflow.py old.json --swwan-node-id 12 --swwan-node-id 3
 整包按 **GPL-3.0** 分发；各来源文件保留原许可、版权和修改说明。详见 [LICENSE](LICENSE)、[来源与资产声明](THIRD_PARTY_NOTICES.md)。
 
 - [Qwen 2.1 Turbo 多功能统一工作流](docs/QWEN21_UNIFIED.md)：裁切对齐、公共 LoRA / prompt、最多 6 人换脸。
+
+### 展开式 Turbo 移除 + 孤海颜色还原
+
+[使用说明](docs/QWEN21_REMOVE_BLUEBOX.md) · [可编辑工作流](examples/qwen21-remove-turbo-bluebox-gh-expanded.json)。BlueBox 候选与不动点校验仅用于预处理，原生孤海裁剪恢复负责贴回及颜色还原；`SwwanCropByMaskV5.qwen_restore_backend=goohai` 显式选择兼容 SEAM。

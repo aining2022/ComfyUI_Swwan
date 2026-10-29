@@ -52,3 +52,8 @@ No model inference, GPU validation or public release is implied by local CPU acc
 - Integrate the user-provided BFS v5 preprocessing graph with a sequential per-person chain, avoiding Easy-Use nested-loop IDs. Region detection/sorting is evaluated on the original canvas; each person uses the preceding completed canvas. Diagnostic artifacts identify partial failures.
 - Freeze original-image regions in row-major order for both numbering and identity mapping; preserve source alpha independently of edit masks and keep soft-mask values when filling holes.
 - Add CPU geometry/control/graph tests and workflow examples. L20 quality status is reported separately in the integration project's validation report; registration tests do not establish image quality.
+
+### 2026-10-29 — BlueBox preprocessing with native GH restoration
+
+- `SwwanCropByMaskV5` adds optional `qwen_restore_backend`: `swwan` preserves the existing default; `goohai` emits GH-compatible SEAM metadata in `qwen21_aligned` mode.
+- Candidate sizing, fixed-point validation, full selection and shared image/mask preprocessing remain unchanged. All existing output positions are preserved. Native `GH_CropRestore` performs the inverse transform, color restoration and feathering; the workflow gates final pixels using the original selection/protection masks.

@@ -63,6 +63,7 @@ class CropByMaskV5:
                    ("edit_top_factor", "edit_bottom_factor", "edit_left_factor", "edit_right_factor")},
                 "qwen_resolution": ("INT", {"default": 1024, "min": 512, "max": 2048, "step": 32}),
                 "qwen_tolerance": ("FLOAT", {"default": 1.0, "min": 0.2, "max": 3.0, "step": 0.1}),
+                "qwen_restore_backend": (["swwan", "goohai"], {"default": "swwan", "tooltip": "qwen21_aligned SEAM format. goohai connects to GH_CropRestore, retaining its color restoration."}),
             }
         }
 
@@ -209,7 +210,7 @@ Reserve 模式:
                         image=None, mask_image=None, crop_box=None,
                         crop_mode="bounds", mask=None, fill_mask_holes=False,
                         output_size="原像素", custom_width=1024, custom_height=1024,
-                        alignment=8, edit_expansion_mode="reserve_ratio", edit_top_factor=1.2, edit_bottom_factor=1.2, edit_left_factor=1.2, edit_right_factor=1.2, qwen_resolution=1024, qwen_tolerance=1.0):
+                        alignment=8, edit_expansion_mode="reserve_ratio", edit_top_factor=1.2, edit_bottom_factor=1.2, edit_left_factor=1.2, edit_right_factor=1.2, qwen_resolution=1024, qwen_tolerance=1.0, qwen_restore_backend="swwan"):
 
         if crop_mode == "qwen21_aligned":
             from .ops.qwen21_geometry import prepare_aligned
@@ -226,7 +227,13 @@ Reserve 模式:
             x0,y0,x1,y1 = region["box"]
             preview = draw_rect(tensor2pil(image[:1]).convert("RGB"),x0,y0,x1-x0,y1-y0,line_color="#00FF00",line_width=2)
             width,height = region["canvas_size"]
-            return prepared,region_mask[...,None].repeat(1,1,1,3),list(region["box"]),pil2tensor(preview),region,region_mask,width,height,0
+            restore_info = region
+            if qwen_restore_backend == "goohai":
+                from .ops.qwen21_gh_seam import to_goohai_seam
+                restore_info = to_goohai_seam(region)
+            elif qwen_restore_backend != "swwan":
+                raise ValueError("Unknown Qwen restore backend")
+            return prepared,region_mask[...,None].repeat(1,1,1,3),list(region["box"]),pil2tensor(preview),restore_info,region_mask,width,height,0
 
         if crop_mode == "edit_region":
             from .edit_region import EditRegionCrop

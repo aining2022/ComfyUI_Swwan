@@ -57,3 +57,7 @@ Goohaitools mask arithmetic, bounds/area detection, existing-mask matte, region 
 - `resources/qwen21/bfs-v5-api.json`: frozen user-provided `Qwen-2.1-BFS-Swwan-v5-api.json` baseline; referenced plugins remain external dependencies. No model weights or input photographs are bundled. Runtime changes replace the original loaders, sampling and loop mechanics while retaining the region-processing graph.
 - Prepared encoding follows ComfyUI 0.37.0 `TextEncodeQwenImage21` resolution=0 semantics. No attention-weight or zero-drift guarantee is inferred from reference token counts.
 - Task prompts and weight selections follow the linked model authors' model cards; model licenses and input-image rights are not replaced by this node package's license. Models are downloaded separately.
+
+## Qwen preprocessing / GH restoration compatibility (2026-10-29)
+
+`ops/qwen21_gh_seam.py` is an original metadata adapter for the `GH_CropRestore` SEAM contract; no restoration algorithm is copied into runtime code. The portable regression fixture `tests/fixtures/reference/gh_crop_restore_color_8d9499.py` freezes the native restoration class from Goohaitools-comfyui `nodes/遮罩裁剪V2.py`, revision `8d9499f74f13764182634b02a2b390579491bd21`, goohai and contributors, GPL-3.0 (`licenses/GPL-3.0.txt`). The dedicated workflow keeps that native node and its color-restoration control.
