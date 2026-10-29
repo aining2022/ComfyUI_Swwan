@@ -64,11 +64,13 @@ class CropByMaskV5:
                 "qwen_resolution": ("INT", {"default": 1024, "min": 512, "max": 2048, "step": 32}),
                 "qwen_tolerance": ("FLOAT", {"default": 1.0, "min": 0.2, "max": 3.0, "step": 0.1}),
                 "qwen_restore_backend": (["swwan", "goohai"], {"default": "swwan", "tooltip": "qwen21_aligned SEAM format. goohai connects to GH_CropRestore, retaining its color restoration."}),
+                "qwen_resolution_mode": (["fixed", "crop_area"], {"default": "fixed", "tooltip": "crop_area derives the area budget from the native mask bounding box plus context, before resize or aspect adjustment."}),
+                "qwen_max_resolution": ("INT", {"default": 1920, "min": 512, "max": 2048, "step": 1, "tooltip": "crop_area budget cap; rounded down to a multiple of 32. Minimum budget is 512."}),
             }
         }
 
-    RETURN_TYPES = ("IMAGE", "IMAGE", "BOX", "IMAGE", "SEAM", "MASK", "INT", "INT", "INT")
-    RETURN_NAMES = ("cropped_image", "cropped_mask", "crop_box", "box_preview", "region_info", "region_mask", "width", "height", "encoder_resolution")
+    RETURN_TYPES = ("IMAGE", "IMAGE", "BOX", "IMAGE", "SEAM", "MASK", "INT", "INT", "INT", "INT", "INT", "INT")
+    RETURN_NAMES = ("cropped_image", "cropped_mask", "crop_box", "box_preview", "region_info", "region_mask", "width", "height", "encoder_resolution", "native_crop_width", "native_crop_height", "working_resolution")
     FUNCTION = 'crop_by_mask_v5'
     CATEGORY = 'Swwan/image'
     DESCRIPTION = """CropByMask V5 - 批处理智能裁剪节点
@@ -210,7 +212,7 @@ Reserve 模式:
                         image=None, mask_image=None, crop_box=None,
                         crop_mode="bounds", mask=None, fill_mask_holes=False,
                         output_size="原像素", custom_width=1024, custom_height=1024,
-                        alignment=8, edit_expansion_mode="reserve_ratio", edit_top_factor=1.2, edit_bottom_factor=1.2, edit_left_factor=1.2, edit_right_factor=1.2, qwen_resolution=1024, qwen_tolerance=1.0, qwen_restore_backend="swwan"):
+                        alignment=8, edit_expansion_mode="reserve_ratio", edit_top_factor=1.2, edit_bottom_factor=1.2, edit_left_factor=1.2, edit_right_factor=1.2, qwen_resolution=1024, qwen_tolerance=1.0, qwen_restore_backend="swwan", qwen_resolution_mode="fixed", qwen_max_resolution=1920):
 
         if crop_mode == "qwen21_aligned":
             from .ops.qwen21_geometry import prepare_aligned
@@ -223,7 +225,8 @@ Reserve 模式:
             if fill_mask_holes:
                 from .ops.qwen21_geometry import fill_holes_preserving_softness
                 mask = fill_holes_preserving_softness(mask)
-            prepared, region_mask, region = prepare_aligned(image, mask, qwen_resolution, qwen_tolerance, factors)
+            prepared, region_mask, region = prepare_aligned(image, mask, qwen_resolution, qwen_tolerance, factors,
+                                                              resolution_mode=qwen_resolution_mode, max_resolution=qwen_max_resolution)
             x0,y0,x1,y1 = region["box"]
             preview = draw_rect(tensor2pil(image[:1]).convert("RGB"),x0,y0,x1-x0,y1-y0,line_color="#00FF00",line_width=2)
             width,height = region["canvas_size"]
@@ -233,7 +236,7 @@ Reserve 模式:
                 restore_info = to_goohai_seam(region)
             elif qwen_restore_backend != "swwan":
                 raise ValueError("Unknown Qwen restore backend")
-            return prepared,region_mask[...,None].repeat(1,1,1,3),list(region["box"]),pil2tensor(preview),restore_info,region_mask,width,height,0
+            return prepared,region_mask[...,None].repeat(1,1,1,3),list(region["box"]),pil2tensor(preview),restore_info,region_mask,width,height,0,*region["native_crop_size"],region["resolution"]
 
         if crop_mode == "edit_region":
             from .edit_region import EditRegionCrop
@@ -263,7 +266,7 @@ Reserve 模式:
                                 left, top, right - left, bottom - top,
                                 line_color="#00FF00", line_width=2)
             mask_rgb = region_mask.unsqueeze(-1).repeat(1, 1, 1, 3)
-            return cropped, mask_rgb, box, pil2tensor(preview), region, region_mask, cropped.shape[2], cropped.shape[1], 0
+            return cropped, mask_rgb, box, pil2tensor(preview), region, region_mask, cropped.shape[2], cropped.shape[1], 0, right-left, bottom-top, 0
 
         # 验证输入
         if mask_image is None and crop_box is None:
@@ -358,6 +361,7 @@ Reserve 模式:
             None,
             torch.cat(ret_masks, dim=0)[..., 0],
             ret_images[0].shape[2], ret_images[0].shape[1], 0,
+            effective_crop_box[2]-effective_crop_box[0], effective_crop_box[3]-effective_crop_box[1], 0,
         )
 
 

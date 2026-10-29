@@ -83,7 +83,19 @@ def fill_holes_preserving_softness(mask):
     return torch.maximum(mask[:1],torch.as_tensor(holes,device=mask.device,dtype=mask.dtype)[None])
 
 
-def prepare_aligned(image, mask, resolution=1024, tolerance=1., factors=(1.3,)*4, full_image=False):
+def crop_area_resolution(width, height, maximum=1920):
+    """Half-up rounding of native crop sqrt(area), with a legal 32-grid cap."""
+    if width <= 0 or height <= 0:
+        raise ValueError('Native crop dimensions must be positive')
+    if maximum < 512 or maximum > 2048:
+        raise ValueError('Qwen budget cap must be in 512..2048')
+    legal_maximum = 32 * (int(maximum) // 32)
+    rounded = 32 * math.floor(math.sqrt(width * height) / 32 + 0.5)
+    return max(512, min(rounded, legal_maximum))
+
+
+def prepare_aligned(image, mask, resolution=1024, tolerance=1., factors=(1.3,)*4,
+                    full_image=False, resolution_mode='fixed', max_resolution=1920):
     image = image[:1]
     if image.ndim != 4 or image.shape[-1] not in (3, 4):
         raise ValueError('Expected one RGB or RGBA image')
@@ -96,7 +108,13 @@ def prepare_aligned(image, mask, resolution=1024, tolerance=1., factors=(1.3,)*4
     short = min(x1-x0, y1-y0)
     top, bottom, left, right = [max(0, math.ceil(short*(float(v)-1))) for v in factors]
     x0, y0, x1, y1 = max(0,x0-left), max(0,y0-top), min(w,x1+right), min(h,y1+bottom)
-    tw, th = target_size(x1-x0, y1-y0, resolution, tolerance)
+    native_crop_size = (x1-x0, y1-y0)
+    context_box = (x0, y0, x1, y1)
+    if resolution_mode == 'crop_area':
+        resolution = crop_area_resolution(*native_crop_size, max_resolution)
+    elif resolution_mode != 'fixed':
+        raise ValueError('Unknown Qwen resolution mode')
+    tw, th = target_size(*native_crop_size, resolution, tolerance)
     # Expand, never crop away a selection, to approach the chosen aspect ratio.
     vw = max(x1-x0, math.ceil((y1-y0)*tw/th))
     vh = max(y1-y0, math.ceil((x1-x0)*th/tw))
@@ -120,6 +138,8 @@ def prepare_aligned(image, mask, resolution=1024, tolerance=1., factors=(1.3,)*4
     seam = {'qwen21_geometry_version':1, 'original_size':(w,h), 'box':(bx0,by0,bx1,by1),
             'virtual_box':(vx0,vy0,vx1,vy1), 'content_box':(px,py,px+cw,py+ch),
             'canvas_size':(tw,th), 'resolution':int(resolution), 'encoder_resolution':0,
+            'native_crop_size':native_crop_size, 'context_box':context_box,
+            'resolution_mode':resolution_mode, 'max_resolution':int(max_resolution),
             'source_padding':source_pad, 'original_mask':mask, 'original_image':image,
             'scale':(cw/vw,ch/vh), 'full_image':bool(full_image)}
     return prepared, pm, seam

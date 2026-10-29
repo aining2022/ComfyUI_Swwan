@@ -1,6 +1,6 @@
 {
-  "last_node_id": 36,
-  "last_link_id": 45,
+  "last_node_id": 39,
+  "last_link_id": 48,
   "nodes": [
     {
       "id": 1,
@@ -353,6 +353,30 @@
             13
           ],
           "slot_index": 8
+        },
+        {
+          "name": "native_crop_width",
+          "type": "INT",
+          "links": [
+            46
+          ],
+          "slot_index": 9
+        },
+        {
+          "name": "native_crop_height",
+          "type": "INT",
+          "links": [
+            47
+          ],
+          "slot_index": 10
+        },
+        {
+          "name": "working_resolution",
+          "type": "INT",
+          "links": [
+            48
+          ],
+          "slot_index": 11
         }
       ],
       "properties": {
@@ -386,7 +410,9 @@
         1.4,
         1024,
         1.0,
-        "goohai"
+        "goohai",
+        "crop_area",
+        1920
       ],
       "title": "05 裁切 + BlueBox 尺寸对齐",
       "widgets_values_named": {
@@ -417,7 +443,9 @@
         "edit_right_factor": 1.4,
         "qwen_resolution": 1024,
         "qwen_tolerance": 1.0,
-        "qwen_restore_backend": "goohai"
+        "qwen_restore_backend": "goohai",
+        "qwen_resolution_mode": "crop_area",
+        "qwen_max_resolution": 1920
       }
     },
     {
@@ -1374,8 +1402,8 @@
         740
       ],
       "size": [
-        390,
-        300
+        210,
+        160
       ],
       "flags": {},
       "order": 29,
@@ -1409,8 +1437,8 @@
         740
       ],
       "size": [
-        390,
-        300
+        210,
+        160
       ],
       "flags": {},
       "order": 30,
@@ -1631,6 +1659,111 @@
         0.0
       ],
       "title": "最终融合范围（保留 GH 内部软边）"
+    },
+    {
+      "id": 37,
+      "type": "PreviewAny",
+      "pos": [
+        880,
+        1740
+      ],
+      "size": [
+        210,
+        160
+      ],
+      "flags": {},
+      "order": 36,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 46
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": [],
+      "title": "原生裁剪宽 W（缩放前）"
+    },
+    {
+      "id": 38,
+      "type": "PreviewAny",
+      "pos": [
+        1120,
+        1740
+      ],
+      "size": [
+        210,
+        160
+      ],
+      "flags": {},
+      "order": 37,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 47
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": [],
+      "title": "原生裁剪高 H（缩放前）"
+    },
+    {
+      "id": 39,
+      "type": "PreviewAny",
+      "pos": [
+        1350,
+        1740
+      ],
+      "size": [
+        210,
+        160
+      ],
+      "flags": {},
+      "order": 38,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 48
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": [],
+      "title": "动态 resolution（面积预算）"
     }
   ],
   "links": [
@@ -1993,6 +2126,30 @@
       36,
       0,
       "MASK"
+    ],
+    [
+      46,
+      6,
+      9,
+      37,
+      0,
+      "INT"
+    ],
+    [
+      47,
+      6,
+      10,
+      38,
+      0,
+      "INT"
+    ],
+    [
+      48,
+      6,
+      11,
+      39,
+      0,
+      "INT"
     ]
   ],
   "groups": [
@@ -2014,7 +2171,7 @@
         850,
         20,
         870,
-        1660
+        1980
       ],
       "color": "#3f789e",
       "font_size": 24,
@@ -2066,7 +2223,7 @@
         20
       ]
     },
-    "notes": "Expanded removal v2: BlueBox candidates + fixed-point check for preprocessing only; GH_CropRestore color=1; encoder resolution=0. Final gate protects original pixels. See BLUEBOX_REMOVAL.md."
+    "notes": "Expanded removal v3: native crop-area budget 512..1920, BlueBox candidates + fixed-point check for preprocessing only; GH_CropRestore color=1; encoder resolution=0. Final gate protects original pixels. See BLUEBOX_REMOVAL.md."
   },
   "version": 0.4
 }

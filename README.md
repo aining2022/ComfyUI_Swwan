@@ -134,3 +134,5 @@ python scripts/migrate_workflow.py old.json --swwan-node-id 12 --swwan-node-id 3
 ### 展开式 Turbo 移除 + 孤海颜色还原
 
 [使用说明](docs/QWEN21_REMOVE_BLUEBOX.md) · [可编辑工作流](examples/qwen21-remove-turbo-bluebox-gh-expanded.json)。BlueBox 候选与不动点校验仅用于预处理，原生孤海裁剪恢复负责贴回及颜色还原；`SwwanCropByMaskV5.qwen_restore_backend=goohai` 显式选择兼容 SEAM。
+
+专用移除工作流现默认按原生裁剪面积动态选择 512–1920 的预算，并显示原生宽高与实际预算；[规则、使用与独立 L20 验收](docs/QWEN21_REMOVE_BLUEBOX.md)。原有节点默认固定模式保持兼容。

@@ -99,9 +99,14 @@ class WorkflowContracts(unittest.TestCase):
             if node["type"] not in C: continue
             cls = C[node["type"]]
             expected = len(defaults(cls))
-            # Existing V5 files legitimately omit the two new trailing optional widgets.
-            if node["type"] == "SwwanCropByMaskV5" and len(node["widgets_values"]) == expected - 2:
-                self.assertEqual(list(defaults(cls))[-2:], ["qwen_resolution", "qwen_tolerance"])
+            # Old V5 workflows may omit only the appended optional Qwen controls.
+            if node["type"] == "SwwanCropByMaskV5":
+                self.assertLessEqual(len(node["widgets_values"]), expected)
+                omitted = list(defaults(cls))[len(node["widgets_values"]):]
+                optional_qwen = {"qwen_resolution", "qwen_tolerance", "qwen_restore_backend",
+                                 "qwen_resolution_mode", "qwen_max_resolution"}
+                self.assertTrue(set(omitted) <= optional_qwen)
+                self.assertTrue(set(omitted) <= cls.INPUT_TYPES().get("optional", {}).keys())
             else:
                 self.assertEqual(len(node["widgets_values"]), expected)
             values = dict(zip(defaults(cls), node["widgets_values"]))
@@ -117,6 +122,17 @@ class WorkflowContracts(unittest.TestCase):
                         "LayerUtility: RestoreCropBox", "LayerUtility: RestoreCropBox V2", "SwwanRestoreCropBoxV3", "ImageResizeKJ"]:
             self.assertEqual(C[json.loads((ROOT/"tests/fixtures/legacy_id_map.json").read_text()).get(node_id,node_id)].CATEGORY, "Swwan/Legacy")
         self.assertIn("SwwanDrawMaskOnImage", C)  # pre-existing user edit
+
+    def test_dynamic_crop_budget_ports(self):
+        result = invoke("SwwanCropByMaskV5", image=self.image, mask=self.mask,
+                        crop_mode="qwen21_aligned", qwen_restore_backend="goohai",
+                        edit_expansion_mode="factor", edit_top_factor=1.5,
+                        edit_bottom_factor=1.5, edit_left_factor=1.5, edit_right_factor=1.5,
+                        qwen_resolution_mode="crop_area", qwen_max_resolution=1920)
+        self.assertEqual(len(result), 12)
+        self.assertEqual(result[8:], (0, 96, 80, 512))
+        self.assertEqual(result[0].shape[1:3], result[5].shape[1:3])
+        self.assertEqual(result[4]["目标尺寸"], (result[7], result[6]))
 
     def test_legacy_regression_against_base(self):
         # Read the pre-change classes for this worktree's targeted regression check.

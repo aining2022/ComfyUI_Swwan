@@ -16,7 +16,7 @@
 | 兼容入口 | `SwwanCropByMaskV2` | CropByMask V2 (Swwan) · 旧版兼容 | Swwan/Legacy | IMAGE, MASK, BOX, IMAGE | [crop_by_mask_v2.py](../crop_by_mask_v2.py#L10) |
 | 兼容入口 | `SwwanCropByMaskV3` | CropByMask V3 (Swwan) · 旧版兼容 | Swwan/Legacy | IMAGE, IMAGE, BOX, IMAGE | [crop_by_mask_v3.py](../crop_by_mask_v3.py#L10) |
 | 兼容入口 | `LayerUtility: CropByMask V4` | CropByMask V4 (Swwan) · 旧版兼容 | Swwan/Legacy | IMAGE, IMAGE, BOX, IMAGE | [crop_by_mask_v4.py](../crop_by_mask_v4.py#L14) |
-| 主入口 | `SwwanCropByMaskV5` | Mask Crop (Swwan) | Swwan/Image | IMAGE, IMAGE, BOX, IMAGE, SEAM, MASK, INT, INT, INT | [crop_by_mask_v5.py](../crop_by_mask_v5.py#L14) |
+| 主入口 | `SwwanCropByMaskV5` | Mask Crop (Swwan) | Swwan/Image | IMAGE, IMAGE, BOX, IMAGE, SEAM, MASK, INT, INT, INT, INT, INT, INT | [crop_by_mask_v5.py](../crop_by_mask_v5.py#L14) |
 | 兼容入口 | `SwwanRestoreCropBox` | RestoreCropBox (Swwan) · 旧版兼容 | Swwan/Legacy | IMAGE, MASK | [restore_crop_box.py](../restore_crop_box.py#L9) |
 | 兼容入口 | `LayerUtility: RestoreCropBox V2` | RestoreCropBox V2 (Swwan) · 旧版兼容 | Swwan/Legacy | IMAGE, MASK | [restore_crop_box_v2.py](../restore_crop_box_v2.py#L11) |
 | 兼容入口 | `SwwanRestoreCropBoxV3` | Restore Crop Box V3 (Batch) (Swwan) · 旧版兼容 | Swwan/Legacy | IMAGE, MASK | [restore_crop_box_v3.py](../restore_crop_box_v3.py#L11) |

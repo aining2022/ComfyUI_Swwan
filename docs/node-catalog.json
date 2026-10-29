@@ -662,6 +662,26 @@
             "default": "swwan",
             "tooltip": "qwen21_aligned SEAM format. goohai connects to GH_CropRestore, retaining its color restoration."
           }
+        ],
+        "qwen_resolution_mode": [
+          [
+            "fixed",
+            "crop_area"
+          ],
+          {
+            "default": "fixed",
+            "tooltip": "crop_area derives the area budget from the native mask bounding box plus context, before resize or aspect adjustment."
+          }
+        ],
+        "qwen_max_resolution": [
+          "INT",
+          {
+            "default": 1920,
+            "min": 512,
+            "max": 2048,
+            "step": 1,
+            "tooltip": "crop_area budget cap; rounded down to a multiple of 32. Minimum budget is 512."
+          }
         ]
       }
     },
@@ -736,7 +756,12 @@
         "qwen_restore_backend": [
           "swwan",
           "goohai"
-        ]
+        ],
+        "qwen_resolution_mode": [
+          "fixed",
+          "crop_area"
+        ],
+        "qwen_max_resolution": "INT"
       }
     },
     "output_types": [
@@ -746,6 +771,9 @@
       "IMAGE",
       "SEAM",
       "MASK",
+      "INT",
+      "INT",
+      "INT",
       "INT",
       "INT",
       "INT"

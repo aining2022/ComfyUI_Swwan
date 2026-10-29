@@ -230,3 +230,18 @@ reverse.onConfigure({widgets_values_named:{...canonicalResize,resize_mode:'essen
 assert.equal(visible(reverse,'essentials_interpolation'),true);
 assert.equal(visible(reverse,'upscale_method'),false);
 console.log('PASS: mode visibility with reversed extension order');
+
+const dynamicBudget = makeNode('SwwanCropByMaskV5', {
+    crop_mode:'qwen21_aligned', qwen_resolution_mode:'crop_area', qwen_resolution:1024,
+    qwen_max_resolution:1920, qwen_tolerance:1, qwen_restore_backend:'goohai',
+});
+assert.equal(visible(dynamicBudget,'qwen_resolution'),false);
+assert.equal(visible(dynamicBudget,'qwen_max_resolution'),true);
+set(dynamicBudget,'qwen_resolution_mode','fixed');
+assert.equal(visible(dynamicBudget,'qwen_resolution'),true);
+assert.equal(visible(dynamicBudget,'qwen_max_resolution'),false);
+assert.equal(widget(dynamicBudget,'qwen_max_resolution').value,1920);
+set(dynamicBudget,'qwen_resolution_mode','crop_area');
+const dynamicSaved=savedValues(dynamicBudget);dynamicBudget.onConfigure();
+assert.equal(savedValues(dynamicBudget),dynamicSaved);
+console.log('PASS: dynamic crop budget controls preserve fixed values and serialize');
