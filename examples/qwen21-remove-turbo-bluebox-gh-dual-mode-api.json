@@ -1,0 +1,630 @@
+{
+  "1": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "remove_snack-original.png"
+    }
+  },
+  "2": {
+    "class_type": "LoadImageMask",
+    "inputs": {
+      "image": "remove_snack-mask.png",
+      "channel": "red"
+    }
+  },
+  "3": {
+    "class_type": "GetImageSize",
+    "inputs": {
+      "image": [
+        "1",
+        0
+      ]
+    }
+  },
+  "4": {
+    "class_type": "SolidMask",
+    "inputs": {
+      "value": 0.0,
+      "width": [
+        "3",
+        0
+      ],
+      "height": [
+        "3",
+        1
+      ]
+    }
+  },
+  "5": {
+    "class_type": "SwwanMaskCombine",
+    "inputs": {
+      "operation": "相减",
+      "bbox_mode": "关闭",
+      "alignment": "居中",
+      "mask_1": [
+        "2",
+        0
+      ],
+      "mask_2": [
+        "4",
+        0
+      ]
+    }
+  },
+  "6": {
+    "class_type": "SwwanCropByMaskV5",
+    "inputs": {
+      "detect": "mask_area",
+      "reserve_mode": "absolute",
+      "top_reserve": 20,
+      "bottom_reserve": 20,
+      "left_reserve": 20,
+      "right_reserve": 20,
+      "top_reserve_ratio": 0.5,
+      "bottom_reserve_ratio": 0.5,
+      "left_reserve_ratio": 0.5,
+      "right_reserve_ratio": 0.5,
+      "reserve_max": 100,
+      "round_to_multiple": "32",
+      "batch_mode": "single_frame",
+      "device": "CPU",
+      "crop_mode": "qwen21_aligned",
+      "fill_mask_holes": false,
+      "output_size": "原像素",
+      "custom_width": 1024,
+      "custom_height": 1024,
+      "alignment": 8,
+      "edit_expansion_mode": "factor",
+      "edit_top_factor": 1.3,
+      "edit_bottom_factor": 1.4,
+      "edit_left_factor": 1.4,
+      "edit_right_factor": 1.4,
+      "qwen_resolution": 1024,
+      "qwen_tolerance": 1.0,
+      "qwen_restore_backend": "goohai",
+      "qwen_resolution_mode": "crop_area",
+      "qwen_max_resolution": 1920,
+      "image": [
+        "1",
+        0
+      ],
+      "mask": [
+        "104",
+        1
+      ]
+    }
+  },
+  "7": {
+    "class_type": "SwwanDrawMaskOnImage",
+    "inputs": {
+      "color": "0, 255, 0",
+      "opacity": [
+        "108",
+        1
+      ],
+      "device": "cpu",
+      "image": [
+        "6",
+        0
+      ],
+      "mask": [
+        "6",
+        5
+      ]
+    }
+  },
+  "8": {
+    "class_type": "StringConcatenate",
+    "inputs": {
+      "string_a": [
+        "112",
+        1
+      ],
+      "string_b": "",
+      "delimiter": "\n"
+    }
+  },
+  "9": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "qwen_image_2.1_turbo_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "10": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "lora_name": "Qwen2.1_万物移除Remove_GH.safetensors",
+      "strength_model": 1.0,
+      "model": [
+        "9",
+        0
+      ]
+    }
+  },
+  "11": {
+    "class_type": "QwenImage21SageAttentionT8",
+    "inputs": {
+      "backend_mode": "sage",
+      "model": [
+        "10",
+        0
+      ]
+    }
+  },
+  "12": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_8b_int8_convrot.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+    }
+  },
+  "13": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+    }
+  },
+  "14": {
+    "class_type": "TextEncodeQwenImage21",
+    "inputs": {
+      "prompt": [
+        "8",
+        0
+      ],
+      "negative_prompt": "",
+      "resolution": [
+        "6",
+        8
+      ],
+      "clip": [
+        "12",
+        0
+      ],
+      "vae": [
+        "13",
+        0
+      ],
+      "images.image_1": [
+        "7",
+        0
+      ]
+    }
+  },
+  "15": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": 42
+    }
+  },
+  "16": {
+    "class_type": "BasicGuider",
+    "inputs": {
+      "model": [
+        "11",
+        0
+      ],
+      "conditioning": [
+        "14",
+        0
+      ]
+    }
+  },
+  "17": {
+    "class_type": "KSamplerSelect",
+    "inputs": {
+      "sampler_name": "euler"
+    }
+  },
+  "18": {
+    "class_type": "ManualSigmas",
+    "inputs": {
+      "sigmas": "1.0,0.978453,0.954180,0.926626,0.895080,0.845148,0.704534,0.414568,0.150000,0"
+    }
+  },
+  "19": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": [
+        "15",
+        0
+      ],
+      "guider": [
+        "16",
+        0
+      ],
+      "sampler": [
+        "17",
+        0
+      ],
+      "sigmas": [
+        "18",
+        0
+      ],
+      "latent_image": [
+        "14",
+        2
+      ]
+    }
+  },
+  "20": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "19",
+        0
+      ],
+      "vae": [
+        "13",
+        0
+      ]
+    }
+  },
+  "21": {
+    "class_type": "GH_CropRestore",
+    "inputs": {
+      "遮罩扩展百分比": 4,
+      "遮罩羽化百分比": 5,
+      "颜色还原强度": 1.0,
+      "接缝": [
+        "6",
+        4
+      ],
+      "裁剪图像": [
+        "20",
+        0
+      ],
+      "裁剪遮罩": [
+        "6",
+        5
+      ]
+    }
+  },
+  "22": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "Qwen21-Remove-Dual/01-model-input",
+      "images": [
+        "7",
+        0
+      ]
+    }
+  },
+  "23": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "Qwen21-Remove-Dual/02-raw-generated",
+      "images": [
+        "20",
+        0
+      ]
+    }
+  },
+  "24": {
+    "class_type": "MaskToImage",
+    "inputs": {
+      "mask": [
+        "36",
+        0
+      ]
+    }
+  },
+  "25": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "Qwen21-Remove-Dual/03-fusion-mask",
+      "images": [
+        "24",
+        0
+      ]
+    }
+  },
+  "26": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "Qwen21-Remove-Dual/04-final",
+      "images": [
+        "34",
+        0
+      ]
+    }
+  },
+  "27": {
+    "class_type": "PreviewImage",
+    "inputs": {
+      "images": [
+        "6",
+        3
+      ]
+    }
+  },
+  "28": {
+    "class_type": "PreviewImage",
+    "inputs": {
+      "images": [
+        "6",
+        0
+      ]
+    }
+  },
+  "29": {
+    "class_type": "PreviewImage",
+    "inputs": {
+      "images": [
+        "6",
+        1
+      ]
+    }
+  },
+  "30": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "6",
+        6
+      ]
+    }
+  },
+  "31": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "6",
+        7
+      ]
+    }
+  },
+  "32": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "8",
+        0
+      ]
+    }
+  },
+  "33": {
+    "class_type": "PreviewImage",
+    "inputs": {
+      "images": [
+        "1",
+        0
+      ]
+    }
+  },
+  "34": {
+    "class_type": "ImageCompositeMasked",
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "resize_source": false,
+      "destination": [
+        "1",
+        0
+      ],
+      "source": [
+        "21",
+        0
+      ],
+      "mask": [
+        "36",
+        0
+      ]
+    }
+  },
+  "35": {
+    "class_type": "PreviewImage",
+    "inputs": {
+      "images": [
+        "21",
+        0
+      ]
+    }
+  },
+  "36": {
+    "class_type": "ThresholdMask",
+    "inputs": {
+      "value": 0.0,
+      "mask": [
+        "104",
+        1
+      ]
+    }
+  },
+  "37": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "6",
+        9
+      ]
+    }
+  },
+  "38": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "6",
+        10
+      ]
+    }
+  },
+  "39": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "6",
+        11
+      ]
+    }
+  },
+  "100": {
+    "class_type": "PrimitiveBoolean",
+    "inputs": {
+      "value": false
+    }
+  },
+  "101": {
+    "class_type": "SwwanBlockifyMask",
+    "inputs": {
+      "block_size": 32,
+      "device": "cpu",
+      "masks": [
+        "5",
+        0
+      ]
+    }
+  },
+  "102": {
+    "class_type": "SwwanMaskCombine",
+    "inputs": {
+      "operation": "相减",
+      "bbox_mode": "关闭",
+      "alignment": "居中",
+      "mask_1": [
+        "101",
+        0
+      ],
+      "mask_2": [
+        "4",
+        0
+      ]
+    }
+  },
+  "103": {
+    "class_type": "AnyBooleanSwitch (Swwan)",
+    "inputs": {
+      "开关": [
+        "100",
+        0
+      ],
+      "输入": [
+        "102",
+        0
+      ]
+    }
+  },
+  "104": {
+    "class_type": "AnySwitch (Swwan)",
+    "inputs": {
+      "优先输入": [
+        "103",
+        0
+      ],
+      "备用输入": [
+        "5",
+        0
+      ]
+    }
+  },
+  "105": {
+    "class_type": "PrimitiveFloat",
+    "inputs": {
+      "value": 0.4
+    }
+  },
+  "106": {
+    "class_type": "PrimitiveFloat",
+    "inputs": {
+      "value": 1.0
+    }
+  },
+  "107": {
+    "class_type": "AnyBooleanSwitch (Swwan)",
+    "inputs": {
+      "开关": [
+        "100",
+        0
+      ],
+      "输入": [
+        "106",
+        0
+      ]
+    }
+  },
+  "108": {
+    "class_type": "AnySwitch (Swwan)",
+    "inputs": {
+      "优先输入": [
+        "107",
+        0
+      ],
+      "备用输入": [
+        "105",
+        0
+      ]
+    }
+  },
+  "109": {
+    "class_type": "PrimitiveStringMultiline",
+    "inputs": {
+      "value": "移除图像中的绿色区域"
+    }
+  },
+  "110": {
+    "class_type": "PrimitiveStringMultiline",
+    "inputs": {
+      "value": "移除图像中的绿色区域，根据周围背景自然重建绿色色块覆盖区域，彻底消除绿色标记，保持背景纹理、结构和光照连续。"
+    }
+  },
+  "111": {
+    "class_type": "AnyBooleanSwitch (Swwan)",
+    "inputs": {
+      "开关": [
+        "100",
+        0
+      ],
+      "输入": [
+        "110",
+        0
+      ]
+    }
+  },
+  "112": {
+    "class_type": "AnySwitch (Swwan)",
+    "inputs": {
+      "优先输入": [
+        "111",
+        0
+      ],
+      "备用输入": [
+        "109",
+        0
+      ]
+    }
+  },
+  "113": {
+    "class_type": "SwwanImageAndMaskPreview",
+    "inputs": {
+      "mask_opacity": 0.4,
+      "mask_color": "0,255,0",
+      "pass_through": false,
+      "preview_mode": "standard",
+      "region_color": "#00ffff",
+      "show_numbers": false,
+      "number_opacity": 0.8,
+      "number_scale": "跟随遮罩缩放",
+      "font_scale": 0.6,
+      "number_font": "FreeMono.ttf",
+      "number_color": "#ffffff",
+      "image": [
+        "1",
+        0
+      ],
+      "mask": [
+        "104",
+        1
+      ]
+    }
+  },
+  "114": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "108",
+        1
+      ]
+    }
+  }
+}

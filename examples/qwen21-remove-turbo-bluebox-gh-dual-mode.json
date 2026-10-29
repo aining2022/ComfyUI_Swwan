@@ -1,0 +1,3082 @@
+{
+  "last_node_id": 114,
+  "last_link_id": 68,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "pos": [
+        40,
+        100
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1,
+            6,
+            42,
+            43,
+            66
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [],
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "remove_snack-original.png"
+      ],
+      "title": "01 原图"
+    },
+    {
+      "id": 2,
+      "type": "LoadImageMask",
+      "pos": [
+        40,
+        510
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            4
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImageMask"
+      },
+      "widgets_values": [
+        "remove_snack-mask.png",
+        "red"
+      ],
+      "title": "02 选区：白色移除，黑色保留"
+    },
+    {
+      "id": 3,
+      "type": "GetImageSize",
+      "pos": [
+        40,
+        880
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            2
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            3
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "batch_size",
+          "type": "INT",
+          "links": [],
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GetImageSize"
+      },
+      "widgets_values": [],
+      "title": "GetImageSize"
+    },
+    {
+      "id": 4,
+      "type": "SolidMask",
+      "pos": [
+        440,
+        510
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "link": 2,
+          "widget": {
+            "name": "width"
+          }
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "link": 3,
+          "widget": {
+            "name": "height"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            5,
+            53
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SolidMask"
+      },
+      "widgets_values": [
+        0.0,
+        512,
+        512
+      ],
+      "title": "03 保护遮罩（默认全黑；可替换 MASK）"
+    },
+    {
+      "id": 5,
+      "type": "SwwanMaskCombine",
+      "pos": [
+        440,
+        100
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask_1",
+          "type": "MASK",
+          "link": 4
+        },
+        {
+          "name": "mask_2",
+          "type": "MASK",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": [
+            51,
+            57
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [],
+          "slot_index": 1
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [],
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SwwanMaskCombine"
+      },
+      "widgets_values": [
+        "相减",
+        "关闭",
+        "居中"
+      ],
+      "title": "04 选区减保护",
+      "widgets_values_named": {
+        "operation": "相减",
+        "bbox_mode": "关闭",
+        "alignment": "居中"
+      }
+    },
+    {
+      "id": 6,
+      "type": "SwwanCropByMaskV5",
+      "pos": [
+        2530,
+        100
+      ],
+      "size": [
+        410,
+        600
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 6
+        },
+        {
+          "name": "mask_image",
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "crop_box",
+          "type": "BOX",
+          "link": null
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "cropped_image",
+          "type": "IMAGE",
+          "links": [
+            9,
+            37
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "cropped_mask",
+          "type": "IMAGE",
+          "links": [
+            38
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "crop_box",
+          "type": "BOX",
+          "links": [],
+          "slot_index": 2
+        },
+        {
+          "name": "box_preview",
+          "type": "IMAGE",
+          "links": [
+            36
+          ],
+          "slot_index": 3
+        },
+        {
+          "name": "region_info",
+          "type": "SEAM",
+          "links": [
+            28
+          ],
+          "slot_index": 4
+        },
+        {
+          "name": "region_mask",
+          "type": "MASK",
+          "links": [
+            10,
+            30
+          ],
+          "slot_index": 5
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            39
+          ],
+          "slot_index": 6
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            40
+          ],
+          "slot_index": 7
+        },
+        {
+          "name": "encoder_resolution",
+          "type": "INT",
+          "links": [
+            15
+          ],
+          "slot_index": 8
+        },
+        {
+          "name": "native_crop_width",
+          "type": "INT",
+          "links": [
+            48
+          ],
+          "slot_index": 9
+        },
+        {
+          "name": "native_crop_height",
+          "type": "INT",
+          "links": [
+            49
+          ],
+          "slot_index": 10
+        },
+        {
+          "name": "working_resolution",
+          "type": "INT",
+          "links": [
+            50
+          ],
+          "slot_index": 11
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SwwanCropByMaskV5"
+      },
+      "widgets_values": [
+        "mask_area",
+        "absolute",
+        20,
+        20,
+        20,
+        20,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        100,
+        "32",
+        "single_frame",
+        "CPU",
+        "qwen21_aligned",
+        false,
+        "原像素",
+        1024,
+        1024,
+        8,
+        "factor",
+        1.3,
+        1.4,
+        1.4,
+        1.4,
+        1024,
+        1.0,
+        "goohai",
+        "crop_area",
+        1920
+      ],
+      "title": "05 裁切 + BlueBox 尺寸对齐",
+      "widgets_values_named": {
+        "detect": "mask_area",
+        "reserve_mode": "absolute",
+        "top_reserve": 20,
+        "bottom_reserve": 20,
+        "left_reserve": 20,
+        "right_reserve": 20,
+        "top_reserve_ratio": 0.5,
+        "bottom_reserve_ratio": 0.5,
+        "left_reserve_ratio": 0.5,
+        "right_reserve_ratio": 0.5,
+        "reserve_max": 100,
+        "round_to_multiple": "32",
+        "batch_mode": "single_frame",
+        "device": "CPU",
+        "crop_mode": "qwen21_aligned",
+        "fill_mask_holes": false,
+        "output_size": "原像素",
+        "custom_width": 1024,
+        "custom_height": 1024,
+        "alignment": 8,
+        "edit_expansion_mode": "factor",
+        "edit_top_factor": 1.3,
+        "edit_bottom_factor": 1.4,
+        "edit_left_factor": 1.4,
+        "edit_right_factor": 1.4,
+        "qwen_resolution": 1024,
+        "qwen_tolerance": 1.0,
+        "qwen_restore_backend": "goohai",
+        "qwen_resolution_mode": "crop_area",
+        "qwen_max_resolution": 1920
+      }
+    },
+    {
+      "id": 7,
+      "type": "SwwanDrawMaskOnImage",
+      "pos": [
+        3000,
+        100
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 9
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 10
+        },
+        {
+          "name": "opacity",
+          "type": "FLOAT",
+          "link": 8,
+          "widget": {
+            "name": "opacity"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            18,
+            31
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SwwanDrawMaskOnImage"
+      },
+      "widgets_values": [
+        "0, 255, 0",
+        1.0,
+        "cpu"
+      ],
+      "title": "绿色覆盖：普通 40% / 增强 100%",
+      "widgets_values_named": {
+        "color": "0, 255, 0",
+        "opacity": 1.0,
+        "device": "cpu"
+      }
+    },
+    {
+      "id": 8,
+      "type": "StringConcatenate",
+      "pos": [
+        3430,
+        100
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string_a",
+          "type": "STRING",
+          "link": 11,
+          "widget": {
+            "name": "string_a"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            14,
+            41
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "StringConcatenate"
+      },
+      "widgets_values": [
+        "",
+        "",
+        "\n"
+      ],
+      "title": "07 固定移除指令 + 额外要求（PE 旁路）"
+    },
+    {
+      "id": 9,
+      "type": "UNETLoader",
+      "pos": [
+        3430,
+        510
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            12
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "qwen_image_2.1_turbo_int8_convrot.safetensors",
+        "default"
+      ],
+      "title": "UNETLoader"
+    },
+    {
+      "id": 10,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        3430,
+        760
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 12
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            13
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "Qwen2.1_万物移除Remove_GH.safetensors",
+        1.0
+      ],
+      "title": "LoraLoaderModelOnly"
+    },
+    {
+      "id": 11,
+      "type": "QwenImage21SageAttentionT8",
+      "pos": [
+        3430,
+        1000
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 13
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            19
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "QwenImage21SageAttentionT8"
+      },
+      "widgets_values": [
+        "sage"
+      ],
+      "title": "QwenImage21SageAttentionT8"
+    },
+    {
+      "id": 12,
+      "type": "CLIPLoader",
+      "pos": [
+        3850,
+        510
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            16
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen3vl_8b_int8_convrot.safetensors",
+        "qwen_image",
+        "default"
+      ],
+      "title": "CLIPLoader"
+    },
+    {
+      "id": 13,
+      "type": "VAELoader",
+      "pos": [
+        3850,
+        760
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            17,
+            27
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "qwen_image_2.1_vae_bf16.safetensors"
+      ],
+      "title": "VAELoader"
+    },
+    {
+      "id": 14,
+      "type": "TextEncodeQwenImage21",
+      "pos": [
+        3850,
+        100
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 16
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": 14,
+          "widget": {
+            "name": "prompt"
+          }
+        },
+        {
+          "name": "resolution",
+          "type": "INT",
+          "link": 15,
+          "widget": {
+            "name": "resolution"
+          }
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 17
+        },
+        {
+          "name": "images.image_1",
+          "type": "IMAGE",
+          "link": 18
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            20
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [],
+          "slot_index": 1
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            25
+          ],
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImage21"
+      },
+      "widgets_values": [
+        "",
+        "",
+        1024
+      ],
+      "title": "08 官方编码 · resolution=0 · latent 同源"
+    },
+    {
+      "id": 15,
+      "type": "RandomNoise",
+      "pos": [
+        4300,
+        100
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "NOISE",
+          "type": "NOISE",
+          "links": [
+            21
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RandomNoise"
+      },
+      "widgets_values": [
+        42,
+        "fixed"
+      ],
+      "title": "RandomNoise"
+    },
+    {
+      "id": 16,
+      "type": "BasicGuider",
+      "pos": [
+        4300,
+        340
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 19
+        },
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "name": "GUIDER",
+          "type": "GUIDER",
+          "links": [
+            22
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BasicGuider"
+      },
+      "widgets_values": [],
+      "title": "BasicGuider"
+    },
+    {
+      "id": 17,
+      "type": "KSamplerSelect",
+      "pos": [
+        4300,
+        580
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "SAMPLER",
+          "type": "SAMPLER",
+          "links": [
+            23
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerSelect"
+      },
+      "widgets_values": [
+        "euler"
+      ],
+      "title": "KSamplerSelect"
+    },
+    {
+      "id": 18,
+      "type": "ManualSigmas",
+      "pos": [
+        4300,
+        820
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "SIGMAS",
+          "type": "SIGMAS",
+          "links": [
+            24
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ManualSigmas"
+      },
+      "widgets_values": [
+        "1.0,0.978453,0.954180,0.926626,0.895080,0.845148,0.704534,0.414568,0.150000,0"
+      ],
+      "title": "09 Turbo 9 步完整 sigma"
+    },
+    {
+      "id": 19,
+      "type": "SamplerCustomAdvanced",
+      "pos": [
+        4750,
+        100
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "noise",
+          "type": "NOISE",
+          "link": 21
+        },
+        {
+          "name": "guider",
+          "type": "GUIDER",
+          "link": 22
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 23
+        },
+        {
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 24
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 25
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            26
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "denoised_output",
+          "type": "LATENT",
+          "links": [],
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SamplerCustomAdvanced"
+      },
+      "widgets_values": [],
+      "title": "SamplerCustomAdvanced"
+    },
+    {
+      "id": 20,
+      "type": "VAEDecode",
+      "pos": [
+        4750,
+        510
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 26
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 27
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            29,
+            32
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": [],
+      "title": "VAEDecode"
+    },
+    {
+      "id": 21,
+      "type": "GH_CropRestore",
+      "pos": [
+        5200,
+        100
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "接缝",
+          "type": "SEAM",
+          "link": 28
+        },
+        {
+          "name": "裁剪图像",
+          "type": "IMAGE",
+          "link": 29
+        },
+        {
+          "name": "裁剪遮罩",
+          "type": "MASK",
+          "link": 30
+        },
+        {
+          "name": "背景图像",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "图像",
+          "type": "IMAGE",
+          "links": [
+            44,
+            46
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GH_CropRestore"
+      },
+      "widgets_values": [
+        4,
+        5,
+        1.0
+      ],
+      "title": "10 孤海裁剪恢复 · 颜色还原 1（0 关闭）"
+    },
+    {
+      "id": 22,
+      "type": "SaveImage",
+      "pos": [
+        3000,
+        510
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 31
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Qwen21-Remove-Dual/01-model-input"
+      ],
+      "title": "保存：实际模型输入"
+    },
+    {
+      "id": 23,
+      "type": "SaveImage",
+      "pos": [
+        4750,
+        850
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Qwen21-Remove-Dual/02-raw-generated"
+      ],
+      "title": "保存：原始生成块（未校色）"
+    },
+    {
+      "id": 24,
+      "type": "MaskToImage",
+      "pos": [
+        5200,
+        580
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 33
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            34
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage"
+      },
+      "widgets_values": [],
+      "title": "MaskToImage"
+    },
+    {
+      "id": 25,
+      "type": "SaveImage",
+      "pos": [
+        5600,
+        580
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 34
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Qwen21-Remove-Dual/03-fusion-mask"
+      ],
+      "title": "保存：最终融合遮罩"
+    },
+    {
+      "id": 26,
+      "type": "SaveImage",
+      "pos": [
+        6050,
+        100
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 35
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Qwen21-Remove-Dual/04-final"
+      ],
+      "title": "保存：校色后最终原尺寸结果"
+    },
+    {
+      "id": 27,
+      "type": "PreviewImage",
+      "pos": [
+        2530,
+        900
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 36
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [],
+      "title": "PreviewImage"
+    },
+    {
+      "id": 28,
+      "type": "PreviewImage",
+      "pos": [
+        2530,
+        1300
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 37
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [],
+      "title": "PreviewImage"
+    },
+    {
+      "id": 29,
+      "type": "PreviewImage",
+      "pos": [
+        3000,
+        950
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 38
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [],
+      "title": "PreviewImage"
+    },
+    {
+      "id": 30,
+      "type": "PreviewAny",
+      "pos": [
+        2530,
+        740
+      ],
+      "size": [
+        210,
+        160
+      ],
+      "flags": {},
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 39
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": [],
+      "title": "实际宽度"
+    },
+    {
+      "id": 31,
+      "type": "PreviewAny",
+      "pos": [
+        2770,
+        740
+      ],
+      "size": [
+        210,
+        160
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 40
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": [],
+      "title": "实际高度"
+    },
+    {
+      "id": 32,
+      "type": "PreviewAny",
+      "pos": [
+        3430,
+        1280
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 31,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 41
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": [],
+      "title": "实际编码文本"
+    },
+    {
+      "id": 33,
+      "type": "PreviewImage",
+      "pos": [
+        6050,
+        1050
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 42
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [],
+      "title": "原图对照"
+    },
+    {
+      "id": 34,
+      "type": "ImageCompositeMasked",
+      "pos": [
+        5600,
+        100
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 33,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "destination",
+          "type": "IMAGE",
+          "link": 43
+        },
+        {
+          "name": "source",
+          "type": "IMAGE",
+          "link": 44
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 45
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            35
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageCompositeMasked"
+      },
+      "widgets_values": [
+        0,
+        0,
+        false
+      ],
+      "title": "最终保护：当前有效范围外保留原像素"
+    },
+    {
+      "id": 35,
+      "type": "PreviewImage",
+      "pos": [
+        5200,
+        1050
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 34,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 46
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [],
+      "title": "预览：孤海贴回结果"
+    },
+    {
+      "id": 36,
+      "type": "ThresholdMask",
+      "pos": [
+        5200,
+        730
+      ],
+      "size": [
+        390,
+        300
+      ],
+      "flags": {},
+      "order": 35,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 47
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            33,
+            45
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ThresholdMask"
+      },
+      "widgets_values": [
+        0.0
+      ],
+      "title": "最终融合范围（保留 GH 内部软边）"
+    },
+    {
+      "id": 37,
+      "type": "PreviewAny",
+      "pos": [
+        2530,
+        1740
+      ],
+      "size": [
+        210,
+        160
+      ],
+      "flags": {},
+      "order": 36,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 48
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": [],
+      "title": "原生裁剪宽 W（缩放前）"
+    },
+    {
+      "id": 38,
+      "type": "PreviewAny",
+      "pos": [
+        2770,
+        1740
+      ],
+      "size": [
+        210,
+        160
+      ],
+      "flags": {},
+      "order": 37,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 49
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": [],
+      "title": "原生裁剪高 H（缩放前）"
+    },
+    {
+      "id": 39,
+      "type": "PreviewAny",
+      "pos": [
+        3000,
+        1740
+      ],
+      "size": [
+        210,
+        160
+      ],
+      "flags": {},
+      "order": 38,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 50
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": [],
+      "title": "动态 resolution（面积预算）"
+    },
+    {
+      "id": 100,
+      "type": "PrimitiveBoolean",
+      "pos": [
+        880,
+        100
+      ],
+      "size": [
+        350,
+        170
+      ],
+      "flags": {},
+      "order": 99,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "BOOLEAN",
+          "type": "BOOLEAN",
+          "links": [
+            54,
+            58,
+            62
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveBoolean"
+      },
+      "widgets_values": [
+        false
+      ],
+      "title": "增强模式：关闭＝普通 / 开启＝100% 绿色块化"
+    },
+    {
+      "id": 101,
+      "type": "SwwanBlockifyMask",
+      "pos": [
+        880,
+        350
+      ],
+      "size": [
+        350,
+        170
+      ],
+      "flags": {},
+      "order": 100,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "masks",
+          "type": "MASK",
+          "link": 51
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": [
+            52
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SwwanBlockifyMask"
+      },
+      "widgets_values": [
+        32,
+        "cpu"
+      ],
+      "title": "增强：原图坐标遮罩块化 · 默认 32 px",
+      "widgets_values_named": {
+        "block_size": 32,
+        "device": "cpu"
+      }
+    },
+    {
+      "id": 102,
+      "type": "SwwanMaskCombine",
+      "pos": [
+        880,
+        610
+      ],
+      "size": [
+        350,
+        170
+      ],
+      "flags": {},
+      "order": 101,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask_1",
+          "type": "MASK",
+          "link": 52
+        },
+        {
+          "name": "mask_2",
+          "type": "MASK",
+          "link": 53
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": [
+            55
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [],
+          "slot_index": 1
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [],
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SwwanMaskCombine"
+      },
+      "widgets_values": [
+        "相减",
+        "关闭",
+        "居中"
+      ],
+      "title": "增强：块化后再次扣除保护区域",
+      "widgets_values_named": {
+        "operation": "相减",
+        "bbox_mode": "关闭",
+        "alignment": "居中"
+      }
+    },
+    {
+      "id": 103,
+      "type": "AnyBooleanSwitch (Swwan)",
+      "pos": [
+        1260,
+        610
+      ],
+      "size": [
+        350,
+        170
+      ],
+      "flags": {},
+      "order": 102,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "输入",
+          "type": "*",
+          "link": 55
+        },
+        {
+          "name": "开关",
+          "type": "BOOLEAN",
+          "link": 54,
+          "widget": {
+            "name": "开关"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "输出结果",
+          "type": "*",
+          "links": [
+            56
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AnyBooleanSwitch (Swwan)"
+      },
+      "widgets_values": [
+        true
+      ],
+      "title": "惰性开关：普通模式不执行块化"
+    },
+    {
+      "id": 104,
+      "type": "AnySwitch (Swwan)",
+      "pos": [
+        1640,
+        610
+      ],
+      "size": [
+        350,
+        170
+      ],
+      "flags": {},
+      "order": 103,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "优先输入",
+          "type": "*",
+          "link": 56
+        },
+        {
+          "name": "备用输入",
+          "type": "*",
+          "link": 57
+        }
+      ],
+      "outputs": [
+        {
+          "name": "是否启用优先",
+          "type": "BOOLEAN",
+          "links": [],
+          "slot_index": 0
+        },
+        {
+          "name": "输出结果",
+          "type": "*",
+          "links": [
+            7,
+            47,
+            67
+          ],
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AnySwitch (Swwan)"
+      },
+      "widgets_values": [],
+      "title": "当前有效选区 → 裁剪与最终贴回"
+    },
+    {
+      "id": 105,
+      "type": "PrimitiveFloat",
+      "pos": [
+        880,
+        900
+      ],
+      "size": [
+        350,
+        170
+      ],
+      "flags": {},
+      "order": 104,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            61
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveFloat"
+      },
+      "widgets_values": [
+        0.4
+      ],
+      "title": "普通覆盖强度 · 0.40"
+    },
+    {
+      "id": 106,
+      "type": "PrimitiveFloat",
+      "pos": [
+        880,
+        1110
+      ],
+      "size": [
+        350,
+        170
+      ],
+      "flags": {},
+      "order": 105,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            59
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveFloat"
+      },
+      "widgets_values": [
+        1.0
+      ],
+      "title": "增强覆盖强度 · 1.00"
+    },
+    {
+      "id": 107,
+      "type": "AnyBooleanSwitch (Swwan)",
+      "pos": [
+        1260,
+        1110
+      ],
+      "size": [
+        350,
+        170
+      ],
+      "flags": {},
+      "order": 106,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "输入",
+          "type": "*",
+          "link": 59
+        },
+        {
+          "name": "开关",
+          "type": "BOOLEAN",
+          "link": 58,
+          "widget": {
+            "name": "开关"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "输出结果",
+          "type": "*",
+          "links": [
+            60
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AnyBooleanSwitch (Swwan)"
+      },
+      "widgets_values": [
+        true
+      ],
+      "title": "增强强度开关"
+    },
+    {
+      "id": 108,
+      "type": "AnySwitch (Swwan)",
+      "pos": [
+        1640,
+        900
+      ],
+      "size": [
+        350,
+        170
+      ],
+      "flags": {},
+      "order": 107,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "优先输入",
+          "type": "*",
+          "link": 60
+        },
+        {
+          "name": "备用输入",
+          "type": "*",
+          "link": 61
+        }
+      ],
+      "outputs": [
+        {
+          "name": "是否启用优先",
+          "type": "BOOLEAN",
+          "links": [],
+          "slot_index": 0
+        },
+        {
+          "name": "输出结果",
+          "type": "*",
+          "links": [
+            8,
+            68
+          ],
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AnySwitch (Swwan)"
+      },
+      "widgets_values": [],
+      "title": "当前覆盖强度"
+    },
+    {
+      "id": 109,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        880,
+        1400
+      ],
+      "size": [
+        350,
+        230
+      ],
+      "flags": {},
+      "order": 108,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            65
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "移除图像中的绿色区域"
+      ],
+      "title": "普通基础指令（保持原版）"
+    },
+    {
+      "id": 110,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        880,
+        1660
+      ],
+      "size": [
+        350,
+        230
+      ],
+      "flags": {},
+      "order": 109,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            63
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "移除图像中的绿色区域，根据周围背景自然重建绿色色块覆盖区域，彻底消除绿色标记，保持背景纹理、结构和光照连续。"
+      ],
+      "title": "增强基础指令（重建色块覆盖区域）"
+    },
+    {
+      "id": 111,
+      "type": "AnyBooleanSwitch (Swwan)",
+      "pos": [
+        1260,
+        1660
+      ],
+      "size": [
+        350,
+        170
+      ],
+      "flags": {},
+      "order": 110,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "输入",
+          "type": "*",
+          "link": 63
+        },
+        {
+          "name": "开关",
+          "type": "BOOLEAN",
+          "link": 62,
+          "widget": {
+            "name": "开关"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "输出结果",
+          "type": "*",
+          "links": [
+            64
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AnyBooleanSwitch (Swwan)"
+      },
+      "widgets_values": [
+        true
+      ],
+      "title": "增强指令开关"
+    },
+    {
+      "id": 112,
+      "type": "AnySwitch (Swwan)",
+      "pos": [
+        1640,
+        1400
+      ],
+      "size": [
+        350,
+        170
+      ],
+      "flags": {},
+      "order": 111,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "优先输入",
+          "type": "*",
+          "link": 64
+        },
+        {
+          "name": "备用输入",
+          "type": "*",
+          "link": 65
+        }
+      ],
+      "outputs": [
+        {
+          "name": "是否启用优先",
+          "type": "BOOLEAN",
+          "links": [],
+          "slot_index": 0
+        },
+        {
+          "name": "输出结果",
+          "type": "*",
+          "links": [
+            11
+          ],
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AnySwitch (Swwan)"
+      },
+      "widgets_values": [],
+      "title": "当前基础指令 → 追加公共要求"
+    },
+    {
+      "id": 113,
+      "type": "SwwanImageAndMaskPreview",
+      "pos": [
+        2030,
+        100
+      ],
+      "size": [
+        390,
+        400
+      ],
+      "flags": {},
+      "order": 112,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 66
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 67
+        }
+      ],
+      "outputs": [
+        {
+          "name": "composite",
+          "type": "IMAGE",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SwwanImageAndMaskPreview"
+      },
+      "widgets_values": [
+        0.4,
+        "0,255,0",
+        false,
+        "standard",
+        "#00ffff",
+        false,
+        0.8,
+        "跟随遮罩缩放",
+        0.6,
+        "FreeMono.ttf",
+        "#ffffff"
+      ],
+      "title": "预览：最终允许修改的范围（扣除保护）",
+      "widgets_values_named": {
+        "mask_opacity": 0.4,
+        "mask_color": "0,255,0",
+        "pass_through": false,
+        "preview_mode": "standard",
+        "region_color": "#00ffff",
+        "show_numbers": false,
+        "number_opacity": 0.8,
+        "number_scale": "跟随遮罩缩放",
+        "font_scale": 0.6,
+        "number_font": "FreeMono.ttf",
+        "number_color": "#ffffff"
+      }
+    },
+    {
+      "id": 114,
+      "type": "PreviewAny",
+      "pos": [
+        2030,
+        900
+      ],
+      "size": [
+        350,
+        170
+      ],
+      "flags": {},
+      "order": 113,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 68
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": [],
+      "title": "实际绿色不透明度"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      3,
+      0,
+      "IMAGE"
+    ],
+    [
+      2,
+      3,
+      0,
+      4,
+      0,
+      "INT"
+    ],
+    [
+      3,
+      3,
+      1,
+      4,
+      1,
+      "INT"
+    ],
+    [
+      4,
+      2,
+      0,
+      5,
+      0,
+      "MASK"
+    ],
+    [
+      5,
+      4,
+      0,
+      5,
+      1,
+      "MASK"
+    ],
+    [
+      6,
+      1,
+      0,
+      6,
+      0,
+      "IMAGE"
+    ],
+    [
+      7,
+      104,
+      1,
+      6,
+      3,
+      "*"
+    ],
+    [
+      8,
+      108,
+      1,
+      7,
+      2,
+      "*"
+    ],
+    [
+      9,
+      6,
+      0,
+      7,
+      0,
+      "IMAGE"
+    ],
+    [
+      10,
+      6,
+      5,
+      7,
+      1,
+      "MASK"
+    ],
+    [
+      11,
+      112,
+      1,
+      8,
+      0,
+      "*"
+    ],
+    [
+      12,
+      9,
+      0,
+      10,
+      0,
+      "MODEL"
+    ],
+    [
+      13,
+      10,
+      0,
+      11,
+      0,
+      "MODEL"
+    ],
+    [
+      14,
+      8,
+      0,
+      14,
+      1,
+      "STRING"
+    ],
+    [
+      15,
+      6,
+      8,
+      14,
+      2,
+      "INT"
+    ],
+    [
+      16,
+      12,
+      0,
+      14,
+      0,
+      "CLIP"
+    ],
+    [
+      17,
+      13,
+      0,
+      14,
+      3,
+      "VAE"
+    ],
+    [
+      18,
+      7,
+      0,
+      14,
+      4,
+      "IMAGE"
+    ],
+    [
+      19,
+      11,
+      0,
+      16,
+      0,
+      "MODEL"
+    ],
+    [
+      20,
+      14,
+      0,
+      16,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      21,
+      15,
+      0,
+      19,
+      0,
+      "NOISE"
+    ],
+    [
+      22,
+      16,
+      0,
+      19,
+      1,
+      "GUIDER"
+    ],
+    [
+      23,
+      17,
+      0,
+      19,
+      2,
+      "SAMPLER"
+    ],
+    [
+      24,
+      18,
+      0,
+      19,
+      3,
+      "SIGMAS"
+    ],
+    [
+      25,
+      14,
+      2,
+      19,
+      4,
+      "LATENT"
+    ],
+    [
+      26,
+      19,
+      0,
+      20,
+      0,
+      "LATENT"
+    ],
+    [
+      27,
+      13,
+      0,
+      20,
+      1,
+      "VAE"
+    ],
+    [
+      28,
+      6,
+      4,
+      21,
+      0,
+      "SEAM"
+    ],
+    [
+      29,
+      20,
+      0,
+      21,
+      1,
+      "IMAGE"
+    ],
+    [
+      30,
+      6,
+      5,
+      21,
+      2,
+      "MASK"
+    ],
+    [
+      31,
+      7,
+      0,
+      22,
+      0,
+      "IMAGE"
+    ],
+    [
+      32,
+      20,
+      0,
+      23,
+      0,
+      "IMAGE"
+    ],
+    [
+      33,
+      36,
+      0,
+      24,
+      0,
+      "MASK"
+    ],
+    [
+      34,
+      24,
+      0,
+      25,
+      0,
+      "IMAGE"
+    ],
+    [
+      35,
+      34,
+      0,
+      26,
+      0,
+      "IMAGE"
+    ],
+    [
+      36,
+      6,
+      3,
+      27,
+      0,
+      "IMAGE"
+    ],
+    [
+      37,
+      6,
+      0,
+      28,
+      0,
+      "IMAGE"
+    ],
+    [
+      38,
+      6,
+      1,
+      29,
+      0,
+      "IMAGE"
+    ],
+    [
+      39,
+      6,
+      6,
+      30,
+      0,
+      "INT"
+    ],
+    [
+      40,
+      6,
+      7,
+      31,
+      0,
+      "INT"
+    ],
+    [
+      41,
+      8,
+      0,
+      32,
+      0,
+      "STRING"
+    ],
+    [
+      42,
+      1,
+      0,
+      33,
+      0,
+      "IMAGE"
+    ],
+    [
+      43,
+      1,
+      0,
+      34,
+      0,
+      "IMAGE"
+    ],
+    [
+      44,
+      21,
+      0,
+      34,
+      1,
+      "IMAGE"
+    ],
+    [
+      45,
+      36,
+      0,
+      34,
+      2,
+      "MASK"
+    ],
+    [
+      46,
+      21,
+      0,
+      35,
+      0,
+      "IMAGE"
+    ],
+    [
+      47,
+      104,
+      1,
+      36,
+      0,
+      "*"
+    ],
+    [
+      48,
+      6,
+      9,
+      37,
+      0,
+      "INT"
+    ],
+    [
+      49,
+      6,
+      10,
+      38,
+      0,
+      "INT"
+    ],
+    [
+      50,
+      6,
+      11,
+      39,
+      0,
+      "INT"
+    ],
+    [
+      51,
+      5,
+      0,
+      101,
+      0,
+      "MASK"
+    ],
+    [
+      52,
+      101,
+      0,
+      102,
+      0,
+      "MASK"
+    ],
+    [
+      53,
+      4,
+      0,
+      102,
+      1,
+      "MASK"
+    ],
+    [
+      54,
+      100,
+      0,
+      103,
+      1,
+      "BOOLEAN"
+    ],
+    [
+      55,
+      102,
+      0,
+      103,
+      0,
+      "MASK"
+    ],
+    [
+      56,
+      103,
+      0,
+      104,
+      0,
+      "*"
+    ],
+    [
+      57,
+      5,
+      0,
+      104,
+      1,
+      "MASK"
+    ],
+    [
+      58,
+      100,
+      0,
+      107,
+      1,
+      "BOOLEAN"
+    ],
+    [
+      59,
+      106,
+      0,
+      107,
+      0,
+      "FLOAT"
+    ],
+    [
+      60,
+      107,
+      0,
+      108,
+      0,
+      "*"
+    ],
+    [
+      61,
+      105,
+      0,
+      108,
+      1,
+      "FLOAT"
+    ],
+    [
+      62,
+      100,
+      0,
+      111,
+      1,
+      "BOOLEAN"
+    ],
+    [
+      63,
+      110,
+      0,
+      111,
+      0,
+      "STRING"
+    ],
+    [
+      64,
+      111,
+      0,
+      112,
+      0,
+      "*"
+    ],
+    [
+      65,
+      109,
+      0,
+      112,
+      1,
+      "STRING"
+    ],
+    [
+      66,
+      1,
+      0,
+      113,
+      0,
+      "IMAGE"
+    ],
+    [
+      67,
+      104,
+      1,
+      113,
+      1,
+      "*"
+    ],
+    [
+      68,
+      108,
+      1,
+      114,
+      0,
+      "*"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "1 原图 / 选区 / 保护",
+      "bounding": [
+        10,
+        20,
+        830,
+        1200
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "title": "2 普通 / 增强：可见分支与有效范围",
+      "bounding": [
+        850,
+        20,
+        1600,
+        2030
+      ],
+      "color": "#497b62",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "title": "3 裁切 / BlueBox / 预览",
+      "bounding": [
+        2500,
+        20,
+        870,
+        1980
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "title": "4 提示词 / 显式模型加载",
+      "bounding": [
+        3400,
+        20,
+        850,
+        1620
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "title": "5 采样 / 解码 / 原始块",
+      "bounding": [
+        4270,
+        20,
+        880,
+        1500
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "title": "6 原尺寸贴回 / 颜色还原 / 保存",
+      "bounding": [
+        5170,
+        20,
+        1300,
+        1530
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.45,
+      "offset": [
+        20,
+        20
+      ]
+    },
+    "notes": "Normal remains the accepted 40% green pipeline. Enhanced: original-coordinate block mask, protection subtracted again, 100% green; paste only the selected mode effective region. Shared dynamic budget 512..1920, native GH color=1, Turbo 9 sigmas. See ENHANCED_REMOVAL.md."
+  },
+  "version": 0.4
+}

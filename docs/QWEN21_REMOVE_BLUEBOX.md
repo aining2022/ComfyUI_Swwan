@@ -2,6 +2,8 @@
 
 [可编辑工作流](../examples/qwen21-remove-turbo-bluebox-gh-expanded.json) 使用 Turbo INT8 + Remove GH 1.0 + Sage、9 步完整 sigma；各处理阶段均为独立节点，不使用 Dispatch/Core。
 
+双模式扩展见 [普通 / 增强说明](QWEN21_REMOVE_ENHANCED.md)；本页普通版示例保留作为回归基线。
+
 ## 本次新增能力
 
 `SwwanCropByMaskV5` 在 `crop_mode=qwen21_aligned` 下增加 `qwen_restore_backend`：

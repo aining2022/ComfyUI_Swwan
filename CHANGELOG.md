@@ -63,3 +63,9 @@ No model inference, GPU validation or public release is implied by local CPU acc
 - Add optional `qwen_resolution_mode` (legacy-safe default `fixed`) and `qwen_max_resolution` (1920). Dedicated removal selects `crop_area`: half-up rounding of sqrt(native expanded bbox area) to 32, clamped to 512 and the legal cap.
 - Preserve BlueBox candidate/fixed-point selection, encoder resolution=0 and native GH restoration/color settings. Append native crop width, height and effective budget outputs; keep the existing nine output slots.
 - Dynamic UI hides the unused fixed budget while preserving saved values. New L20 acceptance is separate from the fixed-1024 reference.
+
+### 2026-10-29 — expanded normal/enhanced removal workflow
+
+- Add separate editable/API dual-mode examples using existing nodes; default normal keeps the accepted soft mask and 40% green input.
+- Enhanced mode uses original-coordinate Blockify (32 by default), subtracts protection again, paints 100% green, and restores only the selected mode effective region.
+- One lazy control selects mask, opacity and prompt; inference, dynamic crop budget and native GH color restoration remain shared. Add focused CPU/graph tests and operating instructions.
