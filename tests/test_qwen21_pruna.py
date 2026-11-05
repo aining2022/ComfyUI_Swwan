@@ -342,16 +342,13 @@ class TaskContracts(unittest.TestCase):
             def load_image(self, name):
                 calls.append(('image', name))
                 return image, torch.full_like(mask, .3)
-        class MaskLoader:
-            FUNCTION = "load_image_mask"
-            def load_image(self, name):
-                raise AssertionError("Do not call inherited LoadImage implementation for mask files")
-            def load_image_mask(self, name, channel):
-                calls.append(('mask', name, channel))
-                return (mask,)
+        def read_mask(name):
+            calls.append(('mask', name, 'red'))
+            return mask
         stub = types.ModuleType('nodes')
-        stub.LoadImage, stub.LoadImageMask = ImageLoader, MaskLoader
-        with patch.dict(sys.modules, {'nodes': stub}):
+        stub.LoadImage = ImageLoader
+        paths = types.SimpleNamespace(get_annotated_filepath=lambda name: name)
+        with patch.dict(sys.modules, {'nodes': stub, 'folder_paths': paths}), patch.object(P, 'load_red_mask', read_mask):
             result = N.Qwen21PrunaInputs().load(config(edit_scope='local'),
                 'main.png', 'selection.png', 'protect.png', 'reference1.png\nreference2.png')
         self.assertEqual(result[0].shape[-1], 4)
@@ -359,6 +356,19 @@ class TaskContracts(unittest.TestCase):
         self.assertEqual([call for call in calls if call[0] == 'mask'],
                          [('mask', 'selection.png', 'red'), ('mask', 'protect.png', 'red')])
         self.assertEqual(len(result[3]), 2)
+
+    def test_file_mask_preserves_white_soft_values_and_red_not_alpha(self):
+        import numpy as np
+        from PIL import Image
+        pixels = np.array([[[0, 255, 255, 255], [128, 0, 0, 0],
+                            [254, 0, 0, 0], [255, 0, 0, 0]]], dtype=np.uint8)
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'mask.png'
+            Image.fromarray(pixels, 'RGBA').save(path)
+            mask = P.load_red_mask(path)
+        torch.testing.assert_close(mask, torch.tensor([[[0., 128/255, 254/255, 1.]]]), rtol=0, atol=0)
+        image = torch.zeros(1, 1, 4, 3)
+        self.assertEqual(float(P.selection(image, torch.ones_like(mask), mask, config())[0, 0, -1]), 0.)
 
     def test_task_model_starts_from_clean_base_on_every_switch(self):
         model = N.Qwen21PrunaModel()

@@ -107,6 +107,15 @@ def valid_image(image):
     return image
 
 
+def load_red_mask(path):
+    """Read mask samples without the video decoder's RGB range conversion."""
+    import numpy as np
+    from PIL import Image, ImageOps
+    with Image.open(path) as source:
+        red = np.array(ImageOps.exif_transpose(source).convert('RGB').getchannel('R'), dtype=np.float32)
+    return torch.from_numpy(red / 255.)[None]
+
+
 def selection(image, mask, protection, config):
     if mask is None:
         raise ValueError('此任务需要非空选区 MASK；不要将主图 alpha 自动当作选区。')

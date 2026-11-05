@@ -117,6 +117,9 @@ class Qwen21PrunaInputs:
         import torch
         if P.is_text(config):return torch.zeros(1,32,32,3),torch.zeros(1,32,32),torch.zeros(1,32,32),[]
         import nodes
+        def load_mask(name):
+            import folder_paths
+            return P.load_red_mask(folder_paths.get_annotated_filepath(name.strip()))
         def load_image(name):
             rgb,alpha=nodes.LoadImage().load_image(name)
             if alpha.shape[-2:]==rgb.shape[1:3] and bool(torch.any(alpha)):
@@ -126,8 +129,8 @@ class Qwen21PrunaInputs:
             if not image_filename.strip():raise ValueError('请提供主图文件名或连接IMAGE')
             image=load_image(image_filename.strip())
         P.valid_image(image)
-        if P.needs_mask(config) and mask is None and mask_filename.strip():mask=getattr(nodes.LoadImageMask(), nodes.LoadImageMask.FUNCTION)(mask_filename.strip(),'red')[0]
-        if protect_mask is None and protect_filename.strip():protect_mask=getattr(nodes.LoadImageMask(), nodes.LoadImageMask.FUNCTION)(protect_filename.strip(),'red')[0]
+        if P.needs_mask(config) and mask is None and mask_filename.strip():mask=load_mask(mask_filename)
+        if protect_mask is None and protect_filename.strip():protect_mask=load_mask(protect_filename)
         if not P.needs_mask(config):mask=None
         if not P.uses_references(config):references=[]
         elif references is None:references=[load_image(n.strip()) for n in reference_filenames.splitlines() if n.strip()]
