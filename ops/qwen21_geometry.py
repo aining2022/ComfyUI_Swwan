@@ -17,8 +17,8 @@ def fixed_point(w, h, resolution):
 
 @lru_cache(maxsize=64)
 def candidates(resolution, tolerance=1.):
-    if resolution < 512 or resolution > 2048 or resolution % 32:
-        raise ValueError('Qwen resolution must be a multiple of 32 in 512..2048')
+    if resolution < 32 or resolution > 2048 or resolution % 32:
+        raise ValueError('Qwen resolution must be a multiple of 32 in 32..2048')
     if not 0.2 <= tolerance <= 3.:
         raise ValueError('Qwen tolerance must be in 0.2..3')
     n = resolution // 32
@@ -53,9 +53,15 @@ def resize_image(image, width, height):
     return x.movedim(1, -1).to(image.dtype)
 
 
-def resize_mask(mask, width, height):
+def resize_mask(mask, width, height, preserve_coverage=False):
     if mask.shape[-2:] == (height, width):
         return mask
+    if preserve_coverage and (height < mask.shape[-2] or width < mask.shape[-1]):
+        # Average covered pixels before any enlargement; point sampling can miss thin selections.
+        reduced = (min(height, mask.shape[-2]), min(width, mask.shape[-1]))
+        mask = F.interpolate(mask[:, None].float(), size=reduced, mode='area')[:, 0]
+        if reduced == (height, width):
+            return mask.clamp(0, 1)
     binary = bool(torch.all((mask == 0) | (mask == 1)))
     kw = {} if binary else {'align_corners': False}
     return F.interpolate(mask[:, None].float(), size=(height, width),
@@ -83,19 +89,24 @@ def fill_holes_preserving_softness(mask):
     return torch.maximum(mask[:1],torch.as_tensor(holes,device=mask.device,dtype=mask.dtype)[None])
 
 
-def crop_area_resolution(width, height, maximum=1920):
-    """Half-up rounding of native crop sqrt(area), with a legal 32-grid cap."""
+def crop_area_resolution(width, height, maximum=1024, minimum=128):
+    """Half-up native-area budget, bounded by an inward-aligned 32-grid interval."""
     if width <= 0 or height <= 0:
         raise ValueError('Native crop dimensions must be positive')
     if maximum < 512 or maximum > 2048:
         raise ValueError('Qwen budget cap must be in 512..2048')
+    if minimum < 32 or minimum > 2048:
+        raise ValueError('Qwen budget minimum must be in 32..2048')
+    legal_minimum = 32 * math.ceil(minimum / 32)
     legal_maximum = 32 * (int(maximum) // 32)
+    if legal_minimum > legal_maximum:
+        raise ValueError('Qwen budget minimum exceeds maximum after 32-pixel alignment')
     rounded = 32 * math.floor(math.sqrt(width * height) / 32 + 0.5)
-    return max(512, min(rounded, legal_maximum))
+    return max(legal_minimum, min(rounded, legal_maximum))
 
 
 def prepare_aligned(image, mask, resolution=1024, tolerance=1., factors=(1.3,)*4,
-                    full_image=False, resolution_mode='fixed', max_resolution=1920):
+                    full_image=False, resolution_mode='fixed', max_resolution=1024, min_resolution=128):
     image = image[:1]
     if image.ndim != 4 or image.shape[-1] not in (3, 4):
         raise ValueError('Expected one RGB or RGBA image')
@@ -111,7 +122,7 @@ def prepare_aligned(image, mask, resolution=1024, tolerance=1., factors=(1.3,)*4
     native_crop_size = (x1-x0, y1-y0)
     context_box = (x0, y0, x1, y1)
     if resolution_mode == 'crop_area':
-        resolution = crop_area_resolution(*native_crop_size, max_resolution)
+        resolution = crop_area_resolution(*native_crop_size, max_resolution, min_resolution)
     elif resolution_mode != 'fixed':
         raise ValueError('Unknown Qwen resolution mode')
     tw, th = target_size(*native_crop_size, resolution, tolerance)
@@ -134,12 +145,14 @@ def prepare_aligned(image, mask, resolution=1024, tolerance=1., factors=(1.3,)*4
     px, py = (tw-cw)//2, (th-ch)//2
     prepared = resize_image(crop,cw,ch)
     prepared = F.pad(prepared.movedim(-1,1),(px,tw-cw-px,py,th-ch-py),mode='replicate').movedim(1,-1)
-    pm = F.pad(resize_mask(cm,cw,ch),(px,tw-cw-px,py,th-ch-py))
+    pm = F.pad(resize_mask(cm,cw,ch,preserve_coverage=resolution < 512),(px,tw-cw-px,py,th-ch-py))
+    if resolution < 512 and not bool(torch.any(pm > 0)):
+        raise ValueError('Selection mask vanished during Qwen resize; increase the resolution or widen the selection')
     seam = {'qwen21_geometry_version':1, 'original_size':(w,h), 'box':(bx0,by0,bx1,by1),
             'virtual_box':(vx0,vy0,vx1,vy1), 'content_box':(px,py,px+cw,py+ch),
             'canvas_size':(tw,th), 'resolution':int(resolution), 'encoder_resolution':0,
             'native_crop_size':native_crop_size, 'context_box':context_box,
-            'resolution_mode':resolution_mode, 'max_resolution':int(max_resolution),
+            'resolution_mode':resolution_mode, 'max_resolution':int(max_resolution), 'min_resolution':int(min_resolution),
             'source_padding':source_pad, 'original_mask':mask, 'original_image':image,
             'scale':(cw/vw,ch/vh), 'full_image':bool(full_image)}
     return prepared, pm, seam

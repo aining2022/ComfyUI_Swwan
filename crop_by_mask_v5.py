@@ -12,14 +12,7 @@ from .layerstyle_utils import num_round_up_to_multiple, draw_rect
 
 
 class CropByMaskV5:
-    """
-    CropByMask V5 - 批处理增强版智能裁剪节点
-
-    相比 V4 新增功能：
-    - batch_mode: 批处理模式，支持直接处理视频批次
-      * single_frame: 保留历史行为，首帧遮罩和裁剪框处理输入批次
-      * batch_first_reuse: 批处理模式，首帧计算 crop_box，后续帧自动复用
-    """
+    """传统批次裁剪、单张编辑裁剪和 Qwen 对齐面积预算；模式合同见界面帮助。"""
 
     def __init__(self):
         self.NODE_NAME = 'CropByMask V5'
@@ -30,7 +23,7 @@ class CropByMaskV5:
         multiple_list = ['8', '16', '32', '64', '128', '256', '512', 'None']
         batch_mode_list = ['single_frame', 'batch_first_reuse']
         reserve_mode_list = ['absolute', 'ratio']
-        return {
+        inputs = {
             "required": {
                 "detect": (detect_mode,),
                 "reserve_mode": (reserve_mode_list,),
@@ -63,34 +56,90 @@ class CropByMaskV5:
                    ("edit_top_factor", "edit_bottom_factor", "edit_left_factor", "edit_right_factor")},
                 "qwen_resolution": ("INT", {"default": 1024, "min": 512, "max": 2048, "step": 32}),
                 "qwen_tolerance": ("FLOAT", {"default": 1.0, "min": 0.2, "max": 3.0, "step": 0.1}),
-                "qwen_restore_backend": (["swwan", "goohai"], {"default": "swwan", "tooltip": "qwen21_aligned SEAM format. goohai connects to GH_CropRestore, retaining its color restoration."}),
-                "qwen_resolution_mode": (["fixed", "crop_area"], {"default": "fixed", "tooltip": "crop_area derives the area budget from the native mask bounding box plus context, before resize or aspect adjustment."}),
-                "qwen_max_resolution": ("INT", {"default": 1920, "min": 512, "max": 2048, "step": 1, "tooltip": "crop_area budget cap; rounded down to a multiple of 32. Minimum budget is 512."}),
+                "qwen_restore_backend": (["swwan", "goohai"], {"default": "swwan"}),
+                "qwen_resolution_mode": (["fixed", "crop_area"], {"default": "fixed"}),
+                "qwen_max_resolution": ("INT", {"default": 1024, "min": 512, "max": 2048, "step": 1}),
+                "qwen_min_resolution": ("INT", {"default": 128, "min": 32, "max": 2048, "step": 1}),
             }
         }
+        tips = {
+            "image": "待裁剪的干净原图。edit_region/qwen21_aligned 必须连接，且仅处理首张；mask 必须与该图同尺寸、同坐标。",
+            "mask": "仅 edit_region/qwen21_aligned：白色为选区，黑色为非选区，优先于 mask_image。LoadImage 的 MASK 是 1-alpha，不是自动主体选区。aligned 按 >0 取外接框，保留软值；低于512预算缩小时按面积覆盖采样，细小选区可能变灰但不直接丢弃。空选区报错。",
+            "mask_image": "遮罩的 IMAGE 输入。bounds 使用灰度遮罩；编辑模式未接 mask 时才使用它，edit_region 转灰度，aligned 读取红通道。请与原图保持同尺寸。",
+            "crop_box": "仅 bounds：复用 [left, top, right, bottom] 原图坐标框，右/下为排他边界；连接后跳过自动检测和边距计算。不是 BBOX/SEAM。",
+            "crop_mode": "bounds：传统边界裁剪/批次复用；edit_region：局部编辑裁剪与恢复记录；qwen21_aligned：局部裁剪 + BlueBox 32 对齐/不动点校验 + Qwen 面积预算。模式决定其他控件是否生效。",
+            "detect": "仅 bounds 且未接 crop_box：mask_area 按遮罩区域，min_bounding_rect 最小外接矩形，max_inscribed_rect 最大内接矩形；后两者使用平滑后的遮罩。",
+            "reserve_mode": "仅 bounds：absolute 使用四向像素边距；ratio 上下按遮罩框高度、左右按宽度乘比例，并受 reserve_max 限制。编辑模式改用 edit_expansion_mode。",
+            "reserve_max": "仅 bounds + ratio：每侧边距的最大像素数。对 edit_region/qwen21_aligned 的上下文扩展不生效。",
+            "round_to_multiple": "仅 bounds：裁剪框宽高向上对齐指定倍数，尽量限制在原图内。不是 aligned 的 Qwen 32 对齐，也不是遮罩块化。",
+            "batch_mode": "仅 bounds：两个选项均按首帧遮罩/同一 crop_box 裁剪输入批次，不逐帧检测；batch_first_reuse 显式表示复用。edit_region/aligned 始终只处理首张。",
+            "device": "仅 bounds 自动检测时选择平滑计算设备，后续检测仍含 CPU/PIL。不是 Qwen 推理设备；edit_region/aligned 不使用此参数。",
+            "fill_mask_holes": "仅编辑模式：填充选区内部封闭孔洞，可能把原本保留的内部区域纳入选区；不是最终保护区。aligned 保留已有软值，仅补孔。默认关闭。",
+            "output_size": "仅 edit_region：原像素保持裁剪像素尺度；原像素1：1 扩成正方形；自定义宽高按指定尺寸处理。aligned 由面积预算决定画布，不使用此项。",
+            "alignment": "仅 edit_region：原像素/原像素1：1尺寸向上对齐此倍数，自定义输出按该模式规则取整；0/1 不额外对齐。aligned 固定使用自己的 32 倍数候选，不读取此项。",
+            "edit_expansion_mode": "仅编辑模式：factor 使用四向 edit_*_factor；reserve_ratio 使用四向 *_reserve_ratio（内部转为 1+ratio）。均按选区外接框短边增加上下文，不是整个宽高乘倍数。",
+            "qwen_resolution": "仅 aligned + fixed：固定面积预算 R，目标画布约 R² 像素，不是固定 R×R，也不是长边上限。crop_area 不读取此项。",
+            "qwen_tolerance": "仅 aligned：BlueBox 候选面积容差，越大可选画布越多；不是位移容忍像素。1.0 在 R=1024 时约为 3.125% 面积容差；最终仍验证不动点。",
+            "qwen_restore_backend": "仅 aligned：swwan 的 region_info 接 SwwanRestoreCropBoxV4；goohai 接原生 GH_CropRestore，保留该节点的校色/羽化能力。本节点只准备几何记录，不执行校色，两个 SEAM 合同不可混接。",
+            "qwen_resolution_mode": "仅 aligned：fixed 使用 qwen_resolution；crop_area 按原生选区框+上下文的 sqrt(W×H) 取最近 32 档（半档向上），再限制在 min/max 内。预算在缩放/比例扩框/补边之前计算，不按白色像素总数计算。",
+            "qwen_min_resolution": "仅 aligned + crop_area：面积预算下限，默认 128，向上取 32 倍数（129→160）。不是最短边；小裁剪可能被放大到约 min²。低于 512 的模型质量/速度未验收。对齐后的下限不能超过上限。",
+            "qwen_max_resolution": "仅 aligned + crop_area：面积预算上限，默认 1024，向下取 32 倍数（1560→1536）。不是最长边；狭长画布单边可以更大。降低上限可减少大裁剪的推理像素，也可能损失细节。",
+        }
+        for side, label in (("top", "上"), ("bottom", "下"), ("left", "左"), ("right", "右")):
+            tips[f"{side}_reserve"] = f"仅 bounds + absolute：向{label}保留的像素边距；负值收缩，边界受原图限制。编辑模式不使用此项。"
+            tips[f"{side}_reserve_ratio"] = f"向{label}扩展比例。bounds + ratio 按对应宽/高计算并受 reserve_max 限制；编辑模式 + reserve_ratio 按选区框短边 S×ratio 增加上下文，不受 reserve_max 限制。"
+            tips[f"edit_{side}_factor"] = f"仅编辑模式 + factor：向{label}增加 S×(factor-1) 像素，S 为选区框短边；1=不扩展，1.3=增加约 0.3S，不是整张图放大1.3倍。aligned 向上取整，edit_region 截断取整。上下文不自动获得最终修改权限。"
+        for axis in ("width", "height"):
+            tips[f"custom_{axis}"] = "仅 edit_region + 自定义宽高：与另一维共同设置输出；仅一维为0时，非零值作为长边预算；两维不能同时为0。aligned 不使用此项。"
+        for group in inputs.values():
+            for name, data in group.items():
+                group[name] = (data[0], {**(data[1] if len(data) > 1 else {}), "tooltip": tips[name]})
+        return inputs
 
     RETURN_TYPES = ("IMAGE", "IMAGE", "BOX", "IMAGE", "SEAM", "MASK", "INT", "INT", "INT", "INT", "INT", "INT")
     RETURN_NAMES = ("cropped_image", "cropped_mask", "crop_box", "box_preview", "region_info", "region_mask", "width", "height", "encoder_resolution", "native_crop_width", "native_crop_height", "working_resolution")
+    OUTPUT_TOOLTIPS = (
+        "实际裁剪/对齐后的图像。aligned 下可接任务标记处理再送编码器；保留干净图作颜色参考。",
+        "与裁剪图同尺寸的三通道遮罩预览（IMAGE）；需要 MASK 连线时使用 region_mask。",
+        "原图坐标 BOX：[left, top, right, bottom]，右/下排他。aligned 的缩放/补边恢复还必须带同源 region_info，不能只靠 BOX。",
+        "原图或遮罩上的裁剪框预览，供检查选区是否完整；不是模型输入。",
+        "同源 SEAM，记录原图、裁剪、缩放和补边。aligned 按 qwen_restore_backend 连接匹配恢复器；edit_region 接 SwwanRestoreCropBoxV4；bounds 为 None。",
+        "与裁剪图同步变换后的原生 MASK，用于标记或同源贴回；不等于最终硬保护范围或生成 alpha。",
+        "实际输出画布宽度；aligned 下为32倍数，可能大于面积预算数值。",
+        "实际输出画布高度；aligned 下为32倍数，可能大于面积预算数值。",
+        "供官方 TextEncodeQwenImage21.resolution 使用，aligned 输出0以保持已对齐画布；采样使用同一编码器的 latent。其他模式也返回0，但不保证已32对齐。",
+        "原生裁剪宽度：aligned 中为选区框+上下文，尚未进行比例扩框、缩放或补边。用于理解预算来源。",
+        "原生裁剪高度：aligned 中为选区框+上下文，尚未进行比例扩框、缩放或补边。用于理解预算来源。",
+        "实际选中的面积预算R（目标面积约R²，不等于width或height）；aligned fixed/dynamic均返回实际值，其他模式返回0。",
+    )
     FUNCTION = 'crop_by_mask_v5'
     CATEGORY = 'Swwan/image'
-    DESCRIPTION = """CropByMask V5 - 批处理智能裁剪节点
+    DESCRIPTION = """## 局部裁剪 / BlueBox / 面积预算（Swwan）
 
-批处理模式:
-- single_frame: 保留历史行为，使用首帧遮罩和裁剪框处理输入批次
-- batch_first_reuse: 批处理模式，首帧计算 crop_box，后续帧自动复用
+按选区裁剪、保留上下文并准备恢复坐标。**本节点不执行 Qwen 推理、颜色校正或最终贴回。** 输入参数、输出端口均有中文悬停说明。
 
-Reserve 模式:
-- absolute: 绝对值模式，使用固定像素值 (top/bottom/left/right_reserve)
-- ratio: 比例模式，基于 mask 尺寸计算 reserve
-  * 左右 reserve = mask宽度 × ratio，上下 reserve = mask高度 × ratio
-  * reserve_max 限制最大扩展像素（防止过度扩展）
-  * 推荐比例：0.3(紧凑), 0.5(标准), 0.8(宽松)
+### 先选择 crop_mode
+- **bounds**：传统边界裁剪。使用 mask_image 或 crop_box；直接 mask 不生效。detect、reserve_mode、reserve_max、round_to_multiple、batch_mode、device 只在此模式使用。输入批次共用首帧选区/同一框，不逐帧检测。
+- **edit_region**：单张局部编辑裁剪。使用 image + mask（优先）或 mask_image；支持孔洞填充、上下文、output_size/custom_width/custom_height/alignment，输出 SEAM；空选区沿用旧行为取整图。只处理首张，不是 Qwen BlueBox 对齐模式。
+- **qwen21_aligned**：单张 Qwen 局部裁剪。完整 mask 外接框 + 上下文 → 面积预算 → BlueBox 候选评分/32 对齐/不动点校验 → 图与 mask 同步缩放补边。空选区报错；不使用旧的 output_size、alignment、bounds 检测/边距控件。不需要再串接 BlueBox Cut。
 
-使用说明:
-1. 直接接收视频批次输入（无需 ImageList 转换）
-2. batch_first_reuse 模式下，自动处理首帧和后续帧
-3. ratio 模式适合不同尺寸的 mask（如视频中人脸大小变化）
-4. device 参数支持 CPU/GPU 选择"""
+### Qwen 动态面积预算
+选择 **qwen_resolution_mode=crop_area**，默认 **qwen_min_resolution=128 / qwen_max_resolution=1024**。
+W、H 是加上下文后的原生裁剪尺寸，在比例扩框/缩放/补边之前计算：
+`R = 32 × floor(sqrt(W × H) / 32 + 0.5)`，再限制到 `[32×ceil(min/32), 32×floor(max/32)]`。
+min 向上取整（129→160），max 向下取整（1560→1536）；对齐后 min>max 报错。
+**R 是面积预算，目标面积约 R²，不是固定正方形，也不是长边/短边限制。** 实际宽高还受比例与候选容差影响；不是对 mask 白色像素数量求面积。小裁剪会被下限放大，大裁剪被上限缩小；128等低于512的预算尚无模型效果/速度验收。
+选择 **fixed** 时只使用 qwen_resolution（默认1024），min/max 不生效。默认 crop_mode=bounds、resolution_mode=fixed 保留，需主动选择 aligned + crop_area 才使用动态预算。
+
+### 上下文与对齐
+编辑模式的 edit_expansion_mode=factor 使用四向 edit_*_factor：每侧增加选区框短边 S×(factor−1)，1不扩展，1.3增加约0.3S；reserve_ratio 改用 S×四向ratio。不是整个宽高乘factor，亦不受 bounds 的 reserve_max 限制。
+aligned 先利用原图真实上下文，为候选比例扩框，边界不足才复制边缘补图（mask补0），不通过中心裁切丢掉选区。qwen_tolerance 控制候选面积容差，不是位移精度；1.0在R=1024时约3.125%。这些处理减少管线尺寸偏差，**不保证模型生成内容零位移**。
+
+### 遮罩与恢复接线
+编辑模式的 mask 必须与原图同尺寸、同坐标；LoadImage 的 MASK 是1-alpha，不是自动主体选区。fill_mask_holes会改变内部孔洞，慎用于保护孔。上下文只是参考，不自动扩大最终允许修改范围。低于512预算缩小遮罩时使用面积覆盖采样，保留细线/离散小选区的非零覆盖；二值遮罩边缘可能变为灰度，不强制阈值化。若缩放后完全失去选区则报错，请提高预算或加宽选区；512及以上保留既有采样。
+aligned 的 cropped_image/region_mask送任务前处理；encoder_resolution（0）接官方 TextEncodeQwenImage21.resolution，采样接该编码器的latent，避免再次独立定尺寸。
+**qwen_restore_backend=swwan**：region_info接SwwanRestoreCropBoxV4，并按恢复器接口接原图/crop_box；**goohai**：region_info接原生GH_CropRestore，生成块/region_mask接对应输入。两种SEAM不可混接，不要重复逆变换。颜色还原和羽化在恢复器中配置；严格范围外保护需最终门控，抠图生成alpha不能直接当原选区处理。
+查看 native_crop_width/height理解预算来源，width/height查看实际模型画布，working_resolution查看实际R。新默认用于新建节点或缺失字段；旧工作流显式保存值/已连接输入不会被强制覆盖。"""
 
     def _gaussian_blur_tensor(self, mask_tensor, blur_radius, processing_device):
         """PyTorch 实现的高斯模糊，支持 GPU 加速"""
@@ -212,7 +261,7 @@ Reserve 模式:
                         image=None, mask_image=None, crop_box=None,
                         crop_mode="bounds", mask=None, fill_mask_holes=False,
                         output_size="原像素", custom_width=1024, custom_height=1024,
-                        alignment=8, edit_expansion_mode="reserve_ratio", edit_top_factor=1.2, edit_bottom_factor=1.2, edit_left_factor=1.2, edit_right_factor=1.2, qwen_resolution=1024, qwen_tolerance=1.0, qwen_restore_backend="swwan", qwen_resolution_mode="fixed", qwen_max_resolution=1920):
+                        alignment=8, edit_expansion_mode="reserve_ratio", edit_top_factor=1.2, edit_bottom_factor=1.2, edit_left_factor=1.2, edit_right_factor=1.2, qwen_resolution=1024, qwen_tolerance=1.0, qwen_restore_backend="swwan", qwen_resolution_mode="fixed", qwen_max_resolution=1024, qwen_min_resolution=128):
 
         if crop_mode == "qwen21_aligned":
             from .ops.qwen21_geometry import prepare_aligned
@@ -226,7 +275,8 @@ Reserve 模式:
                 from .ops.qwen21_geometry import fill_holes_preserving_softness
                 mask = fill_holes_preserving_softness(mask)
             prepared, region_mask, region = prepare_aligned(image, mask, qwen_resolution, qwen_tolerance, factors,
-                                                              resolution_mode=qwen_resolution_mode, max_resolution=qwen_max_resolution)
+                                                              resolution_mode=qwen_resolution_mode, max_resolution=qwen_max_resolution,
+                                                              min_resolution=qwen_min_resolution)
             x0,y0,x1,y1 = region["box"]
             preview = draw_rect(tensor2pil(image[:1]).convert("RGB"),x0,y0,x1-x0,y1-y0,line_color="#00FF00",line_width=2)
             width,height = region["canvas_size"]
@@ -363,6 +413,3 @@ Reserve 模式:
             ret_images[0].shape[2], ret_images[0].shape[1], 0,
             effective_crop_box[2]-effective_crop_box[0], effective_crop_box[3]-effective_crop_box[1], 0,
         )
-
-
-CropByMaskV5.DESCRIPTION = CropByMaskV5.DESCRIPTION + "\nEdit region: native mask input; first image only. Ratios add margins based on the mask's shortest side.\nUse region_info + region_mask for editing/restoration; bounds keeps the original four outputs.\n"

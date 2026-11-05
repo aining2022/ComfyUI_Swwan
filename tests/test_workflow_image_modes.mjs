@@ -233,15 +233,32 @@ console.log('PASS: mode visibility with reversed extension order');
 
 const dynamicBudget = makeNode('SwwanCropByMaskV5', {
     crop_mode:'qwen21_aligned', qwen_resolution_mode:'crop_area', qwen_resolution:1024,
-    qwen_max_resolution:1920, qwen_tolerance:1, qwen_restore_backend:'goohai',
+    qwen_max_resolution:1920, qwen_tolerance:1, qwen_restore_backend:'goohai', qwen_min_resolution:384,
 });
 assert.equal(visible(dynamicBudget,'qwen_resolution'),false);
 assert.equal(visible(dynamicBudget,'qwen_max_resolution'),true);
+assert.equal(visible(dynamicBudget,'qwen_min_resolution'),true);
 set(dynamicBudget,'qwen_resolution_mode','fixed');
 assert.equal(visible(dynamicBudget,'qwen_resolution'),true);
 assert.equal(visible(dynamicBudget,'qwen_max_resolution'),false);
+assert.equal(visible(dynamicBudget,'qwen_min_resolution'),false);
+assert.equal(widget(dynamicBudget,'qwen_min_resolution').value,384);
 assert.equal(widget(dynamicBudget,'qwen_max_resolution').value,1920);
 set(dynamicBudget,'qwen_resolution_mode','crop_area');
 const dynamicSaved=savedValues(dynamicBudget);dynamicBudget.onConfigure();
 assert.equal(savedValues(dynamicBudget),dynamicSaved);
+const budgetSaved={};dynamicBudget.onSerialize(budgetSaved);
+assert.equal(budgetSaved.widgets_values_named.qwen_min_resolution,384);
+set(dynamicBudget,'qwen_min_resolution',512);
+dynamicBudget.onConfigure(budgetSaved);
+assert.equal(widget(dynamicBudget,'qwen_min_resolution').value,384);
+set(dynamicBudget,'crop_mode','bounds');
+assert.equal(visible(dynamicBudget,'qwen_min_resolution'),false);
+set(dynamicBudget,'crop_mode','qwen21_aligned');
+assert.equal(visible(dynamicBudget,'qwen_min_resolution'),true);
+dynamicBudget.inputs.push({name:'qwen_min_resolution',link:42});
+widget(dynamicBudget,'qwen_min_resolution').type='converted-widget';
+set(dynamicBudget,'qwen_resolution_mode','fixed');
+assert.equal(widget(dynamicBudget,'qwen_min_resolution').type,'converted-widget');
+assert.equal(dynamicBudget.inputs.find(i=>i.name==='qwen_min_resolution').link,42);
 console.log('PASS: dynamic crop budget controls preserve fixed values and serialize');

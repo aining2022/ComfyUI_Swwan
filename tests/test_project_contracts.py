@@ -52,6 +52,10 @@ class Acceptance(unittest.TestCase):
                 for group,inputs in contract['inputs'].items():
                     for name,data in inputs.items():
                         got=schema[group][name]
+                        if new=='SwwanCropByMaskV5':
+                            # Added UI help is metadata; historical defaults and types must still match.
+                            options={k:v for k,v in (got[1] if len(got)>1 else {}).items() if k!='tooltip'}
+                            got=[got[0]]+([options] if options else [])
                         if isinstance(data,list) and isinstance(data[0],list):
                             if len(data)>1 and data[1].get('image_upload'):
                                 # Upload choices come from this server's input folder, not the fixture author's files.

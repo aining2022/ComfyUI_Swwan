@@ -1,5 +1,13 @@
 # 迁移与数据合同
 
+## Qwen 局部裁剪默认预算与界面说明
+
+`SwwanCropByMaskV5` 的动态面积预算新默认是 `qwen_min_resolution=128`、`qwen_max_resolution=1024`，仅 `crop_mode=qwen21_aligned` 且 `qwen_resolution_mode=crop_area` 使用。新建节点和 API/旧工作流缺失的字段采用新默认；显式保存的旧值（例如 512/1920、1560 上限）和连线不被覆盖。需要复现旧动态结果时，请显式设置原上下限，不能依赖缺失字段回退512。模式默认仍为 bounds/fixed，输出顺序与名称不变。
+
+节点帮助及全部输入、12个输出均增加中文说明；这只是界面元数据，不改变其余参数算法。重启实际使用的 ComfyUI 并刷新前端后查看；已打开旧节点不会自动改成新参数。128等低于512的预算只经CPU几何验证，不代表生成质量或速度已验收。
+
+低于512的实际预算新增遮罩降采样保护：先按面积覆盖缩小，保留细线和离散选区的非零值；输出可由二值变为灰度，后续不要无条件以0.5阈值再次丢弃覆盖。缩放后全黑则明确报错。512及以上保留原采样算法，最终保护仍用原图坐标的有效mask。
+
 通用迁移器支持 UI workflow（nodes/links）以及 API prompt（class_type/inputs），也支持带 `prompt` 字段的封装。默认检查后另存 `<原名>-swwan.json`，禁止覆盖输入或既有输出。`--dry-run` 只报告。
 
 未知来源的重名节点会列为 ambiguous：必须通过 `--swwan-node-id 编号` 指定迁移范围。已有 `cnr_id=comfyui_swwan` 或 `swwan_version` 可确认本仓来源。API prompt 使用 `_meta.swwan_version`。只在文件全部为本仓历史节点时显式 `--assume-swwan`。未选择的第三方节点不修改。

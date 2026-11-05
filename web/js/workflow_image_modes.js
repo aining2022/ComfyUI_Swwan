@@ -47,10 +47,10 @@ function update(node) {
     if (id === "SwwanCropByMaskV5" && !connected(node, "crop_mode")) {
         const aligned = value(node, "crop_mode") === "qwen21_aligned";
         const edit = aligned || value(node, "crop_mode") === "edit_region";
-        if (!aligned) hide("qwen_resolution", "qwen_tolerance", "qwen_restore_backend", "qwen_resolution_mode", "qwen_max_resolution");
+        if (!aligned) hide("qwen_resolution", "qwen_tolerance", "qwen_restore_backend", "qwen_resolution_mode", "qwen_max_resolution", "qwen_min_resolution");
         else if (!connected(node, "qwen_resolution_mode")) {
             if (value(node, "qwen_resolution_mode") === "crop_area") hide("qwen_resolution");
-            else hide("qwen_max_resolution");
+            else hide("qwen_max_resolution", "qwen_min_resolution");
         }
         if (aligned) hide("output_size", "custom_width", "custom_height", "alignment");
         if (edit) {

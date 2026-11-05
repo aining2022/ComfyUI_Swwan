@@ -23,6 +23,9 @@ jobs:
       - working-directory: swwan
         run: |
           python tests/test_workflow_image_nodes.py --comfyui-root ../comfyui
+          python tests/test_qwen21_dynamic_budget.py
+          python tests/test_qwen21_mask_coverage.py
+          python tests/test_qwen21_crop_budget_node.py --comfyui-root ../comfyui
           python tests/test_outpaint.py --comfyui-root ../comfyui
           python tests/test_project_contracts.py --comfyui-root ../comfyui
           python tests/test_face_head_processing.py --comfyui-root ../comfyui

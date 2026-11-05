@@ -104,7 +104,7 @@ class WorkflowContracts(unittest.TestCase):
                 self.assertLessEqual(len(node["widgets_values"]), expected)
                 omitted = list(defaults(cls))[len(node["widgets_values"]):]
                 optional_qwen = {"qwen_resolution", "qwen_tolerance", "qwen_restore_backend",
-                                 "qwen_resolution_mode", "qwen_max_resolution"}
+                                 "qwen_resolution_mode", "qwen_max_resolution", "qwen_min_resolution"}
                 self.assertTrue(set(omitted) <= optional_qwen)
                 self.assertTrue(set(omitted) <= cls.INPUT_TYPES().get("optional", {}).keys())
             else:
@@ -128,7 +128,8 @@ class WorkflowContracts(unittest.TestCase):
                         crop_mode="qwen21_aligned", qwen_restore_backend="goohai",
                         edit_expansion_mode="factor", edit_top_factor=1.5,
                         edit_bottom_factor=1.5, edit_left_factor=1.5, edit_right_factor=1.5,
-                        qwen_resolution_mode="crop_area", qwen_max_resolution=1920)
+                        qwen_resolution_mode="crop_area", qwen_max_resolution=1920,
+                        qwen_min_resolution=512)
         self.assertEqual(len(result), 12)
         self.assertEqual(result[8:], (0, 96, 80, 512))
         self.assertEqual(result[0].shape[1:3], result[5].shape[1:3])

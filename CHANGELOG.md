@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Preserve thin and disconnected mask coverage when downsampling new sub-512 Qwen budgets using area sampling; keep soft values, reject an empty resized selection, and retain the legacy sampler at 512 and above. Update old workflow/default contracts and run crop budget/coverage tests in CPU CI.
+
+- Set Crop By Mask V5's dynamic budget defaults to min=128/max=1024, including omitted API arguments. Preserve explicitly saved/connected values and fixed-mode behavior. Replace the outdated batch-only description with Chinese mode/budget/geometry/restoration guidance and add tooltips for every input and all 12 outputs; sub-512 inference remains unverified.
+
+- Add optional `qwen_min_resolution` at the end of Crop By Mask V5's aligned crop-area inputs. Round the minimum up and maximum down to 32-grid budgets, reject empty intervals, and allow experimental sub-512 budgets without reordering old inputs or output slots. Preserve explicit values through mode changes and workflow serialization; current defaults are 128/1024 as noted above.
+
 - Fix Seed's global queue hook rejecting reactive prompts with DataCloneError, including workflows without SwwanSeed. Copy only edited seed fields and execution metadata, preserve queue options, and keep the last seed unchanged on failed submission.
 
 - Fix the missing internal ImagePadKJ import in Resize v2 and Resize By Megapixels; restore pad, pad_edge, pad_edge_pixel and pillarbox_blur execution with pixel/mask regression coverage.
