@@ -1,0 +1,452 @@
+{
+  "509": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "qwen_image_2.1_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "_meta": {
+      "title": "UNETLoader"
+    }
+  },
+  "527": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "lora_name": "qwen21/p_q_image_2.1_6_steps_upsampled_v0.2_comfyui_bf16.safetensors",
+      "strength_model": 1,
+      "model": [
+        "509",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Load Pruna-Q-Image-2.1 LoRA"
+    }
+  },
+  "548": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_8b_int8_convrot.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+    },
+    "_meta": {
+      "title": "CLIPLoader"
+    }
+  },
+  "511": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+    },
+    "_meta": {
+      "title": "VAELoader"
+    }
+  },
+  "532": {
+    "class_type": "ModelAttentionBackend",
+    "inputs": {
+      "attention": "comfy kitchen attention",
+      "model": [
+        "602",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "ModelAttentionBackend"
+    }
+  },
+  "522": {
+    "class_type": "ManualSigmas",
+    "inputs": {
+      "sigmas": "1.0, 0.961054, 0.918949, 0.769302, 0.545554, 0.222292, 0"
+    },
+    "_meta": {
+      "title": "Manual Sigmas (Pruna-Q-Image-2.1 6-step schedule)"
+    }
+  },
+  "523": {
+    "class_type": "KSamplerSelect",
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "_meta": {
+      "title": "KSampler Select (euler)"
+    }
+  },
+  "524": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": [
+        "600",
+        2
+      ]
+    },
+    "_meta": {
+      "title": "种子 / 与 BFS 共用；在任务控制中修改"
+    }
+  },
+  "526": {
+    "class_type": "CFGGuider",
+    "inputs": {
+      "cfg": 1,
+      "model": [
+        "532",
+        0
+      ],
+      "positive": [
+        "605",
+        0
+      ],
+      "negative": [
+        "605",
+        1
+      ]
+    },
+    "_meta": {
+      "title": "CFGGuider"
+    }
+  },
+  "525": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": [
+        "524",
+        0
+      ],
+      "guider": [
+        "526",
+        0
+      ],
+      "sampler": [
+        "523",
+        0
+      ],
+      "sigmas": [
+        "522",
+        0
+      ],
+      "latent_image": [
+        "605",
+        2
+      ]
+    },
+    "_meta": {
+      "title": "Sampler Custom Advanced"
+    }
+  },
+  "513": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "525",
+        0
+      ],
+      "vae": [
+        "511",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "VAEDecode"
+    }
+  },
+  "600": {
+    "class_type": "SwwanQwen21PrunaControls",
+    "inputs": {
+      "task": "edit",
+      "extra_prompt": "HD, enhance, red lipstick, mouth wide open",
+      "negative_prompt": "",
+      "seed": 482316605808414,
+      "edit_scope": "full",
+      "generation_mode": "image",
+      "encoder": "auto",
+      "qwen_min_resolution": 128,
+      "qwen_max_resolution": 1024,
+      "qwen_tolerance": 1.0,
+      "context_factor": 1.3,
+      "reference_resolution": 768,
+      "color_mode": "auto",
+      "color_strength": 1.0,
+      "expand_percent": 4,
+      "feather_percent": 5,
+      "marking": "brush",
+      "enhanced": false,
+      "mark_opacity": 0.4,
+      "block_size": 32,
+      "padding_unit": "pixels",
+      "left": 128,
+      "right": 128,
+      "top": 0,
+      "bottom": 0,
+      "seam_band": 0,
+      "people": 1,
+      "swap_head": false,
+      "forehead": false,
+      "skin_match": false,
+      "skin_strength": 0.25,
+      "output_width": 1024,
+      "output_height": 1024,
+      "azimuth": 0,
+      "elevation": 0,
+      "close_up": false,
+      "lora_strength": -1.0,
+      "additional_lora_mode": "edit_only",
+      "additional_lora_name": "qwen21/qwen2_1-femaledVaginus-nsfw-v1.3-fine.safetensors",
+      "additional_lora_strength": 0.6,
+      "task_lora_edit": "None",
+      "task_lora_outpaint": "qwen21/Qwen2.1_扩图_GH_3750.safetensors",
+      "task_lora_cutout": "qwen21/心宝强化抠图.safetensors",
+      "task_lora_watermark": "qwen21/Qwen21-水印移除watermark_remover_v2.safetensors",
+      "task_lora_face_swap": "qwen21/bfs_head_v1.1_qwen_2.1.safetensors",
+      "task_lora_photoreal": "qwen21/pipi-qwen2.1-PhotoReal10.safetensors",
+      "task_lora_remove": "qwen21/Qwen2.1_万物移除Remove_GH.safetensors",
+      "task_lora_angles": "qwen21/angles_v2_full_qwen21_multiple_angles_v2_qwen21_multiple_angles_v2_000001500.safetensors"
+    },
+    "_meta": {
+      "title": "01 / 任务、预算、恢复与附加 LoRA"
+    }
+  },
+  "601": {
+    "class_type": "SwwanQwen21PrunaInputs",
+    "inputs": {
+      "image_filename": "0a8317f8-f69b-4211-a0b8-998693fd26cf.jpeg",
+      "mask_filename": "",
+      "protect_filename": "",
+      "reference_filenames": "",
+      "config": [
+        "600",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "02 / 文件名或外接输入；选区遮罩独立于 alpha"
+    }
+  },
+  "602": {
+    "class_type": "SwwanQwen21PrunaModel",
+    "inputs": {
+      "model": [
+        "527",
+        0
+      ],
+      "config": [
+        "600",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "任务 LoRA / 干净 Pruna 底模，不串未激活 LoRA"
+    }
+  },
+  "603": {
+    "class_type": "SwwanQwen21PrunaPrepare",
+    "inputs": {
+      "config": [
+        "600",
+        0
+      ],
+      "image": [
+        "601",
+        0
+      ],
+      "mask": [
+        "601",
+        1
+      ],
+      "protect_mask": [
+        "601",
+        2
+      ]
+    },
+    "_meta": {
+      "title": "03 / 裁剪、上下文、面积预算与唯一几何记录"
+    }
+  },
+  "604": {
+    "class_type": "SwwanQwen21PrunaMark",
+    "inputs": {
+      "image": [
+        "603",
+        0
+      ],
+      "mask": [
+        "603",
+        1
+      ],
+      "config": [
+        "600",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "04 / 副本任务标记；保留干净图作校色参考"
+    }
+  },
+  "605": {
+    "class_type": "SwwanQwen21PrunaEncode",
+    "inputs": {
+      "config": [
+        "600",
+        0
+      ],
+      "clip": [
+        "548",
+        0
+      ],
+      "vae": [
+        "511",
+        0
+      ],
+      "image": [
+        "604",
+        0
+      ],
+      "references": [
+        "601",
+        3
+      ]
+    },
+    "_meta": {
+      "title": "05 / 官方或 EditUtils 兼容编码"
+    }
+  },
+  "606": {
+    "class_type": "SwwanQwen21PrunaUnpad",
+    "inputs": {
+      "image": [
+        "513",
+        0
+      ],
+      "padding": [
+        "605",
+        3
+      ]
+    },
+    "_meta": {
+      "title": "07 / 验证编码画布；拒绝未记录的二次缩放"
+    }
+  },
+  "607": {
+    "class_type": "SwwanQwen21PrunaRestore",
+    "inputs": {
+      "image": [
+        "606",
+        0
+      ],
+      "seam": [
+        "603",
+        2
+      ],
+      "config": [
+        "600",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "08 / 校色、几何恢复、保护或原生 RGBA"
+    }
+  },
+  "608": {
+    "class_type": "SwwanQwen21PrunaFace",
+    "inputs": {
+      "model": [
+        "532",
+        0
+      ],
+      "clip": [
+        "548",
+        0
+      ],
+      "vae": [
+        "511",
+        0
+      ],
+      "image": [
+        "601",
+        0
+      ],
+      "references": [
+        "601",
+        3
+      ],
+      "config": [
+        "600",
+        0
+      ],
+      "mask": [
+        "601",
+        1
+      ],
+      "protect_mask": [
+        "601",
+        2
+      ]
+    },
+    "_meta": {
+      "title": "BFS 专用 / 固定人物序、参考图与逐人共享采样"
+    }
+  },
+  "609": {
+    "class_type": "SwwanQwen21PrunaOutput",
+    "inputs": {
+      "config": [
+        "600",
+        0
+      ],
+      "generic": [
+        "607",
+        0
+      ],
+      "face": [
+        "608",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "09 / 惰性输出路由；仅执行选中任务"
+    }
+  },
+  "610": {
+    "class_type": "SwwanSaveImage",
+    "inputs": {
+      "file_format": "png",
+      "output_path": "",
+      "filename_prefix": "Qwen21_Pruna_v4",
+      "input_mode": "straight",
+      "alpha_mode": "auto",
+      "has_alpha": true,
+      "background_color": "#ffffff",
+      "quality": 88,
+      "png_compress_level": 1,
+      "optimize": true,
+      "webp_lossless": false,
+      "webp_method": 2,
+      "number_prefix": false,
+      "number_digits": 5,
+      "embed_metadata": true,
+      "save_workflow_as_json": true,
+      "caption": "",
+      "epsilon": 0.001,
+      "image": [
+        "609",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "10 / 最终 RGB / RGBA PNG；保留生成 alpha"
+    }
+  },
+  "612": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "600",
+        1
+      ]
+    },
+    "_meta": {
+      "title": "实际送入模型的任务提示词"
+    }
+  }
+}

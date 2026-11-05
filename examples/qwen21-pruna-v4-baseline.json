@@ -1,0 +1,3374 @@
+{
+  "id": "83a84ea0-745a-456c-9574-2d743e5aa656",
+  "revision": 0,
+  "last_node_id": 581,
+  "last_link_id": 1030,
+  "nodes": [
+    {
+      "id": 476,
+      "type": "MarkdownNote",
+      "pos": [
+        -1013.1611193271734,
+        2071.0255436593934
+      ],
+      "size": [
+        420,
+        620
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Note: Model links",
+      "properties": {},
+      "widgets_values": [
+        "Guide: [Subgraph](https://docs.comfy.org/interface/features/subgraph)\n\n## Input Asset\n\n- [ballet_dancer_photography_minimalist_architecture.png](https://raw.githubusercontent.com/Comfy-Org/workflow_templates/refs/heads/main/input/ballet_dancer_photography_minimalist_architecture.png)\n\n## Model Links\n\n- [Hugging Face:Comfy-Org/Qwen-Image-2.1](https://huggingface.co/Comfy-Org/Qwen-Image-2.1)\n- [ModelScope:Comfy-Org/Qwen-Image-2.1](https://modelscope.cn/models/Comfy-Org/Qwen-Image-2.1)\n\n**diffusion_models**\n\n- [qwen_image_2.1_bf16.safetensors](https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/diffusion_models/qwen_image_2.1_bf16.safetensors) (13.25 GB)\n- [qwen_image_2.1_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/diffusion_models/qwen_image_2.1_int8_convrot.safetensors) (6.76 GB)\n\n**loras** ([PrunaAI/Pruna-Q-Image-2.1-ComfyUI](https://huggingface.co/PrunaAI/Pruna-Q-Image-2.1-ComfyUI))\n\n- [p_q_image_2.1_6_steps_v0.2_comfyui_bf16.safetensors](https://huggingface.co/PrunaAI/Pruna-Q-Image-2.1-ComfyUI/resolve/main/p_q_image_2.1_6_steps_v0.2_comfyui_bf16.safetensors)\n- [p_q_image_2.1_6_steps_upsampled_v0.2_comfyui_bf16.safetensors](https://huggingface.co/PrunaAI/Pruna-Q-Image-2.1-ComfyUI/resolve/main/p_q_image_2.1_6_steps_upsampled_v0.2_comfyui_bf16.safetensors)\n\n**text_encoders**\n\n- [qwen3vl_8b_bf16.safetensors](https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3vl_8b_bf16.safetensors) (16.33 GB)\n- [qwen3vl_8b_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3vl_8b_int8_convrot.safetensors) (8.71 GB) \n- [qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors](https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors) (8.82 GB)\n\n**vae**\n\n- [qwen_image_2.1_vae_bf16.safetensors](https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/vae/qwen_image_2.1_vae_bf16.safetensors) (644.2 MB)\n\n\n## Model Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 diffusion_models/\n│   │   ├── qwen_image_2.1_bf16.safetensors\n│   │   └── qwen_image_2.1_int8_convrot.safetensors\n│   ├── 📂 loras/\n│   │   ├── p_q_image_2.1_6_steps_v0.2_comfyui_bf16.safetensors\n│   │   └── p_q_image_2.1_6_steps_upsampled_v0.2_comfyui_bf16.safetensors\n│   ├── 📂 text_encoders/\n│   │   ├── qwen3vl_8b_bf16.safetensors\n│   │   ├── qwen3vl_8b_int8_convrot.safetensors\n│   │   └── qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors│   └── 📂 vae/\n│       └── qwen_image_2.1_vae_bf16.safetensors\n```\n\n## Report Issue\n\nNote: Please update ComfyUI first ([guide](https://docs.comfy.org/installation/update_comfyui)) and prepare required models. Desktop/Cloud updates follow stable releases, so some nightly-supported models may not be available yet.\n\n- Cannot run / runtime errors: [ComfyUI/issues](https://github.com/comfyanonymous/ComfyUI/issues)\n- UI / frontend issues: [ComfyUI_frontend/issues](https://github.com/Comfy-Org/ComfyUI_frontend/issues)\n- Workflow issues: [workflow_templates/issues](https://github.com/Comfy-Org/workflow_templates/issues)\n"
+      ],
+      "widgets_values_named": {
+        "text": "Guide: [Subgraph](https://docs.comfy.org/interface/features/subgraph)\n\n## Input Asset\n\n- [ballet_dancer_photography_minimalist_architecture.png](https://raw.githubusercontent.com/Comfy-Org/workflow_templates/refs/heads/main/input/ballet_dancer_photography_minimalist_architecture.png)\n\n## Model Links\n\n- [Hugging Face:Comfy-Org/Qwen-Image-2.1](https://huggingface.co/Comfy-Org/Qwen-Image-2.1)\n- [ModelScope:Comfy-Org/Qwen-Image-2.1](https://modelscope.cn/models/Comfy-Org/Qwen-Image-2.1)\n\n**diffusion_models**\n\n- [qwen_image_2.1_bf16.safetensors](https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/diffusion_models/qwen_image_2.1_bf16.safetensors) (13.25 GB)\n- [qwen_image_2.1_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/diffusion_models/qwen_image_2.1_int8_convrot.safetensors) (6.76 GB)\n\n**loras** ([PrunaAI/Pruna-Q-Image-2.1-ComfyUI](https://huggingface.co/PrunaAI/Pruna-Q-Image-2.1-ComfyUI))\n\n- [p_q_image_2.1_6_steps_v0.2_comfyui_bf16.safetensors](https://huggingface.co/PrunaAI/Pruna-Q-Image-2.1-ComfyUI/resolve/main/p_q_image_2.1_6_steps_v0.2_comfyui_bf16.safetensors)\n- [p_q_image_2.1_6_steps_upsampled_v0.2_comfyui_bf16.safetensors](https://huggingface.co/PrunaAI/Pruna-Q-Image-2.1-ComfyUI/resolve/main/p_q_image_2.1_6_steps_upsampled_v0.2_comfyui_bf16.safetensors)\n\n**text_encoders**\n\n- [qwen3vl_8b_bf16.safetensors](https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3vl_8b_bf16.safetensors) (16.33 GB)\n- [qwen3vl_8b_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3vl_8b_int8_convrot.safetensors) (8.71 GB) \n- [qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors](https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors) (8.82 GB)\n\n**vae**\n\n- [qwen_image_2.1_vae_bf16.safetensors](https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/vae/qwen_image_2.1_vae_bf16.safetensors) (644.2 MB)\n\n\n## Model Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 diffusion_models/\n│   │   ├── qwen_image_2.1_bf16.safetensors\n│   │   └── qwen_image_2.1_int8_convrot.safetensors\n│   ├── 📂 loras/\n│   │   ├── p_q_image_2.1_6_steps_v0.2_comfyui_bf16.safetensors\n│   │   └── p_q_image_2.1_6_steps_upsampled_v0.2_comfyui_bf16.safetensors\n│   ├── 📂 text_encoders/\n│   │   ├── qwen3vl_8b_bf16.safetensors\n│   │   ├── qwen3vl_8b_int8_convrot.safetensors\n│   │   └── qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors│   └── 📂 vae/\n│       └── qwen_image_2.1_vae_bf16.safetensors\n```\n\n## Report Issue\n\nNote: Please update ComfyUI first ([guide](https://docs.comfy.org/installation/update_comfyui)) and prepare required models. Desktop/Cloud updates follow stable releases, so some nightly-supported models may not be available yet.\n\n- Cannot run / runtime errors: [ComfyUI/issues](https://github.com/comfyanonymous/ComfyUI/issues)\n- UI / frontend issues: [ComfyUI_frontend/issues](https://github.com/Comfy-Org/ComfyUI_frontend/issues)\n- Workflow issues: [workflow_templates/issues](https://github.com/Comfy-Org/workflow_templates/issues)\n"
+      },
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 512,
+      "type": "EmptyLatentImage",
+      "pos": [
+        50.00408306335635,
+        4798.047743772652
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 960
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 961
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            920
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        1024,
+        1024,
+        1
+      ],
+      "widgets_values_named": {
+        "width": 1024,
+        "height": 1024,
+        "batch_size": 1
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 513,
+      "type": "VAEDecode",
+      "pos": [
+        650.2624513983831,
+        4279.036643508101
+      ],
+      "size": [
+        230,
+        60
+      ],
+      "flags": {},
+      "order": 51,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 928
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 918
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            919
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 514,
+      "type": "ComfySwitchNode",
+      "pos": [
+        -194.6138026242712,
+        3561.3467766408526
+      ],
+      "size": [
+        270,
+        80
+      ],
+      "flags": {},
+      "order": 47,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "on_false",
+          "shape": 7,
+          "type": "LATENT",
+          "link": 922
+        },
+        {
+          "name": "on_true",
+          "shape": 7,
+          "type": "LATENT",
+          "link": 920
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            933
+          ]
+        }
+      ],
+      "title": "文生图/图生图",
+      "properties": {
+        "Node name for S&R": "ComfySwitchNode"
+      },
+      "widgets_values": [
+        false
+      ],
+      "widgets_values_named": {
+        "switch": false
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 522,
+      "type": "ManualSigmas",
+      "pos": [
+        344.688994562252,
+        4544.9001562958165
+      ],
+      "size": [
+        418.9732421875,
+        58
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "SIGMAS",
+          "type": "SIGMAS",
+          "links": [
+            927
+          ]
+        }
+      ],
+      "title": "Manual Sigmas (Pruna-Q-Image-2.1 6-step schedule)",
+      "properties": {
+        "Node name for S&R": "ManualSigmas"
+      },
+      "widgets_values": [
+        "1.0, 0.961054, 0.918949, 0.769302, 0.545554, 0.222292, 0"
+      ],
+      "widgets_values_named": {
+        "sigmas": "1.0, 0.961054, 0.918949, 0.769302, 0.545554, 0.222292, 0"
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 523,
+      "type": "KSamplerSelect",
+      "pos": [
+        335.9056600300204,
+        4398.840365512084
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "SAMPLER",
+          "type": "SAMPLER",
+          "links": [
+            926
+          ]
+        }
+      ],
+      "title": "KSampler Select (euler)",
+      "properties": {
+        "Node name for S&R": "KSamplerSelect"
+      },
+      "widgets_values": [
+        "euler"
+      ],
+      "widgets_values_named": {
+        "sampler_name": "euler"
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 524,
+      "type": "RandomNoise",
+      "pos": [
+        335.9056600300204,
+        4062.840365512085
+      ],
+      "size": [
+        270,
+        82
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "NOISE",
+          "type": "NOISE",
+          "links": [
+            925
+          ]
+        }
+      ],
+      "title": "Random Noise",
+      "properties": {
+        "Node name for S&R": "RandomNoise"
+      },
+      "widgets_values": [
+        482316605808414,
+        "randomize"
+      ],
+      "widgets_values_named": {
+        "noise_seed": 482316605808414,
+        "control_after_generate": "randomize"
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 525,
+      "type": "SamplerCustomAdvanced",
+      "pos": [
+        663.2934198927134,
+        4086.3998515688936
+      ],
+      "size": [
+        220.2388671875,
+        106
+      ],
+      "flags": {},
+      "order": 50,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "noise",
+          "type": "NOISE",
+          "link": 925
+        },
+        {
+          "name": "guider",
+          "type": "GUIDER",
+          "link": 932
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 926
+        },
+        {
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 927
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 933
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            928
+          ]
+        },
+        {
+          "name": "denoised_output",
+          "type": "LATENT",
+          "links": []
+        }
+      ],
+      "title": "Sampler Custom Advanced",
+      "properties": {
+        "Node name for S&R": "SamplerCustomAdvanced"
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 526,
+      "type": "CFGGuider",
+      "pos": [
+        335.9056600300204,
+        4222.840365512086
+      ],
+      "size": [
+        270,
+        98
+      ],
+      "flags": {},
+      "order": 49,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 962
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 930
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 931
+        }
+      ],
+      "outputs": [
+        {
+          "name": "GUIDER",
+          "type": "GUIDER",
+          "links": [
+            932
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CFGGuider"
+      },
+      "widgets_values": [
+        1
+      ],
+      "widgets_values_named": {
+        "cfg": 1
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 530,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        -868.1319675329811,
+        4118.407140404933
+      ],
+      "size": [
+        510,
+        82
+      ],
+      "flags": {},
+      "order": 38,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 945
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            957
+          ]
+        }
+      ],
+      "title": "femaled  LoRA",
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "models": [
+          {
+            "name": "p_q_image_2.1_6_steps_v0.2_comfyui_bf16.safetensors",
+            "url": "https://huggingface.co/PrunaAI/Pruna-Q-Image-2.1-ComfyUI/resolve/main/p_q_image_2.1_6_steps_v0.2_comfyui_bf16.safetensors",
+            "directory": "loras"
+          },
+          {
+            "name": "p_q_image_2.1_6_steps_upsampled_v0.2_comfyui_bf16.safetensors",
+            "url": "https://huggingface.co/PrunaAI/Pruna-Q-Image-2.1-ComfyUI/resolve/main/p_q_image_2.1_6_steps_upsampled_v0.2_comfyui_bf16.safetensors",
+            "directory": "loras"
+          }
+        ]
+      },
+      "widgets_values": [
+        "qwen21/qwen2_1-femaledVaginus-nsfw-v1.3-fine.safetensors",
+        0.6
+      ],
+      "widgets_values_named": {
+        "lora_name": "qwen21/qwen2_1-femaledVaginus-nsfw-v1.3-fine.safetensors",
+        "strength_model": 0.6
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 461,
+      "type": "SaveImageAdvanced",
+      "pos": [
+        986.8908974479599,
+        3802.8689105643844
+      ],
+      "size": [
+        794.7213625827139,
+        801.062585288395
+      ],
+      "flags": {},
+      "order": 52,
+      "mode": 0,
+      "showAdvanced": true,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 919
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            964
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImageAdvanced"
+      },
+      "widgets_values": [
+        "Pruna_Q_Image_2.1",
+        "png",
+        "8-bit",
+        "sRGB"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "Pruna_Q_Image_2.1",
+        "format": "png",
+        "format.bit_depth": "8-bit",
+        "format.input_color_space": "sRGB"
+      }
+    },
+    {
+      "id": 501,
+      "type": "MarkdownNote",
+      "pos": [
+        1405.347045488167,
+        2061.379151355516
+      ],
+      "size": [
+        420,
+        480
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Note: PE",
+      "properties": {},
+      "widgets_values": [
+        "## Prompt Enhancer\n\nThe prompt enhancer rewrites your instruction with the Qwen 3.5 prompt enhancer model before the edit model sees it. These settings follow the official prompt enhancer release, and the ones you are most likely to change are exposed on the node.\n\n- `refine_prompt`: on runs the rewrite and feeds it to the edit model, off passes your instruction through as written. On gives the edit model a fuller prompt and usually better results; off skips the rewrite pass and the run finishes faster. This template starts with it off.\n- `thinking`: turn this on together with the enhancer. The checkpoint was trained with a reasoning block and loses quality without it.\n- `max_length`: the token budget for the reasoning block plus the rewritten prompt, 4096 here. The official setting is 24000; this template caps it lower so a single rewrite cannot run for many minutes.\n- `sampling_mode`: the sampling values live inside the subgraph. They follow the official ones: `temperature` 1.0, `top_p` 0.95, `top_k` 20, `min_p` 0, `presence_penalty` 0, `repetition_penalty` 1.0.\n\nThe enhancer checkpoint and its system prompt live inside the subgraph."
+      ],
+      "widgets_values_named": {
+        "text": "## Prompt Enhancer\n\nThe prompt enhancer rewrites your instruction with the Qwen 3.5 prompt enhancer model before the edit model sees it. These settings follow the official prompt enhancer release, and the ones you are most likely to change are exposed on the node.\n\n- `refine_prompt`: on runs the rewrite and feeds it to the edit model, off passes your instruction through as written. On gives the edit model a fuller prompt and usually better results; off skips the rewrite pass and the run finishes faster. This template starts with it off.\n- `thinking`: turn this on together with the enhancer. The checkpoint was trained with a reasoning block and loses quality without it.\n- `max_length`: the token budget for the reasoning block plus the rewritten prompt, 4096 here. The official setting is 24000; this template caps it lower so a single rewrite cannot run for many minutes.\n- `sampling_mode`: the sampling values live inside the subgraph. They follow the official ones: `temperature` 1.0, `top_p` 0.95, `top_k` 20, `min_p` 0, `presence_penalty` 0, `repetition_penalty` 1.0.\n\nThe enhancer checkpoint and its system prompt live inside the subgraph."
+      },
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 517,
+      "type": "CLIPLoader",
+      "pos": [
+        -284.05740388599764,
+        2073.3743010723197
+      ],
+      "size": [
+        530,
+        120
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            939
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader",
+        "models": [
+          {
+            "name": "qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors",
+            "directory": "text_encoders"
+          }
+        ]
+      },
+      "widgets_values": [
+        "qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors",
+        "qwen_image",
+        "default"
+      ],
+      "widgets_values_named": {
+        "clip_name": "qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors",
+        "type": "qwen_image",
+        "device": "default"
+      }
+    },
+    {
+      "id": 520,
+      "type": "BatchImagesNode",
+      "pos": [
+        -58.106519951322355,
+        2184.8569340772938
+      ],
+      "size": [
+        230,
+        270
+      ],
+      "flags": {},
+      "order": 33,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images.image0",
+          "type": "IMAGE",
+          "link": 977
+        },
+        {
+          "name": "images.image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image5",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image6",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image7",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image8",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image9",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image10",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image11",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image12",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image13",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            940
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BatchImagesNode"
+      }
+    },
+    {
+      "id": 521,
+      "type": "TextGenerate",
+      "pos": [
+        395.94259611400236,
+        2073.3743010723197
+      ],
+      "size": [
+        400,
+        456
+      ],
+      "flags": {},
+      "order": 39,
+      "mode": 4,
+      "showAdvanced": true,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 939
+        },
+        {
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 940
+        },
+        {
+          "name": "video",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "system_prompt",
+          "shape": 7,
+          "type": "STRING",
+          "link": 941
+        }
+      ],
+      "outputs": [
+        {
+          "name": "generated_text",
+          "type": "STRING",
+          "links": [
+            924
+          ]
+        },
+        {
+          "name": "thinking",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "TextGenerate"
+      },
+      "widgets_values": [
+        "",
+        4096,
+        "on",
+        1,
+        20,
+        0.95,
+        0,
+        1,
+        0,
+        0,
+        true,
+        true,
+        "auto"
+      ],
+      "widgets_values_named": {
+        "prompt": "",
+        "max_length": 4096,
+        "sampling_mode": "on",
+        "sampling_mode.temperature": 1,
+        "sampling_mode.top_k": 20,
+        "sampling_mode.top_p": 0.95,
+        "sampling_mode.min_p": 0,
+        "sampling_mode.repetition_penalty": 1,
+        "sampling_mode.seed": 0,
+        "sampling_mode.presence_penalty": 0,
+        "thinking": true,
+        "use_default_template": true,
+        "mtp": "auto"
+      }
+    },
+    {
+      "id": 528,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -252.80465383494894,
+        2297.2589881248355
+      ],
+      "size": [
+        620,
+        240
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            941
+          ]
+        }
+      ],
+      "title": "Text (System Prompt)",
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "# Edit Prompt Enhancer — General (v2, 精简版)\n\n**FIRST — there are TWO separate language decisions. Do NOT conflate them.**\n\n**(A) Language of the rewritten prompt's DESCRIPTIVE prose — every word OUTSIDE double quotes (the description you write for the diffusion model, NOT the text painted into the image). This decision is final and non-negotiable:**\n- User instruction is in Chinese → write the description in Chinese.\n- User instruction is in English → write the description in English.\n- User instruction is in ANY other language (Japanese, Korean, French, Spanish, Thai, etc.) → write the description in English.\n\n**(B) Language of the TEXT THAT WILL BE RENDERED INTO THE OUTPUT IMAGE — the content INSIDE double quotes. Decide it in this strict priority order:**\n1. If the user's instruction gives the exact text to write, OR names a target language for the text (e.g. \"改成'夏日特惠'\", \"把标题写成英文\", \"add a Japanese title\", \"write the caption in Thai\") → render exactly that text / in exactly that specified language.\n2. Otherwise, if the input image already contains text → render in the DOMINANT language of the image's existing text — even when the instruction is written in a different language.\n3. Otherwise (the image contains no text AND the instruction names no target language) → render in the language of the user's instruction itself — including Japanese, Korean, Thai, Arabic, French, etc. Do NOT force it to English.\nWorked example: image is mostly Thai, instruction is in English asking to add/redesign a title without giving the exact words or a language → the rendered (quoted) text must be **Thai** (the image's dominant language), while the surrounding description (A) is still written in English.\n\nTwo reinforcements on decision (B): all rendered (quoted) text must be **monolingual** — do not mix Chinese and English inside the quotes and do not emit a bilingual pair unless the user explicitly asks for one. And **genre never overrides input language**: a \"spec sheet / cinematic data-document / storyboard / technical parameter\" look is achieved through layout and typography, NOT by switching rendered labels to English — every header, label, and caption stays in the decided language (standardized units and user-given proper nouns may remain Latin).\n\nYou are an expert at clarifying image editing instructions. Given a user's vague or ambiguous edit instruction and the input image(s), rewrite it into a precise, unambiguous, actionable editing directive. An input image is ALWAYS present — this is always an image-editing task, never text-to-image from nothing.\n\n## Core Objective\n\nRewrite the instruction so a downstream image-editing model can execute it without guessing — anchored on what the input image(s) actually show, faithful to the user's intent, inventing nothing.\n\n**How much you build is intent-branched.** When the user wants *this picture changed* (a local object/attribute/background edit, a text or UI edit, a quality or style change, a viewpoint/canvas transform), clarify and constrain: say exactly what changes, and let everything else stand. When the user wants *a new picture of this subject* (placing a subject in a new scene, compositing across images, a photo-shoot or poster or infographic built from a reference), construct actively: design the scene, lighting, composition and layout to a professional standard. Scale the elaboration to what was asked — a plain placement stays restrained, a styled shoot or a publication-grade poster is built out fully.\n\n## The Governing Principle — Attribute Disentanglement at Full Strength\n\n**Edit exactly the attribute(s) the user named, push each to a strong and unmistakable degree, and hold everything else at input fidelity.**\n\nBoth halves matter, and the two failure modes are symmetric:\n\n- **Leakage** — touching what the user did not name (a sharpen that re-grades color, an upscale that reframes, a style change that drifts a face, an outfit swap that drops an accessory, a background change that \"helpfully\" cleans up something unmentioned).\n- **Under-editing** — an output a viewer could mistake for the unedited input, because the requested change was applied faintly.\n\nPreservation locks **content, never edit strength**. Recognizability is bought by naming what stays fixed, not by holding the effect back.\n\n## What to Anchor, What to Decide\n\n**Anchor on the image.** Every spatial, tonal and contextual claim comes from what is visibly there. If you are unsure a detail exists, leave it out — a preserved element described at a higher level of abstraction is always safer than an invented specific.\n\n**Say what stays, without repainting it.** Name the untargeted content by type, position and role rather than describing its appearance, and prefer one blanket preservation clause over walking the frame. A preservation description reads to the model as a generation instruction: the more concretely you describe something you meant to keep, the more likely it drifts. Describe appearance concretely only for what you are actually changing, or when it is the only way to disambiguate between similar objects.\n\n**Identity is the hardest invariant.** A person's facial identity and the personal accessories that make them recognizable; a product's exact design, markings and count; and the input's rendering medium (photograph, anime, illustration, sketch, 3D render, painting) all survive every edit unless the user explicitly targets them. When identity comes from a reference image, point at that image rather than describing features in words — verbal descriptions make the model regenerate and degrade the likeness.\n\n**Resolve ambiguity, then commit.** Turn vague intent, imprecise spatial reference and unparameterized style words into something concrete and observable. Translate abstract quality language into the visual properties it implies. Where the instruction offers alternatives or contradicts itself, pick the most reasonable reading and state it as a decision. Keep the user's own action verb, spatial relations and described state intact, and treat anything they asked to preserve as absolute. Preserve creative or physically impossible intent rather than correcting it.\n\n**Only what was asked.** Do not add operations the user did not request, and do not clean up unmentioned defects, overlays or clutter however prominent they look. When an edit removes, moves or reveals something, say enough about the newly exposed region that the result stays physically coherent.\n\n**Text in the image is literal.** Whenever readable text will appear in the output, commit to the exact characters — every element, quoted, nothing summarized or abbreviated away. Text you cannot commit to should not be added at all. Match the typography and language the input establishes unless the user asks otherwise. When the operation extends the canvas outward, name it as outpainting explicitly.\n\n**Write it as an instruction.** Lead with the operation, not a description of the finished picture, and write from the perspective of someone holding only the input image(s).\n\n## Thinking Process\n\nBefore emitting the final prompt, reason through: what the image(s) actually contain (including a complete reading of any text present); what the user is asking for and which attributes that names; what must therefore stay fixed; and finally the composed directive. Close with a check that every visible element is either the target of the edit or covered by what stays fixed, that the requested change is unmistakable, that nothing outside the target was touched, and that every quoted string obeys language decision (B).\n\n## Image Reference Rules\n\nFor Multi-Image Input (N >= 2), the rewritten instruction MUST use `<image1>`, `<image2>`, ... to refer to each input image. Do not use natural language references like \"图1\", \"第一张图\", \"the first image\", or \"image A\". This tagging format is mandatory and non-negotiable. For single-image input (N = 1), do NOT use tags — refer to the image naturally (\"图像\", \"图片中\", \"the image\").\n\nState each image's role explicitly — which one is the canvas whose composition and untargeted content survive, and which supply material to transfer — and say what is taken from each. For scene generation with no canvas (合影/合照 and the like), all images serve as identity sources. Describe every referenced image individually; never compress several into a range or a group to avoid describing them one by one.\n\n## Output Format\nOutput ONLY the rewritten editing instruction itself: one single continuous paragraph of plain text.\n\nFormatting rules:\n- The entire rewritten prompt must be a single continuous paragraph with NO line breaks or newline characters.\n- The response must contain nothing except the instruction itself: no object or array wrapper, no field names or key-value pairs, no headings, labels, or prefaces, no greetings, explanations, or commentary, no markdown, and no code fences. Begin with the first word of the instruction and end with its last word.\n- Do not wrap the whole instruction in quotes: double quotes are reserved for text that will be RENDERED in the image (next rule).\n- All text that should appear as visible, readable content in the output image must be enclosed in double quotes (\"\"). Descriptive or structural language that does not appear as rendered text should NOT be quoted.\n- **Never include any resolution or aspect ratio information** (e.g., \"2:3\", \"16:9\", \"1920x1080\", \"2K\", \"4K\"). Output size is decided downstream, not by you.\n- Write it out in full — no ellipsis, no truncation.\n- State requirements affirmatively (\"保持背景与输入图完全一致\") rather than as prohibitions (\"禁止改变背景\"). Standard preservation phrasing \"保持/保留[X]不变\" is fine.\n- Be precise and decisive: no hedging, no unresolved alternatives, no vague degree words left unresolved.\n- The descriptive prose (outside double quotes) follows language decision (A); the text rendered inside the image (inside double quotes) follows language decision (B). Retain proper nouns and domain-specific terms in their original language, placed in English double quotes.\n- **Language-purge self-check (do this last)**: re-scan every double-quoted string — the text that will be RENDERED in the image — and enforce language decision (B). No quoted string may mix Chinese and English, form a bilingual pair, or carry a parenthetical translation gloss unless the user explicitly asked. Standardized units and user-given proper nouns may remain Latin.\n\nThe user's edit instruction to rewrite is:"
+      ],
+      "widgets_values_named": {
+        "value": "# Edit Prompt Enhancer — General (v2, 精简版)\n\n**FIRST — there are TWO separate language decisions. Do NOT conflate them.**\n\n**(A) Language of the rewritten prompt's DESCRIPTIVE prose — every word OUTSIDE double quotes (the description you write for the diffusion model, NOT the text painted into the image). This decision is final and non-negotiable:**\n- User instruction is in Chinese → write the description in Chinese.\n- User instruction is in English → write the description in English.\n- User instruction is in ANY other language (Japanese, Korean, French, Spanish, Thai, etc.) → write the description in English.\n\n**(B) Language of the TEXT THAT WILL BE RENDERED INTO THE OUTPUT IMAGE — the content INSIDE double quotes. Decide it in this strict priority order:**\n1. If the user's instruction gives the exact text to write, OR names a target language for the text (e.g. \"改成'夏日特惠'\", \"把标题写成英文\", \"add a Japanese title\", \"write the caption in Thai\") → render exactly that text / in exactly that specified language.\n2. Otherwise, if the input image already contains text → render in the DOMINANT language of the image's existing text — even when the instruction is written in a different language.\n3. Otherwise (the image contains no text AND the instruction names no target language) → render in the language of the user's instruction itself — including Japanese, Korean, Thai, Arabic, French, etc. Do NOT force it to English.\nWorked example: image is mostly Thai, instruction is in English asking to add/redesign a title without giving the exact words or a language → the rendered (quoted) text must be **Thai** (the image's dominant language), while the surrounding description (A) is still written in English.\n\nTwo reinforcements on decision (B): all rendered (quoted) text must be **monolingual** — do not mix Chinese and English inside the quotes and do not emit a bilingual pair unless the user explicitly asks for one. And **genre never overrides input language**: a \"spec sheet / cinematic data-document / storyboard / technical parameter\" look is achieved through layout and typography, NOT by switching rendered labels to English — every header, label, and caption stays in the decided language (standardized units and user-given proper nouns may remain Latin).\n\nYou are an expert at clarifying image editing instructions. Given a user's vague or ambiguous edit instruction and the input image(s), rewrite it into a precise, unambiguous, actionable editing directive. An input image is ALWAYS present — this is always an image-editing task, never text-to-image from nothing.\n\n## Core Objective\n\nRewrite the instruction so a downstream image-editing model can execute it without guessing — anchored on what the input image(s) actually show, faithful to the user's intent, inventing nothing.\n\n**How much you build is intent-branched.** When the user wants *this picture changed* (a local object/attribute/background edit, a text or UI edit, a quality or style change, a viewpoint/canvas transform), clarify and constrain: say exactly what changes, and let everything else stand. When the user wants *a new picture of this subject* (placing a subject in a new scene, compositing across images, a photo-shoot or poster or infographic built from a reference), construct actively: design the scene, lighting, composition and layout to a professional standard. Scale the elaboration to what was asked — a plain placement stays restrained, a styled shoot or a publication-grade poster is built out fully.\n\n## The Governing Principle — Attribute Disentanglement at Full Strength\n\n**Edit exactly the attribute(s) the user named, push each to a strong and unmistakable degree, and hold everything else at input fidelity.**\n\nBoth halves matter, and the two failure modes are symmetric:\n\n- **Leakage** — touching what the user did not name (a sharpen that re-grades color, an upscale that reframes, a style change that drifts a face, an outfit swap that drops an accessory, a background change that \"helpfully\" cleans up something unmentioned).\n- **Under-editing** — an output a viewer could mistake for the unedited input, because the requested change was applied faintly.\n\nPreservation locks **content, never edit strength**. Recognizability is bought by naming what stays fixed, not by holding the effect back.\n\n## What to Anchor, What to Decide\n\n**Anchor on the image.** Every spatial, tonal and contextual claim comes from what is visibly there. If you are unsure a detail exists, leave it out — a preserved element described at a higher level of abstraction is always safer than an invented specific.\n\n**Say what stays, without repainting it.** Name the untargeted content by type, position and role rather than describing its appearance, and prefer one blanket preservation clause over walking the frame. A preservation description reads to the model as a generation instruction: the more concretely you describe something you meant to keep, the more likely it drifts. Describe appearance concretely only for what you are actually changing, or when it is the only way to disambiguate between similar objects.\n\n**Identity is the hardest invariant.** A person's facial identity and the personal accessories that make them recognizable; a product's exact design, markings and count; and the input's rendering medium (photograph, anime, illustration, sketch, 3D render, painting) all survive every edit unless the user explicitly targets them. When identity comes from a reference image, point at that image rather than describing features in words — verbal descriptions make the model regenerate and degrade the likeness.\n\n**Resolve ambiguity, then commit.** Turn vague intent, imprecise spatial reference and unparameterized style words into something concrete and observable. Translate abstract quality language into the visual properties it implies. Where the instruction offers alternatives or contradicts itself, pick the most reasonable reading and state it as a decision. Keep the user's own action verb, spatial relations and described state intact, and treat anything they asked to preserve as absolute. Preserve creative or physically impossible intent rather than correcting it.\n\n**Only what was asked.** Do not add operations the user did not request, and do not clean up unmentioned defects, overlays or clutter however prominent they look. When an edit removes, moves or reveals something, say enough about the newly exposed region that the result stays physically coherent.\n\n**Text in the image is literal.** Whenever readable text will appear in the output, commit to the exact characters — every element, quoted, nothing summarized or abbreviated away. Text you cannot commit to should not be added at all. Match the typography and language the input establishes unless the user asks otherwise. When the operation extends the canvas outward, name it as outpainting explicitly.\n\n**Write it as an instruction.** Lead with the operation, not a description of the finished picture, and write from the perspective of someone holding only the input image(s).\n\n## Thinking Process\n\nBefore emitting the final prompt, reason through: what the image(s) actually contain (including a complete reading of any text present); what the user is asking for and which attributes that names; what must therefore stay fixed; and finally the composed directive. Close with a check that every visible element is either the target of the edit or covered by what stays fixed, that the requested change is unmistakable, that nothing outside the target was touched, and that every quoted string obeys language decision (B).\n\n## Image Reference Rules\n\nFor Multi-Image Input (N >= 2), the rewritten instruction MUST use `<image1>`, `<image2>`, ... to refer to each input image. Do not use natural language references like \"图1\", \"第一张图\", \"the first image\", or \"image A\". This tagging format is mandatory and non-negotiable. For single-image input (N = 1), do NOT use tags — refer to the image naturally (\"图像\", \"图片中\", \"the image\").\n\nState each image's role explicitly — which one is the canvas whose composition and untargeted content survive, and which supply material to transfer — and say what is taken from each. For scene generation with no canvas (合影/合照 and the like), all images serve as identity sources. Describe every referenced image individually; never compress several into a range or a group to avoid describing them one by one.\n\n## Output Format\nOutput ONLY the rewritten editing instruction itself: one single continuous paragraph of plain text.\n\nFormatting rules:\n- The entire rewritten prompt must be a single continuous paragraph with NO line breaks or newline characters.\n- The response must contain nothing except the instruction itself: no object or array wrapper, no field names or key-value pairs, no headings, labels, or prefaces, no greetings, explanations, or commentary, no markdown, and no code fences. Begin with the first word of the instruction and end with its last word.\n- Do not wrap the whole instruction in quotes: double quotes are reserved for text that will be RENDERED in the image (next rule).\n- All text that should appear as visible, readable content in the output image must be enclosed in double quotes (\"\"). Descriptive or structural language that does not appear as rendered text should NOT be quoted.\n- **Never include any resolution or aspect ratio information** (e.g., \"2:3\", \"16:9\", \"1920x1080\", \"2K\", \"4K\"). Output size is decided downstream, not by you.\n- Write it out in full — no ellipsis, no truncation.\n- State requirements affirmatively (\"保持背景与输入图完全一致\") rather than as prohibitions (\"禁止改变背景\"). Standard preservation phrasing \"保持/保留[X]不变\" is fine.\n- Be precise and decisive: no hedging, no unresolved alternatives, no vague degree words left unresolved.\n- The descriptive prose (outside double quotes) follows language decision (A); the text rendered inside the image (inside double quotes) follows language decision (B). Retain proper nouns and domain-specific terms in their original language, placed in English double quotes.\n- **Language-purge self-check (do this last)**: re-scan every double-quoted string — the text that will be RENDERED in the image — and enforce language decision (B). No quoted string may mix Chinese and English, form a bilingual pair, or carry a parenthetical translation gloss unless the user explicitly asked. Standardized units and user-given proper nouns may remain Latin.\n\nThe user's edit instruction to rewrite is:"
+      }
+    },
+    {
+      "id": 516,
+      "type": "TextEncodeQwenImage21",
+      "pos": [
+        -239.9161032573315,
+        3851.6643841113714
+      ],
+      "size": [
+        319.1824626528718,
+        466
+      ],
+      "flags": {},
+      "order": 44,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 963
+        },
+        {
+          "name": "images.image_1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 1030
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 936
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": 998
+        },
+        {
+          "name": "images.image_12",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 979
+        },
+        {
+          "name": "images.image_13",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image_4",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image_5",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image_6",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image_7",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image_8",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image_9",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image_10",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image_11",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image_2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image_3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            930
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            931
+          ]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            922
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImage21"
+      },
+      "widgets_values": [
+        "",
+        "",
+        992
+      ],
+      "widgets_values_named": {
+        "prompt": "",
+        "negative_prompt": "",
+        "resolution": 992
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 519,
+      "type": "ComfySwitchNode",
+      "pos": [
+        637.755156973003,
+        2577.9065473047385
+      ],
+      "size": [
+        270,
+        80
+      ],
+      "flags": {},
+      "order": 43,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "on_false",
+          "shape": 7,
+          "type": "STRING",
+          "link": 997
+        },
+        {
+          "name": "on_true",
+          "shape": 7,
+          "type": "STRING",
+          "link": 924
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "STRING",
+          "links": [
+            923
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ComfySwitchNode"
+      },
+      "widgets_values": [
+        false
+      ],
+      "widgets_values_named": {
+        "switch": false
+      }
+    },
+    {
+      "id": 518,
+      "type": "PreviewAny",
+      "pos": [
+        904.7431942508523,
+        2031.8630426424759
+      ],
+      "size": [
+        470,
+        680
+      ],
+      "flags": {},
+      "order": 46,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 923
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    },
+    {
+      "id": 532,
+      "type": "ModelAttentionBackend",
+      "pos": [
+        -612.4529777562037,
+        4257.6362522349
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 48,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 958
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "links": [
+            962
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelAttentionBackend"
+      },
+      "widgets_values": [
+        "comfy kitchen attention"
+      ],
+      "widgets_values_named": {
+        "attention": "comfy kitchen attention"
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 511,
+      "type": "VAELoader",
+      "pos": [
+        -858.6151718383779,
+        4862.062048770801
+      ],
+      "size": [
+        510,
+        70
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            918,
+            936
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader",
+        "models": [
+          {
+            "name": "qwen_image_2.1_vae_bf16.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/vae/qwen_image_2.1_vae_bf16.safetensors",
+            "directory": "vae"
+          }
+        ]
+      },
+      "widgets_values": [
+        "qwen_image_2.1_vae_bf16.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 509,
+      "type": "UNETLoader",
+      "pos": [
+        -874.925974540889,
+        3859.522596541828
+      ],
+      "size": [
+        510,
+        90
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            921
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "qwen_image_2.1_int8_convrot.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/diffusion_models/qwen_image_2.1_int8_convrot.safetensors",
+            "directory": "diffusion_models"
+          }
+        ]
+      },
+      "widgets_values": [
+        "qwen_image_2.1_int8_convrot.safetensors",
+        "default"
+      ],
+      "widgets_values_named": {
+        "unet_name": "qwen_image_2.1_int8_convrot.safetensors",
+        "weight_dtype": "default"
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 527,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        -872.4833667985831,
+        3992.2177204432473
+      ],
+      "size": [
+        510,
+        82
+      ],
+      "flags": {},
+      "order": 31,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 921
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            945
+          ]
+        }
+      ],
+      "title": "Load Pruna-Q-Image-2.1 LoRA",
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "models": [
+          {
+            "name": "p_q_image_2.1_6_steps_v0.2_comfyui_bf16.safetensors",
+            "url": "https://huggingface.co/PrunaAI/Pruna-Q-Image-2.1-ComfyUI/resolve/main/p_q_image_2.1_6_steps_v0.2_comfyui_bf16.safetensors",
+            "directory": "loras"
+          },
+          {
+            "name": "p_q_image_2.1_6_steps_upsampled_v0.2_comfyui_bf16.safetensors",
+            "url": "https://huggingface.co/PrunaAI/Pruna-Q-Image-2.1-ComfyUI/resolve/main/p_q_image_2.1_6_steps_upsampled_v0.2_comfyui_bf16.safetensors",
+            "directory": "loras"
+          }
+        ]
+      },
+      "widgets_values": [
+        "qwen21/p_q_image_2.1_6_steps_upsampled_v0.2_comfyui_bf16.safetensors",
+        1
+      ],
+      "widgets_values_named": {
+        "lora_name": "qwen21/p_q_image_2.1_6_steps_upsampled_v0.2_comfyui_bf16.safetensors",
+        "strength_model": 1
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 545,
+      "type": "easy loraStackApply",
+      "pos": [
+        -841.81899112439,
+        4255.913794796024
+      ],
+      "size": [
+        184.05625,
+        66
+      ],
+      "flags": {},
+      "order": 45,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "lora_stack",
+          "type": "LORA_STACK",
+          "link": 1009
+        },
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 957
+        },
+        {
+          "name": "optional_clip",
+          "shape": 7,
+          "type": "CLIP",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "links": [
+            958
+          ]
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy loraStackApply"
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 546,
+      "type": "ResolutionSelector",
+      "pos": [
+        -199.7101653548629,
+        3300.0877724919474
+      ],
+      "size": [
+        300,
+        190
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "showAdvanced": false,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            960
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            961
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ResolutionSelector"
+      },
+      "widgets_values": [
+        "1:1 (Square)",
+        1,
+        32
+      ],
+      "widgets_values_named": {
+        "aspect_ratio": "1:1 (Square)",
+        "megapixels": 1,
+        "multiple": 32
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 548,
+      "type": "CLIPLoader",
+      "pos": [
+        -852.5643395264093,
+        4692.393432212927
+      ],
+      "size": [
+        510,
+        120
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            963
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader",
+        "models": [
+          {
+            "name": "qwen3vl_8b_int8_convrot.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3vl_8b_int8_convrot.safetensors",
+            "directory": "text_encoders"
+          }
+        ]
+      },
+      "widgets_values": [
+        "qwen3vl_8b_int8_convrot.safetensors",
+        "qwen_image",
+        "default"
+      ],
+      "widgets_values_named": {
+        "clip_name": "qwen3vl_8b_int8_convrot.safetensors",
+        "type": "qwen_image",
+        "device": "default"
+      },
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 549,
+      "type": "XiaozhuguangImageCompareCustom",
+      "pos": [
+        1008.5904418163595,
+        2852.602890709071
+      ],
+      "size": [
+        802.7630727428796,
+        680.3108026656837
+      ],
+      "flags": {},
+      "order": 53,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "a",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 964
+        },
+        {
+          "name": "b",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 978
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "xzg_preview_background": "checker",
+        "xzg_preview_custom_color": "#303030"
+      },
+      "widgets_values": [
+        false,
+        true,
+        []
+      ],
+      "widgets_values_named": {
+        "reduce_lag": false,
+        "show_line": true,
+        "xzg_image_compare": {
+          "images": []
+        }
+      },
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 551,
+      "type": "LoadImage",
+      "pos": [
+        -908.046497657466,
+        2817.098002912123
+      ],
+      "size": [
+        351.59115163987053,
+        548.8686769486816
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            977,
+            978,
+            1028
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "title": "图1",
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "guhaiImageValue": "0a8317f8-f69b-4211-a0b8-998693fd26cf.jpeg"
+      },
+      "widgets_values": [
+        "0a8317f8-f69b-4211-a0b8-998693fd26cf.jpeg",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "0a8317f8-f69b-4211-a0b8-998693fd26cf.jpeg",
+        "upload": "image"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 552,
+      "type": "LoadImage",
+      "pos": [
+        -527.7502866045664,
+        2823.695834737107
+      ],
+      "size": [
+        292.10211279995826,
+        538.4787471298287
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            979
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "title": "图2",
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "guhaiImageValue": "612b6646-ef48-41c9-8632-4ff0ba02add6 (1).jpeg"
+      },
+      "widgets_values": [
+        "612b6646-ef48-41c9-8632-4ff0ba02add6 (1).jpeg",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "612b6646-ef48-41c9-8632-4ff0ba02add6 (1).jpeg",
+        "upload": "image"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 553,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1361.1045453392146,
+        2874.140723378932
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            1010
+          ]
+        }
+      ],
+      "title": "扩图提示词",
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "移除图像中的灰色区域，无缝自然延展为完整图像。"
+      ],
+      "widgets_values_named": {
+        "value": "移除图像中的灰色区域，无缝自然延展为完整图像。"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 555,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -902.563773827752,
+        3432.6855078608914
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            1000
+          ]
+        }
+      ],
+      "title": "用户自定义提示词",
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "HD, enhance, red lipstick, mouth wide open"
+      ],
+      "widgets_values_named": {
+        "value": "HD, enhance, red lipstick, mouth wide open"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 556,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1363.6251764141207,
+        4101.4362787276705
+      ],
+      "size": [
+        397.7125970312595,
+        151.67349632444257
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            1015
+          ]
+        }
+      ],
+      "title": "移除提示词",
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "移除图像中的绿色区域，"
+      ],
+      "widgets_values_named": {
+        "value": "移除图像中的绿色区域，"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 558,
+      "type": "easy textIndexSwitch",
+      "pos": [
+        -382.248471300975,
+        3515.2634852779943
+      ],
+      "size": [
+        270,
+        218
+      ],
+      "flags": {},
+      "order": 36,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text0",
+          "shape": 7,
+          "type": "STRING",
+          "link": 1001
+        },
+        {
+          "name": "text1",
+          "shape": 7,
+          "type": "STRING",
+          "link": 1010
+        },
+        {
+          "name": "index",
+          "type": "INT",
+          "widget": {
+            "name": "index"
+          },
+          "link": 1003
+        },
+        {
+          "name": "text2",
+          "type": "*",
+          "link": 1011
+        },
+        {
+          "name": "text3",
+          "type": "*",
+          "link": 1012
+        },
+        {
+          "name": "text4",
+          "type": "*",
+          "link": 1013
+        },
+        {
+          "name": "text5",
+          "type": "*",
+          "link": 1014
+        },
+        {
+          "name": "text6",
+          "type": "*",
+          "link": 1015
+        },
+        {
+          "name": "text7",
+          "type": "*",
+          "link": 1027
+        },
+        {
+          "name": "text8",
+          "type": "*",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            999
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy textIndexSwitch"
+      },
+      "widgets_values": [
+        0
+      ],
+      "widgets_values_named": {
+        "index": 0
+      }
+    },
+    {
+      "id": 560,
+      "type": "StringConcatenate",
+      "pos": [
+        -1121.65453905032,
+        3207.104784705312
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 41,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string_a",
+          "type": "STRING",
+          "widget": {
+            "name": "string_a"
+          },
+          "link": 999
+        },
+        {
+          "name": "string_b",
+          "type": "STRING",
+          "widget": {
+            "name": "string_b"
+          },
+          "link": 1000
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            997,
+            998
+          ]
+        }
+      ],
+      "title": "拼接提示词",
+      "properties": {
+        "Node name for S&R": "StringConcatenate"
+      },
+      "widgets_values": [
+        "",
+        "",
+        ""
+      ],
+      "widgets_values_named": {
+        "string_a": "",
+        "string_b": "",
+        "delimiter": ""
+      }
+    },
+    {
+      "id": 561,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1369.734133972943,
+        2821.025404680547
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 16,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            1001
+          ]
+        }
+      ],
+      "title": "EmptyText",
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "widgets_values_named": {
+        "value": ""
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 562,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1365.8674299587403,
+        3616.3488925191346
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            1013
+          ]
+        }
+      ],
+      "title": "换脸提示词",
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "head_swap: start with <image1> as the base image, keeping its lighting, environment, and background. remove the head from <image1> completely and replace it with the head from <image2>, strictly preserving the hair, eye color, nose structure from <image2>. copy the direction of the eye and head rotation from <image1>; preserve the micro expressions from <image1>, high quality, sharp details, 4k。"
+      ],
+      "widgets_values_named": {
+        "value": "head_swap: start with <image1> as the base image, keeping its lighting, environment, and background. remove the head from <image1> completely and replace it with the head from <image2>, strictly preserving the hair, eye color, nose structure from <image2>. copy the direction of the eye and head rotation from <image1>; preserve the micro expressions from <image1>, high quality, sharp details, 4k。"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 563,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1375.9034826081554,
+        3123.17223726376
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            1011
+          ]
+        }
+      ],
+      "title": "抠图提示词",
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "Xinbao，抠出【红色标记出来的主体】，移除背景和所有外部遮挡物，补全其被遮挡的部分并显示完整主体；保持原有位置、比例、视角、颜色、材质和未遮挡细节不变，输出透明背景PNG。"
+      ],
+      "widgets_values_named": {
+        "value": "Xinbao，抠出【红色标记出来的主体】，移除背景和所有外部遮挡物，补全其被遮挡的部分并显示完整主体；保持原有位置、比例、视角、颜色、材质和未遮挡细节不变，输出透明背景PNG。"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 564,
+      "type": "PrimitiveInt",
+      "pos": [
+        -1396.8832483983545,
+        4627.788035082837
+      ],
+      "size": [
+        270,
+        82
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            1003,
+            1004,
+            1016
+          ]
+        }
+      ],
+      "title": "lora 选择",
+      "properties": {
+        "Node name for S&R": "PrimitiveInt"
+      },
+      "widgets_values": [
+        0,
+        "fixed"
+      ],
+      "widgets_values_named": {
+        "value": 0,
+        "control_after_generate": "fixed"
+      }
+    },
+    {
+      "id": 565,
+      "type": "easy mathInt",
+      "pos": [
+        -1036.4389415046471,
+        4655.799179840552
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 35,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "a",
+          "type": "INT",
+          "widget": {
+            "name": "a"
+          },
+          "link": 1004
+        }
+      ],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            1007
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy mathInt"
+      },
+      "widgets_values": [
+        0,
+        1,
+        "add"
+      ],
+      "widgets_values_named": {
+        "a": 0,
+        "b": 1,
+        "operation": "add"
+      }
+    },
+    {
+      "id": 566,
+      "type": "easy loraSwitcher",
+      "pos": [
+        -843.7849722629508,
+        4361.183114565424
+      ],
+      "size": [
+        467.8617046402362,
+        174
+      ],
+      "flags": {},
+      "order": 42,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "optional_lora_stack",
+          "shape": 7,
+          "type": "LORA_STACK",
+          "link": null
+        },
+        {
+          "name": "select",
+          "type": "INT",
+          "widget": {
+            "name": "select"
+          },
+          "link": 1007
+        },
+        {
+          "name": "lora_strength",
+          "type": "FLOAT",
+          "widget": {
+            "name": "lora_strength"
+          },
+          "link": 1019
+        }
+      ],
+      "outputs": [
+        {
+          "name": "lora_stack",
+          "type": "LORA_STACK",
+          "links": [
+            1009
+          ]
+        },
+        {
+          "name": "lora_name",
+          "type": "*",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy loraSwitcher"
+      },
+      "widgets_values": [
+        true,
+        1,
+        9,
+        1,
+        "None",
+        "qwen21/Qwen2.1_扩图_GH_3750.safetensors",
+        "qwen21/心宝强化抠图.safetensors",
+        "qwen21/Qwen21-水印移除watermark_remover_v2.safetensors",
+        "qwen21/bfs_head_v1.1_qwen_2.1.safetensors",
+        "qwen21/pipi-qwen2.1-PhotoReal10.safetensors",
+        "qwen21/Qwen2.1_万物移除Remove_GH.safetensors",
+        "qwen21/angles_v2_full_qwen21_multiple_angles_v2_qwen21_multiple_angles_v2_000001500.safetensors",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None"
+      ],
+      "widgets_values_named": {
+        "toggle": true,
+        "select": 1,
+        "num_loras": 9,
+        "lora_strength": 1,
+        "lora_1_name": "None",
+        "lora_2_name": "qwen21/Qwen2.1_扩图_GH_3750.safetensors",
+        "lora_3_name": "qwen21/心宝强化抠图.safetensors",
+        "lora_4_name": "qwen21/Qwen21-水印移除watermark_remover_v2.safetensors",
+        "lora_5_name": "qwen21/bfs_head_v1.1_qwen_2.1.safetensors",
+        "lora_6_name": "qwen21/pipi-qwen2.1-PhotoReal10.safetensors",
+        "lora_7_name": "qwen21/Qwen2.1_万物移除Remove_GH.safetensors",
+        "lora_8_name": "qwen21/angles_v2_full_qwen21_multiple_angles_v2_qwen21_multiple_angles_v2_000001500.safetensors",
+        "lora_9_name": "None",
+        "lora_10_name": "None",
+        "lora_11_name": "None",
+        "lora_12_name": "None",
+        "lora_13_name": "None",
+        "lora_14_name": "None",
+        "lora_15_name": "None",
+        "lora_16_name": "None",
+        "lora_17_name": "None",
+        "lora_18_name": "None",
+        "lora_19_name": "None",
+        "lora_20_name": "None",
+        "lora_21_name": "None",
+        "lora_22_name": "None",
+        "lora_23_name": "None",
+        "lora_24_name": "None",
+        "lora_25_name": "None",
+        "lora_26_name": "None",
+        "lora_27_name": "None",
+        "lora_28_name": "None",
+        "lora_29_name": "None",
+        "lora_30_name": "None",
+        "lora_31_name": "None",
+        "lora_32_name": "None",
+        "lora_33_name": "None",
+        "lora_34_name": "None",
+        "lora_35_name": "None",
+        "lora_36_name": "None",
+        "lora_37_name": "None",
+        "lora_38_name": "None",
+        "lora_39_name": "None",
+        "lora_40_name": "None",
+        "lora_41_name": "None",
+        "lora_42_name": "None",
+        "lora_43_name": "None",
+        "lora_44_name": "None",
+        "lora_45_name": "None",
+        "lora_46_name": "None",
+        "lora_47_name": "None",
+        "lora_48_name": "None",
+        "lora_49_name": "None",
+        "lora_50_name": "None"
+      }
+    },
+    {
+      "id": 567,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1367.5749018797987,
+        3369.0471994192085
+      ],
+      "size": [
+        390.85038812503797,
+        199.50432023142594
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            1012
+          ]
+        }
+      ],
+      "title": "水印提示词",
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "remove all watermark."
+      ],
+      "widgets_values_named": {
+        "value": "remove all watermark."
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 568,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1364.3961848317877,
+        3859.574626912512
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            1014
+          ]
+        }
+      ],
+      "title": "生图提示词",
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "photorealistic,"
+      ],
+      "widgets_values_named": {
+        "value": "photorealistic,"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 570,
+      "type": "easy anythingIndexSwitch",
+      "pos": [
+        -1737.6271576417478,
+        3756.1503628045166
+      ],
+      "size": [
+        270,
+        218
+      ],
+      "flags": {},
+      "order": 37,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "value0",
+          "shape": 7,
+          "type": "*",
+          "link": 1018
+        },
+        {
+          "name": "value1",
+          "shape": 7,
+          "type": "*",
+          "link": 1020
+        },
+        {
+          "name": "index",
+          "type": "INT",
+          "widget": {
+            "name": "index"
+          },
+          "link": 1016
+        },
+        {
+          "name": "value2",
+          "type": "*",
+          "link": 1021
+        },
+        {
+          "name": "value3",
+          "type": "*",
+          "link": 1022
+        },
+        {
+          "name": "value4",
+          "type": "*",
+          "link": 1023
+        },
+        {
+          "name": "value5",
+          "type": "*",
+          "link": 1024
+        },
+        {
+          "name": "value6",
+          "type": "*",
+          "link": 1025
+        },
+        {
+          "name": "value7",
+          "type": "*",
+          "link": 1026
+        },
+        {
+          "name": "value8",
+          "type": "*",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "value",
+          "type": "*",
+          "links": [
+            1019
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy anythingIndexSwitch"
+      },
+      "widgets_values": [
+        0
+      ],
+      "widgets_values_named": {
+        "index": 0
+      }
+    },
+    {
+      "id": 571,
+      "type": "PrimitiveFloat",
+      "pos": [
+        -1698.1956046756459,
+        2828.6607554695784
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            1018
+          ]
+        }
+      ],
+      "title": "Empty",
+      "properties": {
+        "Node name for S&R": "PrimitiveFloat"
+      },
+      "widgets_values": [
+        0
+      ],
+      "widgets_values_named": {
+        "value": 0
+      }
+    },
+    {
+      "id": 572,
+      "type": "PrimitiveFloat",
+      "pos": [
+        -1695.3738446148354,
+        2946.5870634489775
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            1020
+          ]
+        }
+      ],
+      "title": "扩图权重",
+      "properties": {
+        "Node name for S&R": "PrimitiveFloat"
+      },
+      "widgets_values": [
+        1
+      ],
+      "widgets_values_named": {
+        "value": 1
+      }
+    },
+    {
+      "id": 573,
+      "type": "PrimitiveFloat",
+      "pos": [
+        -1705.5375536310084,
+        3050.9663086607106
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            1021
+          ]
+        }
+      ],
+      "title": "抠图权重",
+      "properties": {
+        "Node name for S&R": "PrimitiveFloat"
+      },
+      "widgets_values": [
+        1
+      ],
+      "widgets_values_named": {
+        "value": 1
+      }
+    },
+    {
+      "id": 574,
+      "type": "PrimitiveFloat",
+      "pos": [
+        -1716.6607895386414,
+        3160.020405267801
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            1022
+          ]
+        }
+      ],
+      "title": "水印权重",
+      "properties": {
+        "Node name for S&R": "PrimitiveFloat"
+      },
+      "widgets_values": [
+        0.8
+      ],
+      "widgets_values_named": {
+        "value": 0.8
+      }
+    },
+    {
+      "id": 575,
+      "type": "PrimitiveFloat",
+      "pos": [
+        -1721.5993971411312,
+        3278.72434103924
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            1023
+          ]
+        }
+      ],
+      "title": "换脸",
+      "properties": {
+        "Node name for S&R": "PrimitiveFloat"
+      },
+      "widgets_values": [
+        0.7
+      ],
+      "widgets_values_named": {
+        "value": 0.7
+      }
+    },
+    {
+      "id": 576,
+      "type": "PrimitiveFloat",
+      "pos": [
+        -1714.5507398815926,
+        3391.280028672039
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            1024
+          ]
+        }
+      ],
+      "title": "生图权重",
+      "properties": {
+        "Node name for S&R": "PrimitiveFloat"
+      },
+      "widgets_values": [
+        0.8
+      ],
+      "widgets_values_named": {
+        "value": 0.8
+      }
+    },
+    {
+      "id": 577,
+      "type": "PrimitiveFloat",
+      "pos": [
+        -1713.4093121576284,
+        3500.9307600097445
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            1025
+          ]
+        }
+      ],
+      "title": "移除权重",
+      "properties": {
+        "Node name for S&R": "PrimitiveFloat"
+      },
+      "widgets_values": [
+        1
+      ],
+      "widgets_values_named": {
+        "value": 1
+      }
+    },
+    {
+      "id": 578,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1353.8322939841057,
+        4307.9792786228245
+      ],
+      "size": [
+        397.7125970312595,
+        151.67349632444257
+      ],
+      "flags": {},
+      "order": 29,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            1027
+          ]
+        }
+      ],
+      "title": "多角度提示词",
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "移除图像中的绿色区域，"
+      ],
+      "widgets_values_named": {
+        "value": "移除图像中的绿色区域，"
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 579,
+      "type": "PrimitiveFloat",
+      "pos": [
+        -1711.058243897512,
+        3623.0453363906363
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            1026
+          ]
+        }
+      ],
+      "title": "多角度权重",
+      "properties": {
+        "Node name for S&R": "PrimitiveFloat"
+      },
+      "widgets_values": [
+        0.9
+      ],
+      "widgets_values_named": {
+        "value": 0.9
+      }
+    },
+    {
+      "id": 580,
+      "type": "ImageResizeByMegapixels",
+      "pos": [
+        -67.94382435235877,
+        2865.119139328397
+      ],
+      "size": [
+        350.478125,
+        330
+      ],
+      "flags": {},
+      "order": 34,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1028
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1029
+          ]
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "longest_edge",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageResizeByMegapixels"
+      },
+      "widgets_values": [
+        1,
+        "default",
+        "crop",
+        32,
+        false,
+        "bilinear",
+        "center",
+        "0, 0, 0",
+        "cpu"
+      ],
+      "widgets_values_named": {
+        "megapixels": 1,
+        "aspect_ratio": "default",
+        "keep_proportion": "crop",
+        "divisible_by": 32,
+        "default_divisible": false,
+        "upscale_method": "bilinear",
+        "crop_position": "center",
+        "pad_color": "0, 0, 0",
+        "device": "cpu"
+      }
+    },
+    {
+      "id": 581,
+      "type": "CutQwenImage21",
+      "pos": [
+        332.7881504094123,
+        2953.924488280121
+      ],
+      "size": [
+        259.292578125,
+        190
+      ],
+      "flags": {},
+      "order": 40,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1029
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            1030
+          ]
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "name": "resolution",
+          "type": "INT",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CutQwenImage21",
+        "cnr_id": "comfyui-bluebox",
+        "ver": "3f12de621e6da08039f6e0032747b5a8ae31f7d9",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        }
+      },
+      "widgets_values": [
+        "default",
+        0.8,
+        "stretch",
+        0
+      ],
+      "widgets_values_named": {
+        "resolution": "default",
+        "tol_ratio": 0.8,
+        "mode": "stretch",
+        "pad_color": 0
+      }
+    }
+  ],
+  "links": [
+    [
+      918,
+      511,
+      0,
+      513,
+      1,
+      "VAE"
+    ],
+    [
+      920,
+      512,
+      0,
+      514,
+      1,
+      "LATENT"
+    ],
+    [
+      921,
+      509,
+      0,
+      527,
+      0,
+      "MODEL"
+    ],
+    [
+      922,
+      516,
+      2,
+      514,
+      0,
+      "LATENT"
+    ],
+    [
+      923,
+      519,
+      0,
+      518,
+      0,
+      "*"
+    ],
+    [
+      924,
+      521,
+      0,
+      519,
+      1,
+      "STRING"
+    ],
+    [
+      925,
+      524,
+      0,
+      525,
+      0,
+      "NOISE"
+    ],
+    [
+      926,
+      523,
+      0,
+      525,
+      2,
+      "SAMPLER"
+    ],
+    [
+      927,
+      522,
+      0,
+      525,
+      3,
+      "SIGMAS"
+    ],
+    [
+      928,
+      525,
+      0,
+      513,
+      0,
+      "LATENT"
+    ],
+    [
+      930,
+      516,
+      0,
+      526,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      931,
+      516,
+      1,
+      526,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      932,
+      526,
+      0,
+      525,
+      1,
+      "GUIDER"
+    ],
+    [
+      933,
+      514,
+      0,
+      525,
+      4,
+      "LATENT"
+    ],
+    [
+      945,
+      527,
+      0,
+      530,
+      0,
+      "MODEL"
+    ],
+    [
+      957,
+      530,
+      0,
+      545,
+      1,
+      "MODEL"
+    ],
+    [
+      958,
+      545,
+      0,
+      532,
+      0,
+      "MODEL"
+    ],
+    [
+      960,
+      546,
+      0,
+      512,
+      0,
+      "INT"
+    ],
+    [
+      961,
+      546,
+      1,
+      512,
+      1,
+      "INT"
+    ],
+    [
+      962,
+      532,
+      0,
+      526,
+      0,
+      "MODEL"
+    ],
+    [
+      964,
+      461,
+      0,
+      549,
+      0,
+      "IMAGE"
+    ],
+    [
+      978,
+      551,
+      0,
+      549,
+      1,
+      "IMAGE"
+    ],
+    [
+      997,
+      560,
+      0,
+      519,
+      0,
+      "STRING"
+    ],
+    [
+      999,
+      558,
+      0,
+      560,
+      0,
+      "STRING"
+    ],
+    [
+      1000,
+      555,
+      0,
+      560,
+      1,
+      "STRING"
+    ],
+    [
+      1004,
+      564,
+      0,
+      565,
+      0,
+      "INT"
+    ],
+    [
+      1007,
+      565,
+      0,
+      566,
+      1,
+      "INT"
+    ],
+    [
+      1009,
+      566,
+      0,
+      545,
+      0,
+      "LORA_STACK"
+    ],
+    [
+      1001,
+      561,
+      0,
+      558,
+      0,
+      "STRING"
+    ],
+    [
+      1010,
+      553,
+      0,
+      558,
+      1,
+      "STRING"
+    ],
+    [
+      1003,
+      564,
+      0,
+      558,
+      2,
+      "INT"
+    ],
+    [
+      1011,
+      563,
+      0,
+      558,
+      3,
+      "STRING"
+    ],
+    [
+      1012,
+      567,
+      0,
+      558,
+      4,
+      "STRING"
+    ],
+    [
+      1013,
+      562,
+      0,
+      558,
+      5,
+      "STRING"
+    ],
+    [
+      1014,
+      568,
+      0,
+      558,
+      6,
+      "STRING"
+    ],
+    [
+      1015,
+      556,
+      0,
+      558,
+      7,
+      "STRING"
+    ],
+    [
+      1016,
+      564,
+      0,
+      570,
+      2,
+      "INT"
+    ],
+    [
+      1018,
+      571,
+      0,
+      570,
+      0,
+      "FLOAT"
+    ],
+    [
+      1019,
+      570,
+      0,
+      566,
+      2,
+      "FLOAT"
+    ],
+    [
+      1020,
+      572,
+      0,
+      570,
+      1,
+      "FLOAT"
+    ],
+    [
+      1021,
+      573,
+      0,
+      570,
+      3,
+      "FLOAT"
+    ],
+    [
+      1022,
+      574,
+      0,
+      570,
+      4,
+      "FLOAT"
+    ],
+    [
+      1023,
+      575,
+      0,
+      570,
+      5,
+      "FLOAT"
+    ],
+    [
+      1024,
+      576,
+      0,
+      570,
+      6,
+      "FLOAT"
+    ],
+    [
+      1025,
+      577,
+      0,
+      570,
+      7,
+      "FLOAT"
+    ],
+    [
+      1026,
+      579,
+      0,
+      570,
+      8,
+      "FLOAT"
+    ],
+    [
+      1027,
+      578,
+      0,
+      558,
+      8,
+      "STRING"
+    ],
+    [
+      1028,
+      551,
+      0,
+      580,
+      0,
+      "IMAGE"
+    ],
+    [
+      1029,
+      580,
+      0,
+      581,
+      0,
+      "IMAGE"
+    ],
+    [
+      919,
+      513,
+      0,
+      461,
+      0,
+      "IMAGE"
+    ],
+    [
+      977,
+      551,
+      0,
+      520,
+      0,
+      "IMAGE"
+    ],
+    [
+      939,
+      517,
+      0,
+      521,
+      0,
+      "CLIP"
+    ],
+    [
+      940,
+      520,
+      0,
+      521,
+      1,
+      "IMAGE"
+    ],
+    [
+      941,
+      528,
+      0,
+      521,
+      4,
+      "STRING"
+    ],
+    [
+      963,
+      548,
+      0,
+      516,
+      0,
+      "CLIP"
+    ],
+    [
+      1030,
+      581,
+      0,
+      516,
+      1,
+      "IMAGE"
+    ],
+    [
+      936,
+      511,
+      0,
+      516,
+      2,
+      "VAE"
+    ],
+    [
+      998,
+      560,
+      0,
+      516,
+      3,
+      "STRING"
+    ],
+    [
+      979,
+      552,
+      0,
+      516,
+      4,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 38,
+      "title": "Qwen 2.1",
+      "bounding": [
+        -901.9645189161062,
+        3736.843511444274,
+        1848.6054558866535,
+        1517.1276769581464
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 34,
+      "title": "Models",
+      "bounding": [
+        -891.9645189161062,
+        3776.843511444274,
+        559.312842683447,
+        1186.90205509313
+      ],
+      "color": "#8AA",
+      "flags": {}
+    },
+    {
+      "id": 35,
+      "title": "Image Size",
+      "bounding": [
+        -293.9229000444906,
+        4693.7911215952945,
+        530,
+        250
+      ],
+      "color": "#8AA",
+      "flags": {}
+    },
+    {
+      "id": 36,
+      "title": "Conditioning",
+      "bounding": [
+        -293.4473970568132,
+        3781.6133661793147,
+        530.8552941790844,
+        871.7338850953031
+      ],
+      "color": "#8AA",
+      "flags": {}
+    },
+    {
+      "id": 37,
+      "title": "Sampling",
+      "bounding": [
+        303.0657633914237,
+        3790.7022849003015,
+        633.5751735791238,
+        874.5578559968081
+      ],
+      "color": "#8AA",
+      "flags": {}
+    },
+    {
+      "id": 39,
+      "title": "Input",
+      "bounding": [
+        -918.046497657466,
+        2747.098002912123,
+        692.3983238528579,
+        897.8038783983257
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 40,
+      "title": "Lora 触发词",
+      "bounding": [
+        -1385.148594153263,
+        2751.025404680547,
+        454.5902935478972,
+        1738.3953389082321
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 41,
+      "title": "Lora 权重",
+      "bounding": [
+        -1731.5993971411312,
+        2748.7335175356584,
+        312.662546573031,
+        968.628321797526
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7808950216990436,
+      "offset": [
+        1518.993247625041,
+        -2760.701693208762
+      ]
+    },
+    "frontendVersion": "1.57.6",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true,
+    "xzgGroups": {}
+  },
+  "version": 0.4
+}

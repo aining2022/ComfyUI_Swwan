@@ -24,6 +24,11 @@ jobs:
         run: |
           python tests/test_workflow_image_nodes.py --comfyui-root ../comfyui
           python tests/test_qwen21_dynamic_budget.py
+          python tests/test_qwen21_pruna.py --comfyui-root ../comfyui
+          python tests/test_qwen21_pruna_encoding.py
+          python tests/test_qwen21_pruna_face.py --comfyui-root ../comfyui
+          python tests/test_qwen21_pruna_workflow.py --comfyui-root ../comfyui
+          node tests/test_qwen21_pruna_controls.mjs
           python tests/test_qwen21_mask_coverage.py
           python tests/test_qwen21_crop_budget_node.py --comfyui-root ../comfyui
           python tests/test_outpaint.py --comfyui-root ../comfyui

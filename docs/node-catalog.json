@@ -11608,5 +11608,1391 @@
     ],
     "output_is_list": [],
     "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21PrunaControls",
+    "display": "Qwen 2.1 Pruna Controls (Swwan)",
+    "source": "nodes/qwen21_pruna.py",
+    "line": 10,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "Pruna v3任务配置。模型/6步采样可见；新合同不修改旧Turbo节点。128/1024只限推理面积，不默认缩小最终输出。说明见docs/QWEN21_PRUNA.md。",
+    "schema": {
+      "required": {
+        "task": [
+          [
+            "edit",
+            "outpaint",
+            "cutout",
+            "watermark",
+            "face_swap",
+            "photoreal",
+            "remove",
+            "angles"
+          ],
+          {
+            "default": "edit",
+            "tooltip": "任务联动LoRA、提示词、前后处理；BFS单独惰性分支。"
+          }
+        ],
+        "extra_prompt": [
+          "STRING",
+          {
+            "default": "HD, enhance, red lipstick, mouth wide open",
+            "multiline": true,
+            "tooltip": "用户额外指令；普通编辑必填。切换任务时请清除不适用的内容。"
+          }
+        ],
+        "negative_prompt": [
+          "STRING",
+          {
+            "default": "",
+            "multiline": true,
+            "tooltip": "官方编码器负面提示词；CFG=1不保证负向引导生效。EditUtils路径必须留空。"
+          }
+        ],
+        "seed": [
+          "INT",
+          {
+            "default": 482316605808414,
+            "min": 0,
+            "max": 18446744073709551615,
+            "step": 1,
+            "tooltip": "所有任务共用seed；同seed不承诺跨硬件逐像素一致。",
+            "control_after_generate": false
+          }
+        ],
+        "edit_scope": [
+          [
+            "full",
+            "local"
+          ],
+          {
+            "default": "full",
+            "tooltip": "仅edit/watermark；local必须有选区，full处理整图。"
+          }
+        ],
+        "generation_mode": [
+          [
+            "image",
+            "text"
+          ],
+          {
+            "default": "image",
+            "tooltip": "仅photoreal的text跳过所有图片/参考输入。"
+          }
+        ],
+        "encoder": [
+          [
+            "auto",
+            "official",
+            "editutils"
+          ],
+          {
+            "default": "auto",
+            "tooltip": "auto: cutout/BFS使用EditUtils，其余官方2.1；缺依赖明确报错。"
+          }
+        ],
+        "qwen_min_resolution": [
+          "INT",
+          {
+            "default": 128,
+            "min": 32,
+            "max": 2048,
+            "step": 1,
+            "tooltip": "面积预算下限，向上32对齐；低于512效果待GPU验收。"
+          }
+        ],
+        "qwen_max_resolution": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 512,
+            "max": 2048,
+            "step": 1,
+            "tooltip": "面积预算上限，向下32对齐；不是长边。"
+          }
+        ],
+        "qwen_tolerance": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.2,
+            "max": 3.0,
+            "step": 0.1,
+            "tooltip": "BlueBox候选面积容差，不是内容位移精度。"
+          }
+        ],
+        "context_factor": [
+          "FLOAT",
+          {
+            "default": 1.3,
+            "min": 1.0,
+            "max": 10.0,
+            "step": 0.1,
+            "tooltip": "每侧增加bbox短边*(factor-1)的上下文；不扩大最终编辑权限。"
+          }
+        ],
+        "reference_resolution": [
+          "INT",
+          {
+            "default": 768,
+            "min": 128,
+            "max": 2048,
+            "step": 32,
+            "tooltip": "身份参考独立面积预算；不套主图BOX。"
+          }
+        ],
+        "color_mode": [
+          [
+            "auto",
+            "none",
+            "goohai",
+            "bluebox"
+          ],
+          {
+            "default": "auto",
+            "tooltip": "auto仅局部编辑/移除/扩图用GH；默认不全局校色。GH与BlueBox互斥。"
+          }
+        ],
+        "color_strength": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.05,
+            "tooltip": "校色强度；不改变alpha。"
+          }
+        ],
+        "expand_percent": [
+          "INT",
+          {
+            "default": 4,
+            "min": 0,
+            "max": 30,
+            "step": 1,
+            "tooltip": "GH贴回扩展百分比；最终原坐标门控限制修改。"
+          }
+        ],
+        "feather_percent": [
+          "INT",
+          {
+            "default": 5,
+            "min": 0,
+            "max": 30,
+            "step": 1,
+            "tooltip": "贴回羽化百分比；最终保护mask不等于羽化权重。"
+          }
+        ],
+        "marking": [
+          [
+            "brush",
+            "circle"
+          ],
+          {
+            "default": "brush",
+            "tooltip": "brush保留软mask；circle要求闭合并填内部。"
+          }
+        ],
+        "enhanced": [
+          "BOOLEAN",
+          {
+            "default": false,
+            "tooltip": "仅remove：块化选区后再次扣保护，绿色覆盖改100%。"
+          }
+        ],
+        "mark_opacity": [
+          "FLOAT",
+          {
+            "default": 0.4,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.05,
+            "tooltip": "普通remove绿色标记不透明度；cutout固定红色内轮廓。"
+          }
+        ],
+        "block_size": [
+          "INT",
+          {
+            "default": 32,
+            "min": 8,
+            "max": 512,
+            "step": 1,
+            "tooltip": "增强移除的原图选区块预算；不是Qwen32对齐。"
+          }
+        ],
+        "padding_unit": [
+          [
+            "pixels",
+            "percent"
+          ],
+          {
+            "default": "pixels",
+            "tooltip": "扩图单位：原图像素，或对应原图宽/高的百分比。"
+          }
+        ],
+        "left": [
+          "INT",
+          {
+            "default": 128,
+            "min": 0,
+            "max": 4096,
+            "step": 1,
+            "tooltip": "仅outpaint；四向扩展，percent按对应原图轴计算。"
+          }
+        ],
+        "right": [
+          "INT",
+          {
+            "default": 128,
+            "min": 0,
+            "max": 4096,
+            "step": 1,
+            "tooltip": "仅outpaint；四向扩展，percent按对应原图轴计算。"
+          }
+        ],
+        "top": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 4096,
+            "step": 1,
+            "tooltip": "仅outpaint；四向扩展，percent按对应原图轴计算。"
+          }
+        ],
+        "bottom": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 4096,
+            "step": 1,
+            "tooltip": "仅outpaint；四向扩展，percent按对应原图轴计算。"
+          }
+        ],
+        "seam_band": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 4096,
+            "step": 1,
+            "tooltip": "outpaint允许修改的原图内侧接缝带像素；0严格保留旧画布。"
+          }
+        ],
+        "people": [
+          "INT",
+          {
+            "default": 1,
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "tooltip": "BFS目标人数，按行从左到右匹配参考图。"
+          }
+        ],
+        "swap_head": [
+          "BOOLEAN",
+          {
+            "default": false,
+            "tooltip": "BFS换头范围开关，false保持换脸流程。"
+          }
+        ],
+        "forehead": [
+          "BOOLEAN",
+          {
+            "default": false,
+            "tooltip": "BFS原有额头范围处理开关，不是通用mask膨胀。"
+          }
+        ],
+        "skin_match": [
+          "BOOLEAN",
+          {
+            "default": false,
+            "tooltip": "仅BFS保留原肤色匹配链。"
+          }
+        ],
+        "skin_strength": [
+          "FLOAT",
+          {
+            "default": 0.25,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.05,
+            "tooltip": "仅BFS启用肤色匹配时的强度。"
+          }
+        ],
+        "output_width": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 32,
+            "max": 4096,
+            "step": 32,
+            "tooltip": "仅纯文生图输出画布，32倍数。"
+          }
+        ],
+        "output_height": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 32,
+            "max": 4096,
+            "step": 32,
+            "tooltip": "仅纯文生图输出画布，32倍数。"
+          }
+        ],
+        "azimuth": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 330,
+            "step": 30,
+            "tooltip": "仅angles：水平角度。"
+          }
+        ],
+        "elevation": [
+          [
+            0,
+            30,
+            60,
+            90
+          ],
+          {
+            "default": 0,
+            "tooltip": "多角度任务的仰俯视角档位，以提示词控制，不是几何投影。"
+          }
+        ],
+        "close_up": [
+          "BOOLEAN",
+          {
+            "default": false,
+            "tooltip": "多角度任务追加close-up特写提示词。"
+          }
+        ],
+        "lora_strength": [
+          "FLOAT",
+          {
+            "default": -1.0,
+            "min": -1.0,
+            "max": 2.0,
+            "step": 0.05,
+            "tooltip": "-1使用v3任务预设，0禁用当前任务LoRA。"
+          }
+        ],
+        "additional_lora_mode": [
+          [
+            "off",
+            "edit_only",
+            "all"
+          ],
+          {
+            "default": "edit_only",
+            "tooltip": "原v3附加LoRA默认只在edit使用，不污染工具任务。"
+          }
+        ],
+        "additional_lora_name": [
+          "STRING",
+          {
+            "default": "qwen21/qwen2_1-femaledVaginus-nsfw-v1.3-fine.safetensors",
+            "tooltip": "v3附加LoRA路径；不需要时将additional_lora_mode设off。此项不是Pruna加速LoRA。"
+          }
+        ],
+        "additional_lora_strength": [
+          "FLOAT",
+          {
+            "default": 0.6,
+            "min": 0.0,
+            "max": 2.0,
+            "step": 0.05,
+            "tooltip": "附加LoRA权重，不是Pruna加速权重。"
+          }
+        ],
+        "task_lora_edit": [
+          "STRING",
+          {
+            "default": "",
+            "tooltip": "相对于ComfyUI models/loras的任务文件；空表示不加载。"
+          }
+        ],
+        "task_lora_outpaint": [
+          "STRING",
+          {
+            "default": "qwen21/Qwen2.1_扩图_GH_3750.safetensors",
+            "tooltip": "相对于ComfyUI models/loras的任务文件；空表示不加载。"
+          }
+        ],
+        "task_lora_cutout": [
+          "STRING",
+          {
+            "default": "qwen21/心宝强化抠图.safetensors",
+            "tooltip": "相对于ComfyUI models/loras的任务文件；空表示不加载。"
+          }
+        ],
+        "task_lora_watermark": [
+          "STRING",
+          {
+            "default": "qwen21/Qwen21-水印移除watermark_remover_v2.safetensors",
+            "tooltip": "相对于ComfyUI models/loras的任务文件；空表示不加载。"
+          }
+        ],
+        "task_lora_face_swap": [
+          "STRING",
+          {
+            "default": "qwen21/bfs_head_v1.1_qwen_2.1.safetensors",
+            "tooltip": "相对于ComfyUI models/loras的任务文件；空表示不加载。"
+          }
+        ],
+        "task_lora_photoreal": [
+          "STRING",
+          {
+            "default": "qwen21/pipi-qwen2.1-PhotoReal10.safetensors",
+            "tooltip": "相对于ComfyUI models/loras的任务文件；空表示不加载。"
+          }
+        ],
+        "task_lora_remove": [
+          "STRING",
+          {
+            "default": "qwen21/Qwen2.1_万物移除Remove_GH.safetensors",
+            "tooltip": "相对于ComfyUI models/loras的任务文件；空表示不加载。"
+          }
+        ],
+        "task_lora_angles": [
+          "STRING",
+          {
+            "default": "qwen21/angles_v2_full_qwen21_multiple_angles_v2_qwen21_multiple_angles_v2_000001500.safetensors",
+            "tooltip": "相对于ComfyUI models/loras的任务文件；空表示不加载。"
+          }
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "task": [
+          "edit",
+          "outpaint",
+          "cutout",
+          "watermark",
+          "face_swap",
+          "photoreal",
+          "remove",
+          "angles"
+        ],
+        "extra_prompt": "STRING",
+        "negative_prompt": "STRING",
+        "seed": "INT",
+        "edit_scope": [
+          "full",
+          "local"
+        ],
+        "generation_mode": [
+          "image",
+          "text"
+        ],
+        "encoder": [
+          "auto",
+          "official",
+          "editutils"
+        ],
+        "qwen_min_resolution": "INT",
+        "qwen_max_resolution": "INT",
+        "qwen_tolerance": "FLOAT",
+        "context_factor": "FLOAT",
+        "reference_resolution": "INT",
+        "color_mode": [
+          "auto",
+          "none",
+          "goohai",
+          "bluebox"
+        ],
+        "color_strength": "FLOAT",
+        "expand_percent": "INT",
+        "feather_percent": "INT",
+        "marking": [
+          "brush",
+          "circle"
+        ],
+        "enhanced": "BOOLEAN",
+        "mark_opacity": "FLOAT",
+        "block_size": "INT",
+        "padding_unit": [
+          "pixels",
+          "percent"
+        ],
+        "left": "INT",
+        "right": "INT",
+        "top": "INT",
+        "bottom": "INT",
+        "seam_band": "INT",
+        "people": "INT",
+        "swap_head": "BOOLEAN",
+        "forehead": "BOOLEAN",
+        "skin_match": "BOOLEAN",
+        "skin_strength": "FLOAT",
+        "output_width": "INT",
+        "output_height": "INT",
+        "azimuth": "INT",
+        "elevation": [
+          0,
+          30,
+          60,
+          90
+        ],
+        "close_up": "BOOLEAN",
+        "lora_strength": "FLOAT",
+        "additional_lora_mode": [
+          "off",
+          "edit_only",
+          "all"
+        ],
+        "additional_lora_name": "STRING",
+        "additional_lora_strength": "FLOAT",
+        "task_lora_edit": "STRING",
+        "task_lora_outpaint": "STRING",
+        "task_lora_cutout": "STRING",
+        "task_lora_watermark": "STRING",
+        "task_lora_face_swap": "STRING",
+        "task_lora_photoreal": "STRING",
+        "task_lora_remove": "STRING",
+        "task_lora_angles": "STRING"
+      }
+    },
+    "output_types": [
+      "QWEN21_PRUNA_CONFIG",
+      "STRING",
+      "INT"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21PrunaInputs",
+    "display": "Qwen 2.1 Pruna Inputs (Swwan)",
+    "source": "nodes/qwen21_pruna.py",
+    "line": 63,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "按当前任务读取主图、选区、保护和有序参考。可选外接端口优先；文件遮罩读取red，主图alpha不是选区。纯文本任务不读取任何图片文件。",
+    "schema": {
+      "required": {
+        "config": [
+          "QWEN21_PRUNA_CONFIG"
+        ],
+        "image_filename": [
+          "STRING",
+          {
+            "default": "",
+            "multiline": false,
+            "tooltip": "ComfyUI input目录文件名；mask读取red，不是1-alpha。外接端口优先；纯文任务不读取。"
+          }
+        ],
+        "mask_filename": [
+          "STRING",
+          {
+            "default": "",
+            "multiline": false,
+            "tooltip": "ComfyUI input目录文件名；mask读取red，不是1-alpha。外接端口优先；纯文任务不读取。"
+          }
+        ],
+        "protect_filename": [
+          "STRING",
+          {
+            "default": "",
+            "multiline": false,
+            "tooltip": "ComfyUI input目录文件名；mask读取red，不是1-alpha。外接端口优先；纯文任务不读取。"
+          }
+        ],
+        "reference_filenames": [
+          "STRING",
+          {
+            "default": "",
+            "multiline": true,
+            "tooltip": "ComfyUI input目录文件名；mask读取red，不是1-alpha。外接端口优先；纯文任务不读取。"
+          }
+        ]
+      },
+      "optional": {
+        "image": [
+          "IMAGE",
+          {
+            "lazy": true
+          }
+        ],
+        "mask": [
+          "MASK",
+          {
+            "lazy": true
+          }
+        ],
+        "protect_mask": [
+          "MASK",
+          {
+            "lazy": true
+          }
+        ],
+        "references": [
+          "QWEN21_REFS",
+          {
+            "lazy": true
+          }
+        ]
+      },
+      "hidden": {
+        "prompt": "PROMPT",
+        "unique_id": "UNIQUE_ID"
+      }
+    },
+    "input_types": {
+      "required": {
+        "config": "QWEN21_PRUNA_CONFIG",
+        "image_filename": "STRING",
+        "mask_filename": "STRING",
+        "protect_filename": "STRING",
+        "reference_filenames": "STRING"
+      },
+      "optional": {
+        "image": "IMAGE",
+        "mask": "MASK",
+        "protect_mask": "MASK",
+        "references": "QWEN21_REFS"
+      },
+      "hidden": {
+        "prompt": "PROMPT",
+        "unique_id": "UNIQUE_ID"
+      }
+    },
+    "output_types": [
+      "IMAGE",
+      "MASK",
+      "MASK",
+      "QWEN21_REFS"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21PrunaModel",
+    "display": "Qwen 2.1 Pruna Model (Swwan)",
+    "source": "nodes/qwen21_pruna.py",
+    "line": 140,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "在已加载Pruna的干净公共模型上，仅应用当前任务及可选附加LoRA。标准ComfyUI补丁缓存，不宣称GPU常驻或零成本切换。",
+    "schema": {
+      "required": {
+        "model": [
+          "MODEL"
+        ],
+        "config": [
+          "QWEN21_PRUNA_CONFIG"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "model": "MODEL",
+        "config": "QWEN21_PRUNA_CONFIG"
+      }
+    },
+    "output_types": [
+      "MODEL"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21PrunaPrepare",
+    "display": "Qwen 2.1 Pruna Prepare (Swwan)",
+    "source": "nodes/qwen21_pruna.py",
+    "line": 158,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "生成干净推理图与同源几何记录：选区扣保护、局部上下文、128..1024动态面积预算、32对齐。扩图自动产生新画布；BFS使用独立人物分支。",
+    "schema": {
+      "required": {
+        "config": [
+          "QWEN21_PRUNA_CONFIG"
+        ]
+      },
+      "optional": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "protect_mask": [
+          "MASK"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "config": "QWEN21_PRUNA_CONFIG"
+      },
+      "optional": {
+        "image": "IMAGE",
+        "mask": "MASK",
+        "protect_mask": "MASK"
+      }
+    },
+    "output_types": [
+      "IMAGE",
+      "MASK",
+      "QWEN21_PRUNA_SEAM",
+      "STRING"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21PrunaMark",
+    "display": "Qwen 2.1 Pruna Mark (Swwan)",
+    "source": "nodes/qwen21_pruna.py",
+    "line": 168,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "只在副本标记：普通移除绿色0.4、增强移除绿色1、抠图红色内轮廓。干净裁剪图保留为校色参考，选区不是生成alpha。",
+    "schema": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "config": [
+          "QWEN21_PRUNA_CONFIG"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "image": "IMAGE",
+        "mask": "MASK",
+        "config": "QWEN21_PRUNA_CONFIG"
+      }
+    },
+    "output_types": [
+      "IMAGE"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21PrunaRestore",
+    "display": "Qwen 2.1 Pruna Restore (Swwan)",
+    "source": "nodes/qwen21_pruna.py",
+    "line": 177,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "GH或BlueBox互斥校色后按唯一几何记录恢复；最后以原坐标mask保护范围外与白保护区。抠图必须是原生RGBA，不用输入mask截断生成主体。",
+    "schema": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "seam": [
+          "QWEN21_PRUNA_SEAM"
+        ],
+        "config": [
+          "QWEN21_PRUNA_CONFIG"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "image": "IMAGE",
+        "seam": "QWEN21_PRUNA_SEAM",
+        "config": "QWEN21_PRUNA_CONFIG"
+      }
+    },
+    "output_types": [
+      "IMAGE",
+      "MASK",
+      "STRING"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21PrunaOutput",
+    "display": "Qwen 2.1 Pruna Output (Swwan)",
+    "source": "nodes/qwen21_pruna.py",
+    "line": 187,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "惰性选择BFS或通用结果，不执行未选择采样分支。不要启用未选分支的输出预览，否则该预览会独立触发执行。",
+    "schema": {
+      "required": {
+        "config": [
+          "QWEN21_PRUNA_CONFIG"
+        ]
+      },
+      "optional": {
+        "generic": [
+          "IMAGE",
+          {
+            "lazy": true
+          }
+        ],
+        "face": [
+          "IMAGE",
+          {
+            "lazy": true
+          }
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "config": "QWEN21_PRUNA_CONFIG"
+      },
+      "optional": {
+        "generic": "IMAGE",
+        "face": "IMAGE"
+      }
+    },
+    "output_types": [
+      "IMAGE"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21PrunaEncode",
+    "display": "Qwen 2.1 Pruna Encode (Swwan)",
+    "source": "nodes/qwen21_pruna_encoding.py",
+    "line": 5,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "自动：抠图/BFS保留EditUtils，其他任务使用官方Qwen2.1。主图须已32对齐；官方resolution=0，EditUtils保持实际长边，发现二次缩放立即报错。参考图按顺序处理，不套主图BOX。纯文生成仅photoreal/text，不读取任何图像。缺少指定编码器时报错，不静默回退；当前EditUtils可能将抠图VL-only配置转成参考latent。",
+    "schema": {
+      "required": {
+        "config": [
+          "QWEN21_PRUNA_CONFIG"
+        ],
+        "clip": [
+          "CLIP"
+        ],
+        "vae": [
+          "VAE"
+        ]
+      },
+      "optional": {
+        "image": [
+          "IMAGE",
+          {
+            "lazy": true
+          }
+        ],
+        "references": [
+          "QWEN21_REFS",
+          {
+            "lazy": true
+          }
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "config": "QWEN21_PRUNA_CONFIG",
+        "clip": "CLIP",
+        "vae": "VAE"
+      },
+      "optional": {
+        "image": "IMAGE",
+        "references": "QWEN21_REFS"
+      }
+    },
+    "output_types": [
+      "CONDITIONING",
+      "CONDITIONING",
+      "LATENT",
+      "QWEN21_PRUNA_PADDING"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21PrunaUnpad",
+    "display": "Qwen 2.1 Pruna Unpad (Swwan)",
+    "source": "nodes/qwen21_pruna_encoding.py",
+    "line": 30,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "校验解码尺寸与同源编码记录一致，保留RGB/RGBA；不再缩放，不裁掉生成alpha。",
+    "schema": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "padding": [
+          "QWEN21_PRUNA_PADDING"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "image": "IMAGE",
+        "padding": "QWEN21_PRUNA_PADDING"
+      }
+    },
+    "output_types": [
+      "IMAGE"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21PrunaFace",
+    "display": "Qwen 2.1 Pruna Face (Swwan)",
+    "source": "nodes/qwen21_pruna_face.py",
+    "line": 5,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "BFS换脸/换头专用分支。保留区域检测、参考脸对齐、RMBG及可选肤色匹配；按从上到下、同行从左到右匹配1–6张参考。共享外部已打补丁的Pruna模型，每人6步串行生成。可选mask为手动选区，空mask走检测；protect_mask白色区域最终保留原图。不是GPU常驻适配器实现。",
+    "schema": {
+      "required": {
+        "model": [
+          "MODEL"
+        ],
+        "clip": [
+          "CLIP"
+        ],
+        "vae": [
+          "VAE"
+        ],
+        "image": [
+          "IMAGE"
+        ],
+        "references": [
+          "QWEN21_REFS"
+        ],
+        "config": [
+          "QWEN21_PRUNA_CONFIG"
+        ]
+      },
+      "optional": {
+        "mask": [
+          "MASK"
+        ],
+        "protect_mask": [
+          "MASK"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "model": "MODEL",
+        "clip": "CLIP",
+        "vae": "VAE",
+        "image": "IMAGE",
+        "references": "QWEN21_REFS",
+        "config": "QWEN21_PRUNA_CONFIG"
+      },
+      "optional": {
+        "mask": "MASK",
+        "protect_mask": "MASK"
+      }
+    },
+    "output_types": [
+      "IMAGE",
+      "STRING"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21PrunaFaceGuard",
+    "display": "Qwen 2.1 Pruna FaceGuard (Swwan)",
+    "source": "nodes/qwen21_pruna_face.py",
+    "line": 26,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "count": [
+          "INT",
+          {
+            "default": 1
+          }
+        ],
+        "valid": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "references": [
+          "QWEN21_REFS"
+        ],
+        "config": [
+          "QWEN21_PRUNA_CONFIG"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "image": "IMAGE",
+        "count": "INT",
+        "valid": "BOOLEAN",
+        "references": "QWEN21_REFS",
+        "config": "QWEN21_PRUNA_CONFIG"
+      }
+    },
+    "output_types": [
+      "IMAGE"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21PrunaFaceMask",
+    "display": "Qwen 2.1 Pruna FaceMask (Swwan)",
+    "source": "nodes/qwen21_pruna_face.py",
+    "line": 45,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "protect_mask": [
+          "MASK"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "image": "IMAGE",
+        "mask": "MASK",
+        "protect_mask": "MASK"
+      }
+    },
+    "output_types": [
+      "MASK"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21PrunaFaceReferences",
+    "display": "Qwen 2.1 Pruna FaceReferences (Swwan)",
+    "source": "nodes/qwen21_pruna_face.py",
+    "line": 57,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "image": "IMAGE"
+      }
+    },
+    "output_types": [
+      "QWEN21_REFS"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21PrunaFaceSequence",
+    "display": "Qwen 2.1 Pruna FaceSequence (Swwan)",
+    "source": "nodes/qwen21_pruna_face.py",
+    "line": 70,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "model": [
+          "MODEL"
+        ],
+        "clip": [
+          "CLIP"
+        ],
+        "vae": [
+          "VAE"
+        ],
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "protect_mask": [
+          "MASK"
+        ],
+        "regions": [
+          "SEGS"
+        ],
+        "manual": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "count": [
+          "INT",
+          {
+            "default": 1
+          }
+        ],
+        "references": [
+          "QWEN21_REFS"
+        ],
+        "config": [
+          "QWEN21_PRUNA_CONFIG"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "model": "MODEL",
+        "clip": "CLIP",
+        "vae": "VAE",
+        "image": "IMAGE",
+        "mask": "MASK",
+        "protect_mask": "MASK",
+        "regions": "SEGS",
+        "manual": "BOOLEAN",
+        "count": "INT",
+        "references": "QWEN21_REFS",
+        "config": "QWEN21_PRUNA_CONFIG"
+      }
+    },
+    "output_types": [
+      "IMAGE",
+      "STRING"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21PrunaFaceRestore",
+    "display": "Qwen 2.1 Pruna FaceRestore (Swwan)",
+    "source": "nodes/qwen21_pruna_face.py",
+    "line": 87,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "background": [
+          "IMAGE"
+        ],
+        "original": [
+          "IMAGE"
+        ],
+        "image": [
+          "IMAGE"
+        ],
+        "seam": [
+          "SEAM"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "selection": [
+          "MASK"
+        ],
+        "protect_mask": [
+          "MASK"
+        ],
+        "manual": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "config": [
+          "QWEN21_PRUNA_CONFIG"
+        ],
+        "person": [
+          "INT",
+          {
+            "default": 0
+          }
+        ],
+        "previous_report": [
+          "STRING",
+          {
+            "default": ""
+          }
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "background": "IMAGE",
+        "original": "IMAGE",
+        "image": "IMAGE",
+        "seam": "SEAM",
+        "mask": "MASK",
+        "selection": "MASK",
+        "protect_mask": "MASK",
+        "manual": "BOOLEAN",
+        "config": "QWEN21_PRUNA_CONFIG",
+        "person": "INT",
+        "previous_report": "STRING"
+      }
+    },
+    "output_types": [
+      "IMAGE",
+      "STRING"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwen21PrunaFaceFinish",
+    "display": "Qwen 2.1 Pruna FaceFinish (Swwan)",
+    "source": "nodes/qwen21_pruna_face.py",
+    "line": 103,
+    "category": "Swwan/Advanced/Qwen",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "",
+    "schema": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "original": [
+          "IMAGE"
+        ],
+        "protect_mask": [
+          "MASK"
+        ],
+        "report": [
+          "STRING",
+          {
+            "default": ""
+          }
+        ],
+        "count": [
+          "INT",
+          {
+            "default": 1
+          }
+        ],
+        "config": [
+          "QWEN21_PRUNA_CONFIG"
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "image": "IMAGE",
+        "original": "IMAGE",
+        "protect_mask": "MASK",
+        "report": "STRING",
+        "count": "INT",
+        "config": "QWEN21_PRUNA_CONFIG"
+      }
+    },
+    "output_types": [
+      "IMAGE",
+      "STRING"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
   }
 ]

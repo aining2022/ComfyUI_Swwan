@@ -1,5 +1,11 @@
 # 迁移与数据合同
 
+## Pruna v3 到独立 v4 工作流
+
+导入 [qwen21-pruna-v4.json](../examples/qwen21-pruna-v4.json)，不要用通用迁移器覆盖原 v3。原文件逐字节保存在 `examples/qwen21-pruna-v4-baseline.json`；新 `SwwanQwen21Pruna*` 合同与既有 Turbo 节点分离。模型、Pruna 权重1、六步 sigma、Euler、CFG1保持；原附加LoRA改为默认仅edit叠加，角度提示词修正为角度指令，seed统一由Controls驱动。
+
+新裁剪默认面积预算128/1024，不先整体缩到992；主图、选区与逆变换共用同源记录。文件mask读取red而非反向alpha；抠图需真实RGBA，新增扩图区域alpha为1且旧图alpha保留。任务切换只隐藏无关控件，不删除保存值，外接端口优先。请按 [完整任务/依赖说明](QWEN21_PRUNA.md) 配置并重新验收：不能把旧Turbo效果或旧v3全局LoRA叠加效果当成新Pruna质量证据。
+
 ## Qwen 局部裁剪默认预算与界面说明
 
 `SwwanCropByMaskV5` 的动态面积预算新默认是 `qwen_min_resolution=128`、`qwen_max_resolution=1024`，仅 `crop_mode=qwen21_aligned` 且 `qwen_resolution_mode=crop_area` 使用。新建节点和 API/旧工作流缺失的字段采用新默认；显式保存的旧值（例如 512/1920、1560 上限）和连线不被覆盖。需要复现旧动态结果时，请显式设置原上下限，不能依赖缺失字段回退512。模式默认仍为 bounds/fixed，输出顺序与名称不变。

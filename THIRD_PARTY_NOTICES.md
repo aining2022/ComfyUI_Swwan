@@ -61,3 +61,7 @@ Goohaitools mask arithmetic, bounds/area detection, existing-mask matte, region 
 ## Qwen preprocessing / GH restoration compatibility (2026-10-29)
 
 `ops/qwen21_gh_seam.py` is an original metadata adapter for the `GH_CropRestore` SEAM contract; no restoration algorithm is copied into runtime code. The portable regression fixture `tests/fixtures/reference/gh_crop_restore_color_8d9499.py` freezes the native restoration class from Goohaitools-comfyui `nodes/遮罩裁剪V2.py`, revision `8d9499f74f13764182634b02a2b390579491bd21`, goohai and contributors, GPL-3.0 (`licenses/GPL-3.0.txt`). The dedicated workflow keeps that native node and its color-restoration control.
+
+## Pruna v4 workflow integration (Unreleased)
+
+`nodes/qwen21_pruna*.py`, `ops/qwen21_pruna*.py`, the workflow builder and task-control frontend are original Swwan adapters under MIT. They reuse the existing BlueBox-derived aligned geometry, GPL directional-outpaint helper and frozen user BFS graph under the notices above; no upstream color/encoder/detector implementation is newly copied. Official ComfyUI Qwen 2.1, QwenImageEditUtils, GH_CropRestore, ColorCalibratorBlueBox and BFS provider nodes remain external runtime dependencies for the selected paths. The v3 baseline and new UI/API examples derive from the user-supplied Pruna workflow and contain filenames/configuration, not weights or source media. Pruna and task-LoRA model licenses remain separate from this package.

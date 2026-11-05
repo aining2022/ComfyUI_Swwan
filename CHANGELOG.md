@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Add the separate Pruna v4 eight-task workflow with inspectable controls, lazy inputs/output, current-task-only LoRA patches, single-record crop/restore geometry, official/EditUtils adapters, native-alpha cutout and serial BFS expansion. Preserve v3 Pruna six-step sampling and the untouched source baseline; do not modify historical Turbo contracts.
+- Add task-specific frontend controls with retained hidden values, independent min=128/max=1024 budgets, explicit mask/protection/alpha contracts, RGBA-safe outpainting, source-aware file fingerprints and Chinese input/tooltips. Add CPU geometry/encoder/graph/PNG and real browser save/reload validation; no GPU residency or generation-quality claim.
+
 - Preserve thin and disconnected mask coverage when downsampling new sub-512 Qwen budgets using area sampling; keep soft values, reject an empty resized selection, and retain the legacy sampler at 512 and above. Update old workflow/default contracts and run crop budget/coverage tests in CPU CI.
 
 - Set Crop By Mask V5's dynamic budget defaults to min=128/max=1024, including omitted API arguments. Preserve explicitly saved/connected values and fixed-mode behavior. Replace the outdated batch-only description with Chinese mode/budget/geometry/restoration guidance and add tooltips for every input and all 12 outputs; sub-512 inference remains unverified.

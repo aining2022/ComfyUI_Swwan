@@ -2,7 +2,7 @@
 
 ComfyUI 的图片、遮罩与工作流工具。通过推荐入口和模式切换减少重复选择，同时保留历史节点的兼容接口。
 
-当前有 **21 个推荐入口**、77 个任务专用工具、18 个 Legacy 兼容节点和 2 个实验功能，共 118 个节点。新工作流优先从推荐入口选择；已有工作流按迁移说明保留行为。
+新工作流优先从推荐入口选择；任务专用、Legacy 与实验节点的当前清单见 [节点目录](docs/NODE_CATALOG.md)，已有工作流按迁移说明保留行为。
 
 **使用者从本页开始。AI agent 请先读 [AGENTS.md](AGENTS.md)。**
 
@@ -43,6 +43,10 @@ python -m pip install -r requirements.txt
 ```
 
 如果存在本地修改或分支分歧导致更新失败，先保存并处理自己的改动。
+
+## Qwen 2.1 Pruna 多任务工作流
+
+[Pruna v4 中文使用说明](docs/QWEN21_PRUNA.md) · [UI 工作流](examples/qwen21-pruna-v4.json) · [API 工作流](examples/qwen21-pruna-v4-api.json)。基于原 v3 保留六步采样，支持编辑、扩图、抠图、水印移除、BFS、写实、物体移除和多角度；共享面积预算与几何记录，不替换旧 Turbo 节点。任务专用编码、GH/BlueBox 校色、BFS 检测等仍需说明中列出的外部依赖和模型。当前为本地实现与 CPU/前端验收，未宣称 GPU 效果或显存常驻切换已通过。
 
 ## 第一个工作流
 
