@@ -1,0 +1,6698 @@
+{
+  "CFGGuider": {
+    "input": {
+      "required": {
+        "model": [
+          "MODEL",
+          {}
+        ],
+        "positive": [
+          "CONDITIONING",
+          {}
+        ],
+        "negative": [
+          "CONDITIONING",
+          {}
+        ],
+        "cfg": [
+          "FLOAT",
+          {
+            "default": 8.0,
+            "min": 0.0,
+            "max": 100.0,
+            "step": 0.1,
+            "round": 0.01
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "model",
+        "positive",
+        "negative",
+        "cfg"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "GUIDER"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "GUIDER"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "CFGGuider",
+    "display_name": "CFG Guider",
+    "description": "",
+    "python_module": "comfy_extras.nodes_custom_sampler",
+    "category": "model/sampling/guiders",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": null,
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "CLIPLoader": {
+    "input": {
+      "required": {
+        "clip_name": [
+          [
+            "qwen3vl_8b_int8_convrot.safetensors"
+          ]
+        ],
+        "type": [
+          [
+            "stable_diffusion",
+            "stable_cascade",
+            "sd3",
+            "stable_audio",
+            "mochi",
+            "ltxv",
+            "pixart",
+            "cosmos",
+            "lumina2",
+            "wan",
+            "hidream",
+            "chroma",
+            "ace",
+            "omnigen2",
+            "qwen_image",
+            "hunyuan_image",
+            "flux2",
+            "ovis",
+            "longcat_image",
+            "cogvideox",
+            "lens",
+            "pixeldit",
+            "ideogram4",
+            "boogu",
+            "krea2",
+            "joyimage",
+            "mage",
+            "minimax",
+            "yue2",
+            "flux3",
+            "moss_image",
+            "fibo2"
+          ]
+        ]
+      },
+      "optional": {
+        "device": [
+          [
+            "default",
+            "cpu"
+          ],
+          {
+            "advanced": true
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "clip_name",
+        "type"
+      ],
+      "optional": [
+        "device"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "CLIP"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "CLIP"
+    ],
+    "name": "CLIPLoader",
+    "display_name": "Load CLIP",
+    "description": "Recipes:\nsd: clip-l\nstable cascade: clip-g\nsd3: t5 xxl / clip-g / clip-l\nstable audio: t5 base\nmochi: t5 xxl\ncogvideox: t5 xxl (226-token padding)\ncosmos: old t5 xxl\nlumina2: gemma 2 2B\nwan: umt5 xxl\nhidream: llama-3.1 (Recommend) or t5\nomnigen2: qwen vl 2.5 3B\njoyimage: qwen3-vl 8B\nlens: gpt-oss-20b\npixeldit: gemma 2 2B elm\nminimax: MiniMax H3 Qwen3-VL or Music3 Qwen/RVQ\nflux3: qwen3-vl 4B\nfibo2: qwen3-vl 4B",
+    "python_module": "nodes",
+    "category": "model/loaders",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "ColorCalibratorBlueBox": {
+    "input": {
+      "required": {
+        "image_original": [
+          "IMAGE"
+        ],
+        "image_edited": [
+          "IMAGE"
+        ],
+        "threshold": [
+          "FLOAT",
+          {
+            "default": 0.08,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.01
+          }
+        ],
+        "expand": [
+          "INT",
+          {
+            "default": 48,
+            "min": 0,
+            "max": 128,
+            "step": 1
+          }
+        ],
+        "open_k": [
+          "INT",
+          {
+            "default": 13,
+            "min": 1,
+            "max": 81,
+            "step": 2
+          }
+        ],
+        "close_k": [
+          "INT",
+          {
+            "default": 15,
+            "min": 1,
+            "max": 81,
+            "step": 2
+          }
+        ],
+        "strength": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.05
+          }
+        ],
+        "outside_mode": [
+          [
+            "edited",
+            "original"
+          ],
+          {
+            "default": "edited"
+          }
+        ],
+        "feather": [
+          "INT",
+          {
+            "default": 24,
+            "min": 0,
+            "max": 128,
+            "step": 1
+          }
+        ]
+      },
+      "optional": {
+        "mask": [
+          "MASK"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "image_original",
+        "image_edited",
+        "threshold",
+        "expand",
+        "open_k",
+        "close_k",
+        "strength",
+        "outside_mode",
+        "feather"
+      ],
+      "optional": [
+        "mask"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE",
+      "MASK",
+      "FLOAT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "image",
+      "mask",
+      "changed_ratio"
+    ],
+    "name": "ColorCalibratorBlueBox",
+    "display_name": "Color Calibrator (BlueBox)",
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI-BlueBox",
+    "category": "BlueBox/Color",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "ConditioningZeroOut": {
+    "input": {
+      "required": {
+        "conditioning": [
+          "CONDITIONING"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "conditioning"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "CONDITIONING"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "CONDITIONING"
+    ],
+    "name": "ConditioningZeroOut",
+    "display_name": "Conditioning Zero Out",
+    "description": "",
+    "python_module": "nodes",
+    "category": "model/conditioning/transform",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": [
+      "null conditioning",
+      "clear conditioning"
+    ]
+  },
+  "CropWithPadInfo_EditUtils": {
+    "input": {
+      "required": {
+        "pad_info": [
+          "ANY"
+        ],
+        "image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "pad_info",
+        "image"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE",
+      "FLOAT"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "cropped_image",
+      "scale_by"
+    ],
+    "name": "CropWithPadInfo_EditUtils",
+    "display_name": "EditUtils: Crop With Pad Info lrzjason",
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI-EditUtils",
+    "category": "image",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "EditTextEncode_EditUtils": {
+    "input": {
+      "required": {
+        "clip": [
+          "CLIP"
+        ],
+        "vae": [
+          "VAE"
+        ],
+        "prompt": [
+          "STRING",
+          {
+            "multiline": true,
+            "dynamicPrompts": true
+          }
+        ],
+        "model_config": [
+          "DICT",
+          {
+            "default": null
+          }
+        ]
+      },
+      "optional": {
+        "configs": [
+          "LIST",
+          {
+            "default": null,
+            "tooltip": "List of image configuration dictionaries. When not provided, performs text-only encoding."
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "clip",
+        "vae",
+        "prompt",
+        "model_config"
+      ],
+      "optional": [
+        "configs"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "CONDITIONING",
+      "LATENT",
+      "ANY",
+      "IMAGE",
+      "MASK",
+      "ANY"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "conditioning",
+      "latent",
+      "custom_output",
+      "main_image",
+      "mask",
+      "pad_info"
+    ],
+    "name": "EditTextEncode_EditUtils",
+    "display_name": "EditUtils: EditTextEncode lrzjason",
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI-EditUtils",
+    "category": "advanced/conditioning",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "EmptyImage": {
+    "input": {
+      "required": {
+        "width": [
+          "INT",
+          {
+            "default": 512,
+            "min": 1,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 512,
+            "min": 1,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "batch_size": [
+          "INT",
+          {
+            "default": 1,
+            "min": 1,
+            "max": 4096
+          }
+        ],
+        "color": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16777215,
+            "step": 1,
+            "display": "color"
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "width",
+        "height",
+        "batch_size",
+        "color"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "IMAGE"
+    ],
+    "name": "EmptyImage",
+    "display_name": "Empty Image",
+    "description": "",
+    "python_module": "nodes",
+    "category": "image",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "FloatConstant": {
+    "input": {
+      "required": {
+        "value": [
+          "FLOAT",
+          {
+            "default": 0.0,
+            "min": -18446744073709551615,
+            "max": 18446744073709551615,
+            "step": 1e-05
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "value"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "FLOAT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "value"
+    ],
+    "name": "FloatConstant",
+    "display_name": "Float Constant",
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI-KJNodes",
+    "category": "KJNodes/constants",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": [
+      "float",
+      "value"
+    ]
+  },
+  "GH_CropRestore": {
+    "input": {
+      "required": {
+        "接缝": [
+          "SEAM"
+        ],
+        "裁剪图像": [
+          "IMAGE"
+        ],
+        "遮罩扩展百分比": [
+          "INT",
+          {
+            "default": 5,
+            "min": 0,
+            "max": 30,
+            "step": 1
+          }
+        ],
+        "遮罩羽化百分比": [
+          "INT",
+          {
+            "default": 5,
+            "min": 0,
+            "max": 30,
+            "step": 1
+          }
+        ]
+      },
+      "optional": {
+        "裁剪遮罩": [
+          "MASK"
+        ],
+        "背景图像": [
+          "IMAGE"
+        ],
+        "颜色还原强度": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.1,
+            "tooltip": "与原图对应裁剪区域比较，统一修正返回裁剪图的明度和颜色；0为关闭"
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "接缝",
+        "裁剪图像",
+        "遮罩扩展百分比",
+        "遮罩羽化百分比"
+      ],
+      "optional": [
+        "裁剪遮罩",
+        "背景图像",
+        "颜色还原强度"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "图像"
+    ],
+    "name": "GH_CropRestore",
+    "display_name": "孤海-裁剪恢复",
+    "description": "",
+    "python_module": "custom_nodes.Goohaitools-comfyui",
+    "category": "孤海工具箱",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "GetImageSize": {
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE",
+          {}
+        ]
+      },
+      "hidden": {
+        "unique_id": [
+          "UNIQUE_ID"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "image"
+      ],
+      "hidden": [
+        "unique_id"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "INT",
+      "INT",
+      "INT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "width",
+      "height",
+      "batch_size"
+    ],
+    "output_tooltips": [
+      null,
+      null,
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "GetImageSize",
+    "display_name": "Get Image Size",
+    "description": "Returns the width, height, and batch size of the image.",
+    "python_module": "comfy_extras.nodes_images",
+    "category": "image",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": [
+      "dimensions",
+      "resolution",
+      "image info"
+    ],
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "GetImageSizeAndCount": {
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "image"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE",
+      "INT",
+      "INT",
+      "INT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "image",
+      "width",
+      "height",
+      "count"
+    ],
+    "name": "GetImageSizeAndCount",
+    "display_name": "Get Image Size & Count",
+    "description": "\nReturns width, height and batch size of the image,  \nand passes it through unchanged.  \n\n",
+    "python_module": "custom_nodes.ComfyUI-KJNodes",
+    "category": "KJNodes/image",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "GetMaskSizeAndCount": {
+    "input": {
+      "required": {
+        "mask": [
+          "MASK"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "mask"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "MASK",
+      "INT",
+      "INT",
+      "INT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "mask",
+      "width",
+      "height",
+      "count"
+    ],
+    "name": "GetMaskSizeAndCount",
+    "display_name": "Get Mask Size & Count",
+    "description": "\nReturns the width, height and batch size of the mask,  \nand passes it through unchanged.  \n\n",
+    "python_module": "custom_nodes.ComfyUI-KJNodes",
+    "category": "KJNodes/masking",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "GoohaiUniversalSlider": {
+    "input": {
+      "required": {
+        "值": [
+          "FLOAT",
+          {
+            "default": 0.75,
+            "min": -999999,
+            "max": 999999,
+            "step": 0.01,
+            "display": "slider"
+          }
+        ]
+      },
+      "hidden": {
+        "output_type": [
+          [
+            "float",
+            "int"
+          ],
+          {
+            "default": "float"
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "值"
+      ],
+      "hidden": [
+        "output_type"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "*"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "*"
+    ],
+    "name": "GoohaiUniversalSlider",
+    "display_name": "孤海万能滑条",
+    "description": "",
+    "python_module": "custom_nodes.Goohaitools-comfyui",
+    "category": "孤海工具箱",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "GrowMask": {
+    "input": {
+      "required": {
+        "mask": [
+          "MASK",
+          {}
+        ],
+        "expand": [
+          "INT",
+          {
+            "default": 0,
+            "min": -16384,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "tapered_corners": [
+          "BOOLEAN",
+          {
+            "advanced": true,
+            "default": true
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "mask",
+        "expand",
+        "tapered_corners"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "MASK"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MASK"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "GrowMask",
+    "display_name": "Grow Mask",
+    "description": "",
+    "python_module": "comfy_extras.nodes_mask",
+    "category": "image/mask",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": [
+      "expand mask",
+      "shrink mask"
+    ],
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "GuHai_FaceAlignment": {
+    "input": {
+      "required": {
+        "目标图": [
+          "IMAGE"
+        ],
+        "面部置信度": [
+          "FLOAT",
+          {
+            "default": 0.3,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.1
+          }
+        ],
+        "角度对齐": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ],
+        "填充模式": [
+          [
+            "自定义颜色",
+            "边框颜色"
+          ],
+          {
+            "default": "边框颜色"
+          }
+        ]
+      },
+      "optional": {
+        "参考图": [
+          "IMAGE"
+        ],
+        "自定义填充色": [
+          "GHCOLOR",
+          {
+            "default": "#364254"
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "目标图",
+        "面部置信度",
+        "角度对齐",
+        "填充模式"
+      ],
+      "optional": [
+        "参考图",
+        "自定义填充色"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "图像"
+    ],
+    "name": "GuHai_FaceAlignment",
+    "display_name": "孤海-面部对齐",
+    "description": "通过mediapipe检测人脸并进行面部对齐，自动适配mediapipe 0.10.21-和0.10.30+版本",
+    "python_module": "custom_nodes.Goohaitools-comfyui",
+    "category": "孤海工具箱",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "INTConstant": {
+    "input": {
+      "required": {
+        "value": [
+          "INT",
+          {
+            "default": 0,
+            "min": -18446744073709551615,
+            "max": 18446744073709551615
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "value"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "INT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "value"
+    ],
+    "name": "INTConstant",
+    "display_name": "INT Constant",
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI-KJNodes",
+    "category": "KJNodes/constants",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": [
+      "integer",
+      "value"
+    ]
+  },
+  "ImageBlendSwwan": {
+    "input": {
+      "required": {
+        "background_image": [
+          "IMAGE"
+        ],
+        "layer_image": [
+          "IMAGE"
+        ],
+        "invert_mask": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ],
+        "blend_mode": [
+          [
+            "normal",
+            "multply",
+            "screen",
+            "add",
+            "subtract",
+            "difference",
+            "darker",
+            "lighter",
+            "color_burn",
+            "color_dodge",
+            "linear_burn",
+            "linear_dodge",
+            "overlay",
+            "soft_light",
+            "hard_light",
+            "vivid_light",
+            "pin_light",
+            "linear_light",
+            "hard_mix"
+          ]
+        ],
+        "opacity": [
+          "INT",
+          {
+            "default": 100,
+            "min": 0,
+            "max": 100,
+            "step": 1
+          }
+        ]
+      },
+      "optional": {
+        "layer_mask": [
+          "MASK"
+        ],
+        "operation": [
+          [
+            "blend",
+            "mask_composite"
+          ],
+          {
+            "default": "blend"
+          }
+        ],
+        "mask_expand": [
+          "INT",
+          {
+            "default": 0,
+            "min": -100,
+            "max": 100
+          }
+        ],
+        "mask_blur": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 100
+          }
+        ],
+        "match_image_size": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "background_image",
+        "layer_image",
+        "invert_mask",
+        "blend_mode",
+        "opacity"
+      ],
+      "optional": [
+        "layer_mask",
+        "operation",
+        "mask_expand",
+        "mask_blur",
+        "match_image_size"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "image"
+    ],
+    "name": "ImageBlendSwwan",
+    "display_name": "Image Blend (Swwan)",
+    "description": "Operation blend preserves existing behavior. Mask composite processes the first image,\nresizes/centers the overlay, expands/blurs the mask and returns RGBA.\nFor the Qwen removal workflow use invert_mask=false.\n",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/Image",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "ImageCompositeMasked": {
+    "input": {
+      "required": {
+        "destination": [
+          "IMAGE",
+          {}
+        ],
+        "source": [
+          "IMAGE",
+          {}
+        ],
+        "x": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "y": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "resize_source": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ]
+      },
+      "optional": {
+        "mask": [
+          "MASK",
+          {}
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "destination",
+        "source",
+        "x",
+        "y",
+        "resize_source"
+      ],
+      "optional": [
+        "mask"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "IMAGE"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "ImageCompositeMasked",
+    "display_name": "Image Composite Masked",
+    "description": "",
+    "python_module": "comfy_extras.nodes_mask",
+    "category": "image/compositing",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": [
+      "overlay",
+      "layer",
+      "paste image",
+      "images composition"
+    ],
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "ImageResizeKJv2Alternative": {
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "width": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "upscale_method": [
+          [
+            "nearest-exact",
+            "bilinear",
+            "area",
+            "bicubic",
+            "lanczos",
+            "nvidia_rtx_vsr"
+          ]
+        ],
+        "keep_proportion": [
+          [
+            "stretch",
+            "resize",
+            "pad",
+            "pad_edge",
+            "pad_edge_pixel",
+            "crop",
+            "pillarbox_blur",
+            "total_pixels"
+          ],
+          {
+            "default": "stretch"
+          }
+        ],
+        "pad_color": [
+          "STRING",
+          {
+            "default": "0, 0, 0",
+            "tooltip": "Color to use for padding."
+          }
+        ],
+        "crop_position": [
+          [
+            "center",
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ],
+          {
+            "default": "center"
+          }
+        ],
+        "divisible_by": [
+          "INT",
+          {
+            "default": 2,
+            "min": 0,
+            "max": 512,
+            "step": 1
+          }
+        ]
+      },
+      "optional": {
+        "mask": [
+          "MASK"
+        ],
+        "device": [
+          [
+            "cpu",
+            "gpu"
+          ]
+        ],
+        "resize_mode": [
+          [
+            "standard",
+            "edit_size",
+            "aspect_ratio",
+            "essentials"
+          ],
+          {
+            "default": "standard"
+          }
+        ],
+        "size_rule": [
+          [
+            "按长边等比例",
+            "按短边等比例",
+            "自定义宽高"
+          ],
+          {
+            "default": "按长边等比例"
+          }
+        ],
+        "edge_length": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 64,
+            "max": 100000
+          }
+        ],
+        "execute_condition": [
+          [
+            "总是",
+            "最长边大于时",
+            "最小边小于时"
+          ],
+          {
+            "default": "总是"
+          }
+        ],
+        "edit_fit": [
+          [
+            "拉伸",
+            "裁剪",
+            "填充_自定颜色",
+            "填充_边框颜色",
+            "填充_边缘像素",
+            "总像素_等比例"
+          ],
+          {
+            "default": "裁剪"
+          }
+        ],
+        "fill_color": [
+          "COLORCODE",
+          {
+            "default": "#364254"
+          }
+        ],
+        "aspect_ratio": [
+          [
+            "original",
+            "custom",
+            "1:1",
+            "3:2",
+            "4:3",
+            "16:9",
+            "2:3",
+            "3:4",
+            "9:16"
+          ],
+          {
+            "default": "original"
+          }
+        ],
+        "proportional_width": [
+          "INT",
+          {
+            "default": 1,
+            "min": 1
+          }
+        ],
+        "proportional_height": [
+          "INT",
+          {
+            "default": 1,
+            "min": 1
+          }
+        ],
+        "aspect_fit": [
+          [
+            "letterbox",
+            "crop",
+            "fill"
+          ],
+          {
+            "default": "letterbox"
+          }
+        ],
+        "aspect_method": [
+          [
+            "lanczos",
+            "bicubic",
+            "hamming",
+            "bilinear",
+            "box",
+            "nearest"
+          ],
+          {
+            "default": "lanczos"
+          }
+        ],
+        "aspect_round": [
+          [
+            "8",
+            "16",
+            "32",
+            "64",
+            "128",
+            "256",
+            "512",
+            "None"
+          ],
+          {
+            "default": "8"
+          }
+        ],
+        "aspect_scale_side": [
+          [
+            "None",
+            "longest",
+            "shortest",
+            "width",
+            "height",
+            "total_pixel(kilo pixel)"
+          ],
+          {
+            "default": "longest"
+          }
+        ],
+        "aspect_length": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 4
+          }
+        ],
+        "essentials_method": [
+          [
+            "stretch",
+            "keep proportion",
+            "fill / crop",
+            "pad"
+          ]
+        ],
+        "essentials_condition": [
+          [
+            "always",
+            "downscale if bigger",
+            "upscale if smaller",
+            "if bigger area",
+            "if smaller area"
+          ]
+        ],
+        "essentials_interpolation": [
+          [
+            "nearest",
+            "bilinear",
+            "bicubic",
+            "area",
+            "nearest-exact",
+            "lanczos"
+          ]
+        ]
+      },
+      "hidden": {
+        "unique_id": "UNIQUE_ID"
+      }
+    },
+    "input_order": {
+      "required": [
+        "image",
+        "width",
+        "height",
+        "upscale_method",
+        "keep_proportion",
+        "pad_color",
+        "crop_position",
+        "divisible_by"
+      ],
+      "optional": [
+        "mask",
+        "device",
+        "resize_mode",
+        "size_rule",
+        "edge_length",
+        "execute_condition",
+        "edit_fit",
+        "fill_color",
+        "aspect_ratio",
+        "proportional_width",
+        "proportional_height",
+        "aspect_fit",
+        "aspect_method",
+        "aspect_round",
+        "aspect_scale_side",
+        "aspect_length",
+        "essentials_method",
+        "essentials_condition",
+        "essentials_interpolation"
+      ],
+      "hidden": [
+        "unique_id"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE",
+      "INT",
+      "INT",
+      "MASK"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "IMAGE",
+      "width",
+      "height",
+      "mask"
+    ],
+    "name": "ImageResizeKJv2Alternative",
+    "display_name": "Resize Image (Swwan)",
+    "description": "\nResizes the image to the specified width and height.\nSize can be retrieved from the input.\n\nKeep proportions keeps the aspect ratio of the image, by\nhighest dimension.\n\nEdit size: CPU reference sizing, fit and conditional execution; fill_color is COLORCODE. Standard keeps the existing GPU/RTX algorithm.\n",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/Image",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "ImageScale": {
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "upscale_method": [
+          [
+            "nearest-exact",
+            "bilinear",
+            "area",
+            "bicubic",
+            "lanczos"
+          ]
+        ],
+        "width": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "crop": [
+          [
+            "disabled",
+            "center"
+          ]
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "image",
+        "upscale_method",
+        "width",
+        "height",
+        "crop"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "IMAGE"
+    ],
+    "name": "ImageScale",
+    "display_name": "Upscale Image",
+    "description": "",
+    "python_module": "nodes",
+    "category": "image/upscaling",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": [
+      "resize",
+      "resize image",
+      "scale image",
+      "image resize",
+      "zoom",
+      "zoom in",
+      "change size"
+    ],
+    "essentials_category": "Image Tools"
+  },
+  "ImageToMask": {
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE",
+          {}
+        ],
+        "channel": [
+          "COMBO",
+          {
+            "multiselect": false,
+            "options": [
+              "red",
+              "green",
+              "blue",
+              "alpha"
+            ]
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "image",
+        "channel"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "MASK"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MASK"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "ImageToMask",
+    "display_name": "Convert Image to Mask",
+    "description": "",
+    "python_module": "comfy_extras.nodes_mask",
+    "category": "image/mask",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": [
+      "extract channel",
+      "channel to mask"
+    ],
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "JoinImageWithAlpha": {
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE",
+          {}
+        ],
+        "alpha": [
+          "MASK",
+          {}
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "image",
+        "alpha"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "IMAGE"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "JoinImageWithAlpha",
+    "display_name": "Join Image with Alpha",
+    "description": "",
+    "python_module": "comfy_extras.nodes_compositing",
+    "category": "image/compositing",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": [
+      "add transparency",
+      "apply alpha",
+      "composite alpha",
+      "RGBA"
+    ],
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "KSamplerSelect": {
+    "input": {
+      "required": {
+        "sampler_name": [
+          "COMBO",
+          {
+            "multiselect": false,
+            "options": [
+              "euler",
+              "euler_cfg_pp",
+              "euler_ancestral",
+              "euler_ancestral_cfg_pp",
+              "heun",
+              "heunpp2",
+              "exp_heun_2_x0",
+              "exp_heun_2_x0_sde",
+              "dpm_2",
+              "dpm_2_ancestral",
+              "lms",
+              "dpm_fast",
+              "dpm_adaptive",
+              "dpmpp_2s_ancestral",
+              "dpmpp_2s_ancestral_cfg_pp",
+              "dpmpp_sde",
+              "dpmpp_sde_gpu",
+              "dpmpp_2m",
+              "dpmpp_2m_cfg_pp",
+              "dpmpp_2m_sde",
+              "dpmpp_2m_sde_gpu",
+              "dpmpp_2m_sde_heun",
+              "dpmpp_2m_sde_heun_gpu",
+              "dpmpp_3m_sde",
+              "dpmpp_3m_sde_gpu",
+              "ddpm",
+              "lcm",
+              "ipndm",
+              "ipndm_v",
+              "deis",
+              "cfgpp_ud10_ab",
+              "res_multistep",
+              "res_multistep_cfg_pp",
+              "res_multistep_ancestral",
+              "res_multistep_ancestral_cfg_pp",
+              "gradient_estimation",
+              "gradient_estimation_cfg_pp",
+              "er_sde",
+              "seeds_2",
+              "seeds_3",
+              "sa_solver",
+              "sa_solver_pece",
+              "ddim",
+              "uni_pc",
+              "uni_pc_bh2"
+            ]
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "sampler_name"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "SAMPLER"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "SAMPLER"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "KSamplerSelect",
+    "display_name": null,
+    "description": "",
+    "python_module": "comfy_extras.nodes_custom_sampler",
+    "category": "model/sampling/samplers",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": null,
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "LayerUtility: BooleanOperator": {
+    "input": {
+      "required": {
+        "a": [
+          "*"
+        ],
+        "b": [
+          "*"
+        ],
+        "operator": [
+          [
+            "==",
+            "!=",
+            ">",
+            "<",
+            ">=",
+            "<=",
+            "and",
+            "or",
+            "xor",
+            "not(a)",
+            "min",
+            "max"
+          ]
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "a",
+        "b",
+        "operator"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "BOOLEAN"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "output"
+    ],
+    "name": "LayerUtility: BooleanOperator",
+    "display_name": "LayerUtility: Boolean Operator",
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI_LayerStyle",
+    "category": "😺dzNodes/LayerUtility/Data",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "LoadImage": {
+    "input": {
+      "required": {
+        "image": [
+          [
+            "038eb37b5f49a8979757faf3c0259676e9632019aa2bac43d6cd7c8245bd607b (1).jpg",
+            "0a8317f8-f69b-4211-a0b8-998693fd26cf.jpeg",
+            "1d866b64-a19c-4926-8a9f-b1b9044d0cf6.png",
+            "reference.png"
+          ],
+          {
+            "image_upload": true
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "image"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE",
+      "MASK"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "IMAGE",
+      "MASK"
+    ],
+    "name": "LoadImage",
+    "display_name": "Load Image",
+    "description": "",
+    "python_module": "nodes",
+    "category": "image",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": [
+      "load image",
+      "open image",
+      "import image",
+      "image input",
+      "upload image",
+      "read image",
+      "image loader"
+    ],
+    "essentials_category": "Basics"
+  },
+  "LoraLoaderModelOnly": {
+    "input": {
+      "required": {
+        "model": [
+          "MODEL"
+        ],
+        "lora_name": [
+          [
+            "qwen21/Qwen2.1_万物移除Remove_GH.safetensors",
+            "qwen21/Qwen2.1_扩图_GH_3750.safetensors",
+            "qwen21/Qwen21-水印移除watermark_remover_v2.safetensors",
+            "qwen21/angles_v2_full_qwen21_multiple_angles_v2_qwen21_multiple_angles_v2_000001500.safetensors",
+            "qwen21/bfs_head_v1.1_qwen_2.1.safetensors",
+            "qwen21/p_q_image_2.1_6_steps_upsampled_v0.2_comfyui_bf16.safetensors",
+            "qwen21/pipi-qwen2.1-PhotoReal10.safetensors",
+            "qwen21/qwen2_1-femaledVaginus-nsfw-v1.3-fine.safetensors",
+            "qwen21/心宝强化抠图.safetensors"
+          ]
+        ],
+        "strength_model": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": -100.0,
+            "max": 100.0,
+            "step": 0.01
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "model",
+        "lora_name",
+        "strength_model"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
+    ],
+    "name": "LoraLoaderModelOnly",
+    "display_name": "Load LoRA",
+    "description": "This LoRAs loader is used to modify the diffusion model, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.",
+    "python_module": "nodes",
+    "category": "model/loaders",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "output_tooltips": [
+      "The modified diffusion model.",
+      "The modified CLIP model."
+    ],
+    "search_aliases": [
+      "lora",
+      "load lora",
+      "apply lora",
+      "lora loader",
+      "lora model"
+    ],
+    "essentials_category": "Image Generation"
+  },
+  "ManualSigmas": {
+    "input": {
+      "required": {
+        "sigmas": [
+          "STRING",
+          {
+            "default": "1, 0.5",
+            "multiline": false
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "sigmas"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "SIGMAS"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "SIGMAS"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "ManualSigmas",
+    "display_name": null,
+    "description": "",
+    "python_module": "comfy_extras.nodes_custom_sampler",
+    "category": "model/sampling/sigmas",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": true,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": [
+      "custom noise schedule",
+      "define sigmas"
+    ],
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "MaskComposite": {
+    "input": {
+      "required": {
+        "destination": [
+          "MASK",
+          {}
+        ],
+        "source": [
+          "MASK",
+          {}
+        ],
+        "x": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "y": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "operation": [
+          "COMBO",
+          {
+            "multiselect": false,
+            "options": [
+              "multiply",
+              "add",
+              "subtract",
+              "and",
+              "or",
+              "xor"
+            ]
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "destination",
+        "source",
+        "x",
+        "y",
+        "operation"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "MASK"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MASK"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "MaskComposite",
+    "display_name": "Combine Masks",
+    "description": "",
+    "python_module": "comfy_extras.nodes_mask",
+    "category": "image/mask",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": [
+      "combine masks",
+      "blend masks",
+      "layer masks",
+      "masks composition"
+    ],
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "MaskToImage": {
+    "input": {
+      "required": {
+        "mask": [
+          "MASK",
+          {}
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "mask"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "IMAGE"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "MaskToImage",
+    "display_name": "Convert Mask to Image",
+    "description": "",
+    "python_module": "comfy_extras.nodes_mask",
+    "category": "image/mask",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": [
+      "convert mask"
+    ],
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "MathExpression_UTK": {
+    "input": {
+      "required": {
+        "expression": [
+          "STRING",
+          {
+            "multiline": true,
+            "dynamicPrompts": false,
+            "pysssss.autocomplete": {
+              "words": [
+                {
+                  "text": "round",
+                  "value": "round()",
+                  "showValue": false,
+                  "hint": "number, dp? = 0",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "ceil",
+                  "value": "ceil()",
+                  "showValue": false,
+                  "hint": "number",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "floor",
+                  "value": "floor()",
+                  "showValue": false,
+                  "hint": "number",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "min",
+                  "value": "min()",
+                  "showValue": false,
+                  "hint": "...numbers",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "max",
+                  "value": "max()",
+                  "showValue": false,
+                  "hint": "...numbers",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "randomint",
+                  "value": "randomint()",
+                  "showValue": false,
+                  "hint": "min, max",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "randomchoice",
+                  "value": "randomchoice()",
+                  "showValue": false,
+                  "hint": "...numbers",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "sqrt",
+                  "value": "sqrt()",
+                  "showValue": false,
+                  "hint": "number",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "int",
+                  "value": "int()",
+                  "showValue": false,
+                  "hint": "number",
+                  "caretOffset": -1
+                },
+                {
+                  "text": "iif",
+                  "value": "iif()",
+                  "showValue": false,
+                  "hint": "value, truepart, falsepart",
+                  "caretOffset": -1
+                }
+              ],
+              "separator": ""
+            }
+          }
+        ]
+      },
+      "optional": {
+        "a": [
+          "*"
+        ],
+        "b": [
+          "*"
+        ],
+        "c": [
+          "*"
+        ],
+        "preset": [
+          [
+            "custom",
+            "sin(a)",
+            "cos(a)",
+            "tan(a)",
+            "asin(a)",
+            "acos(a)",
+            "atan(a)",
+            "pow(a, 2)",
+            "sqrt(a)",
+            "log(a)",
+            "log10(a)",
+            "sinh(a)",
+            "cosh(a)",
+            "tanh(a)",
+            "asinh(a)",
+            "acosh(a)",
+            "atanh(a)",
+            "radians(a)",
+            "degrees(a)",
+            "fabs(a)",
+            "exp(a)",
+            "round(a)",
+            "ceil(a)",
+            "floor(a)",
+            "abs(a)",
+            "a + b",
+            "a - b",
+            "a * b",
+            "a ÷ b",
+            "a % b",
+            "pow(a,b)",
+            "ceil(a÷b)",
+            "floor(a÷b)",
+            "max(a,b)",
+            "min(a,b)",
+            "a > b",
+            "a < b",
+            "a >= b",
+            "a <= b",
+            "a == b",
+            "a != b",
+            "a & b",
+            "a | b",
+            "a ^ b",
+            "a << b",
+            "a >> b",
+            "atan2(a,b)",
+            "hypot(a,b)",
+            "copysign(a,b)",
+            "fmod(a,b)",
+            "max(a,b,c)",
+            "min(a,b,c)",
+            "clamp(a,b,c)",
+            "lerp(a,b,c)"
+          ],
+          {
+            "default": "custom"
+          }
+        ]
+      },
+      "hidden": {
+        "extra_pnginfo": "EXTRA_PNGINFO",
+        "prompt": "PROMPT"
+      }
+    },
+    "input_order": {
+      "required": [
+        "expression"
+      ],
+      "optional": [
+        "a",
+        "b",
+        "c",
+        "preset"
+      ],
+      "hidden": [
+        "extra_pnginfo",
+        "prompt"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "INT",
+      "FLOAT",
+      "BOOLEAN"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "INT",
+      "FLOAT",
+      "BOOLEAN"
+    ],
+    "name": "MathExpression_UTK",
+    "display_name": "Math Expression (Swwan)",
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/Utils",
+    "output_node": true,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "ModelAttentionBackend": {
+    "input": {
+      "required": {
+        "model": [
+          "MODEL",
+          {
+            "tooltip": "The model to patch."
+          }
+        ],
+        "attention": [
+          "COMBO",
+          {
+            "display_name": "backend",
+            "tooltip": "The dense attention backend. Comfy Kitchen attention uses quantized INT8 attention and is available only on Nvidia and AMD GPUs.",
+            "default": "pytorch attention",
+            "multiselect": false,
+            "options": [
+              "pytorch attention",
+              "comfy kitchen attention"
+            ]
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "model",
+        "attention"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "model"
+    ],
+    "output_tooltips": [
+      "The model with the selected attention backend."
+    ],
+    "output_matchtypes": null,
+    "name": "ModelAttentionBackend",
+    "display_name": "Model Attention Backend",
+    "description": "Selects the dense attention implementation for the model. When used with Block Sparse Attention, this backend is used whenever sparse attention is inactive or unsupported.",
+    "python_module": "comfy_extras.nodes_model_advanced",
+    "category": "model/patch",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": true,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": [
+      "comfy kitchen",
+      "attention",
+      "pytorch",
+      "kitchen attention"
+    ],
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "PreviewAny": {
+    "input": {
+      "required": {
+        "source": [
+          "*",
+          {}
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "source"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "STRING"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "STRING"
+    ],
+    "name": "PreviewAny",
+    "display_name": "Preview as Text",
+    "description": "Preview any input value as text.",
+    "python_module": "comfy_extras.nodes_preview_any",
+    "category": "utilities",
+    "output_node": true,
+    "has_intermediate_output": false,
+    "search_aliases": [
+      "preview",
+      "preview text",
+      "show output",
+      "inspect",
+      "debug",
+      "print value",
+      "show text"
+    ]
+  },
+  "PreviewImage": {
+    "input": {
+      "required": {
+        "images": [
+          "IMAGE"
+        ]
+      },
+      "hidden": {
+        "prompt": "PROMPT",
+        "extra_pnginfo": "EXTRA_PNGINFO"
+      }
+    },
+    "input_order": {
+      "required": [
+        "images"
+      ],
+      "hidden": [
+        "prompt",
+        "extra_pnginfo"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "images"
+    ],
+    "name": "PreviewImage",
+    "display_name": "Preview Image",
+    "description": "Preview the images without saving them to the ComfyUI output directory.",
+    "python_module": "nodes",
+    "category": "image",
+    "output_node": true,
+    "has_intermediate_output": false,
+    "search_aliases": [
+      "preview",
+      "preview image",
+      "show image",
+      "view image",
+      "display image",
+      "image viewer"
+    ],
+    "essentials_category": "Basics"
+  },
+  "PrimitiveBoolean": {
+    "input": {
+      "required": {
+        "value": [
+          "BOOLEAN",
+          {}
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "value"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "BOOLEAN"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "BOOLEAN"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "PrimitiveBoolean",
+    "display_name": "Boolean",
+    "description": "",
+    "python_module": "comfy_extras.nodes_primitive",
+    "category": "utilities/primitive",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": null,
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "PrimitiveFloat": {
+    "input": {
+      "required": {
+        "value": [
+          "FLOAT",
+          {
+            "min": -9223372036854775807,
+            "max": 9223372036854775807,
+            "step": 0.1
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "value"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "FLOAT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "FLOAT"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "PrimitiveFloat",
+    "display_name": "Float",
+    "description": "",
+    "python_module": "comfy_extras.nodes_primitive",
+    "category": "utilities/primitive",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": null,
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "PrimitiveInt": {
+    "input": {
+      "required": {
+        "value": [
+          "INT",
+          {
+            "min": -9223372036854775807,
+            "max": 9223372036854775807,
+            "control_after_generate": "fixed"
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "value"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "INT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "INT"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "PrimitiveInt",
+    "display_name": "Int",
+    "description": "",
+    "python_module": "comfy_extras.nodes_primitive",
+    "category": "utilities/primitive",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": null,
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "PrimitiveStringMultiline": {
+    "input": {
+      "required": {
+        "value": [
+          "STRING",
+          {
+            "multiline": true
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "value"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "STRING"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "STRING"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "PrimitiveStringMultiline",
+    "display_name": "Text (Multiline)",
+    "description": "",
+    "python_module": "comfy_extras.nodes_primitive",
+    "category": "utilities/primitive",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": [
+      "text",
+      "string",
+      "text box",
+      "prompt"
+    ],
+    "essentials_category": "Basics",
+    "has_intermediate_output": false
+  },
+  "QwenImage21ConfigPreparer_EditUtils": {
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ]
+      },
+      "optional": {
+        "configs": [
+          "LIST",
+          {
+            "default": null,
+            "tooltip": "Configs list"
+          }
+        ],
+        "to_ref": [
+          "BOOLEAN",
+          {
+            "default": true,
+            "tooltip": "Add image to reference latent"
+          }
+        ],
+        "ref_main_image": [
+          "BOOLEAN",
+          {
+            "default": true,
+            "tooltip": "Set image as main image which would return the latent as output."
+          }
+        ],
+        "ref_longest_edge": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 32,
+            "max": 4096,
+            "step": 32,
+            "tooltip": "Reference target size. Snapped to 32-pixel multiples (vision slot <-> 2x2 latent group alignment)."
+          }
+        ],
+        "ref_crop": [
+          [
+            "pad",
+            "center",
+            "disabled"
+          ],
+          {
+            "default": "pad",
+            "tooltip": "Crop method for reference image"
+          }
+        ],
+        "ref_upscale": [
+          [
+            "lanczos",
+            "bicubic",
+            "area"
+          ],
+          {
+            "default": "lanczos",
+            "tooltip": "Upscale method for reference image"
+          }
+        ],
+        "to_vl": [
+          "BOOLEAN",
+          {
+            "default": true,
+            "tooltip": "Feed the resized reference to the Qwen3-VL text encoder and splice its latent at the vision slot. Keep enabled for trained behavior."
+          }
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "ref_resize_mode": [
+          [
+            "longest_edge",
+            "area"
+          ],
+          {
+            "default": "longest_edge",
+            "tooltip": "longest_edge: scale so the longest dimension equals ref_longest_edge. area: scale so total pixels equals ref_longest_edge squared."
+          }
+        ],
+        "rope_x_offset": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 4096,
+            "step": 8,
+            "tooltip": "ROPE horizontal position offset in pixels (32-aligned). Shifts reference rightward on the canvas. Requires QwenImage21EditApply_EditUtils."
+          }
+        ],
+        "rope_y_offset": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 4096,
+            "step": 8,
+            "tooltip": "ROPE vertical position offset in pixels (32-aligned). Shifts reference downward on the canvas. Requires QwenImage21EditApply_EditUtils."
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "image"
+      ],
+      "optional": [
+        "configs",
+        "to_ref",
+        "ref_main_image",
+        "ref_longest_edge",
+        "ref_crop",
+        "ref_upscale",
+        "to_vl",
+        "mask",
+        "ref_resize_mode",
+        "rope_x_offset",
+        "rope_y_offset"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "LIST",
+      "ANY"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "configs",
+      "config"
+    ],
+    "name": "QwenImage21ConfigPreparer_EditUtils",
+    "display_name": "EditUtils: QwenImage 2.1 Config Preparer lrzjason",
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI-EditUtils",
+    "category": "advanced/conditioning",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "QwenImage21ModelConfig_EditUtils": {
+    "input": {
+      "optional": {
+        "instruction": [
+          "STRING",
+          {
+            "multiline": true,
+            "default": ""
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "optional": [
+        "instruction"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "DICT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "model_config"
+    ],
+    "name": "QwenImage21ModelConfig_EditUtils",
+    "display_name": "EditUtils: QwenImage 2.1 Model Config lrzjason",
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI-EditUtils",
+    "category": "advanced/conditioning",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "RMBG": {
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE",
+          {
+            "tooltip": "Input image to be processed for background removal."
+          }
+        ],
+        "model": [
+          [
+            "RMBG-2.0",
+            "INSPYRENET",
+            "BEN",
+            "BEN2"
+          ],
+          {
+            "tooltip": "Select the background removal model to use (RMBG-2.0, INSPYRENET, BEN)."
+          }
+        ]
+      },
+      "optional": {
+        "sensitivity": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.01,
+            "tooltip": "Adjust the strength of mask detection (higher values result in more aggressive detection)."
+          }
+        ],
+        "process_res": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 256,
+            "max": 2048,
+            "step": 128,
+            "tooltip": "Set the processing resolution (higher values require more VRAM and may increase processing time)."
+          }
+        ],
+        "mask_blur": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 64,
+            "step": 1,
+            "tooltip": "Specify the amount of blur to apply to the mask edges (0 for no blur, higher values for more blur)."
+          }
+        ],
+        "mask_offset": [
+          "INT",
+          {
+            "default": 0,
+            "min": -64,
+            "max": 64,
+            "step": 1,
+            "tooltip": "Adjust the mask boundary (positive values expand the mask, negative values shrink it)."
+          }
+        ],
+        "invert_output": [
+          "BOOLEAN",
+          {
+            "default": false,
+            "tooltip": "Enable to invert both the image and mask output (useful for certain effects)."
+          }
+        ],
+        "refine_foreground": [
+          "BOOLEAN",
+          {
+            "default": false,
+            "tooltip": "Use Fast Foreground Colour Estimation to optimize transparent background"
+          }
+        ],
+        "background": [
+          [
+            "Alpha",
+            "Color"
+          ],
+          {
+            "default": "Alpha",
+            "tooltip": "Choose output type: Alpha (transparent) or Color (custom background color)."
+          }
+        ],
+        "background_color": [
+          "COLORCODE",
+          {
+            "default": "#222222",
+            "tooltip": "Pick background color (supports alpha, use color picker)."
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "image",
+        "model"
+      ],
+      "optional": [
+        "sensitivity",
+        "process_res",
+        "mask_blur",
+        "mask_offset",
+        "invert_output",
+        "refine_foreground",
+        "background",
+        "background_color"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE",
+      "MASK",
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "IMAGE",
+      "MASK",
+      "MASK_IMAGE"
+    ],
+    "name": "RMBG",
+    "display_name": "Remove Background (RMBG)",
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI-RMBG",
+    "category": "🧪AILab/🧽RMBG",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "RandomNoise": {
+    "input": {
+      "required": {
+        "noise_seed": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 18446744073709551615,
+            "control_after_generate": true
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "noise_seed"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "NOISE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "NOISE"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "RandomNoise",
+    "display_name": null,
+    "description": "",
+    "python_module": "comfy_extras.nodes_custom_sampler",
+    "category": "model/sampling/noise",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": null,
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "SamplerCustomAdvanced": {
+    "input": {
+      "required": {
+        "noise": [
+          "NOISE",
+          {}
+        ],
+        "guider": [
+          "GUIDER",
+          {}
+        ],
+        "sampler": [
+          "SAMPLER",
+          {}
+        ],
+        "sigmas": [
+          "SIGMAS",
+          {}
+        ],
+        "latent_image": [
+          "LATENT",
+          {}
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "noise",
+        "guider",
+        "sampler",
+        "sigmas",
+        "latent_image"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "LATENT",
+      "LATENT"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "output",
+      "denoised_output"
+    ],
+    "output_tooltips": [
+      null,
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "SamplerCustomAdvanced",
+    "display_name": null,
+    "description": "",
+    "python_module": "comfy_extras.nodes_custom_sampler",
+    "category": "model/sampling/custom",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": null,
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "SaveImage": {
+    "input": {
+      "required": {
+        "images": [
+          "IMAGE",
+          {
+            "tooltip": "The images to save."
+          }
+        ],
+        "filename_prefix": [
+          "STRING",
+          {
+            "default": "ComfyUI",
+            "tooltip": "The prefix for the file to save. This may include formatting information such as %date:yyyy-MM-dd% or %Empty Latent Image.width% to include values from nodes."
+          }
+        ]
+      },
+      "hidden": {
+        "prompt": "PROMPT",
+        "extra_pnginfo": "EXTRA_PNGINFO"
+      }
+    },
+    "input_order": {
+      "required": [
+        "images",
+        "filename_prefix"
+      ],
+      "hidden": [
+        "prompt",
+        "extra_pnginfo"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "images"
+    ],
+    "name": "SaveImage",
+    "display_name": "Save Image",
+    "description": "Saves the input images to your ComfyUI output directory.",
+    "python_module": "nodes",
+    "category": "image",
+    "output_node": true,
+    "has_intermediate_output": false,
+    "search_aliases": [
+      "save",
+      "save image",
+      "export image",
+      "output image",
+      "write image",
+      "download"
+    ],
+    "essentials_category": "Basics"
+  },
+  "SolidMask": {
+    "input": {
+      "required": {
+        "value": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.01
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "default": 512,
+            "min": 1,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 512,
+            "min": 1,
+            "max": 16384,
+            "step": 1
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "value",
+        "width",
+        "height"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "MASK"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MASK"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "SolidMask",
+    "display_name": "Create Solid Mask",
+    "description": "",
+    "python_module": "comfy_extras.nodes_mask",
+    "category": "image/mask",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": null,
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "SplitImageWithAlpha": {
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE",
+          {}
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "image"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE",
+      "MASK"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "IMAGE",
+      "MASK"
+    ],
+    "output_tooltips": [
+      null,
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "SplitImageWithAlpha",
+    "display_name": "Split Image with Alpha",
+    "description": "",
+    "python_module": "comfy_extras.nodes_compositing",
+    "category": "image/compositing",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": [
+      "extract alpha",
+      "separate transparency",
+      "remove alpha"
+    ],
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "StringConcatenate": {
+    "input": {
+      "required": {
+        "string_a": [
+          "STRING",
+          {
+            "multiline": true
+          }
+        ],
+        "string_b": [
+          "STRING",
+          {
+            "multiline": true
+          }
+        ],
+        "delimiter": [
+          "STRING",
+          {
+            "default": "",
+            "multiline": false
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "string_a",
+        "string_b",
+        "delimiter"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "STRING"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "STRING"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "StringConcatenate",
+    "display_name": "Concatenate Text",
+    "description": "",
+    "python_module": "comfy_extras.nodes_string",
+    "category": "text",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": [
+      "concatenate",
+      "text concat",
+      "join text",
+      "merge text",
+      "combine strings",
+      "string concat",
+      "append text",
+      "combine text"
+    ],
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "SwwanBlockifyMask": {
+    "input": {
+      "required": {
+        "masks": [
+          "MASK"
+        ],
+        "block_size": [
+          "INT",
+          {
+            "default": 32,
+            "min": 8,
+            "max": 512,
+            "step": 1,
+            "tooltip": "Size of blocks in pixels (smaller = smaller blocks)"
+          }
+        ]
+      },
+      "optional": {
+        "device": [
+          [
+            "cpu",
+            "gpu"
+          ],
+          {
+            "default": "cpu",
+            "tooltip": "Device to use for processing"
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "masks",
+        "block_size"
+      ],
+      "optional": [
+        "device"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "MASK"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "mask"
+    ],
+    "name": "SwwanBlockifyMask",
+    "display_name": "Blockify Mask (Swwan)",
+    "description": "Creates a block mask by dividing the bounding box of each mask into blocks of the specified size and filling in blocks that contain any part of the original mask.",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/Mask",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "SwwanColorMatch": {
+    "input": {
+      "required": {
+        "image_ref": [
+          "IMAGE"
+        ],
+        "image_target": [
+          "IMAGE"
+        ],
+        "method": [
+          [
+            "mkl",
+            "hm",
+            "reinhard",
+            "mvgd",
+            "hm-mvgd-hm",
+            "hm-mkl-hm"
+          ],
+          {
+            "default": "mkl"
+          }
+        ]
+      },
+      "optional": {
+        "strength": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 10.0,
+            "step": 0.01
+          }
+        ],
+        "multithread": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ],
+        "match_mode": [
+          [
+            "color_matcher",
+            "mean_std"
+          ],
+          {
+            "default": "color_matcher"
+          }
+        ],
+        "reference_mask": [
+          "MASK"
+        ],
+        "color_space": [
+          [
+            "LAB",
+            "YCbCr",
+            "RGB",
+            "LUV",
+            "YUV",
+            "XYZ"
+          ]
+        ],
+        "factor": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.05
+          }
+        ],
+        "device": [
+          [
+            "auto",
+            "cpu",
+            "gpu"
+          ]
+        ],
+        "batch_size": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 1024
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "image_ref",
+        "image_target",
+        "method"
+      ],
+      "optional": [
+        "strength",
+        "multithread",
+        "match_mode",
+        "reference_mask",
+        "color_space",
+        "factor",
+        "device",
+        "batch_size"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "image"
+    ],
+    "name": "SwwanColorMatch",
+    "display_name": "Color Match (Swwan)",
+    "description": "\ncolor-matcher enables color transfer across images which comes in handy for automatic\ncolor-grading of photographs, paintings and film sequences as well as light-field\nand stopmotion corrections.\n\nThe methods behind the mappings are based on the approach from Reinhard et al.,\nthe Monge-Kantorovich Linearization (MKL) as proposed by Pitie et al. and our analytical solution\nto a Multi-Variate Gaussian Distribution (MVGD) transfer in conjunction with classical histogram\nmatching. As shown below our HM-MVGD-HM compound outperforms existing methods.\nhttps://github.com/hahnec/color-matcher/\n\n",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/Advanced/Image",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "SwwanCropByMaskV5": {
+    "input": {
+      "required": {
+        "detect": [
+          [
+            "mask_area",
+            "min_bounding_rect",
+            "max_inscribed_rect"
+          ],
+          {
+            "tooltip": "仅 bounds 且未接 crop_box：mask_area 按遮罩区域，min_bounding_rect 最小外接矩形，max_inscribed_rect 最大内接矩形；后两者使用平滑后的遮罩。"
+          }
+        ],
+        "reserve_mode": [
+          [
+            "absolute",
+            "ratio"
+          ],
+          {
+            "tooltip": "仅 bounds：absolute 使用四向像素边距；ratio 上下按遮罩框高度、左右按宽度乘比例，并受 reserve_max 限制。编辑模式改用 edit_expansion_mode。"
+          }
+        ],
+        "top_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1,
+            "tooltip": "仅 bounds + absolute：向上保留的像素边距；负值收缩，边界受原图限制。编辑模式不使用此项。"
+          }
+        ],
+        "bottom_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1,
+            "tooltip": "仅 bounds + absolute：向下保留的像素边距；负值收缩，边界受原图限制。编辑模式不使用此项。"
+          }
+        ],
+        "left_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1,
+            "tooltip": "仅 bounds + absolute：向左保留的像素边距；负值收缩，边界受原图限制。编辑模式不使用此项。"
+          }
+        ],
+        "right_reserve": [
+          "INT",
+          {
+            "default": 20,
+            "min": -9999,
+            "max": 9999,
+            "step": 1,
+            "tooltip": "仅 bounds + absolute：向右保留的像素边距；负值收缩，边界受原图限制。编辑模式不使用此项。"
+          }
+        ],
+        "top_reserve_ratio": [
+          "FLOAT",
+          {
+            "default": 0.5,
+            "min": 0.0,
+            "max": 10.0,
+            "step": 0.1,
+            "tooltip": "向上扩展比例。bounds + ratio 按对应宽/高计算并受 reserve_max 限制；编辑模式 + reserve_ratio 按选区框短边 S×ratio 增加上下文，不受 reserve_max 限制。"
+          }
+        ],
+        "bottom_reserve_ratio": [
+          "FLOAT",
+          {
+            "default": 0.5,
+            "min": 0.0,
+            "max": 10.0,
+            "step": 0.1,
+            "tooltip": "向下扩展比例。bounds + ratio 按对应宽/高计算并受 reserve_max 限制；编辑模式 + reserve_ratio 按选区框短边 S×ratio 增加上下文，不受 reserve_max 限制。"
+          }
+        ],
+        "left_reserve_ratio": [
+          "FLOAT",
+          {
+            "default": 0.5,
+            "min": 0.0,
+            "max": 10.0,
+            "step": 0.1,
+            "tooltip": "向左扩展比例。bounds + ratio 按对应宽/高计算并受 reserve_max 限制；编辑模式 + reserve_ratio 按选区框短边 S×ratio 增加上下文，不受 reserve_max 限制。"
+          }
+        ],
+        "right_reserve_ratio": [
+          "FLOAT",
+          {
+            "default": 0.5,
+            "min": 0.0,
+            "max": 10.0,
+            "step": 0.1,
+            "tooltip": "向右扩展比例。bounds + ratio 按对应宽/高计算并受 reserve_max 限制；编辑模式 + reserve_ratio 按选区框短边 S×ratio 增加上下文，不受 reserve_max 限制。"
+          }
+        ],
+        "reserve_max": [
+          "INT",
+          {
+            "default": 100,
+            "min": 0,
+            "max": 1024,
+            "step": 1,
+            "tooltip": "仅 bounds + ratio：每侧边距的最大像素数。对 edit_region/qwen21_aligned 的上下文扩展不生效。"
+          }
+        ],
+        "round_to_multiple": [
+          [
+            "8",
+            "16",
+            "32",
+            "64",
+            "128",
+            "256",
+            "512",
+            "None"
+          ],
+          {
+            "tooltip": "仅 bounds：裁剪框宽高向上对齐指定倍数，尽量限制在原图内。不是 aligned 的 Qwen 32 对齐，也不是遮罩块化。"
+          }
+        ],
+        "batch_mode": [
+          [
+            "single_frame",
+            "batch_first_reuse"
+          ],
+          {
+            "tooltip": "仅 bounds：两个选项均按首帧遮罩/同一 crop_box 裁剪输入批次，不逐帧检测；batch_first_reuse 显式表示复用。edit_region/aligned 始终只处理首张。"
+          }
+        ],
+        "device": [
+          [
+            "CPU",
+            "GPU"
+          ],
+          {
+            "default": "CPU",
+            "tooltip": "仅 bounds 自动检测时选择平滑计算设备，后续检测仍含 CPU/PIL。不是 Qwen 推理设备；edit_region/aligned 不使用此参数。"
+          }
+        ]
+      },
+      "optional": {
+        "image": [
+          "IMAGE",
+          {
+            "tooltip": "待裁剪的干净原图。edit_region/qwen21_aligned 必须连接，且仅处理首张；mask 必须与该图同尺寸、同坐标。"
+          }
+        ],
+        "mask_image": [
+          "IMAGE",
+          {
+            "tooltip": "遮罩的 IMAGE 输入。bounds 使用灰度遮罩；编辑模式未接 mask 时才使用它，edit_region 转灰度，aligned 读取红通道。请与原图保持同尺寸。"
+          }
+        ],
+        "crop_box": [
+          "BOX",
+          {
+            "tooltip": "仅 bounds：复用 [left, top, right, bottom] 原图坐标框，右/下为排他边界；连接后跳过自动检测和边距计算。不是 BBOX/SEAM。"
+          }
+        ],
+        "crop_mode": [
+          [
+            "bounds",
+            "edit_region",
+            "qwen21_aligned"
+          ],
+          {
+            "default": "bounds",
+            "tooltip": "bounds：传统边界裁剪/批次复用；edit_region：局部编辑裁剪与恢复记录；qwen21_aligned：局部裁剪 + BlueBox 32 对齐/不动点校验 + Qwen 面积预算。模式决定其他控件是否生效。"
+          }
+        ],
+        "mask": [
+          "MASK",
+          {
+            "tooltip": "仅 edit_region/qwen21_aligned：白色为选区，黑色为非选区，优先于 mask_image。LoadImage 的 MASK 是 1-alpha，不是自动主体选区。aligned 按 >0 取外接框，保留软值；低于512预算缩小时按面积覆盖采样，细小选区可能变灰但不直接丢弃。空选区报错。"
+          }
+        ],
+        "fill_mask_holes": [
+          "BOOLEAN",
+          {
+            "default": false,
+            "tooltip": "仅编辑模式：填充选区内部封闭孔洞，可能把原本保留的内部区域纳入选区；不是最终保护区。aligned 保留已有软值，仅补孔。默认关闭。"
+          }
+        ],
+        "output_size": [
+          [
+            "原像素",
+            "原像素1：1",
+            "自定义宽高"
+          ],
+          {
+            "default": "原像素",
+            "tooltip": "仅 edit_region：原像素保持裁剪像素尺度；原像素1：1 扩成正方形；自定义宽高按指定尺寸处理。aligned 由面积预算决定画布，不使用此项。"
+          }
+        ],
+        "custom_width": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 0,
+            "max": 8192,
+            "tooltip": "仅 edit_region + 自定义宽高：与另一维共同设置输出；仅一维为0时，非零值作为长边预算；两维不能同时为0。aligned 不使用此项。"
+          }
+        ],
+        "custom_height": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 0,
+            "max": 8192,
+            "tooltip": "仅 edit_region + 自定义宽高：与另一维共同设置输出；仅一维为0时，非零值作为长边预算；两维不能同时为0。aligned 不使用此项。"
+          }
+        ],
+        "alignment": [
+          "INT",
+          {
+            "default": 8,
+            "min": 0,
+            "max": 256,
+            "tooltip": "仅 edit_region：原像素/原像素1：1尺寸向上对齐此倍数，自定义输出按该模式规则取整；0/1 不额外对齐。aligned 固定使用自己的 32 倍数候选，不读取此项。"
+          }
+        ],
+        "edit_expansion_mode": [
+          [
+            "reserve_ratio",
+            "factor"
+          ],
+          {
+            "default": "reserve_ratio",
+            "tooltip": "仅编辑模式：factor 使用四向 edit_*_factor；reserve_ratio 使用四向 *_reserve_ratio（内部转为 1+ratio）。均按选区外接框短边增加上下文，不是整个宽高乘倍数。"
+          }
+        ],
+        "edit_top_factor": [
+          "FLOAT",
+          {
+            "default": 1.2,
+            "min": 1.0,
+            "max": 10.0,
+            "step": 0.1,
+            "tooltip": "仅编辑模式 + factor：向上增加 S×(factor-1) 像素，S 为选区框短边；1=不扩展，1.3=增加约 0.3S，不是整张图放大1.3倍。aligned 向上取整，edit_region 截断取整。上下文不自动获得最终修改权限。"
+          }
+        ],
+        "edit_bottom_factor": [
+          "FLOAT",
+          {
+            "default": 1.2,
+            "min": 1.0,
+            "max": 10.0,
+            "step": 0.1,
+            "tooltip": "仅编辑模式 + factor：向下增加 S×(factor-1) 像素，S 为选区框短边；1=不扩展，1.3=增加约 0.3S，不是整张图放大1.3倍。aligned 向上取整，edit_region 截断取整。上下文不自动获得最终修改权限。"
+          }
+        ],
+        "edit_left_factor": [
+          "FLOAT",
+          {
+            "default": 1.2,
+            "min": 1.0,
+            "max": 10.0,
+            "step": 0.1,
+            "tooltip": "仅编辑模式 + factor：向左增加 S×(factor-1) 像素，S 为选区框短边；1=不扩展，1.3=增加约 0.3S，不是整张图放大1.3倍。aligned 向上取整，edit_region 截断取整。上下文不自动获得最终修改权限。"
+          }
+        ],
+        "edit_right_factor": [
+          "FLOAT",
+          {
+            "default": 1.2,
+            "min": 1.0,
+            "max": 10.0,
+            "step": 0.1,
+            "tooltip": "仅编辑模式 + factor：向右增加 S×(factor-1) 像素，S 为选区框短边；1=不扩展，1.3=增加约 0.3S，不是整张图放大1.3倍。aligned 向上取整，edit_region 截断取整。上下文不自动获得最终修改权限。"
+          }
+        ],
+        "qwen_resolution": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 512,
+            "max": 2048,
+            "step": 32,
+            "tooltip": "仅 aligned + fixed：固定面积预算 R，目标画布约 R² 像素，不是固定 R×R，也不是长边上限。crop_area 不读取此项。"
+          }
+        ],
+        "qwen_tolerance": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.2,
+            "max": 3.0,
+            "step": 0.1,
+            "tooltip": "仅 aligned：BlueBox 候选面积容差，越大可选画布越多；不是位移容忍像素。1.0 在 R=1024 时约为 3.125% 面积容差；最终仍验证不动点。"
+          }
+        ],
+        "qwen_restore_backend": [
+          [
+            "swwan",
+            "goohai"
+          ],
+          {
+            "default": "swwan",
+            "tooltip": "仅 aligned：swwan 的 region_info 接 SwwanRestoreCropBoxV4；goohai 接原生 GH_CropRestore，保留该节点的校色/羽化能力。本节点只准备几何记录，不执行校色，两个 SEAM 合同不可混接。"
+          }
+        ],
+        "qwen_resolution_mode": [
+          [
+            "fixed",
+            "crop_area"
+          ],
+          {
+            "default": "fixed",
+            "tooltip": "仅 aligned：fixed 使用 qwen_resolution；crop_area 按原生选区框+上下文的 sqrt(W×H) 取最近 32 档（半档向上），再限制在 min/max 内。预算在缩放/比例扩框/补边之前计算，不按白色像素总数计算。"
+          }
+        ],
+        "qwen_max_resolution": [
+          "INT",
+          {
+            "default": 1024,
+            "min": 512,
+            "max": 2048,
+            "step": 1,
+            "tooltip": "仅 aligned + crop_area：面积预算上限，默认 1024，向下取 32 倍数（1560→1536）。不是最长边；狭长画布单边可以更大。降低上限可减少大裁剪的推理像素，也可能损失细节。"
+          }
+        ],
+        "qwen_min_resolution": [
+          "INT",
+          {
+            "default": 128,
+            "min": 32,
+            "max": 2048,
+            "step": 1,
+            "tooltip": "仅 aligned + crop_area：面积预算下限，默认 128，向上取 32 倍数（129→160）。不是最短边；小裁剪可能被放大到约 min²。低于 512 的模型质量/速度未验收。对齐后的下限不能超过上限。"
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "detect",
+        "reserve_mode",
+        "top_reserve",
+        "bottom_reserve",
+        "left_reserve",
+        "right_reserve",
+        "top_reserve_ratio",
+        "bottom_reserve_ratio",
+        "left_reserve_ratio",
+        "right_reserve_ratio",
+        "reserve_max",
+        "round_to_multiple",
+        "batch_mode",
+        "device"
+      ],
+      "optional": [
+        "image",
+        "mask_image",
+        "crop_box",
+        "crop_mode",
+        "mask",
+        "fill_mask_holes",
+        "output_size",
+        "custom_width",
+        "custom_height",
+        "alignment",
+        "edit_expansion_mode",
+        "edit_top_factor",
+        "edit_bottom_factor",
+        "edit_left_factor",
+        "edit_right_factor",
+        "qwen_resolution",
+        "qwen_tolerance",
+        "qwen_restore_backend",
+        "qwen_resolution_mode",
+        "qwen_max_resolution",
+        "qwen_min_resolution"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE",
+      "IMAGE",
+      "BOX",
+      "IMAGE",
+      "SEAM",
+      "MASK",
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "INT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "cropped_image",
+      "cropped_mask",
+      "crop_box",
+      "box_preview",
+      "region_info",
+      "region_mask",
+      "width",
+      "height",
+      "encoder_resolution",
+      "native_crop_width",
+      "native_crop_height",
+      "working_resolution"
+    ],
+    "name": "SwwanCropByMaskV5",
+    "display_name": "Mask Crop (Swwan)",
+    "description": "## 局部裁剪 / BlueBox / 面积预算（Swwan）\n\n按选区裁剪、保留上下文并准备恢复坐标。**本节点不执行 Qwen 推理、颜色校正或最终贴回。** 输入参数、输出端口均有中文悬停说明。\n\n### 先选择 crop_mode\n- **bounds**：传统边界裁剪。使用 mask_image 或 crop_box；直接 mask 不生效。detect、reserve_mode、reserve_max、round_to_multiple、batch_mode、device 只在此模式使用。输入批次共用首帧选区/同一框，不逐帧检测。\n- **edit_region**：单张局部编辑裁剪。使用 image + mask（优先）或 mask_image；支持孔洞填充、上下文、output_size/custom_width/custom_height/alignment，输出 SEAM；空选区沿用旧行为取整图。只处理首张，不是 Qwen BlueBox 对齐模式。\n- **qwen21_aligned**：单张 Qwen 局部裁剪。完整 mask 外接框 + 上下文 → 面积预算 → BlueBox 候选评分/32 对齐/不动点校验 → 图与 mask 同步缩放补边。空选区报错；不使用旧的 output_size、alignment、bounds 检测/边距控件。不需要再串接 BlueBox Cut。\n\n### Qwen 动态面积预算\n选择 **qwen_resolution_mode=crop_area**，默认 **qwen_min_resolution=128 / qwen_max_resolution=1024**。\nW、H 是加上下文后的原生裁剪尺寸，在比例扩框/缩放/补边之前计算：\n`R = 32 × floor(sqrt(W × H) / 32 + 0.5)`，再限制到 `[32×ceil(min/32), 32×floor(max/32)]`。\nmin 向上取整（129→160），max 向下取整（1560→1536）；对齐后 min>max 报错。\n**R 是面积预算，目标面积约 R²，不是固定正方形，也不是长边/短边限制。** 实际宽高还受比例与候选容差影响；不是对 mask 白色像素数量求面积。小裁剪会被下限放大，大裁剪被上限缩小；128等低于512的预算尚无模型效果/速度验收。\n选择 **fixed** 时只使用 qwen_resolution（默认1024），min/max 不生效。默认 crop_mode=bounds、resolution_mode=fixed 保留，需主动选择 aligned + crop_area 才使用动态预算。\n\n### 上下文与对齐\n编辑模式的 edit_expansion_mode=factor 使用四向 edit_*_factor：每侧增加选区框短边 S×(factor−1)，1不扩展，1.3增加约0.3S；reserve_ratio 改用 S×四向ratio。不是整个宽高乘factor，亦不受 bounds 的 reserve_max 限制。\naligned 先利用原图真实上下文，为候选比例扩框，边界不足才复制边缘补图（mask补0），不通过中心裁切丢掉选区。qwen_tolerance 控制候选面积容差，不是位移精度；1.0在R=1024时约3.125%。这些处理减少管线尺寸偏差，**不保证模型生成内容零位移**。\n\n### 遮罩与恢复接线\n编辑模式的 mask 必须与原图同尺寸、同坐标；LoadImage 的 MASK 是1-alpha，不是自动主体选区。fill_mask_holes会改变内部孔洞，慎用于保护孔。上下文只是参考，不自动扩大最终允许修改范围。低于512预算缩小遮罩时使用面积覆盖采样，保留细线/离散小选区的非零覆盖；二值遮罩边缘可能变为灰度，不强制阈值化。若缩放后完全失去选区则报错，请提高预算或加宽选区；512及以上保留既有采样。\naligned 的 cropped_image/region_mask送任务前处理；encoder_resolution（0）接官方 TextEncodeQwenImage21.resolution，采样接该编码器的latent，避免再次独立定尺寸。\n**qwen_restore_backend=swwan**：region_info接SwwanRestoreCropBoxV4，并按恢复器接口接原图/crop_box；**goohai**：region_info接原生GH_CropRestore，生成块/region_mask接对应输入。两种SEAM不可混接，不要重复逆变换。颜色还原和羽化在恢复器中配置；严格范围外保护需最终门控，抠图生成alpha不能直接当原选区处理。\n查看 native_crop_width/height理解预算来源，width/height查看实际模型画布，working_resolution查看实际R。新默认用于新建节点或缺失字段；旧工作流显式保存值/已连接输入不会被强制覆盖。",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/Image",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "output_tooltips": [
+      "实际裁剪/对齐后的图像。aligned 下可接任务标记处理再送编码器；保留干净图作颜色参考。",
+      "与裁剪图同尺寸的三通道遮罩预览（IMAGE）；需要 MASK 连线时使用 region_mask。",
+      "原图坐标 BOX：[left, top, right, bottom]，右/下排他。aligned 的缩放/补边恢复还必须带同源 region_info，不能只靠 BOX。",
+      "原图或遮罩上的裁剪框预览，供检查选区是否完整；不是模型输入。",
+      "同源 SEAM，记录原图、裁剪、缩放和补边。aligned 按 qwen_restore_backend 连接匹配恢复器；edit_region 接 SwwanRestoreCropBoxV4；bounds 为 None。",
+      "与裁剪图同步变换后的原生 MASK，用于标记或同源贴回；不等于最终硬保护范围或生成 alpha。",
+      "实际输出画布宽度；aligned 下为32倍数，可能大于面积预算数值。",
+      "实际输出画布高度；aligned 下为32倍数，可能大于面积预算数值。",
+      "供官方 TextEncodeQwenImage21.resolution 使用，aligned 输出0以保持已对齐画布；采样使用同一编码器的 latent。其他模式也返回0，但不保证已32对齐。",
+      "原生裁剪宽度：aligned 中为选区框+上下文，尚未进行比例扩框、缩放或补边。用于理解预算来源。",
+      "原生裁剪高度：aligned 中为选区框+上下文，尚未进行比例扩框、缩放或补边。用于理解预算来源。",
+      "实际选中的面积预算R（目标面积约R²，不等于width或height）；aligned fixed/dynamic均返回实际值，其他模式返回0。"
+    ],
+    "search_aliases": []
+  },
+  "SwwanDrawMaskOnImage": {
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "color": [
+          "STRING",
+          {
+            "default": "0, 0, 0",
+            "tooltip": "Color as RGB values in range 0-255 or 0.0-1.0, separated by commas."
+          }
+        ],
+        "opacity": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.01
+          }
+        ]
+      },
+      "optional": {
+        "device": [
+          [
+            "cpu",
+            "gpu"
+          ],
+          {
+            "default": "cpu",
+            "tooltip": "Device to use for processing"
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "image",
+        "mask",
+        "color",
+        "opacity"
+      ],
+      "optional": [
+        "device"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "images"
+    ],
+    "name": "SwwanDrawMaskOnImage",
+    "display_name": "Draw Mask On Image (Swwan)",
+    "description": "Applies the provided masks to the input images.",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/Advanced/Image",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "SwwanImageAndMaskPreview": {
+    "input": {
+      "required": {
+        "mask_opacity": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.01
+          }
+        ],
+        "mask_color": [
+          "STRING",
+          {
+            "default": "255, 255, 255"
+          }
+        ],
+        "pass_through": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ]
+      },
+      "optional": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ],
+        "preview_mode": [
+          [
+            "standard",
+            "regions"
+          ],
+          {
+            "default": "standard"
+          }
+        ],
+        "region_color": [
+          "COLORCODE",
+          {
+            "default": "#00ffff"
+          }
+        ],
+        "show_numbers": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "number_opacity": [
+          "FLOAT",
+          {
+            "default": 0.8,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.1
+          }
+        ],
+        "number_scale": [
+          [
+            "跟随遮罩缩放",
+            "固定大小"
+          ]
+        ],
+        "font_scale": [
+          "FLOAT",
+          {
+            "default": 0.6,
+            "min": 0.1,
+            "max": 2.0,
+            "step": 0.1
+          }
+        ],
+        "number_font": [
+          [
+            "FreeMono.ttf",
+            "FreeMonoBoldOblique.otf",
+            "苹方特粗.ttf"
+          ],
+          {
+            "default": "FreeMono.ttf"
+          }
+        ],
+        "number_color": [
+          "COLORCODE",
+          {
+            "default": "#ffffff"
+          }
+        ]
+      },
+      "hidden": {
+        "prompt": "PROMPT",
+        "extra_pnginfo": "EXTRA_PNGINFO"
+      }
+    },
+    "input_order": {
+      "required": [
+        "mask_opacity",
+        "mask_color",
+        "pass_through"
+      ],
+      "optional": [
+        "image",
+        "mask",
+        "preview_mode",
+        "region_color",
+        "show_numbers",
+        "number_opacity",
+        "number_scale",
+        "font_scale",
+        "number_font",
+        "number_color"
+      ],
+      "hidden": [
+        "prompt",
+        "extra_pnginfo"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "composite"
+    ],
+    "name": "SwwanImageAndMaskPreview",
+    "display_name": "Image And Mask Preview (Swwan)",
+    "description": "\nPreview an image or a mask, when both inputs are used\ncomposites the mask on top of the image.\nwith pass_through on the preview is disabled and the\ncomposite is returned from the composite slot instead,\nthis allows for the preview to be passed for video combine\nnodes for example.\n",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/Advanced/IO",
+    "output_node": true,
+    "has_intermediate_output": false,
+    "search_aliases": [
+      "save",
+      "save image",
+      "export image",
+      "output image",
+      "write image",
+      "download"
+    ],
+    "essentials_category": "Basics"
+  },
+  "SwwanImageMatte": {
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "mask": [
+          "MASK"
+        ]
+      },
+      "optional": {
+        "fill_holes": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ],
+        "crop_mask": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ],
+        "crop_factor": [
+          "FLOAT",
+          {
+            "default": 1.2,
+            "min": 1.0,
+            "max": 2.0,
+            "step": 0.1
+          }
+        ],
+        "stroke_width": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 512
+          }
+        ],
+        "background_color": [
+          "COLORCODE",
+          {
+            "default": "#364254"
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "image",
+        "mask"
+      ],
+      "optional": [
+        "fill_holes",
+        "crop_mask",
+        "crop_factor",
+        "stroke_width",
+        "background_color"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE",
+      "IMAGE",
+      "MASK"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "rgba",
+      "rgb",
+      "mask"
+    ],
+    "name": "SwwanImageMatte",
+    "display_name": "Image Matte (Swwan)",
+    "description": "Use an existing mask as alpha; optionally fill holes, crop and add a stroke. RGB fills transparent pixels with background_color. This does not run background detection or premultiply RGB.",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/Advanced/Image",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "SwwanImagePadKJ": {
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "left": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "right": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "top": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "bottom": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "extra_padding": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 16384,
+            "step": 1
+          }
+        ],
+        "pad_mode": [
+          [
+            "edge",
+            "edge_pixel",
+            "color",
+            "pillarbox_blur"
+          ]
+        ],
+        "color": [
+          "STRING",
+          {
+            "default": "0, 0, 0",
+            "tooltip": "Color as RGB values in range 0-255, separated by commas."
+          }
+        ]
+      },
+      "optional": {
+        "mask": [
+          "MASK"
+        ],
+        "target_width": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 1,
+            "forceInput": true
+          }
+        ],
+        "target_height": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 1,
+            "forceInput": true
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "image",
+        "left",
+        "right",
+        "top",
+        "bottom",
+        "extra_padding",
+        "pad_mode",
+        "color"
+      ],
+      "optional": [
+        "mask",
+        "target_width",
+        "target_height"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE",
+      "MASK"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "images",
+      "masks"
+    ],
+    "name": "SwwanImagePadKJ",
+    "display_name": "Image Pad (Swwan)",
+    "description": "Pad the input image and optionally mask with the specified padding.",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/Advanced/Image",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "SwwanLoadAndResizeImage": {
+    "input": {
+      "required": {
+        "image": [
+          [
+            "selection.png"
+          ],
+          {
+            "image_upload": true
+          }
+        ],
+        "resize": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "width": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 8
+          }
+        ],
+        "height": [
+          "INT",
+          {
+            "default": 512,
+            "min": 0,
+            "max": 16384,
+            "step": 8
+          }
+        ],
+        "repeat": [
+          "INT",
+          {
+            "default": 1,
+            "min": 1,
+            "max": 4096,
+            "step": 1
+          }
+        ],
+        "keep_proportion": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "divisible_by": [
+          "INT",
+          {
+            "default": 2,
+            "min": 0,
+            "max": 512,
+            "step": 1
+          }
+        ],
+        "mask_channel": [
+          [
+            "alpha",
+            "red",
+            "green",
+            "blue"
+          ],
+          {
+            "tooltip": "Channel to use for the mask output"
+          }
+        ],
+        "background_color": [
+          "STRING",
+          {
+            "default": "",
+            "tooltip": "Fills the alpha channel with the specified color."
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "image",
+        "resize",
+        "width",
+        "height",
+        "repeat",
+        "keep_proportion",
+        "divisible_by",
+        "mask_channel",
+        "background_color"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE",
+      "MASK",
+      "INT",
+      "INT",
+      "STRING"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "image",
+      "mask",
+      "width",
+      "height",
+      "image_path"
+    ],
+    "name": "SwwanLoadAndResizeImage",
+    "display_name": "Load And Resize Image (Swwan)",
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/Advanced/IO",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "SwwanMaskAnalyze": {
+    "input": {
+      "required": {
+        "mask": [
+          "MASK"
+        ]
+      },
+      "optional": {
+        "top_percent": [
+          "INT",
+          {
+            "default": 0,
+            "min": -90,
+            "max": 1000
+          }
+        ],
+        "bottom_percent": [
+          "INT",
+          {
+            "default": 0,
+            "min": -90,
+            "max": 1000
+          }
+        ],
+        "left_percent": [
+          "INT",
+          {
+            "default": 0,
+            "min": -90,
+            "max": 1000
+          }
+        ],
+        "right_percent": [
+          "INT",
+          {
+            "default": 0,
+            "min": -90,
+            "max": 1000
+          }
+        ],
+        "minimum_area_percent": [
+          "FLOAT",
+          {
+            "default": 3.0,
+            "min": 0.0,
+            "max": 10.0,
+            "step": 0.1
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "mask"
+      ],
+      "optional": [
+        "top_percent",
+        "bottom_percent",
+        "left_percent",
+        "right_percent",
+        "minimum_area_percent"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "MASK",
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "BOOLEAN"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "mask",
+      "canvas_width",
+      "canvas_height",
+      "mask_width",
+      "mask_height",
+      "center_x",
+      "center_y",
+      "has_mask"
+    ],
+    "name": "SwwanMaskAnalyze",
+    "display_name": "Mask Analyze (Swwan)",
+    "description": "Bounds use the first mask and >=0.5; area detection uses all masks and >0.5. Empty bounds retain the reference full-canvas fallback.",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/Advanced/Mask",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "SwwanMaskCombine": {
+    "input": {
+      "required": {
+        "operation": [
+          [
+            "相加",
+            "相减",
+            "相交",
+            "排除",
+            "水平取左",
+            "水平取右",
+            "垂直取上",
+            "垂直取下"
+          ]
+        ],
+        "bbox_mode": [
+          [
+            "关闭",
+            "原始比例",
+            "1：1长边不变",
+            "1：1短边不变",
+            "1：1宽度不变",
+            "1：1高度不变"
+          ]
+        ],
+        "alignment": [
+          [
+            "左对齐",
+            "右对齐",
+            "居中",
+            "上对齐",
+            "下对齐"
+          ]
+        ]
+      },
+      "optional": {
+        "mask_1": [
+          "MASK"
+        ],
+        "mask_2": [
+          "MASK"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "operation",
+        "bbox_mode",
+        "alignment"
+      ],
+      "optional": [
+        "mask_1",
+        "mask_2"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "MASK",
+      "INT",
+      "INT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "mask",
+      "width",
+      "height"
+    ],
+    "name": "SwwanMaskCombine",
+    "display_name": "Mask Combine (Swwan)",
+    "description": "Mask arithmetic and aligned BBOX crops. Width/height are the effective region, not necessarily canvas dimensions.",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/Advanced/Mask",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "SwwanMaskProcess": {
+    "input": {
+      "required": {
+        "mask": [
+          "MASK"
+        ],
+        "operation": [
+          [
+            "cleanup",
+            "fill_holes",
+            "binary",
+            "layer_grow",
+            "grow_blur"
+          ]
+        ]
+      },
+      "optional": {
+        "threshold": [
+          "INT",
+          {
+            "default": 20,
+            "min": 1,
+            "max": 255
+          }
+        ],
+        "erode_dilate": [
+          "INT",
+          {
+            "default": 0,
+            "min": -256,
+            "max": 256
+          }
+        ],
+        "close_holes": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 128
+          }
+        ],
+        "remove_isolated_pixels": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 32
+          }
+        ],
+        "smooth": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 256
+          }
+        ],
+        "blur": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 999
+          }
+        ],
+        "invert_mask": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "grow": [
+          "INT",
+          {
+            "default": 4,
+            "min": -999,
+            "max": 999
+          }
+        ],
+        "expand": [
+          "INT",
+          {
+            "default": 0,
+            "min": -16384,
+            "max": 16384
+          }
+        ],
+        "incremental_expandrate": [
+          "FLOAT",
+          {
+            "default": 0.0,
+            "min": 0.0,
+            "max": 100.0
+          }
+        ],
+        "tapered_corners": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ],
+        "flip_input": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "blur_radius": [
+          "FLOAT",
+          {
+            "default": 0.0,
+            "min": 0.0,
+            "max": 100.0
+          }
+        ],
+        "lerp_alpha": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0
+          }
+        ],
+        "decay_factor": [
+          "FLOAT",
+          {
+            "default": 1.0,
+            "min": 0.0,
+            "max": 1.0
+          }
+        ],
+        "fill_holes": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "mask",
+        "operation"
+      ],
+      "optional": [
+        "threshold",
+        "erode_dilate",
+        "close_holes",
+        "remove_isolated_pixels",
+        "smooth",
+        "blur",
+        "invert_mask",
+        "grow",
+        "expand",
+        "incremental_expandrate",
+        "tapered_corners",
+        "flip_input",
+        "blur_radius",
+        "lerp_alpha",
+        "decay_factor",
+        "fill_holes"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "MASK",
+      "MASK"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "mask",
+      "mask_inverted"
+    ],
+    "name": "SwwanMaskProcess",
+    "display_name": "Mask Process (Swwan)",
+    "description": "Cleanup, hard threshold, hole filling and two distinct growth algorithms. Fill holes retains the historical [B,1,H,W] output; other modes return [B,H,W].",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/Advanced/Mask",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "SwwanMaskSegments": {
+    "input": {
+      "required": {
+        "operation": [
+          [
+            "from_mask",
+            "combined_mask",
+            "mask_batch",
+            "filter"
+          ]
+        ]
+      },
+      "optional": {
+        "mask": [
+          "MASK"
+        ],
+        "segs": [
+          "SEGS"
+        ],
+        "combined": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "crop_factor": [
+          "FLOAT",
+          {
+            "default": 3.0,
+            "min": 1.0,
+            "max": 100.0
+          }
+        ],
+        "bbox_fill": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "drop_size": [
+          "INT",
+          {
+            "default": 10,
+            "min": 1,
+            "max": 16384
+          }
+        ],
+        "contour_fill": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "sort_rule": [
+          [
+            "面积大小",
+            "宽度大小",
+            "高度大小",
+            "左右上下",
+            "左右下上"
+          ]
+        ],
+        "sort_order": [
+          [
+            "正序",
+            "反序"
+          ]
+        ],
+        "start_index": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 9223372036854775807
+          }
+        ],
+        "count": [
+          "INT",
+          {
+            "default": 1,
+            "min": 0,
+            "max": 9223372036854775807
+          }
+        ],
+        "group_threshold": [
+          "INT",
+          {
+            "default": 50,
+            "min": 1,
+            "max": 500
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "operation"
+      ],
+      "optional": [
+        "mask",
+        "segs",
+        "combined",
+        "crop_factor",
+        "bbox_fill",
+        "drop_size",
+        "contour_fill",
+        "sort_rule",
+        "sort_order",
+        "start_index",
+        "count",
+        "group_threshold"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "SEGS",
+      "MASK"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "segs",
+      "mask"
+    ],
+    "name": "SwwanMaskSegments",
+    "display_name": "Mask Segments (Swwan)",
+    "description": "Pure Impact-compatible seven-field SEGS processing. Combined and batch masks keep byte quantization; filtering keeps soft masks, first-canvas coordinates and cyclic positive-count indexing.",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/Advanced/Mask",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "SwwanQwenGeometryUnpack": {
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "seam": [
+          "SEAM"
+        ]
+      },
+      "optional": {
+        "require_alpha": [
+          "BOOLEAN",
+          {
+            "default": false,
+            "tooltip": "抠图时开启；若生成图只有RGB则明确报错，不伪造透明背景。"
+          }
+        ]
+      }
+    },
+    "output": [
+      "IMAGE",
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "INT"
+    ],
+    "output_name": [
+      "patch",
+      "x",
+      "y",
+      "width",
+      "height",
+      "original_width",
+      "original_height"
+    ]
+  },
+  "SwwanRestoreCropBoxV4": {
+    "input": {
+      "required": {
+        "background_image": [
+          "IMAGE"
+        ],
+        "croped_image": [
+          "IMAGE"
+        ],
+        "crop_box": [
+          "BOX"
+        ],
+        "feathering": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 256,
+            "step": 1
+          }
+        ],
+        "device": [
+          [
+            "CPU",
+            "GPU"
+          ],
+          {
+            "default": "GPU"
+          }
+        ]
+      },
+      "optional": {
+        "croped_mask": [
+          "MASK"
+        ],
+        "region_info": [
+          "SEAM"
+        ],
+        "expand_percent": [
+          "INT",
+          {
+            "default": 5,
+            "min": 0,
+            "max": 30
+          }
+        ],
+        "feather_percent": [
+          "INT",
+          {
+            "default": 5,
+            "min": 0,
+            "max": 30
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "background_image",
+        "croped_image",
+        "crop_box",
+        "feathering",
+        "device"
+      ],
+      "optional": [
+        "croped_mask",
+        "region_info",
+        "expand_percent",
+        "feather_percent"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE",
+      "MASK"
+    ],
+    "output_is_list": [
+      false,
+      false
+    ],
+    "output_name": [
+      "image",
+      "mask"
+    ],
+    "name": "SwwanRestoreCropBoxV4",
+    "display_name": "Restore Crop (Swwan)",
+    "description": "RestoreCropBox V4 - PyTorch 批处理优化版\n\n性能优化:\n- 完全 PyTorch 实现，避免 Tensor ↔ PIL 转换\n- 批量处理所有帧，10-100x 性能提升\n- GPU 加速友好\n- 直接输出 IMAGE batch，无需 ImageListToImageBatch\n\n推荐配置:\n- device: GPU（批量处理时性能提升明显）\n- feathering: 30-60（中等分辨率）\n\n注意:\n- 输入的 background_image 和 croped_image 必须批次大小相同\n- 输出直接可用于 VideoCombine\nConnect region_info for CPU edit-region restore with percent expansion/feathering.\nWithout region_info, the existing BOX batch/GPU path is unchanged.\nThe MASK output is the actual full-canvas compositing mask.\n",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/Image",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "SwwanSaveImage": {
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "file_format": [
+          [
+            "png",
+            "jpg",
+            "webp",
+            "tif",
+            "bmp"
+          ],
+          {
+            "default": "png"
+          }
+        ],
+        "output_path": [
+          "STRING",
+          {
+            "default": ""
+          }
+        ],
+        "filename_prefix": [
+          "STRING",
+          {
+            "default": "Swwan"
+          }
+        ]
+      },
+      "optional": {
+        "alpha": [
+          "MASK"
+        ],
+        "input_mode": [
+          [
+            "straight",
+            "premultiplied"
+          ],
+          {
+            "default": "straight"
+          }
+        ],
+        "alpha_mode": [
+          [
+            "auto",
+            "keep",
+            "flatten"
+          ],
+          {
+            "default": "auto"
+          }
+        ],
+        "has_alpha": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ],
+        "background_color": [
+          "COLORCODE",
+          {
+            "default": "#ffffff"
+          }
+        ],
+        "quality": [
+          "INT",
+          {
+            "default": 88,
+            "min": 1,
+            "max": 100
+          }
+        ],
+        "png_compress_level": [
+          "INT",
+          {
+            "default": 1,
+            "min": 0,
+            "max": 9
+          }
+        ],
+        "optimize": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ],
+        "webp_lossless": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "webp_method": [
+          "INT",
+          {
+            "default": 2,
+            "min": 0,
+            "max": 6
+          }
+        ],
+        "number_prefix": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "number_digits": [
+          "INT",
+          {
+            "default": 5,
+            "min": 1,
+            "max": 10
+          }
+        ],
+        "embed_metadata": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ],
+        "save_workflow_as_json": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "caption": [
+          "STRING",
+          {
+            "default": "",
+            "multiline": true
+          }
+        ],
+        "epsilon": [
+          "FLOAT",
+          {
+            "default": 0.001,
+            "min": 1e-06,
+            "max": 0.1
+          }
+        ]
+      },
+      "hidden": {
+        "prompt": "PROMPT",
+        "extra_pnginfo": "EXTRA_PNGINFO"
+      }
+    },
+    "input_order": {
+      "required": [
+        "image",
+        "file_format",
+        "output_path",
+        "filename_prefix"
+      ],
+      "optional": [
+        "alpha",
+        "input_mode",
+        "alpha_mode",
+        "has_alpha",
+        "background_color",
+        "quality",
+        "png_compress_level",
+        "optimize",
+        "webp_lossless",
+        "webp_method",
+        "number_prefix",
+        "number_digits",
+        "embed_metadata",
+        "save_workflow_as_json",
+        "caption",
+        "epsilon"
+      ],
+      "hidden": [
+        "prompt",
+        "extra_pnginfo"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "STRING"
+    ],
+    "output_is_list": [
+      true
+    ],
+    "output_name": [
+      "paths"
+    ],
+    "name": "SwwanSaveImage",
+    "display_name": "Save Image (Swwan)",
+    "description": "Relative folders use ComfyUI output. Straight RGB/RGBA or explicitly premultiplied RGB + alpha. JPEG/BMP flatten alpha. Absolute paths are returned for every image.",
+    "python_module": "custom_nodes.ComfyUI_Swwan",
+    "category": "Swwan/IO",
+    "output_node": true,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "TextEncodeQwenImage21": {
+    "input": {
+      "required": {
+        "clip": [
+          "CLIP",
+          {}
+        ],
+        "prompt": [
+          "STRING",
+          {
+            "multiline": true,
+            "dynamicPrompts": true
+          }
+        ],
+        "negative_prompt": [
+          "STRING",
+          {
+            "multiline": true,
+            "dynamicPrompts": true
+          }
+        ],
+        "resolution": [
+          "INT",
+          {
+            "tooltip": "Reference images are resized to about resolution x resolution pixels, at multiples of 32, preserving aspect ratio. 0 keeps each reference at its own size, rounded to a multiple of 32. ",
+            "default": 1024,
+            "min": 0,
+            "max": 4096,
+            "step": 32
+          }
+        ],
+        "images": [
+          "COMFY_AUTOGROW_V3",
+          {
+            "tooltip": "Reference images, seen by the text encoder and spliced into the sequence as VAE latents.",
+            "template": {
+              "input": {
+                "required": {
+                  "image": [
+                    "IMAGE",
+                    {}
+                  ]
+                }
+              },
+              "names": [
+                "image_1",
+                "image_2",
+                "image_3",
+                "image_4",
+                "image_5",
+                "image_6",
+                "image_7",
+                "image_8",
+                "image_9",
+                "image_10",
+                "image_11",
+                "image_12",
+                "image_13",
+                "image_14",
+                "image_15",
+                "image_16"
+              ],
+              "min": 0
+            }
+          }
+        ]
+      },
+      "optional": {
+        "vae": [
+          "VAE",
+          {}
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "clip",
+        "prompt",
+        "negative_prompt",
+        "resolution",
+        "images"
+      ],
+      "optional": [
+        "vae"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "CONDITIONING",
+      "CONDITIONING",
+      "LATENT"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "positive",
+      "negative",
+      "latent"
+    ],
+    "output_tooltips": [
+      null,
+      null,
+      "Empty latent on the first reference image's size, to match with sampling as any other size shifts the edit."
+    ],
+    "output_matchtypes": null,
+    "name": "TextEncodeQwenImage21",
+    "display_name": "Text Encode Qwen Image 2.1",
+    "description": "",
+    "python_module": "comfy_extras.nodes_qwen",
+    "category": "model/conditioning/qwen image",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": null,
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "ThresholdMask": {
+    "input": {
+      "required": {
+        "mask": [
+          "MASK",
+          {}
+        ],
+        "value": [
+          "FLOAT",
+          {
+            "default": 0.5,
+            "min": 0.0,
+            "max": 1.0,
+            "step": 0.01
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "mask",
+        "value"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "MASK"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MASK"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "ThresholdMask",
+    "display_name": "Threshold Mask",
+    "description": "",
+    "python_module": "comfy_extras.nodes_mask",
+    "category": "image/mask",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": [
+      "binary mask"
+    ],
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "UNETLoader": {
+    "input": {
+      "required": {
+        "unet_name": [
+          [
+            "qwen_image_2.1_int8_convrot.safetensors"
+          ]
+        ],
+        "weight_dtype": [
+          [
+            "default",
+            "fp8_e4m3fn",
+            "fp8_e4m3fn_fast",
+            "fp8_e5m2"
+          ],
+          {
+            "advanced": true
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "unet_name",
+        "weight_dtype"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "MODEL"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "MODEL"
+    ],
+    "name": "UNETLoader",
+    "display_name": "Load Diffusion Model",
+    "description": "",
+    "python_module": "nodes",
+    "category": "model/loaders",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "VAEDecode": {
+    "input": {
+      "required": {
+        "samples": [
+          "LATENT",
+          {
+            "tooltip": "The latent to be decoded."
+          }
+        ],
+        "vae": [
+          "VAE",
+          {
+            "tooltip": "The VAE model used for decoding the latent."
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "samples",
+        "vae"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "IMAGE"
+    ],
+    "name": "VAEDecode",
+    "display_name": "VAE Decode",
+    "description": "Decodes latent images back into pixel space images.",
+    "python_module": "nodes",
+    "category": "model/latent",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "output_tooltips": [
+      "The decoded image."
+    ],
+    "search_aliases": [
+      "decode",
+      "decode latent",
+      "latent to image",
+      "render latent"
+    ]
+  },
+  "VAELoader": {
+    "input": {
+      "required": {
+        "vae_name": [
+          [
+            "qwen_image_2.1_vae_bf16.safetensors"
+          ]
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "vae_name"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "VAE"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "VAE"
+    ],
+    "name": "VAELoader",
+    "display_name": "Load VAE",
+    "description": "",
+    "python_module": "nodes",
+    "category": "model/loaders",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "easy anythingIndexSwitch": {
+    "input": {
+      "required": {
+        "index": [
+          "INT",
+          {
+            "default": 0,
+            "min": 0,
+            "max": 9,
+            "step": 1
+          }
+        ]
+      },
+      "optional": {
+        "value0": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value1": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value2": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value3": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value4": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value5": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value6": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value7": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value8": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value9": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value10": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value11": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value12": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value13": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value14": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value15": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value16": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value17": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value18": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "value19": [
+          "*",
+          {
+            "lazy": true
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "index"
+      ],
+      "optional": [
+        "value0",
+        "value1",
+        "value2",
+        "value3",
+        "value4",
+        "value5",
+        "value6",
+        "value7",
+        "value8",
+        "value9",
+        "value10",
+        "value11",
+        "value12",
+        "value13",
+        "value14",
+        "value15",
+        "value16",
+        "value17",
+        "value18",
+        "value19"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "*"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "value"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "easy anythingIndexSwitch",
+    "display_name": null,
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI-Easy-Use",
+    "category": "EasyUse/Logic/Index Switch",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": null,
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "easy blocker": {
+    "input": {
+      "required": {
+        "continue": [
+          "BOOLEAN",
+          {
+            "default": false
+          }
+        ],
+        "in": [
+          "*",
+          {}
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "continue",
+        "in"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "*"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "out"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "easy blocker",
+    "display_name": null,
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI-Easy-Use",
+    "category": "EasyUse/Logic",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": null,
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "easy forLoopEnd": {
+    "input": {
+      "required": {
+        "flow": [
+          "FLOW_CONTROL",
+          {
+            "rawLink": true
+          }
+        ]
+      },
+      "optional": {
+        "initial_value1": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value2": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value3": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value4": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value5": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value6": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value7": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value8": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value9": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value10": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value11": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value12": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value13": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value14": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value15": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value16": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value17": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value18": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ],
+        "initial_value19": [
+          "*",
+          {
+            "rawLink": true
+          }
+        ]
+      },
+      "hidden": {
+        "dynprompt": "DYNPROMPT",
+        "extra_pnginfo": "EXTRA_PNGINFO",
+        "unique_id": "UNIQUE_ID"
+      }
+    },
+    "input_order": {
+      "required": [
+        "flow"
+      ],
+      "optional": [
+        "initial_value1",
+        "initial_value2",
+        "initial_value3",
+        "initial_value4",
+        "initial_value5",
+        "initial_value6",
+        "initial_value7",
+        "initial_value8",
+        "initial_value9",
+        "initial_value10",
+        "initial_value11",
+        "initial_value12",
+        "initial_value13",
+        "initial_value14",
+        "initial_value15",
+        "initial_value16",
+        "initial_value17",
+        "initial_value18",
+        "initial_value19"
+      ],
+      "hidden": [
+        "dynprompt",
+        "extra_pnginfo",
+        "unique_id"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "value1",
+      "value2",
+      "value3",
+      "value4",
+      "value5",
+      "value6",
+      "value7",
+      "value8",
+      "value9",
+      "value10",
+      "value11",
+      "value12",
+      "value13",
+      "value14",
+      "value15",
+      "value16",
+      "value17",
+      "value18",
+      "value19"
+    ],
+    "name": "easy forLoopEnd",
+    "display_name": "For Loop End",
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI-Easy-Use",
+    "category": "EasyUse/Logic/For Loop",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "easy forLoopStart": {
+    "input": {
+      "required": {
+        "total": [
+          "INT",
+          {
+            "default": 1,
+            "min": 1,
+            "max": 100000,
+            "step": 1
+          }
+        ]
+      },
+      "optional": {
+        "initial_value1": [
+          "*"
+        ],
+        "initial_value2": [
+          "*"
+        ],
+        "initial_value3": [
+          "*"
+        ],
+        "initial_value4": [
+          "*"
+        ],
+        "initial_value5": [
+          "*"
+        ],
+        "initial_value6": [
+          "*"
+        ],
+        "initial_value7": [
+          "*"
+        ],
+        "initial_value8": [
+          "*"
+        ],
+        "initial_value9": [
+          "*"
+        ],
+        "initial_value10": [
+          "*"
+        ],
+        "initial_value11": [
+          "*"
+        ],
+        "initial_value12": [
+          "*"
+        ],
+        "initial_value13": [
+          "*"
+        ],
+        "initial_value14": [
+          "*"
+        ],
+        "initial_value15": [
+          "*"
+        ],
+        "initial_value16": [
+          "*"
+        ],
+        "initial_value17": [
+          "*"
+        ],
+        "initial_value18": [
+          "*"
+        ],
+        "initial_value19": [
+          "*"
+        ]
+      },
+      "hidden": {
+        "initial_value0": [
+          "*"
+        ],
+        "prompt": "PROMPT",
+        "extra_pnginfo": "EXTRA_PNGINFO",
+        "unique_id": "UNIQUE_ID"
+      }
+    },
+    "input_order": {
+      "required": [
+        "total"
+      ],
+      "optional": [
+        "initial_value1",
+        "initial_value2",
+        "initial_value3",
+        "initial_value4",
+        "initial_value5",
+        "initial_value6",
+        "initial_value7",
+        "initial_value8",
+        "initial_value9",
+        "initial_value10",
+        "initial_value11",
+        "initial_value12",
+        "initial_value13",
+        "initial_value14",
+        "initial_value15",
+        "initial_value16",
+        "initial_value17",
+        "initial_value18",
+        "initial_value19"
+      ],
+      "hidden": [
+        "initial_value0",
+        "prompt",
+        "extra_pnginfo",
+        "unique_id"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "FLOW_CONTROL",
+      "INT",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*",
+      "*"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "flow",
+      "index",
+      "value1",
+      "value2",
+      "value3",
+      "value4",
+      "value5",
+      "value6",
+      "value7",
+      "value8",
+      "value9",
+      "value10",
+      "value11",
+      "value12",
+      "value13",
+      "value14",
+      "value15",
+      "value16",
+      "value17",
+      "value18",
+      "value19"
+    ],
+    "name": "easy forLoopStart",
+    "display_name": "For Loop Start",
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI-Easy-Use",
+    "category": "EasyUse/Logic/For Loop",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "easy humanSegmentation": {
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "method": [
+          [
+            "selfie_multiclass_256x256",
+            "human_parsing_lip",
+            "human_parts (deeplabv3p)",
+            "segformer_b3_clothes",
+            "segformer_b3_fashion",
+            "face_parsing"
+          ]
+        ],
+        "confidence": [
+          "FLOAT",
+          {
+            "default": 0.4,
+            "min": 0.05,
+            "max": 0.95,
+            "step": 0.01
+          }
+        ],
+        "crop_multi": [
+          "FLOAT",
+          {
+            "default": 0.0,
+            "min": 0.0,
+            "max": 10.0,
+            "step": 0.001
+          }
+        ],
+        "mask_components": [
+          "EASY_COMBO",
+          {
+            "options": [
+              {
+                "label": "Background",
+                "value": 0
+              }
+            ],
+            "multi_select": {
+              "placeholder": "select mask components",
+              "chip": true,
+              "max_selected_labels": 4
+            }
+          }
+        ]
+      },
+      "hidden": {
+        "prompt": "PROMPT",
+        "my_unique_id": "UNIQUE_ID"
+      }
+    },
+    "input_order": {
+      "required": [
+        "image",
+        "method",
+        "confidence",
+        "crop_multi",
+        "mask_components"
+      ],
+      "hidden": [
+        "prompt",
+        "my_unique_id"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "IMAGE",
+      "MASK",
+      "BBOX"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "image",
+      "mask",
+      "bbox"
+    ],
+    "name": "easy humanSegmentation",
+    "display_name": "Human Segmentation",
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI-Easy-Use",
+    "category": "EasyUse/Segmentation",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "easy ifElse": {
+    "input": {
+      "required": {
+        "boolean": [
+          "BOOLEAN",
+          {}
+        ],
+        "on_true": [
+          "*",
+          {
+            "lazy": true
+          }
+        ],
+        "on_false": [
+          "*",
+          {
+            "lazy": true
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "boolean",
+        "on_true",
+        "on_false"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "*"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "*"
+    ],
+    "output_tooltips": [
+      null
+    ],
+    "output_matchtypes": null,
+    "name": "easy ifElse",
+    "display_name": null,
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI-Easy-Use",
+    "category": "EasyUse/Logic",
+    "output_node": false,
+    "deprecated": false,
+    "experimental": false,
+    "dev_only": false,
+    "api_node": false,
+    "price_badge": null,
+    "search_aliases": null,
+    "essentials_category": null,
+    "has_intermediate_output": false
+  },
+  "easy imageSizeByLongerSide": {
+    "input": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "image"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "INT"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "resolution"
+    ],
+    "name": "easy imageSizeByLongerSide",
+    "display_name": "ImageSize (LongerSide)",
+    "description": "",
+    "python_module": "custom_nodes.ComfyUI-Easy-Use",
+    "category": "EasyUse/Image",
+    "output_node": true,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "布尔孤海": {
+    "input": {
+      "required": {
+        "开关": [
+          "BOOLEAN",
+          {
+            "default": true
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "开关"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "BOOLEAN"
+    ],
+    "output_is_list": [
+      false
+    ],
+    "output_name": [
+      "布尔"
+    ],
+    "name": "布尔孤海",
+    "display_name": "布尔 孤海",
+    "description": "",
+    "python_module": "custom_nodes.Goohaitools-comfyui",
+    "category": "孤海工具箱",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  },
+  "数学运算_孤海": {
+    "input": {
+      "required": {
+        "值1": [
+          "STRING",
+          {
+            "default": "",
+            "placeholder": "例如: a+b*c, round(c/a)"
+          }
+        ],
+        "值2": [
+          "STRING",
+          {
+            "default": "",
+            "placeholder": "例如: (a+c-d*f)//2"
+          }
+        ]
+      },
+      "optional": {
+        "a": [
+          "*",
+          {
+            "default": 0,
+            "forceInput": true
+          }
+        ],
+        "b": [
+          "*",
+          {
+            "default": 0,
+            "forceInput": true
+          }
+        ],
+        "c": [
+          "*",
+          {
+            "default": 0,
+            "forceInput": true
+          }
+        ],
+        "d": [
+          "*",
+          {
+            "default": 0,
+            "forceInput": true
+          }
+        ],
+        "f": [
+          "*",
+          {
+            "default": 0,
+            "forceInput": true
+          }
+        ]
+      }
+    },
+    "input_order": {
+      "required": [
+        "值1",
+        "值2"
+      ],
+      "optional": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "f"
+      ]
+    },
+    "is_input_list": false,
+    "output": [
+      "INT",
+      "FLOAT",
+      "INT",
+      "FLOAT",
+      "STRING"
+    ],
+    "output_is_list": [
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "output_name": [
+      "整数1",
+      "浮点1",
+      "整数2",
+      "浮点2",
+      "？帮助"
+    ],
+    "name": "数学运算_孤海",
+    "display_name": "数学运算 孤海",
+    "description": "",
+    "python_module": "custom_nodes.Goohaitools-comfyui",
+    "category": "孤海工具箱",
+    "output_node": false,
+    "has_intermediate_output": false,
+    "search_aliases": []
+  }
+}

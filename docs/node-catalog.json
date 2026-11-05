@@ -12286,7 +12286,7 @@
     "id": "SwwanQwen21PrunaModel",
     "display": "Qwen 2.1 Pruna Model (Swwan)",
     "source": "nodes/qwen21_pruna.py",
-    "line": 140,
+    "line": 143,
     "category": "Swwan/Advanced/Qwen",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -12321,7 +12321,7 @@
     "id": "SwwanQwen21PrunaPrepare",
     "display": "Qwen 2.1 Pruna Prepare (Swwan)",
     "source": "nodes/qwen21_pruna.py",
-    "line": 158,
+    "line": 161,
     "category": "Swwan/Advanced/Qwen",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -12371,7 +12371,7 @@
     "id": "SwwanQwen21PrunaMark",
     "display": "Qwen 2.1 Pruna Mark (Swwan)",
     "source": "nodes/qwen21_pruna.py",
-    "line": 168,
+    "line": 171,
     "category": "Swwan/Advanced/Qwen",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -12410,7 +12410,7 @@
     "id": "SwwanQwen21PrunaRestore",
     "display": "Qwen 2.1 Pruna Restore (Swwan)",
     "source": "nodes/qwen21_pruna.py",
-    "line": 177,
+    "line": 180,
     "category": "Swwan/Advanced/Qwen",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -12451,7 +12451,7 @@
     "id": "SwwanQwen21PrunaOutput",
     "display": "Qwen 2.1 Pruna Output (Swwan)",
     "source": "nodes/qwen21_pruna.py",
-    "line": 187,
+    "line": 190,
     "category": "Swwan/Advanced/Qwen",
     "proposed_tier": "专用工具",
     "tier": "advanced",
@@ -12991,6 +12991,59 @@
     "output_types": [
       "IMAGE",
       "STRING"
+    ],
+    "output_is_list": [],
+    "input_is_list": false
+  },
+  {
+    "id": "SwwanQwenGeometryUnpack",
+    "display": "Qwen Geometry Unpack (Swwan)",
+    "source": "nodes/qwen_geometry.py",
+    "line": 6,
+    "category": "Swwan/Advanced/Image",
+    "proposed_tier": "专用工具",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null,
+    "description": "仅反变换：使用同一 Swwan Qwen aligned SEAM 去补边并还原局部尺寸，保留所有通道。输出局部图和原图坐标；不执行模型、校色、遮罩融合或贴回。不要连接 GH SEAM。",
+    "schema": {
+      "required": {
+        "image": [
+          "IMAGE"
+        ],
+        "seam": [
+          "SEAM"
+        ]
+      },
+      "optional": {
+        "require_alpha": [
+          "BOOLEAN",
+          {
+            "default": false,
+            "tooltip": "抠图时开启；若生成图只有RGB则明确报错，不伪造透明背景。"
+          }
+        ]
+      }
+    },
+    "input_types": {
+      "required": {
+        "image": "IMAGE",
+        "seam": "SEAM"
+      },
+      "optional": {
+        "require_alpha": "BOOLEAN"
+      }
+    },
+    "output_types": [
+      "IMAGE",
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "INT",
+      "INT"
     ],
     "output_is_list": [],
     "input_is_list": false

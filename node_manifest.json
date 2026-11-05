@@ -1908,5 +1908,17 @@
     "license": "MIT",
     "legacy_ids": [],
     "replacement": null
+  },
+  {
+    "id": "SwwanQwenGeometryUnpack",
+    "module": "nodes.qwen_geometry",
+    "class_name": "QwenGeometryUnpack",
+    "display": "Qwen Geometry Unpack (Swwan)",
+    "category": "Swwan/Advanced/Image",
+    "tier": "advanced",
+    "origin": "Swwan",
+    "license": "MIT",
+    "legacy_ids": [],
+    "replacement": null
   }
 ]

@@ -1,0 +1,300 @@
+{
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "qwen_image_2.1_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "_meta": {
+      "title": "原v3 INT8模型"
+    }
+  },
+  "2": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "lora_name": "qwen21/p_q_image_2.1_6_steps_upsampled_v0.2_comfyui_bf16.safetensors",
+      "strength_model": 1,
+      "model": [
+        "1",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Pruna v0.2 / 权重1"
+    }
+  },
+  "3": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "lora_name": "qwen21/pipi-qwen2.1-PhotoReal10.safetensors",
+      "strength_model": 0.8,
+      "model": [
+        "2",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "写实文生图 / 独立任务LoRA"
+    }
+  },
+  "4": {
+    "class_type": "ModelAttentionBackend",
+    "inputs": {
+      "attention": "comfy kitchen attention",
+      "model": [
+        "3",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "原v3 Attention / 不加Cache或Spectrum"
+    }
+  },
+  "5": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_8b_int8_convrot.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+    },
+    "_meta": {
+      "title": "原v3 INT8 CLIP"
+    }
+  },
+  "6": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+    },
+    "_meta": {
+      "title": "原v3 Qwen 2.1 VAE"
+    }
+  },
+  "7": {
+    "class_type": "PrimitiveStringMultiline",
+    "inputs": {
+      "value": "photorealistic,"
+    },
+    "_meta": {
+      "title": "固定触发提示词 / 可直接检查修改"
+    }
+  },
+  "8": {
+    "class_type": "PrimitiveStringMultiline",
+    "inputs": {
+      "value": ""
+    },
+    "_meta": {
+      "title": "额外指令 / 各任务独立，不继承其他任务"
+    }
+  },
+  "9": {
+    "class_type": "StringConcatenate",
+    "inputs": {
+      "string_a": [
+        "7",
+        0
+      ],
+      "string_b": [
+        "8",
+        0
+      ],
+      "delimiter": "\n"
+    },
+    "_meta": {
+      "title": "触发词 + 额外指令"
+    }
+  },
+  "10": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "9",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "最终实际提示词"
+    }
+  },
+  "11": {
+    "class_type": "TextEncodeQwenImage21",
+    "inputs": {
+      "prompt": [
+        "9",
+        0
+      ],
+      "negative_prompt": "",
+      "resolution": 0,
+      "clip": [
+        "5",
+        0
+      ],
+      "vae": [
+        "6",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "官方编码 / resolution=0 / 同源latent"
+    }
+  },
+  "12": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "11",
+        2
+      ]
+    },
+    "_meta": {
+      "title": "官方纯文本latent / 默认1024×1024，不用SD空latent"
+    }
+  },
+  "13": {
+    "class_type": "CFGGuider",
+    "inputs": {
+      "cfg": 1.0,
+      "model": [
+        "4",
+        0
+      ],
+      "positive": [
+        "11",
+        0
+      ],
+      "negative": [
+        "11",
+        1
+      ]
+    },
+    "_meta": {
+      "title": "原v3 CFG=1"
+    }
+  },
+  "14": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": 482316605808414
+    },
+    "_meta": {
+      "title": "固定seed / 手动比较"
+    }
+  },
+  "15": {
+    "class_type": "KSamplerSelect",
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "_meta": {
+      "title": "原v3 Euler"
+    }
+  },
+  "16": {
+    "class_type": "ManualSigmas",
+    "inputs": {
+      "sigmas": "1.0, 0.961054, 0.918949, 0.769302, 0.545554, 0.222292, 0"
+    },
+    "_meta": {
+      "title": "原v3 Pruna 6步 / 完整sigmas"
+    }
+  },
+  "17": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": [
+        "14",
+        0
+      ],
+      "guider": [
+        "13",
+        0
+      ],
+      "sampler": [
+        "15",
+        0
+      ],
+      "sigmas": [
+        "16",
+        0
+      ],
+      "latent_image": [
+        "11",
+        2
+      ]
+    },
+    "_meta": {
+      "title": "原生采样器 / 不隐藏内部调用"
+    }
+  },
+  "18": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "17",
+        0
+      ],
+      "vae": [
+        "6",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "VAE原始解码 / 尚未校色贴回"
+    }
+  },
+  "19": {
+    "class_type": "PreviewImage",
+    "inputs": {
+      "images": [
+        "18",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "原始生成块 / RGB或RGBA"
+    }
+  },
+  "20": {
+    "class_type": "SwwanSaveImage",
+    "inputs": {
+      "file_format": "png",
+      "output_path": "",
+      "filename_prefix": "Pruna_v5_expanded/photoreal-text",
+      "input_mode": "straight",
+      "alpha_mode": "auto",
+      "has_alpha": true,
+      "background_color": "#ffffff",
+      "quality": 88,
+      "png_compress_level": 1,
+      "optimize": true,
+      "webp_lossless": false,
+      "webp_method": 2,
+      "number_prefix": false,
+      "number_digits": 5,
+      "embed_metadata": true,
+      "save_workflow_as_json": true,
+      "caption": "",
+      "epsilon": 0.001,
+      "image": [
+        "18",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "最终保存 / PNG直通alpha"
+    }
+  },
+  "21": {
+    "class_type": "PreviewImage",
+    "inputs": {
+      "images": [
+        "18",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "最终结果 / 对照原图"
+    }
+  }
+}

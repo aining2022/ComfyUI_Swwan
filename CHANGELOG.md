@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Add Pruna v5 fully expanded review canvases: one muted overview and nine independent UI/API tasks, with visible masks, crop budgets, native encoding/sampling, color restoration, compositing and alpha. No Pruna task wrappers, hidden subgraphs or Set/Get wiring; preserve v4 and original six-step settings. Static/CPU checks only; browser and GPU acceptance remain pending.
+- Add atomic Qwen Geometry Unpack for reversing a recorded Swwan aligned SEAM without color matching or compositing; optional native-alpha validation rejects RGB cutout rather than fabricating transparency.
+
 - Add the separate Pruna v4 eight-task workflow with inspectable controls, lazy inputs/output, current-task-only LoRA patches, single-record crop/restore geometry, official/EditUtils adapters, native-alpha cutout and serial BFS expansion. Preserve v3 Pruna six-step sampling and the untouched source baseline; do not modify historical Turbo contracts.
 - Add task-specific frontend controls with retained hidden values, independent min=128/max=1024 budgets, explicit mask/protection/alpha contracts, RGBA-safe outpainting, source-aware file fingerprints and Chinese input/tooltips. Add CPU geometry/encoder/graph/PNG and real browser save/reload validation; no GPU residency or generation-quality claim.
 

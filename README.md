@@ -46,6 +46,8 @@ python -m pip install -r requirements.txt
 
 ## Qwen 2.1 Pruna 多任务工作流
 
+**逐节点人工审查请用 [v5 展开版说明](examples/qwen21-pruna-v5-expanded/README.md) 和 [v5 总览](examples/qwen21-pruna-v5-expanded/pruna-v5-expanded-all.json)。** 另含9个独立任务 UI/API；没有 Pruna 任务封装、隐藏子图或 Set/Get。只通过静态/CPU检查，浏览器与L20验收待完成。v4 保留供历史对照。
+
 [Pruna v4 中文使用说明](docs/QWEN21_PRUNA.md) · [UI 工作流](examples/qwen21-pruna-v4.json) · [API 工作流](examples/qwen21-pruna-v4-api.json)。基于原 v3 保留六步采样，支持编辑、扩图、抠图、水印移除、BFS、写实、物体移除和多角度；共享面积预算与几何记录，不替换旧 Turbo 节点。任务专用编码、GH/BlueBox 校色、BFS 检测等仍需说明中列出的外部依赖和模型。当前为本地实现与 CPU/前端验收，未宣称 GPU 效果或显存常驻切换已通过。
 
 ## 第一个工作流

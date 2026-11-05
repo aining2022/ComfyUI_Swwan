@@ -1,0 +1,616 @@
+{
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "qwen_image_2.1_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "_meta": {
+      "title": "原v3 INT8模型"
+    }
+  },
+  "2": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "lora_name": "qwen21/p_q_image_2.1_6_steps_upsampled_v0.2_comfyui_bf16.safetensors",
+      "strength_model": 1,
+      "model": [
+        "1",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Pruna v0.2 / 权重1"
+    }
+  },
+  "3": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "lora_name": "qwen21/angles_v2_full_qwen21_multiple_angles_v2_qwen21_multiple_angles_v2_000001500.safetensors",
+      "strength_model": 0.9,
+      "model": [
+        "2",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "多角度 / 独立任务LoRA"
+    }
+  },
+  "4": {
+    "class_type": "ModelAttentionBackend",
+    "inputs": {
+      "attention": "comfy kitchen attention",
+      "model": [
+        "3",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "原v3 Attention / 不加Cache或Spectrum"
+    }
+  },
+  "5": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_8b_int8_convrot.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+    },
+    "_meta": {
+      "title": "原v3 INT8 CLIP"
+    }
+  },
+  "6": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+    },
+    "_meta": {
+      "title": "原v3 Qwen 2.1 VAE"
+    }
+  },
+  "7": {
+    "class_type": "PrimitiveStringMultiline",
+    "inputs": {
+      "value": "<mva> right side view, high-angle shot"
+    },
+    "_meta": {
+      "title": "固定触发提示词 / 可直接检查修改"
+    }
+  },
+  "8": {
+    "class_type": "PrimitiveStringMultiline",
+    "inputs": {
+      "value": ""
+    },
+    "_meta": {
+      "title": "额外指令 / 各任务独立，不继承其他任务"
+    }
+  },
+  "9": {
+    "class_type": "StringConcatenate",
+    "inputs": {
+      "string_a": [
+        "7",
+        0
+      ],
+      "string_b": [
+        "8",
+        0
+      ],
+      "delimiter": "\n"
+    },
+    "_meta": {
+      "title": "触发词 + 额外指令"
+    }
+  },
+  "10": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "9",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "最终实际提示词"
+    }
+  },
+  "11": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "0a8317f8-f69b-4211-a0b8-998693fd26cf.jpeg"
+    },
+    "_meta": {
+      "title": "原图 / 保留实际ComfyUI解码基线"
+    }
+  },
+  "12": {
+    "class_type": "GetImageSize",
+    "inputs": {
+      "image": [
+        "11",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "原图尺寸"
+    }
+  },
+  "13": {
+    "class_type": "SolidMask",
+    "inputs": {
+      "value": 1.0,
+      "width": [
+        "12",
+        0
+      ],
+      "height": [
+        "12",
+        1
+      ]
+    },
+    "_meta": {
+      "title": "整图范围 / 不强制局部贴回"
+    }
+  },
+  "14": {
+    "class_type": "SwwanCropByMaskV5",
+    "inputs": {
+      "detect": "mask_area",
+      "reserve_mode": "absolute",
+      "top_reserve": 20,
+      "bottom_reserve": 20,
+      "left_reserve": 20,
+      "right_reserve": 20,
+      "top_reserve_ratio": 0.5,
+      "bottom_reserve_ratio": 0.5,
+      "left_reserve_ratio": 0.5,
+      "right_reserve_ratio": 0.5,
+      "reserve_max": 100,
+      "round_to_multiple": "8",
+      "batch_mode": "single_frame",
+      "device": "CPU",
+      "crop_mode": "qwen21_aligned",
+      "fill_mask_holes": false,
+      "output_size": "原像素",
+      "custom_width": 1024,
+      "custom_height": 1024,
+      "alignment": 8,
+      "edit_expansion_mode": "factor",
+      "edit_top_factor": 1.3,
+      "edit_bottom_factor": 1.3,
+      "edit_left_factor": 1.3,
+      "edit_right_factor": 1.3,
+      "qwen_resolution": 1024,
+      "qwen_tolerance": 1.0,
+      "qwen_restore_backend": "swwan",
+      "qwen_resolution_mode": "crop_area",
+      "qwen_max_resolution": 1024,
+      "qwen_min_resolution": 128,
+      "image": [
+        "11",
+        0
+      ],
+      "mask": [
+        "13",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "局部裁剪 / BlueBox / 128–1024面积预算"
+    }
+  },
+  "15": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "14",
+        9
+      ]
+    },
+    "_meta": {
+      "title": "原生裁剪宽"
+    }
+  },
+  "16": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "14",
+        10
+      ]
+    },
+    "_meta": {
+      "title": "原生裁剪高"
+    }
+  },
+  "17": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "14",
+        11
+      ]
+    },
+    "_meta": {
+      "title": "实际面积预算R"
+    }
+  },
+  "18": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "14",
+        6
+      ]
+    },
+    "_meta": {
+      "title": "推理画布宽"
+    }
+  },
+  "19": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "14",
+        7
+      ]
+    },
+    "_meta": {
+      "title": "推理画布高"
+    }
+  },
+  "20": {
+    "class_type": "PreviewImage",
+    "inputs": {
+      "images": [
+        "14",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "干净裁剪 / 校色参考"
+    }
+  },
+  "21": {
+    "class_type": "PreviewImage",
+    "inputs": {
+      "images": [
+        "14",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "实际模型输入"
+    }
+  },
+  "22": {
+    "class_type": "MaskToImage",
+    "inputs": {
+      "mask": [
+        "13",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "原坐标有效范围 / mask→image"
+    }
+  },
+  "23": {
+    "class_type": "PreviewImage",
+    "inputs": {
+      "images": [
+        "22",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "原坐标有效范围"
+    }
+  },
+  "24": {
+    "class_type": "TextEncodeQwenImage21",
+    "inputs": {
+      "prompt": [
+        "9",
+        0
+      ],
+      "negative_prompt": "",
+      "resolution": 0,
+      "clip": [
+        "5",
+        0
+      ],
+      "vae": [
+        "6",
+        0
+      ],
+      "images.image_1": [
+        "14",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "官方编码 / resolution=0 / 同源latent"
+    }
+  },
+  "25": {
+    "class_type": "CFGGuider",
+    "inputs": {
+      "cfg": 1.0,
+      "model": [
+        "4",
+        0
+      ],
+      "positive": [
+        "24",
+        0
+      ],
+      "negative": [
+        "24",
+        1
+      ]
+    },
+    "_meta": {
+      "title": "原v3 CFG=1"
+    }
+  },
+  "26": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": 482316605808414
+    },
+    "_meta": {
+      "title": "固定seed / 手动比较"
+    }
+  },
+  "27": {
+    "class_type": "KSamplerSelect",
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "_meta": {
+      "title": "原v3 Euler"
+    }
+  },
+  "28": {
+    "class_type": "ManualSigmas",
+    "inputs": {
+      "sigmas": "1.0, 0.961054, 0.918949, 0.769302, 0.545554, 0.222292, 0"
+    },
+    "_meta": {
+      "title": "原v3 Pruna 6步 / 完整sigmas"
+    }
+  },
+  "29": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": [
+        "26",
+        0
+      ],
+      "guider": [
+        "25",
+        0
+      ],
+      "sampler": [
+        "27",
+        0
+      ],
+      "sigmas": [
+        "28",
+        0
+      ],
+      "latent_image": [
+        "24",
+        2
+      ]
+    },
+    "_meta": {
+      "title": "原生采样器 / 不隐藏内部调用"
+    }
+  },
+  "30": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "29",
+        0
+      ],
+      "vae": [
+        "6",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "VAE原始解码 / 尚未校色贴回"
+    }
+  },
+  "31": {
+    "class_type": "PreviewImage",
+    "inputs": {
+      "images": [
+        "30",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "原始生成块 / RGB或RGBA"
+    }
+  },
+  "32": {
+    "class_type": "SplitImageWithAlpha",
+    "inputs": {
+      "image": [
+        "30",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "后处理只取生成RGB / 原alpha另行恢复"
+    }
+  },
+  "33": {
+    "class_type": "ColorCalibratorBlueBox",
+    "inputs": {
+      "threshold": 0.08,
+      "expand": 64,
+      "open_k": 13,
+      "close_k": 51,
+      "strength": 0.0,
+      "outside_mode": "edited",
+      "feather": 24,
+      "image_original": [
+        "14",
+        0
+      ],
+      "image_edited": [
+        "32",
+        0
+      ],
+      "mask": [
+        "14",
+        5
+      ]
+    },
+    "_meta": {
+      "title": "BlueBox校色 / 强度0旁路，改色勿开全局校色"
+    }
+  },
+  "34": {
+    "class_type": "SwwanRestoreCropBoxV4",
+    "inputs": {
+      "feathering": 0,
+      "device": "CPU",
+      "expand_percent": 0,
+      "feather_percent": 0,
+      "background_image": [
+        "11",
+        0
+      ],
+      "croped_image": [
+        "33",
+        0
+      ],
+      "crop_box": [
+        "14",
+        2
+      ],
+      "region_info": [
+        "14",
+        4
+      ]
+    },
+    "_meta": {
+      "title": "原生SEAM恢复 / 不猜坐标，不重复逆变换"
+    }
+  },
+  "35": {
+    "class_type": "PreviewImage",
+    "inputs": {
+      "images": [
+        "34",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "恢复与校色之后 / 最终门控之前"
+    }
+  },
+  "36": {
+    "class_type": "ThresholdMask",
+    "inputs": {
+      "value": 0.0,
+      "mask": [
+        "13",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "最终权限仅取有效mask非零支持域"
+    }
+  },
+  "37": {
+    "class_type": "ImageCompositeMasked",
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "resize_source": false,
+      "destination": [
+        "11",
+        0
+      ],
+      "source": [
+        "34",
+        0
+      ],
+      "mask": [
+        "36",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "最终门控 / 范围外取回原像素"
+    }
+  },
+  "38": {
+    "class_type": "JoinImageWithAlpha",
+    "inputs": {
+      "image": [
+        "37",
+        0
+      ],
+      "alpha": [
+        "11",
+        1
+      ]
+    },
+    "_meta": {
+      "title": "恢复原图alpha / RGB时为全不透明"
+    }
+  },
+  "39": {
+    "class_type": "SwwanSaveImage",
+    "inputs": {
+      "file_format": "png",
+      "output_path": "",
+      "filename_prefix": "Pruna_v5_expanded/angles",
+      "input_mode": "straight",
+      "alpha_mode": "auto",
+      "has_alpha": true,
+      "background_color": "#ffffff",
+      "quality": 88,
+      "png_compress_level": 1,
+      "optimize": true,
+      "webp_lossless": false,
+      "webp_method": 2,
+      "number_prefix": false,
+      "number_digits": 5,
+      "embed_metadata": true,
+      "save_workflow_as_json": true,
+      "caption": "",
+      "epsilon": 0.001,
+      "image": [
+        "38",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "最终保存 / PNG直通alpha"
+    }
+  },
+  "40": {
+    "class_type": "PreviewImage",
+    "inputs": {
+      "images": [
+        "38",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "最终结果 / 对照原图"
+    }
+  }
+}

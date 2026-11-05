@@ -2,13 +2,13 @@
 
 由唯一注册清单和实际接口生成；层级已应用到菜单。
 
-当前注册 **133** 个节点，**16** 个分类。
+当前注册 **150** 个节点，**16** 个分类。
 
 | 层级 | 数量 |
 | --- | --- |
 | 兼容入口 | 18 |
 | 主入口 | 21 |
-| 专用工具 | 92 |
+| 专用工具 | 109 |
 | 实验功能 | 2 |
 
 | 层级 | 节点 ID | 显示名 | 当前分类 | 输出 | 源码 |
@@ -148,11 +148,11 @@
 | 专用工具 | `SwwanQwen21FaceRegions` | Qwen 2.1 Face Regions (Swwan) | Swwan/Advanced/Qwen | SEGS, MASK | [nodes/qwen21_unified.py](../nodes/qwen21_unified.py#L263) |
 | 专用工具 | `SwwanQwen21PrunaControls` | Qwen 2.1 Pruna Controls (Swwan) | Swwan/Advanced/Qwen | QWEN21_PRUNA_CONFIG, STRING, INT | [nodes/qwen21_pruna.py](../nodes/qwen21_pruna.py#L10) |
 | 专用工具 | `SwwanQwen21PrunaInputs` | Qwen 2.1 Pruna Inputs (Swwan) | Swwan/Advanced/Qwen | IMAGE, MASK, MASK, QWEN21_REFS | [nodes/qwen21_pruna.py](../nodes/qwen21_pruna.py#L63) |
-| 专用工具 | `SwwanQwen21PrunaModel` | Qwen 2.1 Pruna Model (Swwan) | Swwan/Advanced/Qwen | MODEL | [nodes/qwen21_pruna.py](../nodes/qwen21_pruna.py#L140) |
-| 专用工具 | `SwwanQwen21PrunaPrepare` | Qwen 2.1 Pruna Prepare (Swwan) | Swwan/Advanced/Qwen | IMAGE, MASK, QWEN21_PRUNA_SEAM, STRING | [nodes/qwen21_pruna.py](../nodes/qwen21_pruna.py#L158) |
-| 专用工具 | `SwwanQwen21PrunaMark` | Qwen 2.1 Pruna Mark (Swwan) | Swwan/Advanced/Qwen | IMAGE | [nodes/qwen21_pruna.py](../nodes/qwen21_pruna.py#L168) |
-| 专用工具 | `SwwanQwen21PrunaRestore` | Qwen 2.1 Pruna Restore (Swwan) | Swwan/Advanced/Qwen | IMAGE, MASK, STRING | [nodes/qwen21_pruna.py](../nodes/qwen21_pruna.py#L177) |
-| 专用工具 | `SwwanQwen21PrunaOutput` | Qwen 2.1 Pruna Output (Swwan) | Swwan/Advanced/Qwen | IMAGE | [nodes/qwen21_pruna.py](../nodes/qwen21_pruna.py#L187) |
+| 专用工具 | `SwwanQwen21PrunaModel` | Qwen 2.1 Pruna Model (Swwan) | Swwan/Advanced/Qwen | MODEL | [nodes/qwen21_pruna.py](../nodes/qwen21_pruna.py#L143) |
+| 专用工具 | `SwwanQwen21PrunaPrepare` | Qwen 2.1 Pruna Prepare (Swwan) | Swwan/Advanced/Qwen | IMAGE, MASK, QWEN21_PRUNA_SEAM, STRING | [nodes/qwen21_pruna.py](../nodes/qwen21_pruna.py#L161) |
+| 专用工具 | `SwwanQwen21PrunaMark` | Qwen 2.1 Pruna Mark (Swwan) | Swwan/Advanced/Qwen | IMAGE | [nodes/qwen21_pruna.py](../nodes/qwen21_pruna.py#L171) |
+| 专用工具 | `SwwanQwen21PrunaRestore` | Qwen 2.1 Pruna Restore (Swwan) | Swwan/Advanced/Qwen | IMAGE, MASK, STRING | [nodes/qwen21_pruna.py](../nodes/qwen21_pruna.py#L180) |
+| 专用工具 | `SwwanQwen21PrunaOutput` | Qwen 2.1 Pruna Output (Swwan) | Swwan/Advanced/Qwen | IMAGE | [nodes/qwen21_pruna.py](../nodes/qwen21_pruna.py#L190) |
 | 专用工具 | `SwwanQwen21PrunaEncode` | Qwen 2.1 Pruna Encode (Swwan) | Swwan/Advanced/Qwen | CONDITIONING, CONDITIONING, LATENT, QWEN21_PRUNA_PADDING | [nodes/qwen21_pruna_encoding.py](../nodes/qwen21_pruna_encoding.py#L5) |
 | 专用工具 | `SwwanQwen21PrunaUnpad` | Qwen 2.1 Pruna Unpad (Swwan) | Swwan/Advanced/Qwen | IMAGE | [nodes/qwen21_pruna_encoding.py](../nodes/qwen21_pruna_encoding.py#L30) |
 | 专用工具 | `SwwanQwen21PrunaFace` | Qwen 2.1 Pruna Face (Swwan) | Swwan/Advanced/Qwen | IMAGE, STRING | [nodes/qwen21_pruna_face.py](../nodes/qwen21_pruna_face.py#L5) |
@@ -162,6 +162,7 @@
 | 专用工具 | `SwwanQwen21PrunaFaceSequence` | Qwen 2.1 Pruna FaceSequence (Swwan) | Swwan/Advanced/Qwen | IMAGE, STRING | [nodes/qwen21_pruna_face.py](../nodes/qwen21_pruna_face.py#L70) |
 | 专用工具 | `SwwanQwen21PrunaFaceRestore` | Qwen 2.1 Pruna FaceRestore (Swwan) | Swwan/Advanced/Qwen | IMAGE, STRING | [nodes/qwen21_pruna_face.py](../nodes/qwen21_pruna_face.py#L87) |
 | 专用工具 | `SwwanQwen21PrunaFaceFinish` | Qwen 2.1 Pruna FaceFinish (Swwan) | Swwan/Advanced/Qwen | IMAGE, STRING | [nodes/qwen21_pruna_face.py](../nodes/qwen21_pruna_face.py#L103) |
+| 专用工具 | `SwwanQwenGeometryUnpack` | Qwen Geometry Unpack (Swwan) | Swwan/Advanced/Image | IMAGE, INT, INT, INT, INT, INT, INT | [nodes/qwen_geometry.py](../nodes/qwen_geometry.py#L6) |
 
 机器可读接口清单：[node-catalog.json](node-catalog.json)。
 

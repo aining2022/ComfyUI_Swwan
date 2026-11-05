@@ -1,0 +1,6 @@
+{
+  "pruna_source_sha256": "fa4a1555958851c96039cd1cfb91d5f32afa5ccd99a46c9590b87c64f5511a08",
+  "bfs_source_sha256": "a1909e9fe4b60be85335bfe78d4f7e3ba0ae9e3a26421f28534e1e3056a3f757",
+  "schema_origin": "Saved L20 object_info plus local atomic geometry interface; not live validation",
+  "validation": "Static/CPU only. GPU and browser import/roundtrip acceptance are pending."
+}
