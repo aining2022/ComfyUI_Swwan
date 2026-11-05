@@ -7,8 +7,11 @@ const scalarTypes = new Set(['INT', 'FLOAT', 'BOOLEAN', 'STRING', 'COLORCODE']);
 function validate(node, name, value, data) {
     const [kind, options = {}] = data;
     let valid = true;
-    if (Array.isArray(kind)) valid = kind.includes(value);
-    else if (kind === 'INT' || kind === 'FLOAT') {
+    if (Array.isArray(kind)) {
+        // Upload choices describe this server's files, not a fixed enum. Keep
+        // missing filenames editable; VALIDATE_INPUTS checks existence at queue time.
+        valid = options.image_upload === true ? typeof value === 'string' : kind.includes(value);
+    } else if (kind === 'INT' || kind === 'FLOAT') {
         valid = typeof value === 'number' && Number.isFinite(value)
             && (kind !== 'INT' || Number.isInteger(value))
             && value >= (options.min ?? -Infinity) && value <= (options.max ?? Infinity);

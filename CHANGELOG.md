@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Fix named-widget restoration rejecting missing uploaded-image filenames as invalid enums. Preserve file names while importing, saving and reloading portable workflows; backend file validation still rejects nonexistent inputs at queue time. Keep semantic enum, number and COLORCODE validation strict.
+
 - Add Pruna v5 fully expanded review canvases: one muted overview and nine independent UI/API tasks, with visible masks, crop budgets, native encoding/sampling, color restoration, compositing and alpha. No Pruna task wrappers, hidden subgraphs or Set/Get wiring; preserve v4 and original six-step settings. Static/CPU checks only; browser and GPU acceptance remain pending.
 - Add atomic Qwen Geometry Unpack for reversing a recorded Swwan aligned SEAM without color matching or compositing; optional native-alpha validation rejects RGB cutout rather than fabricating transparency.
 

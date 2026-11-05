@@ -55,5 +55,36 @@ const edited={...canonical,width:736,essentials_interpolation:'bicubic'};
 resized.configure({widgets_values:[...resizeValues],widgets_values_named:edited});
 assert.equal(resized.widgets.find(w=>w.name==='width').value,736);
 assert.equal(resized.widgets.find(w=>w.name==='essentials_interpolation').value,'bicubic');
+// File choices are an environment inventory, not a fixed semantic enum.
+// An imported workflow must remain editable before its images are uploaded.
+const editWorkflow=JSON.parse(readFileSync(new URL('../examples/qwen21-pruna-v5-expanded/pruna-v5-edit.json',import.meta.url),'utf8'));
+const maskSource=editWorkflow.nodes.find(n=>n.type==='SwwanLoadAndResizeImage');
+assert.equal(maskSource.id,16);
+assert.equal(maskSource.widgets_values_named.image,'selection.png');
+const loaderData=catalog.find(n=>n.id==='SwwanLoadAndResizeImage');
+const oldFiles=loaderData.schema.required.image[0];
+for(const files of [[],['other-existing-image.png'],['selection.png']]){
+ loaderData.schema.required.image[0]=files;
+ for(const filename of ['selection.png','nested/mask.png','clipspace/test.png [input]','']){
+  const imageWidget={name:'image',value:files[0]??'',options:{values:[...files]}};
+  const loader=node('SwwanLoadAndResizeImage',[imageWidget]);
+  const info=structuredClone(maskSource);info.widgets_values_named.image=filename;info.widgets_values[0]=filename;
+  loader.configure(info);
+  assert.equal(imageWidget.value,filename,'Do not substitute an unrelated local image');
+  const serialized={};loader.onSerialize(serialized);
+  assert.equal(serialized.widgets_values_named.image,filename);
+  const reloaded=node('SwwanLoadAndResizeImage',[{name:'image',value:'other-existing-image.png'}]);
+  reloaded.configure(serialized);
+  assert.equal(reloaded.widgets[0].value,filename);
+  imageWidget.value='newly-uploaded.png';loader.onSerialize(serialized);
+  assert.equal(serialized.widgets_values_named.image,'newly-uploaded.png','Inventory may be stale after upload');
+  assert.throws(()=>loader.configure({widgets_values_named:{image:42}}),/invalid image/);
+  assert.throws(()=>loader.configure({widgets_values_named:{image:null}}),/invalid image/);
+  assert.throws(()=>loader.configure({widgets_values_named:{image:['selection.png']}}),/invalid image/);
+  assert.throws(()=>loader.configure({widgets_values_named:{image:filename,mask_channel:'cyan'}}),/invalid mask_channel/);
+  assert.throws(()=>loader.configure({widgets_values_named:{image:filename,width:'512'}}),/invalid width/);
+ }
+}
+loaderData.schema.required.image[0]=oldFiles;
 class Other {} extension.beforeRegisterNodeDef(Other,{name:'Other',category:'Other/Image'});assert.equal(Other.prototype.onSerialize,undefined);
-console.log('PASS: named save/reload, missing COLORCODE, connected colors, converted widgets, exact shifted-map recovery and strict validation');
+console.log('PASS: named save/reload, missing COLORCODE, connected colors, converted widgets, exact shifted-map recovery, portable image inventory and strict semantic validation');
